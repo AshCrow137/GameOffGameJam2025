@@ -1,4 +1,4 @@
-<img width="273" height="322" alt="image" src="https://github.com/user-attachments/assets/03c9a23f-d187-4388-a381-55e59c301ada" /># GameOffGameJam2025
+# GameOffGameJam2025
 November GameOff game jame; by Stars team
 
 
@@ -10,7 +10,8 @@ In MonoBehaviors, if possible, try to avoid using Start and Awake methods, inste
 <img width="453" height="279" alt="image" src="https://github.com/user-attachments/assets/3b7fa0a9-11d3-431c-a082-c9af8d52f556" />
 
 
-All public Enum must be placed in EnumLibrary file <img width="273" height="322" alt="image" src="https://github.com/user-attachments/assets/7099c638-64cb-4d17-a5b0-ad75055c78b4" />
+All public Enum must be placed in EnumLibrary file 
+<img width="273" height="322" alt="image" src="https://github.com/user-attachments/assets/7099c638-64cb-4d17-a5b0-ad75055c78b4" />
 
 
 
