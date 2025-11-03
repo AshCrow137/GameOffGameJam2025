@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
-
+using UnityEngine.EventSystems;
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
 /// Stores per-tile state since Tile assets are shared ScriptableObjects
 /// </summary>
-[RequireComponent(typeof(Tilemap))]
 public class HexTilemapManager : MonoBehaviour
 {
     [SerializeField] private Tilemap tilemap;
@@ -101,17 +100,19 @@ public class HexTilemapManager : MonoBehaviour
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = mainCamera.ScreenPointToRay(mousePos);
         
-        RaycastHit hit;
-        
+        // cast a 3d ray onto a 2d plane. 
+        // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
         // Raycast to detect what was clicked (adjust layer mask if needed)
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (hit.collider != null)
         {
             // Get the hit point in world space
             Vector3 hitPoint = hit.point;
             
             // Convert world position to tilemap cell position
             Vector3Int cellPosition = tilemap.WorldToCell(hitPoint);
-            
+
+    
             // Get the tile at the clicked position
             TileBase clickedTile = tilemap.GetTile(cellPosition);
 
