@@ -4,3 +4,10 @@
         INCREASE,
         DECREASE
     }
+
+    public enum TileState
+    {
+        Available,
+        Occupied,
+        Unavailable
+    }
