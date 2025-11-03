@@ -8,11 +8,8 @@
         private TestScript testScript;
         [SerializeField]
         private HexTilemapManager hexTilemapManager;
-    [SerializeField]
-    private TurnManager turnManager;
-
-
-    void Start()
+        [SerializeField]
+        private TurnManager turnManager;
         [SerializeField]
         private BaseGridUnitScript unit;
         
@@ -21,11 +18,11 @@
         {
             // testScript.Initialize();
             hexTilemapManager?.Initialize();
-        turnManager?.Initialize();
+            turnManager?.Initialize();
             hexTilemapManager.Initialize();
-        print("scan");
+            print("scan");
             AstarPath.active.Scan();
-        print("scanFinished");
+            print("scanFinished");
             unit.Initialize();
         }
     }
