@@ -16,6 +16,9 @@
         {
             // testScript.Initialize();
             hexTilemapManager.Initialize();
+        print("scan");
+            AstarPath.active.Scan();
+        print("scanFinished");
             unit.Initialize();
         }
     }

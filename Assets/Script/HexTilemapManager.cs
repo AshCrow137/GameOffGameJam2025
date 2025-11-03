@@ -12,6 +12,8 @@ public class HexTilemapManager : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
 
     [SerializeField] private Camera mainCamera;
+    //pahtfinding variable
+    [SerializeField] private Tilemap blockedTiles;
 
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
@@ -58,10 +60,16 @@ public class HexTilemapManager : MonoBehaviour
                 // Get default state from the tile or use Available
                 HexTile hexTile = tile as HexTile;
                 int rand = Random.Range(0, 3);
-                tileStates[pos] = (TileState)rand;
+                TileState state = (TileState)rand;
+                tileStates[pos] = state;
+                if (state==TileState.Unavailable ||  state==TileState.Occupied)
+                {
+                    blockedTiles.SetTile(pos, tile);
+                }
                 
             }
         }
+        print("tiles initialised");
     }
 
 

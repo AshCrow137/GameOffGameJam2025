@@ -15,6 +15,8 @@ public class BaseGridUnitScript : MonoBehaviour
     private Tilemap tilemap;
 
 
+
+
     private Seeker seeker;
     private Path path;
     private int tilesRemain;
@@ -27,6 +29,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
         seeker = GetComponent<Seeker>();
+
     }
 
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
