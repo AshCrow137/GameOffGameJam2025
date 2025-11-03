@@ -117,6 +117,7 @@ public class HexTilemapManager : MonoBehaviour
 
             if (clickedTile is HexTile)
             {
+                GlobalEventManager.InvokeOnTileClickEvent(clickedTile as HexTile,cellPosition);
                 // Get current state (default to Available if not in dictionary)
                 TileState currentState = GetTileState(cellPosition);
                 

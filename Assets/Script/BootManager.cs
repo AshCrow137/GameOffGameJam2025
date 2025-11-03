@@ -8,11 +8,14 @@
         private TestScript testScript;
         [SerializeField]
         private HexTilemapManager hexTilemapManager;
+        [SerializeField]
+        private BaseGridUnitScript unit;
         
         
         void Start()
         {
             // testScript.Initialize();
             hexTilemapManager.Initialize();
+            unit.Initialize();
         }
     }
