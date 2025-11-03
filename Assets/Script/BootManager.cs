@@ -19,10 +19,25 @@
             // testScript.Initialize();
             hexTilemapManager?.Initialize();
             turnManager?.Initialize();
-            hexTilemapManager.Initialize();
             print("scan");
-            AstarPath.active.Scan();
+            AstarPath.active?.Scan();
             print("scanFinished");
-            unit.Initialize();
+            unit?.Initialize();
         }
+
+    bool b = true;
+    float t = 5;
+    private void Update()
+    {
+        if(b&&t<=0)
+        {
+            AstarPath.active?.Scan();
+            
+            b = false;
+        }else
+        {
+            t -= Time.deltaTime;
+        }
+           
     }
+}

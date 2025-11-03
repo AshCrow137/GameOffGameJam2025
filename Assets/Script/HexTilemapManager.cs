@@ -70,6 +70,7 @@ public class HexTilemapManager : MonoBehaviour
             }
         }
         print("tiles initialised");
+        AstarPath.active?.Scan();
     }
 
 
