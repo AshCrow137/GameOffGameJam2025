@@ -15,6 +15,8 @@ public class HexTile : Tile
         base.GetTileData(position, tilemap, ref tileData);
         
         HexTilemapManager manager = HexTilemapManager.Instance;
+        if(manager == null)
+            return;
         TileState state = manager.GetTileState(position);
         tileData.color = manager.GetTileColor(state);
     }

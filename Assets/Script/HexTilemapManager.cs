@@ -19,12 +19,15 @@ public class HexTilemapManager : MonoBehaviour
     // Singleton instance for easy access
     public static HexTilemapManager Instance { get; private set; }
 
-
+    /// <summary>
+    /// Called by Bootmanager
+    /// </summary>
     public void Initialize(){
         Instantiate();
         InitializeTileStates();
         tilemap.RefreshAllTiles();
     }
+
     private void Instantiate()
     {
         // Setup singleton instance
@@ -83,7 +86,6 @@ public class HexTilemapManager : MonoBehaviour
 
     public void OnMouseClick()
     {
-        Debug.Log("Mouse Clicked");
         
         HandleTileClick();
     }
