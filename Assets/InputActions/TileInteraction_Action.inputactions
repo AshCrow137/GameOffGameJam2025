@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "TileInteraction_Action",
+    "maps": [
+        {
+            "name": "BasicTileInteraction",
+            "id": "08dbb815-72f5-41b0-8b2f-96897175326f",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "52da31a7-6661-4dc4-beae-253132e00f93",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f1b9bc1d-a086-4a9f-aa9e-fe55a4a35ad1",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
