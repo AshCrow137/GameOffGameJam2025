@@ -75,3 +75,29 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+# Wwise
+# From: https://gist.github.com/binary1230/983ca3168c8a92ab7b295b2a47a84b84
+
+# Wwise Project Stuff
+PacketBreach_WwiseProject/.cache/
+PacketBreach_WwiseProject/*.prof
+PacketBreach_WwiseProject/*_WwiseProject.*.validationcache
+PacketBreach_WwiseProject/*_WwiseProject.*.wsettings
+PacketBreach_WwiseProject/**/*.akd
+
+# Build Stuff (Unsure?)
+# Assets/Wwise/Deployment/Plugins/Windows/**/*.meta
+
+# Wwise Picker (Editor)
+# From https://www.audiokinetic.com/library/edge/?source=Unity&id=unity__troubleshooting.html
+# >> Do not keep AkWwiseProjectData.asset under version control! 
+# >> This is a temporary cache file for the Wwise project data, 
+# >> so as to avoid having the Wwise Picker continuously parse the Work Unit files.
+Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset*
+
+# Notes:
+# 1) if any other files go in Assets/Wwise/Editor/ProjectData/ besides AkWwiseProjectData.asset*,
+#    then don't ignore Assets/Wwise/Editor/ProjectData.meta. If AkWwiseProjectData.asset is the only item in there,
+#    then, it's OK to ignore this file.
+# 
+# Assets/Wwise/Editor/ProjectData.meta
