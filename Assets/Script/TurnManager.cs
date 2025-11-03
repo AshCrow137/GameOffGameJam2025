@@ -12,7 +12,7 @@ public class TurnManager : MonoBehaviour
     public void Initialize()
     {
         currentOrderIndex = 0;
-        turnOrder = new List<GameObject>();
+        //turnOrder = new List<GameObject>();
         OnTurnStart(turnOrder[currentOrderIndex]);
     }
 
