@@ -25,6 +25,9 @@ public class TurnManager
         //camera focus on the current Player/Unit
         Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
 
+        //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
+        entity.GetComponent<EntityTurnHandler>()?.OnTurnStart();
+
     }
 
     public void OnTurnEnd()
@@ -40,7 +43,9 @@ public class TurnManager
         //when finish the turn, call NextTurn
         NextTurn();
     }
-    private void NextTurn()
+
+    //public function to call from button press
+    public void NextTurn()
     {
         Debug.Log("Next Turn");
         //increment turn count

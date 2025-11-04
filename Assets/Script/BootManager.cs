@@ -10,6 +10,9 @@
         private HexTilemapManager hexTilemapManager;
         [SerializeField]
         private TurnManager turnManager;
+        [SerializeField]
+        private BuildingManager buildingManager;
+    
 
 
     void Start()
@@ -17,5 +20,6 @@
             // testScript.Initialize();
             hexTilemapManager?.Initialize();
             turnManager?.Initialize();
+            buildingManager?.Instantiate();
         }
     }

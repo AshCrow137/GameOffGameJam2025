@@ -24,6 +24,15 @@ public class Resourse : MonoBehaviour
             resources[resoursedKey[i]] += value[i];
         }
     }
+
+    public void SpendResource(Dictionary<ResourceType, int> required)
+    {
+        foreach (var req in required)
+        {
+            resources[req.Key] = Mathf.Max(0, resources[req.Key] - req.Value);
+        }
+    }
+
     public void Remove(int[] value)
     {
         var resoursedKey = new List<ResourceType>(resources.Keys);
