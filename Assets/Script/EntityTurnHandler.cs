@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class EntityTurnHandler : MonoBehaviour
 {
-    public void OnTurnStart()
+    public virtual void OnTurnStart()
     {
         Debug.Log($"Handling {gameObject.name}'s turn start.");
 

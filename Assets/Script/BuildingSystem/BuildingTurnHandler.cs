@@ -6,7 +6,6 @@ using UnityEngine;
 /// </summary>
 public class BuildingTurnHandler : EntityTurnHandler
 {
-    // private BuildingManager buildingManager;
 
     // private void Awake()
     // {
@@ -23,16 +22,11 @@ public class BuildingTurnHandler : EntityTurnHandler
     /// Called when this entity's turn starts
     /// Progresses all building constructions by one turn
     /// </summary>
-    public new void OnTurnStart()
+    public override void OnTurnStart()
     {
         base.OnTurnStart(); // Call base implementation for logging
-        Debug.Log("BuildingTurnHandler: OnTurnStart called.");
         GetComponent<BuildingManager>().StartTurn();
         
-        // if (buildingManager != null)
-        // {
-        //     buildingManager.StartTurn();
-        // }
     }
 }
 

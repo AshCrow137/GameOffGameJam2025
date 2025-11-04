@@ -40,7 +40,7 @@ public class BuildingManager : MonoBehaviour
 
 
 
-    private void Awake()
+    public void Instantiate()
     {
         if (Instance == null)
         {
@@ -103,6 +103,8 @@ public class BuildingManager : MonoBehaviour
             PlaceBuilding(building, mousePosition);
         }
 
+        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.Occupied);
+
     }
 
     private bool CanBuildingBePlaced(Building building, Vector3Int position){
@@ -132,7 +134,6 @@ public class BuildingManager : MonoBehaviour
         BuildingConstruction construction = new BuildingConstruction(building, position, building.duration);
         ongoingConstructions.Add(construction);
 
-        Debug.Log($"Started construction of {building.buildingName} at {position}. Will complete in {building.duration} turns.");
     }
 
     /// <summary>
@@ -140,8 +141,6 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     public void StartTurn()
     {
-        List<BuildingConstruction> completedConstructions = new List<BuildingConstruction>();
-
         // Process each ongoing construction
         foreach (BuildingConstruction construction in ongoingConstructions)
         {
@@ -151,7 +150,7 @@ public class BuildingManager : MonoBehaviour
             {
                 // Construction complete - place the building
                 PlaceBuilding(construction.building, construction.position);
-                completedConstructions.Add(construction);
+                ongoingConstructions.Remove(construction);
                 Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
             }
             else
@@ -160,11 +159,6 @@ public class BuildingManager : MonoBehaviour
             }
         }
 
-        // Remove completed constructions from the list
-        foreach (BuildingConstruction completed in completedConstructions)
-        {
-            ongoingConstructions.Remove(completed);
-        }
     }
 }
 
