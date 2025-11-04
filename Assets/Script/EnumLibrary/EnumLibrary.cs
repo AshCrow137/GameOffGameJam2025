@@ -7,7 +7,9 @@
 
     public enum TileState
     {
-        Available,
-        Occupied,
+        Land,
+        OccuppiedByBuilding,
+        OccupiedByUnit,
+        Water,
         Unavailable
     }

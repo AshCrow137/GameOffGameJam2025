@@ -4,6 +4,9 @@ using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using Pathfinding;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem.LowLevel;
+
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
 /// Stores per-tile state since Tile assets are shared ScriptableObjects
@@ -18,6 +21,7 @@ public class HexTilemapManager : MonoBehaviour
 
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
+    private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
     // Singleton instance for easy access
     public static HexTilemapManager Instance { get; private set; }
 
@@ -84,12 +88,12 @@ public class HexTilemapManager : MonoBehaviour
             TileBase tile = tilemap.GetTile(pos);
             if (tile is HexTile && !tileStates.ContainsKey(pos))
             {
-                // Get default state from the tile or use Available
+                // Get default state from the tile or use Land
                 HexTile hexTile = tile as HexTile;
-                int rand = Random.Range(0, 3);
+                int rand = Random.Range(0, System.Enum.GetValues(typeof(TileState)).Length);
                 TileState state = (TileState)rand;
                 tileStates[pos] = state;
-                if (state==TileState.Unavailable ||  state==TileState.Occupied)
+                if (state==TileState.Unavailable ||  state==TileState.OccuppiedByBuilding || state== TileState.OccupiedByUnit)
                 {
                     blockedTiles.SetTile(pos, tile);
                     blockedTiles.RefreshTile(pos);
@@ -105,13 +109,21 @@ public class HexTilemapManager : MonoBehaviour
 
     public Color GetTileColor(TileState state)
     {
-        if (state == TileState.Available)
+        if (state == TileState.Land)
         {
             return Color.green;
         }
-        else if (state == TileState.Occupied)
+        else if (state == TileState.OccuppiedByBuilding)
         {
             return Color.blue;
+        }
+        else if (state == TileState.OccupiedByUnit)
+        {
+            return Color.cyan;
+        } 
+        else if (state == TileState.Water)
+        {
+            return Color.white;
         }
         else if (state == TileState.Unavailable)
         {
@@ -133,20 +145,22 @@ public class HexTilemapManager : MonoBehaviour
 
             // Get the tile at the clicked position
         TileBase clickedTile = tilemap.GetTile(cellPosition);
-
+        
             if (clickedTile is HexTile)
             {
-                GlobalEventManager.InvokeOnTileClickEvent(clickedTile as HexTile,cellPosition);
-                // Get current state (default to Available if not in dictionary)
+            HexTile hexTile = (HexTile)clickedTile;
+            Debug.Log($"clicked tile type: {hexTile.state}");
+                GlobalEventManager.InvokeOnTileClickEvent(hexTile, cellPosition);
+                // Get current state (default to Land if not in dictionary)
                 TileState currentState = GetTileState(cellPosition);
                 
                 // Check if tile can be clicked (is available)
-                if (currentState == TileState.Available)
+                if (currentState == TileState.Land)
                 {
-                    // Change state from Available to Occupied
+                    // Change state from Land to Occupied
                     //SetTileState(cellPosition, TileState.Occupied);
                     
-                    //Debug.Log($"Tile at {cellPosition} changed from Available to Occupied");
+                    //Debug.Log($"Tile at {cellPosition} changed from Land to Occupied");
                 }
                 else
                 {
@@ -167,7 +181,50 @@ public class HexTilemapManager : MonoBehaviour
         {
             tileStates[cellPosition] = newState;
             tilemap.RefreshTile(cellPosition);
+            UpdateTileWalkability(cellPosition, newState);
         }
+    }
+    public void PlaceUnitOnTile(Vector3Int cellPosition,BaseGridUnitScript unit)
+    {
+        TileBase tile = tilemap.GetTile(cellPosition);
+
+        if (tile is HexTile)
+        {
+            tileStates[cellPosition] = TileState.OccupiedByUnit;
+            tilemap.RefreshTile(cellPosition);
+            UpdateTileWalkability(cellPosition, TileState.OccupiedByUnit);
+            if(!gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
+            {
+                gridUnits.Add(cellPosition, unit);
+            }
+            
+        }
+    }
+    public void RemoveUnitFromTile(Vector3Int cellPosition)
+    {
+        if (gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
+        {
+            gridUnits.Remove(cellPosition);
+        }
+    }
+    public BaseGridUnitScript GetUnitOnTile(Vector3Int cellPosition)
+    {
+        if(gridUnits.TryGetValue(cellPosition,out BaseGridUnitScript unitScript))
+        {
+            return unitScript;
+        }
+        return null;
+    }
+    private void UpdateTileWalkability(Vector3Int cellPos,TileState state)
+    {
+        Bounds newBounds = new Bounds();
+        newBounds.center = tilemap.CellToWorld(cellPos);
+        newBounds.size = tilemap.cellSize;
+        var guo = new GraphUpdateObject(newBounds);
+
+        guo.modifyTag = true;
+        guo.setTag = (int)state;
+        AstarPath.active.UpdateGraphs(guo);
     }
 
     /// <summary>
@@ -202,6 +259,10 @@ public class HexTilemapManager : MonoBehaviour
         tileStates.Clear();
         InitializeTileStates();
         tilemap.RefreshAllTiles();
+    }
+    public Tilemap GetMainTilemap()
+    {
+        return tilemap;
     }
 }
 

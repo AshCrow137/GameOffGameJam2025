@@ -8,6 +8,10 @@ public class InputManager : MonoBehaviour
 
     private Vector2 mousePos;
 
+    private BaseGridUnitScript selectedUnit;
+
+
+
     //Menu Inputs
     public void OnNavigate(CallbackContext value)
     {
@@ -114,12 +118,31 @@ public class InputManager : MonoBehaviour
         if (value.performed)
         {
             Debug.Log("OnClick at position: " + mousePos);
+            if(selectedUnit)
+            {
+                selectedUnit.OnUnitDeselect();
+            }
+            BaseGridUnitScript unit= HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
+            if(unit)
+            {
+                unit.OnUnitSelect();
+                selectedUnit = unit;
+            }
+            //send a position to Selection Manager
+            //I need a mathod that receives a screen position (Vector2)
+            //and converts it to a raycast in the world,
+        }
+    }
+    public void OnMoveUnitToTile(CallbackContext value)
+    {
+        if (value.performed)
+        {
+            Debug.Log("OnClick at position: " + mousePos);
             GlobalEventManager.InvokeMouseClickedEvent(mousePos);
             //send a position to Selection Manager
             //I need a mathod that receives a screen position (Vector2)
             //and converts it to a raycast in the world,
         }
     }
-
     //End GameInputs
 }

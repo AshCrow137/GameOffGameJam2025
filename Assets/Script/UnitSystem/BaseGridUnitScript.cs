@@ -2,6 +2,8 @@ using UnityEngine;
 using Pathfinding;
 using UnityEngine.Tilemaps;
 using System.Collections;
+using System;
+using TMPro;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : MonoBehaviour
@@ -18,6 +20,7 @@ public class BaseGridUnitScript : MonoBehaviour
     private float MovementSpeed = 3;
 
 
+
     [SerializeField]
     private GameObject owner;
     private Seeker seeker;
@@ -27,14 +30,35 @@ public class BaseGridUnitScript : MonoBehaviour
     private float nextWaypointDistance = 0.01f;
     private bool bReachedEndOfPath;
     private Vector3 previousTargetPosition;
+    private IEnumerator movementCoroutine;
 
+    //TODO Replace with normal UI
+    [SerializeField]
+    private TMP_Text remainMovementText;
+
+    private SpriteRenderer spriteRenderer;
     public void Initialize()
     {
-        GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
+        
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         seeker = GetComponent<Seeker>();
         tilesRemain = MovementDistance;
-
+        remainMovementText.text = tilesRemain.ToString();
+        HexTilemapManager hTM = HexTilemapManager.Instance;
+        hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    public void OnUnitSelect()
+    {
+        Debug.Log($"Select {this.name} unit");
+        GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
+        spriteRenderer.color = Color.gray;
+    }
+    public void OnUnitDeselect()
+    {
+        Debug.Log($"Deselect {this.name} unit");
+        GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
+        spriteRenderer.color = Color.white;
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
     private void OnEndTurn(GameObject entity)
@@ -42,6 +66,7 @@ public class BaseGridUnitScript : MonoBehaviour
         if (entity ==owner) 
         {
             tilesRemain = MovementDistance;
+            remainMovementText.text = tilesRemain.ToString();
         }
     }
     private void MoveTo(Vector3 target)
@@ -50,11 +75,19 @@ public class BaseGridUnitScript : MonoBehaviour
     }
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
-        if(tilesRemain>0)
-        {
-            CreatePath(tilemap.CellToWorld(cellPos));
+        //if (movementCoroutine != null)
+        //{
+        //    return;
+        //}
+            if (tilesRemain>0)
+        {//TODO Fix this shitcode
+            
+            HexTilemapManager.Instance.RemoveUnitFromTile(HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position));
+            HexTilemapManager.Instance.SetTileState(HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position), TileState.Land);
 
-            StopAllCoroutines();
+            CreatePath(tilemap.CellToWorld(cellPos));
+            
+            movementCoroutine = MovementCycle();
             StartCoroutine(MovementCycle());
         }
 
@@ -114,6 +147,7 @@ public class BaseGridUnitScript : MonoBehaviour
                         
                         CurrentWaypoint++;
                         tilesRemain--;
+                        remainMovementText.text = tilesRemain.ToString();
 
                     }
                     else
@@ -121,7 +155,7 @@ public class BaseGridUnitScript : MonoBehaviour
                         // Set a status variable to indicate that the agent has reached the end of the path.
                         // You can use this to trigger some special code if your game requires that.
                         bReachedEndOfPath = true;
-                        
+                        OnEndOfPathReached();
                         break;
                     }
                 }
@@ -134,8 +168,22 @@ public class BaseGridUnitScript : MonoBehaviour
             if(tilesRemain<0)
             {
                 break;
+
             }
             MoveTo(path.vectorPath[CurrentWaypoint]);
         }
+        OnEndOfPathReached();
+    }
+
+    private void OnEndOfPathReached()
+    {
+        HexTilemapManager hTM = HexTilemapManager.Instance;
+        hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
+        if(movementCoroutine != null)
+        {
+            StopCoroutine(movementCoroutine);
+            movementCoroutine = null;
+        }
+        
     }
 }

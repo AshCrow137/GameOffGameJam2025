@@ -11,7 +11,7 @@ public class BootManager : MonoBehaviour
         [SerializeField]
         private TurnManager turnManager;
         [SerializeField]
-        private BaseGridUnitScript unit;
+        private BaseGridUnitScript[] units;
         [SerializeField]
         private BuildingManager buildingManager;
 
@@ -22,10 +22,14 @@ public class BootManager : MonoBehaviour
     {
             // testScript.Initialize();
         hexTilemapManager?.Initialize();
-        AstarPath.active.Scan();
+        
         turnManager?.Initialize();
-            
-        unit?.Initialize();
+            foreach (var unit in units)
+        {
+            unit?.Initialize();
+        }
+        
         buildingManager?.Instantiate();
+        AstarPath.active.Scan();
     }
 }
