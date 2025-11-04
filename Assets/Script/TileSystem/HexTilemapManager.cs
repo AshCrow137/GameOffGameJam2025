@@ -28,6 +28,7 @@ public class HexTilemapManager : MonoBehaviour
         Instantiate();
         //InitializeTileStates();
         tilemap.RefreshAllTiles();
+        GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
     }
 
     private void Instantiate()
@@ -120,16 +121,11 @@ public class HexTilemapManager : MonoBehaviour
         return Color.green;
     }
 
-    public void OnMouseClick()
-    {
-        
-        HandleTileClick();
-    }
 
     /// <summary>
     /// Handles mouse click on the tilemap using 3D raycasting
     /// </summary>
-    private void HandleTileClick()
+    private void HandleTileClick(Vector3 clickedPos)
     {
         Vector3Int cellPosition = GetCellAtMousePosition();
         // if cellposition is infinite, return
@@ -148,16 +144,16 @@ public class HexTilemapManager : MonoBehaviour
                 if (currentState == TileState.Available)
                 {
                     // Change state from Available to Occupied
-                    SetTileState(cellPosition, TileState.Occupied);
+                    //SetTileState(cellPosition, TileState.Occupied);
                     
-                    Debug.Log($"Tile at {cellPosition} changed from Available to Occupied");
+                    //Debug.Log($"Tile at {cellPosition} changed from Available to Occupied");
                 }
                 else
                 {
                     Debug.Log($"Tile at {cellPosition} is {currentState} and cannot be clicked");
                 }
             }
-        }
+        
     }
 
     /// <summary>

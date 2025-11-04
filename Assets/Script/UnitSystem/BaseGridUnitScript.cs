@@ -24,7 +24,7 @@ public class BaseGridUnitScript : MonoBehaviour
     private Path path;
     private int tilesRemain;
     private int CurrentWaypoint = 0;
-    private float nextWaypointDistance = 0.1f;
+    private float nextWaypointDistance = 0.01f;
     private bool bReachedEndOfPath;
     private Vector3 previousTargetPosition;
 
@@ -50,10 +50,14 @@ public class BaseGridUnitScript : MonoBehaviour
     }
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
-        CreatePath(tilemap.CellToWorld(cellPos));
-       
-        StopAllCoroutines();
-        StartCoroutine( MovementCycle());
+        if(tilesRemain>0)
+        {
+            CreatePath(tilemap.CellToWorld(cellPos));
+
+            StopAllCoroutines();
+            StartCoroutine(MovementCycle());
+        }
+
         
     }
     private void CreatePath(Vector3 target)
@@ -108,8 +112,8 @@ public class BaseGridUnitScript : MonoBehaviour
                     if (CurrentWaypoint + 1 < path.vectorPath.Count)
                     {
                         
-                        CurrentWaypoint++; 
-                        
+                        CurrentWaypoint++;
+                        tilesRemain--;
 
                     }
                     else
@@ -126,6 +130,10 @@ public class BaseGridUnitScript : MonoBehaviour
                     
                     break;
                 }
+            }
+            if(tilesRemain<0)
+            {
+                break;
             }
             MoveTo(path.vectorPath[CurrentWaypoint]);
         }

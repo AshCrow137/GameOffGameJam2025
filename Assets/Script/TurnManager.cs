@@ -8,16 +8,18 @@ public class TurnManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> turnOrder; //player and enemy turn order
     private int currentOrderIndex; //player
+    public static TurnManager instance { get; private set; }
 
-    public TurnManager(List<GameObject> turnOrder)
-    {
-        this.turnOrder = turnOrder;
-    }
+    //public TurnManager(List<GameObject> turnOrder)
+    //{
+    //    this.turnOrder = turnOrder;
+    //}
 
     public void Initialize()
     {
         currentOrderIndex = 0;
         OnTurnStart(turnOrder[currentOrderIndex]);
+        instance = this;
     }
 
     public void OnTurnStart(GameObject entity)

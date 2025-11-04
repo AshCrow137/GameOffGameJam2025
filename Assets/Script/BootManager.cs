@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 
-    public class BootManager : MonoBehaviour
-    {
+public class BootManager : MonoBehaviour
+{
         ////In this example, you have to put value in testScript directly from Inspector in Unity
         //[SerializeField] 
         //private TestScript testScript;
@@ -12,10 +12,9 @@
         private TurnManager turnManager;
         [SerializeField]
         private BaseGridUnitScript unit;
-        private bool astarInit = false;
-        
         [SerializeField]
         private BuildingManager buildingManager;
+
     
 
 
@@ -27,6 +26,6 @@
         turnManager?.Initialize();
             
         unit?.Initialize();
-            buildingManager?.Instantiate();
-        }
+        buildingManager?.Instantiate();
     }
+}
