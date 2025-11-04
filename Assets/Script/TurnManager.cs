@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TurnManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> turnOrder; //player and enemy turn order
     private int currentOrderIndex; //player
+
+    public UnityEvent TurnStart;
 
     public void Initialize()
     {
@@ -20,7 +23,7 @@ public class TurnManager : MonoBehaviour
     {
         //camera focus on the current Player/Unit
         Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
-
+        
     }
 
     public void OnTurnEnd()
@@ -36,14 +39,16 @@ public class TurnManager : MonoBehaviour
         //when finish the turn, call NextTurn
         NextTurn();
     }
-    private void NextTurn()
+    public void NextTurn()
     {
         Debug.Log("Next Turn");
         //increment turn count
         currentTurnCount++;
 
         //call OnTurnStart to start the next turn
-        OnTurnStart(turnOrder[currentOrderIndex]);
+        // OnTurnStart(turnOrder[currentOrderIndex]);
+        TurnStart?.Invoke();
+
     }
 
 }
