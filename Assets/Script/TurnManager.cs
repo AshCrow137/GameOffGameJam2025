@@ -29,6 +29,7 @@ public class TurnManager
 
     public void OnTurnEnd()
     {
+        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
         //do something at the end of the turn
         currentOrderIndex++;
         if (currentOrderIndex >= turnOrder.Count)
@@ -37,6 +38,7 @@ public class TurnManager
         }
 
         Debug.Log($"Turn {currentTurnCount} End: {turnOrder[currentOrderIndex].name}'s turn.");
+        
         //when finish the turn, call NextTurn
         NextTurn();
     }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Pathfinding;
 using UnityEngine.Tilemaps;
+using System.Collections;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : MonoBehaviour
@@ -13,28 +14,47 @@ public class BaseGridUnitScript : MonoBehaviour
     protected int MovementDistance = 5;
     [SerializeField]
     private Tilemap tilemap;
+    [SerializeField]
+    private float MovementSpeed = 3;
 
 
-
-
+    [SerializeField]
+    private GameObject owner;
     private Seeker seeker;
     private Path path;
     private int tilesRemain;
     private int CurrentWaypoint = 0;
-    private float nextWaypointDistance = 3;
+    private float nextWaypointDistance = 0.1f;
     private bool bReachedEndOfPath;
     private Vector3 previousTargetPosition;
 
     public void Initialize()
     {
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
+        GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         seeker = GetComponent<Seeker>();
+        tilesRemain = MovementDistance;
 
     }
-
+    //TODO replace Entitry with controller class and remove unit end turn listener
+    private void OnEndTurn(GameObject entity)
+    {
+        if (entity ==owner) 
+        {
+            tilesRemain = MovementDistance;
+        }
+    }
+    private void MoveTo(Vector3 target)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, target, MovementSpeed * Time.deltaTime);
+    }
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         CreatePath(tilemap.CellToWorld(cellPos));
+       
+        StopAllCoroutines();
+        StartCoroutine( MovementCycle());
+        
     }
     private void CreatePath(Vector3 target)
     {
@@ -65,36 +85,49 @@ public class BaseGridUnitScript : MonoBehaviour
         }
 
         MovementCycle();
-        //MoveToTarget(path.vectorPath[CurrentWaypoint]);
+        MoveTo(path.vectorPath[CurrentWaypoint]);
 
 
     }
-    private void MovementCycle()
+    private IEnumerator  MovementCycle()
     {
-        float distanceToWaypoint;
+        
         while (true)
         {
-            distanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[CurrentWaypoint]);
-            if (distanceToWaypoint < nextWaypointDistance)
+            yield return null;
+            bReachedEndOfPath = false;
+            float distanceToWaypoint;
+            while (!bReachedEndOfPath)
             {
-                // Check if there is another waypoint or if we have reached the end of the path
-                if (CurrentWaypoint + 1 < path.vectorPath.Count)
+
+                distanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[CurrentWaypoint]);
+                if (distanceToWaypoint < nextWaypointDistance)
                 {
-                    CurrentWaypoint++;
+
+                    // Check if there is another waypoint or if we have reached the end of the path
+                    if (CurrentWaypoint + 1 < path.vectorPath.Count)
+                    {
+                        
+                        CurrentWaypoint++; 
+                        
+
+                    }
+                    else
+                    {
+                        // Set a status variable to indicate that the agent has reached the end of the path.
+                        // You can use this to trigger some special code if your game requires that.
+                        bReachedEndOfPath = true;
+                        
+                        break;
+                    }
                 }
                 else
                 {
-                    // Set a status variable to indicate that the agent has reached the end of the path.
-                    // You can use this to trigger some special code if your game requires that.
-                    bReachedEndOfPath = true;
+                    
                     break;
                 }
             }
-            else
-            {
-                break;
-            }
+            MoveTo(path.vectorPath[CurrentWaypoint]);
         }
-
     }
 }

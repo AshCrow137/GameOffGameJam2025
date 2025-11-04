@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using Pathfinding;
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
 /// Stores per-tile state since Tile assets are shared ScriptableObjects
@@ -25,9 +26,8 @@ public class HexTilemapManager : MonoBehaviour
     /// </summary>
     public void Initialize(){
         Instantiate();
-        InitializeTileStates();
+        //InitializeTileStates();
         tilemap.RefreshAllTiles();
-        
     }
 
     private void Instantiate()
@@ -66,10 +66,12 @@ public class HexTilemapManager : MonoBehaviour
                 if (state==TileState.Unavailable ||  state==TileState.Occupied)
                 {
                     blockedTiles.SetTile(pos, tile);
+                    blockedTiles.RefreshTile(pos);
                 }
                 
             }
         }
+        
 
 
     }

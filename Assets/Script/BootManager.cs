@@ -12,16 +12,18 @@
         private TurnManager turnManager;
         [SerializeField]
         private BaseGridUnitScript unit;
+        private bool astarInit = false;
         
-        
-        void Start()
-        {
+    void Start()
+    {
             // testScript.Initialize();
-            hexTilemapManager?.Initialize();
-            turnManager?.Initialize();
+        hexTilemapManager?.Initialize();
+        AstarPath.active.Scan();
+        turnManager?.Initialize();
             
-            unit?.Initialize();
-        }
+        unit?.Initialize();
+
+    }
 
 
 }
