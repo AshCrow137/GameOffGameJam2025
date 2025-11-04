@@ -14,6 +14,11 @@
         private BaseGridUnitScript unit;
         private bool astarInit = false;
         
+        [SerializeField]
+        private BuildingManager buildingManager;
+    
+
+
     void Start()
     {
             // testScript.Initialize();
@@ -22,8 +27,6 @@
         turnManager?.Initialize();
             
         unit?.Initialize();
-
+            buildingManager?.Instantiate();
+        }
     }
-
-
-}

@@ -14,11 +14,23 @@ public class HexTile : Tile
     {
         base.GetTileData(position, tilemap, ref tileData);
         
+        // Set Tile colour based on state
         HexTilemapManager manager = HexTilemapManager.Instance;
         if(manager == null)
             return;
         state = manager.GetTileState(position);
         tileData.color = manager.GetTileColor(state);
+
+        // Set Tile sprite based on building at position
+        BuildingManager buildingManager = BuildingManager.Instance;
+        if(buildingManager == null)
+        {
+            return;
+        }
+        Sprite sprite = buildingManager.GetBuildingSprite(position);
+        if(sprite != null){
+            tileData.sprite = sprite;
+        }
     }
     
 }

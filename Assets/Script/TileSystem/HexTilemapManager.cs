@@ -43,6 +43,31 @@ public class HexTilemapManager : MonoBehaviour
             return;
         }
     }
+    
+    /// <summary>
+    /// Gets the cell at the mouse position
+    /// </summary>
+    /// <returns>The cell at the mouse position</returns>
+    public Vector3Int GetCellAtMousePosition()
+    {
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Ray ray = mainCamera.ScreenPointToRay(mousePos);
+        
+        // cast a 3d ray onto a 2d plane. 
+        // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+        // Raycast to detect what was clicked (adjust layer mask if needed)
+
+        if (!hit.collider)
+        {
+            // return infinite vector
+            return new Vector3Int(int.MaxValue, int.MaxValue, int.MaxValue);
+        }
+
+        Vector3 hitPoint = hit.point;
+        Vector3Int cellPosition = tilemap.WorldToCell(hitPoint);
+        return cellPosition;
+    }
 
     /// <summary>
     /// Initializes tile states for all tiles currently in the tilemap
@@ -106,27 +131,12 @@ public class HexTilemapManager : MonoBehaviour
     /// </summary>
     private void HandleTileClick()
     {
-        if (mainCamera == null || tilemap == null) return;
+        Vector3Int cellPosition = GetCellAtMousePosition();
+        // if cellposition is infinite, return
+        if (cellPosition.x == int.MaxValue) return;
 
-        // Cast a ray from camera through mouse position
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Ray ray = mainCamera.ScreenPointToRay(mousePos);
-        
-        // cast a 3d ray onto a 2d plane. 
-        // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
-        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
-        // Raycast to detect what was clicked (adjust layer mask if needed)
-        if (hit.collider != null)
-        {
-            // Get the hit point in world space
-            Vector3 hitPoint = hit.point;
-            
-            // Convert world position to tilemap cell position
-            Vector3Int cellPosition = tilemap.WorldToCell(hitPoint);
-
-    
             // Get the tile at the clicked position
-            TileBase clickedTile = tilemap.GetTile(cellPosition);
+        TileBase clickedTile = tilemap.GetTile(cellPosition);
 
             if (clickedTile is HexTile)
             {
