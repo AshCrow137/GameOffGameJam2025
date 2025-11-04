@@ -9,10 +9,14 @@ public class TurnManager : MonoBehaviour
     private List<GameObject> turnOrder; //player and enemy turn order
     private int currentOrderIndex; //player
 
+    public TurnManager(List<GameObject> turnOrder)
+    {
+        this.turnOrder = turnOrder;
+    }
+
     public void Initialize()
     {
         currentOrderIndex = 0;
-        //turnOrder = new List<GameObject>();
         OnTurnStart(turnOrder[currentOrderIndex]);
     }
 
@@ -20,6 +24,9 @@ public class TurnManager : MonoBehaviour
     {
         //camera focus on the current Player/Unit
         Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
+
+        //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
+        entity.GetComponent<EntityTurnHandler>()?.OnTurnStart();
 
     }
 
@@ -36,7 +43,9 @@ public class TurnManager : MonoBehaviour
         //when finish the turn, call NextTurn
         NextTurn();
     }
-    private void NextTurn()
+
+    //public function to call from button press
+    public void NextTurn()
     {
         Debug.Log("Next Turn");
         //increment turn count

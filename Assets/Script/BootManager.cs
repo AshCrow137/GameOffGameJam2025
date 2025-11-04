@@ -8,14 +8,18 @@
         private TestScript testScript;
         [SerializeField]
         private HexTilemapManager hexTilemapManager;
-    [SerializeField]
-    private TurnManager turnManager;
+        [SerializeField]
+        private TurnManager turnManager;
+        [SerializeField]
+        private BuildingManager buildingManager;
+    
 
 
     void Start()
         {
             // testScript.Initialize();
             hexTilemapManager?.Initialize();
-        turnManager?.Initialize();
+            turnManager?.Initialize();
+            buildingManager?.Instantiate();
         }
     }
