@@ -41,6 +41,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MoveCameraWithMouse",
+                    "type": "Value",
+                    "id": "45651cda-2603-4e9a-ad9b-506ee626bf48",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SelectUnitWithMouse",
+                    "type": "Button",
+                    "id": "698db6d9-4f8d-4482-8401-b529e5d1f337",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -175,6 +193,28 @@
                     "action": "PauseGame",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab01903a-7d78-40a5-9b74-ad68e595a9b4",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveCameraWithMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aedc5729-5121-4b8e-b00a-bb1a0cccaf12",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectUnitWithMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -204,6 +244,24 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "27554147-5c68-4bc7-9f2e-1aed120d2bb9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "0016fccd-b569-4c93-93c4-d4824ec87568",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ClickMenu",
+                    "type": "Button",
+                    "id": "487151de-e6b8-4de7-b5c7-3334b13a8f28",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -329,6 +387,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9a602087-ca5e-4c20-9dbc-ebe14e6612d6",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b1e365d-6b93-4682-b32a-6b7922aa0a09",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClickMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

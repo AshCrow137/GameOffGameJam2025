@@ -127,6 +127,24 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveCameraWithMouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""45651cda-2603-4e9a-ad9b-506ee626bf48"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SelectUnitWithMouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""698db6d9-4f8d-4482-8401-b529e5d1f337"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -261,6 +279,28 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""action"": ""PauseGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab01903a-7d78-40a5-9b74-ad68e595a9b4"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCameraWithMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aedc5729-5121-4b8e-b00a-bb1a0cccaf12"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectUnitWithMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -290,6 +330,24 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""27554147-5c68-4bc7-9f2e-1aed120d2bb9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""Value"",
+                    ""id"": ""0016fccd-b569-4c93-93c4-d4824ec87568"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ClickMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""487151de-e6b8-4de7-b5c7-3334b13a8f28"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -417,6 +475,28 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a602087-ca5e-4c20-9dbc-ebe14e6612d6"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b1e365d-6b93-4682-b32a-6b7922aa0a09"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ClickMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -429,11 +509,15 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         m_InGame_EndTurn = m_InGame.FindAction("EndTurn", throwIfNotFound: true);
         m_InGame_NextUnit = m_InGame.FindAction("NextUnit", throwIfNotFound: true);
         m_InGame_PauseGame = m_InGame.FindAction("PauseGame", throwIfNotFound: true);
+        m_InGame_MoveCameraWithMouse = m_InGame.FindAction("MoveCameraWithMouse", throwIfNotFound: true);
+        m_InGame_SelectUnitWithMouse = m_InGame.FindAction("SelectUnitWithMouse", throwIfNotFound: true);
         // InMenu
         m_InMenu = asset.FindActionMap("InMenu", throwIfNotFound: true);
         m_InMenu_Navigate = m_InMenu.FindAction("Navigate", throwIfNotFound: true);
         m_InMenu_Submit = m_InMenu.FindAction("Submit", throwIfNotFound: true);
         m_InMenu_Cancel = m_InMenu.FindAction("Cancel", throwIfNotFound: true);
+        m_InMenu_Point = m_InMenu.FindAction("Point", throwIfNotFound: true);
+        m_InMenu_ClickMenu = m_InMenu.FindAction("ClickMenu", throwIfNotFound: true);
     }
 
     ~@MainControls()
@@ -519,6 +603,8 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_EndTurn;
     private readonly InputAction m_InGame_NextUnit;
     private readonly InputAction m_InGame_PauseGame;
+    private readonly InputAction m_InGame_MoveCameraWithMouse;
+    private readonly InputAction m_InGame_SelectUnitWithMouse;
     /// <summary>
     /// Provides access to input actions defined in input action map "InGame".
     /// </summary>
@@ -546,6 +632,14 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "InGame/PauseGame".
         /// </summary>
         public InputAction @PauseGame => m_Wrapper.m_InGame_PauseGame;
+        /// <summary>
+        /// Provides access to the underlying input action "InGame/MoveCameraWithMouse".
+        /// </summary>
+        public InputAction @MoveCameraWithMouse => m_Wrapper.m_InGame_MoveCameraWithMouse;
+        /// <summary>
+        /// Provides access to the underlying input action "InGame/SelectUnitWithMouse".
+        /// </summary>
+        public InputAction @SelectUnitWithMouse => m_Wrapper.m_InGame_SelectUnitWithMouse;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -584,6 +678,12 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @PauseGame.started += instance.OnPauseGame;
             @PauseGame.performed += instance.OnPauseGame;
             @PauseGame.canceled += instance.OnPauseGame;
+            @MoveCameraWithMouse.started += instance.OnMoveCameraWithMouse;
+            @MoveCameraWithMouse.performed += instance.OnMoveCameraWithMouse;
+            @MoveCameraWithMouse.canceled += instance.OnMoveCameraWithMouse;
+            @SelectUnitWithMouse.started += instance.OnSelectUnitWithMouse;
+            @SelectUnitWithMouse.performed += instance.OnSelectUnitWithMouse;
+            @SelectUnitWithMouse.canceled += instance.OnSelectUnitWithMouse;
         }
 
         /// <summary>
@@ -607,6 +707,12 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @PauseGame.started -= instance.OnPauseGame;
             @PauseGame.performed -= instance.OnPauseGame;
             @PauseGame.canceled -= instance.OnPauseGame;
+            @MoveCameraWithMouse.started -= instance.OnMoveCameraWithMouse;
+            @MoveCameraWithMouse.performed -= instance.OnMoveCameraWithMouse;
+            @MoveCameraWithMouse.canceled -= instance.OnMoveCameraWithMouse;
+            @SelectUnitWithMouse.started -= instance.OnSelectUnitWithMouse;
+            @SelectUnitWithMouse.performed -= instance.OnSelectUnitWithMouse;
+            @SelectUnitWithMouse.canceled -= instance.OnSelectUnitWithMouse;
         }
 
         /// <summary>
@@ -647,6 +753,8 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InMenu_Navigate;
     private readonly InputAction m_InMenu_Submit;
     private readonly InputAction m_InMenu_Cancel;
+    private readonly InputAction m_InMenu_Point;
+    private readonly InputAction m_InMenu_ClickMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "InMenu".
     /// </summary>
@@ -670,6 +778,14 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "InMenu/Cancel".
         /// </summary>
         public InputAction @Cancel => m_Wrapper.m_InMenu_Cancel;
+        /// <summary>
+        /// Provides access to the underlying input action "InMenu/Point".
+        /// </summary>
+        public InputAction @Point => m_Wrapper.m_InMenu_Point;
+        /// <summary>
+        /// Provides access to the underlying input action "InMenu/ClickMenu".
+        /// </summary>
+        public InputAction @ClickMenu => m_Wrapper.m_InMenu_ClickMenu;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -705,6 +821,12 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @Cancel.started += instance.OnCancel;
             @Cancel.performed += instance.OnCancel;
             @Cancel.canceled += instance.OnCancel;
+            @Point.started += instance.OnPoint;
+            @Point.performed += instance.OnPoint;
+            @Point.canceled += instance.OnPoint;
+            @ClickMenu.started += instance.OnClickMenu;
+            @ClickMenu.performed += instance.OnClickMenu;
+            @ClickMenu.canceled += instance.OnClickMenu;
         }
 
         /// <summary>
@@ -725,6 +847,12 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @Cancel.started -= instance.OnCancel;
             @Cancel.performed -= instance.OnCancel;
             @Cancel.canceled -= instance.OnCancel;
+            @Point.started -= instance.OnPoint;
+            @Point.performed -= instance.OnPoint;
+            @Point.canceled -= instance.OnPoint;
+            @ClickMenu.started -= instance.OnClickMenu;
+            @ClickMenu.performed -= instance.OnClickMenu;
+            @ClickMenu.canceled -= instance.OnClickMenu;
         }
 
         /// <summary>
@@ -793,6 +921,20 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPauseGame(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveCameraWithMouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCameraWithMouse(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SelectUnitWithMouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelectUnitWithMouse(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "InMenu" which allows adding and removing callbacks.
@@ -822,5 +964,19 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCancel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Point" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPoint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ClickMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnClickMenu(InputAction.CallbackContext context);
     }
 }

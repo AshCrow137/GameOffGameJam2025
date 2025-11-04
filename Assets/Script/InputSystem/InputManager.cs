@@ -5,6 +5,9 @@ using static UnityEngine.InputSystem.InputAction;
 public class InputManager : MonoBehaviour
 {
     //Class to handles all inputs from player.
+
+    private Vector2 mousePos;
+
     //Menu Inputs
     public void OnNavigate(CallbackContext value)
     {
@@ -29,15 +32,31 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void OnPoint(CallbackContext value)
+    {
+        mousePos = value.ReadValue<Vector2>();
+        Debug.Log("OnPoint: " + mousePos);
+    }
+
+    public void OnClickMenu(CallbackContext value)
+    {
+        if (value.performed)
+        {
+            Debug.Log("OnClickMenu at position: " + mousePos);
+        }
+    }
+
     //End MenuInputs
 
     //GameInputs
+
+    //Keyboard Inputs
     public void OnMoveCamera(CallbackContext value)
     {
         Vector2 directionInput = value.ReadValue<Vector2>();
         Debug.Log("OnMove: " + directionInput);
 
-        //send to Camera Controller
+        //send a direction to Camera Controller
     }
 
     public void OnEndTurn(CallbackContext value)
@@ -66,7 +85,25 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("OnPauseGame");
             //sent to GameManager to pause the game.
+            //change to Menu Input Action Map
             GetComponent<PlayerInput>().SwitchCurrentActionMap("InMenu");
+        }
+    }
+
+    //Mouse Inputs
+    public void OnMoveCameraWithMouse(CallbackContext value)
+    {
+        mousePos = value.ReadValue<Vector2>();
+        Debug.Log("OnMoveCameraWithMouse: " + mousePos);
+        //send a position to Camera Controller
+    }
+
+    public void OnSelectUnitWithMouse(CallbackContext value)
+    {
+        if (value.performed)
+        {
+            Debug.Log("OnClick at position: " + mousePos);
+            //send a position to Selection Manager
         }
     }
 
