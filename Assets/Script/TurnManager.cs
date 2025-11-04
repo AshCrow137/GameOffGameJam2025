@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurnManager
 {
     public int currentTurnCount { get; private set; } = 1;
-    [SerializeField]
+
     private List<GameObject> turnOrder; //player and enemy turn order
     private int currentOrderIndex; //player
 

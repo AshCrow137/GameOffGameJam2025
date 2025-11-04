@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> players;
 
-    public TurnManager turnManager;
+    public TurnManager turnManager { get; private set; }
 
     private void Awake()
     {
