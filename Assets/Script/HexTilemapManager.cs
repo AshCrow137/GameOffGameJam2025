@@ -27,6 +27,7 @@ public class HexTilemapManager : MonoBehaviour
         Instantiate();
         InitializeTileStates();
         tilemap.RefreshAllTiles();
+        
     }
 
     private void Instantiate()
@@ -69,8 +70,8 @@ public class HexTilemapManager : MonoBehaviour
                 
             }
         }
-        print("tiles initialised");
-        AstarPath.active?.Scan();
+
+
     }
 
 
