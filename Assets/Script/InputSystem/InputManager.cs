@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public class InputManager : MonoBehaviour
@@ -24,6 +25,7 @@ public class InputManager : MonoBehaviour
         if (value.performed)
         {
             Debug.Log("OnCancel");
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("InGame");
         }
     }
 
@@ -55,6 +57,16 @@ public class InputManager : MonoBehaviour
             Debug.Log("OnNextUnit");
 
             //sent to change selected unit.
+        }
+    }
+
+    public void OnPauseGame(CallbackContext value)
+    {
+        if (value.performed)
+        {
+            Debug.Log("OnPauseGame");
+            //sent to GameManager to pause the game.
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("InMenu");
         }
     }
 

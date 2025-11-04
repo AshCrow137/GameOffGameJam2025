@@ -118,6 +118,15 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c650fe4-1f14-42a9-802c-6b35200ca641"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -239,6 +248,17 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""NextUnit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d97d4e2-ceca-4900-b1f3-0664ca699047"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -408,6 +428,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         m_InGame_MoveCamera = m_InGame.FindAction("MoveCamera", throwIfNotFound: true);
         m_InGame_EndTurn = m_InGame.FindAction("EndTurn", throwIfNotFound: true);
         m_InGame_NextUnit = m_InGame.FindAction("NextUnit", throwIfNotFound: true);
+        m_InGame_PauseGame = m_InGame.FindAction("PauseGame", throwIfNotFound: true);
         // InMenu
         m_InMenu = asset.FindActionMap("InMenu", throwIfNotFound: true);
         m_InMenu_Navigate = m_InMenu.FindAction("Navigate", throwIfNotFound: true);
@@ -497,6 +518,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_MoveCamera;
     private readonly InputAction m_InGame_EndTurn;
     private readonly InputAction m_InGame_NextUnit;
+    private readonly InputAction m_InGame_PauseGame;
     /// <summary>
     /// Provides access to input actions defined in input action map "InGame".
     /// </summary>
@@ -520,6 +542,10 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "InGame/NextUnit".
         /// </summary>
         public InputAction @NextUnit => m_Wrapper.m_InGame_NextUnit;
+        /// <summary>
+        /// Provides access to the underlying input action "InGame/PauseGame".
+        /// </summary>
+        public InputAction @PauseGame => m_Wrapper.m_InGame_PauseGame;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -555,6 +581,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @NextUnit.started += instance.OnNextUnit;
             @NextUnit.performed += instance.OnNextUnit;
             @NextUnit.canceled += instance.OnNextUnit;
+            @PauseGame.started += instance.OnPauseGame;
+            @PauseGame.performed += instance.OnPauseGame;
+            @PauseGame.canceled += instance.OnPauseGame;
         }
 
         /// <summary>
@@ -575,6 +604,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @NextUnit.started -= instance.OnNextUnit;
             @NextUnit.performed -= instance.OnNextUnit;
             @NextUnit.canceled -= instance.OnNextUnit;
+            @PauseGame.started -= instance.OnPauseGame;
+            @PauseGame.performed -= instance.OnPauseGame;
+            @PauseGame.canceled -= instance.OnPauseGame;
         }
 
         /// <summary>
@@ -754,6 +786,13 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnNextUnit(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PauseGame" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPauseGame(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "InMenu" which allows adding and removing callbacks.
