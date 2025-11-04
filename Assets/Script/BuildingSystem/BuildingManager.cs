@@ -15,6 +15,30 @@ public class BuildingManager : MonoBehaviour
     private Building building;
     [SerializeField]
     private Tilemap tilemap;
+    
+    [SerializeField]
+    private Resourse resourceManager;
+
+    // List to track buildings under construction
+    private List<BuildingConstruction> ongoingConstructions = new List<BuildingConstruction>();
+
+    // Nested class to track construction progress
+    [System.Serializable]
+    private class BuildingConstruction
+    {
+        public Building building;
+        public Vector3Int position;
+        public int turnsRemaining;
+
+        public BuildingConstruction(Building building, Vector3Int position, int duration)
+        {
+            this.building = building;
+            this.position = position;
+            this.turnsRemaining = duration;
+        }
+    }
+
+
 
     private void Awake()
     {
@@ -68,7 +92,79 @@ public class BuildingManager : MonoBehaviour
     public void TestPlaceBuilding(){
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue) return;
-        PlaceBuilding(building, mousePosition);
+
+        if(!CanBuildingBePlaced(building, mousePosition)) return;
+
+        if(building.duration > 0){
+            Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
+            StartBuildingConstruction(building, mousePosition);
+        } else {
+            Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
+            PlaceBuilding(building, mousePosition);
+        }
+
+    }
+
+    private bool CanBuildingBePlaced(Building building, Vector3Int position){
+
+        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Available){
+            return false;
+        }
+
+        // Get building's resource requirements
+        Dictionary<ResourceType, int> resourceRequirements = building.resource;
+
+        return resourceManager.HasEnough(resourceRequirements);
+    }
+
+    /// <summary>
+    /// Initiates building construction that will complete after the specified duration
+    /// </summary>
+    /// <param name="building">The building to construct</param>
+    /// <param name="position">The grid position where the building will be placed</param>
+    private void StartBuildingConstruction(Building building, Vector3Int position)
+    {
+
+        // Consume resources
+        resourceManager.SpendResource(building.resource);
+
+        // Add to construction queue
+        BuildingConstruction construction = new BuildingConstruction(building, position, building.duration);
+        ongoingConstructions.Add(construction);
+
+        Debug.Log($"Started construction of {building.buildingName} at {position}. Will complete in {building.duration} turns.");
+    }
+
+    /// <summary>
+    /// Called at the start of each turn to progress building construction
+    /// </summary>
+    public void StartTurn()
+    {
+        List<BuildingConstruction> completedConstructions = new List<BuildingConstruction>();
+
+        // Process each ongoing construction
+        foreach (BuildingConstruction construction in ongoingConstructions)
+        {
+            construction.turnsRemaining--;
+
+            if (construction.turnsRemaining <= 0)
+            {
+                // Construction complete - place the building
+                PlaceBuilding(construction.building, construction.position);
+                completedConstructions.Add(construction);
+                Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
+            }
+            else
+            {
+                Debug.Log($"{construction.building.buildingName} at {construction.position}: {construction.turnsRemaining} turns remaining");
+            }
+        }
+
+        // Remove completed constructions from the list
+        foreach (BuildingConstruction completed in completedConstructions)
+        {
+            ongoingConstructions.Remove(completed);
+        }
     }
 }
 

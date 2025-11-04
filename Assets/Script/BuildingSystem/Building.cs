@@ -12,7 +12,7 @@ public class Building : ScriptableObject
     [SerializeField] private List<ResourceRequirement> resourceRequirements = new List<ResourceRequirement>();
     
     [Header("Construction")]
-    public float duration;
+    public int duration;
     // Property to access resources as Dictionary
     public Dictionary<ResourceType, int> resource
     {
