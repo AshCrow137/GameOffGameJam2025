@@ -2,17 +2,21 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnManager : MonoBehaviour
+public class TurnManager
 {
     public int currentTurnCount { get; private set; } = 1;
     [SerializeField]
     private List<GameObject> turnOrder; //player and enemy turn order
     private int currentOrderIndex; //player
 
+    public TurnManager(List<GameObject> turnOrder)
+    {
+        this.turnOrder = turnOrder;
+    }
+
     public void Initialize()
     {
         currentOrderIndex = 0;
-        //turnOrder = new List<GameObject>();
         OnTurnStart(turnOrder[currentOrderIndex]);
     }
 
