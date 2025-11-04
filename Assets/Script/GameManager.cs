@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        turnManager = new TurnManager(players);
-        turnManager.Initialize();
+        //turnManager = new TurnManager(players);
+        //turnManager.Initialize();
     }
 }
