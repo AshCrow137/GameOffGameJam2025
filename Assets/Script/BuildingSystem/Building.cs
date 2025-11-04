@@ -13,6 +13,7 @@ public class Building : ScriptableObject
     
     [Header("Construction")]
     public int duration;
+    public GameObject owner;
     // Property to access resources as Dictionary
     public Dictionary<ResourceType, int> resource
     {

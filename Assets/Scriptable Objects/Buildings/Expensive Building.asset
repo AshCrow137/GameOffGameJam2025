@@ -18,3 +18,4 @@ MonoBehaviour:
   - resourceType: 0
     amount: 11
   duration: 0
+  owner: Player

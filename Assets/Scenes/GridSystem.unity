@@ -4344,7 +4344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testScript: {fileID: 0}
   hexTilemapManager: {fileID: 72564436}
-  turnManager: {fileID: 1044635696}
+  turnManager: {fileID: 0}
   buildingManager: {fileID: 1921947616}
 --- !u!4 &898458702
 Transform:
