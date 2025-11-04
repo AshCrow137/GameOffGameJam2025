@@ -141,22 +141,31 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     public void StartTurn()
     {
+        // Collect completed constructions to remove after iteration
+        List<BuildingConstruction> completedConstructions = new List<BuildingConstruction>();
+
         // Process each ongoing construction
         foreach (BuildingConstruction construction in ongoingConstructions)
         {
             construction.turnsRemaining--;
-
+            
             if (construction.turnsRemaining <= 0)
             {
                 // Construction complete - place the building
                 PlaceBuilding(construction.building, construction.position);
-                ongoingConstructions.Remove(construction);
+                completedConstructions.Add(construction);
                 Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
             }
             else
             {
                 Debug.Log($"{construction.building.buildingName} at {construction.position}: {construction.turnsRemaining} turns remaining");
             }
+        }
+
+        // Remove completed constructions from the list
+        foreach (BuildingConstruction construction in completedConstructions)
+        {
+            ongoingConstructions.Remove(construction);
         }
 
     }
