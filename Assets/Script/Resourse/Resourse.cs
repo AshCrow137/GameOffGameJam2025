@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using NUnit.Framework;
-public enum ResourceType { Resource1, Resource2 }
+public enum ResourceType { Magic, Gold, Materials }
 public class Resourse : MonoBehaviour
 {
     private Dictionary<ResourceType, int> resources = new();
@@ -12,16 +11,17 @@ public class Resourse : MonoBehaviour
     }
     public void Initialize()
     {
-        resources[ResourceType.Resource1] = 10;
-        resources[ResourceType.Resource2] = 10;
+        resources[ResourceType.Magic] = 10;
+        resources[ResourceType.Gold] = 10;
+        resources[ResourceType.Materials] = 10;
     }
 
-    public void AddAll(int[] value)
+    public void AddAll(Dictionary<ResourceType,int> required)
     {
-        var resoursedKey = new List<ResourceType>(resources.Keys);
-        for(int i = 0; i<resources.Count; i++)
+        foreach (var req in required)
         {
-            resources[resoursedKey[i]] += value[i];
+            resources[req.Key] += req.Value;
+            
         }
     }
 
@@ -33,48 +33,73 @@ public class Resourse : MonoBehaviour
         }
     }
 
-    public void Remove(int[] value)
+    public void Remove( Dictionary<ResourceType,int> required)
     {
-        var resoursedKey = new List<ResourceType>(resources.Keys);
-        for(int i = 0; i<resources.Count; i++)
+        
+        foreach (var req in required)
         {
-            resources[resoursedKey[i]] = Mathf.Max(0, resources[resoursedKey[i]] - value[i]);
+            resources[req.Key] = Mathf.Max(0, resources[req.Key] - req.Value);
+            
         }
     }
 
     public int Get(ResourceType type) => resources[type];
 
-    public bool HasEnough(Dictionary<ResourceType, int> required)
+    public Dictionary<ResourceType,int> HasEnough(Dictionary<ResourceType, int> required)
     {
+        var _temp = new Dictionary<ResourceType, int>();
         foreach (var req in required)
         {
             if (!resources.ContainsKey(req.Key) || resources[req.Key] < req.Value)
-                return false;
+            {
+                _temp.Add(req.Key, req.Value - resources[req.Key]);
+            }
+
         }
-        return true;
+        if (_temp.Count==0)
+            return null;
+        else
+            return _temp;
+
     }
 
     public void TESTADDFORBUTTON()
     {
-        Debug.Log($"Resources before adding\nresource1: {Get(ResourceType.Resource1)}, resource2: {Get(ResourceType.Resource1)}");
+        Debug.Log($"Resources before adding\nMagic: {Get(ResourceType.Magic)}, Gold: {Get(ResourceType.Gold)}, Material: {Get(ResourceType.Materials)}");
 
-        AddAll(new int[2] { 10, 20 });
-        Debug.Log($"Resources after adding\nresource1: {Get(ResourceType.Resource1)}, resource2: {Get(ResourceType.Resource1)}");
+        AddAll(new Dictionary<ResourceType, int>() {
+            {ResourceType.Gold,10},
+            {ResourceType.Magic,10},
+            {ResourceType.Materials,10},
+            });
+        Debug.Log($"Resources after adding\nMagic: {Get(ResourceType.Magic)}, Gold: {Get(ResourceType.Gold)}, Material: {Get(ResourceType.Materials)}");
     }
     public void TESTREMOVEFORBUTTON()
     {
-        Debug.Log($"Resources before removing\nresource1: {Get(ResourceType.Resource1)}, resource2: {Get(ResourceType.Resource1)}");
+        Debug.Log($"Resources before removing\nMagic: {Get(ResourceType.Magic)}, Gold: {Get(ResourceType.Gold)}, Material: {Get(ResourceType.Materials)}");
         Dictionary<ResourceType, int> req = new Dictionary<ResourceType, int>
         {
-            {ResourceType.Resource1, 10},
-            {ResourceType.Resource2, 10}
+            {ResourceType.Magic, 10},
+            {ResourceType.Gold, 10},
         };
-
-        if (HasEnough(req))
+        var _temp = HasEnough(req);
+        if (_temp == null)
         {
-            Remove(new int[2] { 10, 10 });
-            Debug.Log($"Resources after removing\nresource1: {Get(ResourceType.Resource1)}, resource2: {Get(ResourceType.Resource1)}");
+            Remove(req);
+            Debug.Log($"Resources after removing\nMagic: {Get(ResourceType.Magic)}, Gold: {Get(ResourceType.Gold)}, Material: {Get(ResourceType.Materials)}");
         }
+        else
+        {
+            foreach(var a in _temp)
+            {
+                Debug.Log($"not enough {a.Key} - {a.Value}");
+            }
+        }
+        // if (HasEnough(req))
+        // {
+        //     Remove(new int[2] { 10, 10 });
+        //     Debug.Log($"Resources after removing\nMagic: {Get(ResourceType.Magic)}, Gold: {Get(ResourceType.Gold)}, Material: {Get(ResourceType.Materials)}");
+        // }
 
     }
 }
