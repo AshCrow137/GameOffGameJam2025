@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using Pathfinding;
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
 /// Stores per-tile state since Tile assets are shared ScriptableObjects
@@ -12,6 +13,8 @@ public class HexTilemapManager : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
 
     [SerializeField] private Camera mainCamera;
+    //pahtfinding variable
+    [SerializeField] private Tilemap blockedTiles;
 
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
@@ -23,8 +26,9 @@ public class HexTilemapManager : MonoBehaviour
     /// </summary>
     public void Initialize(){
         Instantiate();
-        InitializeTileStates();
+        //InitializeTileStates();
         tilemap.RefreshAllTiles();
+        GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
     }
 
     private void Instantiate()
@@ -83,10 +87,19 @@ public class HexTilemapManager : MonoBehaviour
                 // Get default state from the tile or use Available
                 HexTile hexTile = tile as HexTile;
                 int rand = Random.Range(0, 3);
-                tileStates[pos] = (TileState)rand;
+                TileState state = (TileState)rand;
+                tileStates[pos] = state;
+                if (state==TileState.Unavailable ||  state==TileState.Occupied)
+                {
+                    blockedTiles.SetTile(pos, tile);
+                    blockedTiles.RefreshTile(pos);
+                }
                 
             }
         }
+        
+
+
     }
 
 
@@ -108,16 +121,11 @@ public class HexTilemapManager : MonoBehaviour
         return Color.green;
     }
 
-    public void OnMouseClick()
-    {
-        
-        HandleTileClick();
-    }
 
     /// <summary>
     /// Handles mouse click on the tilemap using 3D raycasting
     /// </summary>
-    private void HandleTileClick()
+    private void HandleTileClick(Vector3 clickedPos)
     {
         Vector3Int cellPosition = GetCellAtMousePosition();
         // if cellposition is infinite, return
@@ -126,24 +134,26 @@ public class HexTilemapManager : MonoBehaviour
             // Get the tile at the clicked position
         TileBase clickedTile = tilemap.GetTile(cellPosition);
 
-        if (clickedTile is HexTile)
-        {
-            // Get current state (default to Available if not in dictionary)
-            TileState currentState = GetTileState(cellPosition);
-            
-            // Check if tile can be clicked (is available)
-            if (currentState == TileState.Available)
+            if (clickedTile is HexTile)
             {
-                // Change state from Available to Occupied
-                SetTileState(cellPosition, TileState.Occupied);
+                GlobalEventManager.InvokeOnTileClickEvent(clickedTile as HexTile,cellPosition);
+                // Get current state (default to Available if not in dictionary)
+                TileState currentState = GetTileState(cellPosition);
                 
-                Debug.Log($"Tile at {cellPosition} changed from Available to Occupied");
+                // Check if tile can be clicked (is available)
+                if (currentState == TileState.Available)
+                {
+                    // Change state from Available to Occupied
+                    //SetTileState(cellPosition, TileState.Occupied);
+                    
+                    //Debug.Log($"Tile at {cellPosition} changed from Available to Occupied");
+                }
+                else
+                {
+                    Debug.Log($"Tile at {cellPosition} is {currentState} and cannot be clicked");
+                }
             }
-            else
-            {
-                Debug.Log($"Tile at {cellPosition} is {currentState} and cannot be clicked");
-            }
-        }
+        
     }
 
     /// <summary>

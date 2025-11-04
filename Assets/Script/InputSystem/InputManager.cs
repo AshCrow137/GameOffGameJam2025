@@ -71,7 +71,7 @@ public class InputManager : MonoBehaviour
         if (value.performed)
         {
             Debug.Log("OnEndTurn");
-            GameManager.instance.turnManager.OnTurnEnd();
+            TurnManager.instance.OnTurnEnd();
             //sent to BootManager -> TurnManager (if not have any Unit to move) end turn.
         }
     }
@@ -101,7 +101,7 @@ public class InputManager : MonoBehaviour
     public void OnMoveCameraWithMouse(CallbackContext value)
     {
         mousePos = value.ReadValue<Vector2>();
-        Debug.Log("OnMoveCameraWithMouse: " + mousePos);
+        //Debug.Log("OnMoveCameraWithMouse: " + mousePos);
         //send a position to Camera Controller
         //I need a method that tracks the mouse's position on the screen
         //and controls the camera when the mouse is near the edge of the screen.
@@ -114,6 +114,7 @@ public class InputManager : MonoBehaviour
         if (value.performed)
         {
             Debug.Log("OnClick at position: " + mousePos);
+            GlobalEventManager.InvokeMouseClickedEvent(mousePos);
             //send a position to Selection Manager
             //I need a mathod that receives a screen position (Vector2)
             //and converts it to a raycast in the world,
