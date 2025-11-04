@@ -47,16 +47,14 @@ public class Resourse : MonoBehaviour
 
     public void TESTADDFORBUTTON()
     {
-        Debug.Log(Get(ResourceType.Resource1));
-        Debug.Log(Get(ResourceType.Resource2));
+        Debug.Log($"Resources before adding\nresource1: {Get(ResourceType.Resource1)}, resource2: {Get(ResourceType.Resource1)}");
+
         AddAll(new int[2] { 10, 20 });
-        Debug.Log(Get(ResourceType.Resource1));
-        Debug.Log(Get(ResourceType.Resource2));
+        Debug.Log($"Resources after adding\nresource1: {Get(ResourceType.Resource1)}, resource2: {Get(ResourceType.Resource1)}");
     }
     public void TESTREMOVEFORBUTTON()
     {
-        Debug.Log(Get(ResourceType.Resource1));
-        Debug.Log(Get(ResourceType.Resource2));
+        Debug.Log($"Resources before removing\nresource1: {Get(ResourceType.Resource1)}, resource2: {Get(ResourceType.Resource1)}");
         Dictionary<ResourceType, int> req = new Dictionary<ResourceType, int>
         {
             {ResourceType.Resource1, 10},
@@ -66,6 +64,8 @@ public class Resourse : MonoBehaviour
         if (HasEnough(req))
         {
             Remove(new int[2] { 10, 10 });
+            Debug.Log($"Resources after removing\nresource1: {Get(ResourceType.Resource1)}, resource2: {Get(ResourceType.Resource1)}");
         }
+
     }
 }
