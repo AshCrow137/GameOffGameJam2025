@@ -13,6 +13,8 @@ public class InputManager : MonoBehaviour
     {
         Vector2 directionInput = value.ReadValue<Vector2>();
         Debug.Log("OnNavigate: " + directionInput);
+
+        //send a direction to Menu Controller
     }
 
     public void OnSubmit(CallbackContext value)
@@ -21,6 +23,7 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("OnSubmit");
         }
+        //select the current option in Menu Controller
     }
 
     public void OnCancel(CallbackContext value)
@@ -30,12 +33,14 @@ public class InputManager : MonoBehaviour
             Debug.Log("OnCancel");
             GetComponent<PlayerInput>().SwitchCurrentActionMap("InGame");
         }
+        //go back to previous menu in Menu Controller
     }
 
     public void OnPoint(CallbackContext value)
     {
         mousePos = value.ReadValue<Vector2>();
         Debug.Log("OnPoint: " + mousePos);
+        //store the mouse position for other menu inputs
     }
 
     public void OnClickMenu(CallbackContext value)
@@ -44,6 +49,7 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("OnClickMenu at position: " + mousePos);
         }
+        //send a position to Menu Controller
     }
 
     //End MenuInputs
@@ -57,6 +63,7 @@ public class InputManager : MonoBehaviour
         Debug.Log("OnMove: " + directionInput);
 
         //send a direction to Camera Controller
+        //Eu preciso de um método que receba um vetor 2D e mova a camera nessa direção.
     }
 
     public void OnEndTurn(CallbackContext value)
@@ -96,6 +103,10 @@ public class InputManager : MonoBehaviour
         mousePos = value.ReadValue<Vector2>();
         Debug.Log("OnMoveCameraWithMouse: " + mousePos);
         //send a position to Camera Controller
+        //I need a method that tracks the mouse's position on the screen
+        //and controls the camera when the mouse is near the edge of the screen.
+        //Suggestion: Use an offset for the edges.
+        //For example, if the mouse is 100 pixels from the edge, move the camera in the desired direction.
     }
 
     public void OnSelectUnitWithMouse(CallbackContext value)
@@ -104,6 +115,8 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("OnClick at position: " + mousePos);
             //send a position to Selection Manager
+            //I need a mathod that receives a screen position (Vector2)
+            //and converts it to a raycast in the world,
         }
     }
 
