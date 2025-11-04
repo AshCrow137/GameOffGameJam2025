@@ -10,6 +10,11 @@
         private HexTilemapManager hexTilemapManager;
         [SerializeField]
         private TurnManager turnManager;
+
+
+    void Start()
+        [SerializeField]
+        private TurnManager turnManager;
         [SerializeField]
         private BaseGridUnitScript unit;
         
