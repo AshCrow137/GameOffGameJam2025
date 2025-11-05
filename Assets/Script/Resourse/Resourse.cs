@@ -24,6 +24,15 @@ public class Resourse : MonoBehaviour
             resources[resoursedKey[i]] += value[i];
         }
     }
+    public void AddResource(Dictionary<ResourceType, int> required)
+    {
+        foreach (var req in required)
+        {
+            resources[req.Key] += req.Value;
+            Debug.Log($"Added {req.Value} {req.Key} to resources");
+        }
+
+    }
 
     public void SpendResource(Dictionary<ResourceType, int> required)
     {

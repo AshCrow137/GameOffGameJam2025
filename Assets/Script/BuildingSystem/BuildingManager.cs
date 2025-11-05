@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Manages building placement and operations on the grid
+/// Usage: see testPlaceBuilding function for usage
 /// </summary>
 public class BuildingManager : MonoBehaviour
 {
