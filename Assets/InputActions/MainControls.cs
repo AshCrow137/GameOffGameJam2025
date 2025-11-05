@@ -145,6 +145,15 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveUnitToTile"",
+                    ""type"": ""Button"",
+                    ""id"": ""f6eb3eb5-9664-4ab9-8e9b-72ae4ef249a2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -299,6 +308,17 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SelectUnitWithMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb4696fc-a36e-4eb0-8d96-7b4d125f8113"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveUnitToTile"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -511,6 +531,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         m_InGame_PauseGame = m_InGame.FindAction("PauseGame", throwIfNotFound: true);
         m_InGame_MoveCameraWithMouse = m_InGame.FindAction("MoveCameraWithMouse", throwIfNotFound: true);
         m_InGame_SelectUnitWithMouse = m_InGame.FindAction("SelectUnitWithMouse", throwIfNotFound: true);
+        m_InGame_MoveUnitToTile = m_InGame.FindAction("MoveUnitToTile", throwIfNotFound: true);
         // InMenu
         m_InMenu = asset.FindActionMap("InMenu", throwIfNotFound: true);
         m_InMenu_Navigate = m_InMenu.FindAction("Navigate", throwIfNotFound: true);
@@ -605,6 +626,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_PauseGame;
     private readonly InputAction m_InGame_MoveCameraWithMouse;
     private readonly InputAction m_InGame_SelectUnitWithMouse;
+    private readonly InputAction m_InGame_MoveUnitToTile;
     /// <summary>
     /// Provides access to input actions defined in input action map "InGame".
     /// </summary>
@@ -640,6 +662,10 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "InGame/SelectUnitWithMouse".
         /// </summary>
         public InputAction @SelectUnitWithMouse => m_Wrapper.m_InGame_SelectUnitWithMouse;
+        /// <summary>
+        /// Provides access to the underlying input action "InGame/MoveUnitToTile".
+        /// </summary>
+        public InputAction @MoveUnitToTile => m_Wrapper.m_InGame_MoveUnitToTile;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -684,6 +710,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @SelectUnitWithMouse.started += instance.OnSelectUnitWithMouse;
             @SelectUnitWithMouse.performed += instance.OnSelectUnitWithMouse;
             @SelectUnitWithMouse.canceled += instance.OnSelectUnitWithMouse;
+            @MoveUnitToTile.started += instance.OnMoveUnitToTile;
+            @MoveUnitToTile.performed += instance.OnMoveUnitToTile;
+            @MoveUnitToTile.canceled += instance.OnMoveUnitToTile;
         }
 
         /// <summary>
@@ -713,6 +742,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @SelectUnitWithMouse.started -= instance.OnSelectUnitWithMouse;
             @SelectUnitWithMouse.performed -= instance.OnSelectUnitWithMouse;
             @SelectUnitWithMouse.canceled -= instance.OnSelectUnitWithMouse;
+            @MoveUnitToTile.started -= instance.OnMoveUnitToTile;
+            @MoveUnitToTile.performed -= instance.OnMoveUnitToTile;
+            @MoveUnitToTile.canceled -= instance.OnMoveUnitToTile;
         }
 
         /// <summary>
@@ -935,6 +967,13 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelectUnitWithMouse(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveUnitToTile" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveUnitToTile(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "InMenu" which allows adding and removing callbacks.

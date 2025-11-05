@@ -7,7 +7,7 @@ using UnityEngine.Events;
         //This class used to all public UnityEvents. You can place here events and they Invoke methods 
         public static UnityEvent<float> TestUnityEvent { get; private set; } = new UnityEvent<float>();
         public static UnityEvent<HexTile, Vector3Int> OnTileClickEvent { get; private set; } = new UnityEvent<HexTile, Vector3Int>();
-    public static UnityEvent<GameObject> EndTurnEvent { get; private set; } = new UnityEvent<GameObject>();
+    public static UnityEvent<BaseKingdom> EndTurnEvent { get; private set; } = new UnityEvent<BaseKingdom>();
     public static UnityEvent<Vector3> MouseClickedEvent { get; private set; } = new UnityEvent<Vector3>();
 
 
@@ -16,7 +16,7 @@ using UnityEngine.Events;
         MouseClickedEvent.Invoke(clickedPos);
 
     }
-        public static void InvokeEndTurnEvent(GameObject entity)
+        public static void InvokeEndTurnEvent(BaseKingdom entity)
         {
             EndTurnEvent.Invoke(entity);
         }

@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Manages building placement and operations on the grid
+/// Usage: see testPlaceBuilding function for usage
 /// </summary>
 public class BuildingManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class BuildingManager : MonoBehaviour
     private Tilemap tilemap;
     
     [SerializeField]
-    private Resourse resourceManager;
+    private Resource resourceManager;
 
     // List to track buildings under construction
     private List<BuildingConstruction> ongoingConstructions = new List<BuildingConstruction>();
@@ -103,13 +104,14 @@ public class BuildingManager : MonoBehaviour
             PlaceBuilding(building, mousePosition);
         }
 
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.Occupied);
+        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+
 
     }
 
     private bool CanBuildingBePlaced(Building building, Vector3Int position){
 
-        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Available){
+        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land){
             return false;
         }
 
