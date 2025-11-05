@@ -1,8 +1,5 @@
 using UnityEngine;
 using Pathfinding;
-using UnityEngine.Tilemaps;
-using System.Collections;
-using System;
 using TMPro;
 
 [RequireComponent(typeof(Seeker))]
@@ -34,6 +31,13 @@ public class BaseGridUnitScript : MonoBehaviour
     private HexTilemapManager hTM = HexTilemapManager.Instance;
 
     private bool bIsMoving = false;
+
+    [SerializeField]
+    private GameObject bodySprite;
+    [SerializeField]
+    private Vector3 rotationAngles;
+    [SerializeField]
+    private Transform CameraArm;
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
     ///</summary>
@@ -78,7 +82,18 @@ public class BaseGridUnitScript : MonoBehaviour
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
 
-            if (tilesRemain>0&&!bIsMoving)
+           TryToMoveUnitToTile(tile, cellPos);
+
+        
+    }
+    /// <summary>
+    /// Can be used to move unit to target position in cell, using pathfinding
+    /// </summary>
+    /// <param name="tile">where you wish to move</param>
+    /// <param name="cellPos">tile position you wish to move </param>
+    public void TryToMoveUnitToTile(HexTile tile, Vector3Int cellPos)
+    {
+        if (tilesRemain > 0 && !bIsMoving)
         {
 
             hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
@@ -86,10 +101,8 @@ public class BaseGridUnitScript : MonoBehaviour
 
             CreatePath(hTM.GetMainTilemap().CellToWorld(cellPos));
 
-            
-        }
 
-        
+        }
     }
     private void CreatePath(Vector3 target)
     {
@@ -111,20 +124,6 @@ public class BaseGridUnitScript : MonoBehaviour
             path = null;
             Debug.LogError(p.errorLog.ToString());
         }
-    }
-    public void MoveToTargetWithPathfinding(Vector3 pathTarget)
-    {
-        if (path == null)
-        {
-            return;
-        }
-        if (previousTargetPosition != pathTarget)
-        {
-            CreatePath(pathTarget);
-        }
-        MovementCycle();
-
-
     }
     private void  MovementCycle()
     {
@@ -177,5 +176,11 @@ public class BaseGridUnitScript : MonoBehaviour
     protected virtual void Update()
     {
        MovementCycle();
+    }
+  
+    void LateUpdate()
+    {
+        //rotating unit body sprite
+        bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z+90,-90,-90));    
     }
 }

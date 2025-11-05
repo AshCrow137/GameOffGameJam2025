@@ -123,6 +123,7 @@ public class InputManager : MonoBehaviour
             if (selectedUnit)
             {
                 selectedUnit.OnUnitDeselect();
+                selectedUnit = null;
             }
             BaseGridUnitScript unit= HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
             if(unit)

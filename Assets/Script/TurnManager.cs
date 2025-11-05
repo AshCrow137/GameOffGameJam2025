@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,9 +16,10 @@ public class TurnManager : MonoBehaviour
 
     public void Initialize()
     {
+        instance = this;
         currentOrderIndex = 0;
         OnTurnStart(turnOrder[currentOrderIndex]);
-        instance = this;
+       
     }
 
     public void OnTurnStart(BaseKingdom entity)
