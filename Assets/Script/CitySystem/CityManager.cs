@@ -18,7 +18,7 @@ public class CityManager : MonoBehaviour
     private Tilemap tilemap;
     
     [SerializeField]
-    private Resourse resourceManager;
+    private Resource resourceManager;
     public void Instantiate()
     {
         if (Instance == null)
