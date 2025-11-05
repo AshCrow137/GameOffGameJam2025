@@ -14,6 +14,8 @@ public class BootManager : MonoBehaviour
         private BaseGridUnitScript[] units;
         [SerializeField]
         private BuildingManager buildingManager;
+        [SerializeField]
+        private CityManager cityManager;
 
     
 
@@ -32,5 +34,6 @@ public class BootManager : MonoBehaviour
         
         buildingManager?.Instantiate();
         AstarPath.active.Scan();
+        cityManager?.Instantiate();
     }
 }

@@ -10,6 +10,9 @@ using UnityEngine.InputSystem.LowLevel;
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
 /// Stores per-tile state since Tile assets are shared ScriptableObjects
+/// 
+/// Useful Function: GetCellAtMousePosition() - returns the cell position under the mouse cursor
+/// Useful variable: tileStates: stores the state of each tile at its grid position
 /// </summary>
 public class HexTilemapManager : MonoBehaviour
 {

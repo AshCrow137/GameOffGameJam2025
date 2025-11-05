@@ -48,8 +48,7 @@ public class TurnManager : MonoBehaviour
         NextTurn();
     }
 
-    //public function to call from button press
-    public void NextTurn()
+    private void NextTurn()
     {
         Debug.Log("Next Turn");
         //increment turn count

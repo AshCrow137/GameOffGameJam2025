@@ -3,7 +3,7 @@ using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Custom tile class for hexagonal tiles with state management
-/// Uses TileData to dynamically return sprites based on state stored in HexTilemapManager
+/// Usage: Hextile can be created via Unity's Create Asset Menu. Then it can be dragged onto a Tilepalette.
 /// </summary>
 [CreateAssetMenu(fileName = "HexTile", menuName = "Tilemap/Hex Tile")]
 public class HexTile : Tile
@@ -22,6 +22,17 @@ public class HexTile : Tile
         state = manager.GetTileState(position);
         tileData.color = manager.GetTileColor(state);
 
+        // Set Tile sprite based on city at position (cities have priority over buildings)
+        CityManager cityManager = CityManager.Instance;
+        if(cityManager != null)
+        {
+            Sprite citySprite = cityManager.GetCitySprite(position);
+            if(citySprite != null)
+            {
+                tileData.sprite = citySprite;
+                return;
+            }
+        }
         // Set Tile sprite based on building at position
         BuildingManager buildingManager = BuildingManager.Instance;
         if(buildingManager == null)
@@ -32,6 +43,8 @@ public class HexTile : Tile
         if(sprite != null){
             tileData.sprite = sprite;
         }
+
+        
     }
     
 }
