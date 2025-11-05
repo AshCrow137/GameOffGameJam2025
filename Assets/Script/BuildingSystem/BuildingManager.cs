@@ -18,7 +18,7 @@ public class BuildingManager : MonoBehaviour
     private Tilemap tilemap;
     
     [SerializeField]
-    private Resourse resourceManager;
+    private Resource resourceManager;
 
     // List to track buildings under construction
     private List<BuildingConstruction> ongoingConstructions = new List<BuildingConstruction>();
