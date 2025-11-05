@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using NUnit.Framework;
 public enum ResourceType { Resource1, Resource2 }
-public class Resourse : MonoBehaviour
+public class Resource : MonoBehaviour
 {
     private Dictionary<ResourceType, int> resources = new();
 
@@ -18,18 +18,18 @@ public class Resourse : MonoBehaviour
 
     public void AddAll(int[] value)
     {
-        var resoursedKey = new List<ResourceType>(resources.Keys);
+        var resourcedKey = new List<ResourceType>(resources.Keys);
         for(int i = 0; i<resources.Count; i++)
         {
-            resources[resoursedKey[i]] += value[i];
+            resources[resourcedKey[i]] += value[i];
         }
     }
     public void Remove(int[] value)
     {
-        var resoursedKey = new List<ResourceType>(resources.Keys);
+        var resourcedKey = new List<ResourceType>(resources.Keys);
         for(int i = 0; i<resources.Count; i++)
         {
-            resources[resoursedKey[i]] = Mathf.Max(0, resources[resoursedKey[i]] - value[i]);
+            resources[resourcedKey[i]] = Mathf.Max(0, resources[resourcedKey[i]] - value[i]);
         }
     }
 
