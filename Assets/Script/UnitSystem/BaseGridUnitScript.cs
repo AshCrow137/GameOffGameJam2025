@@ -28,7 +28,6 @@ public class BaseGridUnitScript : MonoBehaviour
     private float nextWaypointDistance = 0.01f;
     private bool bReachedEndOfPath;
     private Vector3 previousTargetPosition;
-    private IEnumerator movementCoroutine;
 
     //TODO Replace with normal UI
     [SerializeField]
@@ -36,6 +35,8 @@ public class BaseGridUnitScript : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private HexTilemapManager hTM = HexTilemapManager.Instance;
+
+    private bool bIsMoving = false;
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
     ///</summary>
@@ -71,17 +72,14 @@ public class BaseGridUnitScript : MonoBehaviour
             remainMovementText.text = tilesRemain.ToString();
         }
     }
-    private void MoveTo(Vector3 target)
+    protected virtual void MoveTo(Vector3 target)
     {
         transform.position = Vector3.MoveTowards(transform.position, target, MovementSpeed * Time.deltaTime);
     }
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
-        //if (movementCoroutine != null)
-        //{
-        //    return;
-        //}
-            if (tilesRemain>0)
+
+            if (tilesRemain>0&&!bIsMoving)
         {
 
             hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
@@ -107,8 +105,7 @@ public class BaseGridUnitScript : MonoBehaviour
         {
             path = p;
             CurrentWaypoint = 0;
-            movementCoroutine = MovementCycle();
-            StartCoroutine(MovementCycle());
+            bIsMoving = true;
         }
         else
         {
@@ -122,40 +119,31 @@ public class BaseGridUnitScript : MonoBehaviour
         {
             return;
         }
-
         if (previousTargetPosition != pathTarget)
         {
             CreatePath(pathTarget);
         }
-
         MovementCycle();
-        MoveTo(path.vectorPath[CurrentWaypoint]);
 
 
     }
-    private IEnumerator  MovementCycle()
+    private void  MovementCycle()
     {
-        
-        while (true)
+        if (bIsMoving)
         {
-            yield return null;
             bReachedEndOfPath = false;
             float distanceToWaypoint;
             while (!bReachedEndOfPath)
             {
-
                 distanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[CurrentWaypoint]);
                 if (distanceToWaypoint < nextWaypointDistance)
                 {
-
                     // Check if there is another waypoint or if we have reached the end of the path
                     if (CurrentWaypoint + 1 < path.vectorPath.Count)
                     {
-                        
                         CurrentWaypoint++;
                         tilesRemain--;
                         remainMovementText.text = tilesRemain.ToString();
-
                     }
                     else
                     {
@@ -168,29 +156,27 @@ public class BaseGridUnitScript : MonoBehaviour
                 }
                 else
                 {
-                    
                     break;
                 }
             }
-            if(tilesRemain<0)
+            if (tilesRemain < 0)
             {
-                break;
-
+                bIsMoving = false;
             }
             MoveTo(path.vectorPath[CurrentWaypoint]);
         }
-        OnEndOfPathReached();
     }
 
     private void OnEndOfPathReached()
     {
 
         hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position),this);
-        if(movementCoroutine != null)
-        {
-            StopCoroutine(movementCoroutine);
-            movementCoroutine = null;
-        }
+        bIsMoving = false;
+
         
+    }
+    protected virtual void Update()
+    {
+       MovementCycle();
     }
 }
