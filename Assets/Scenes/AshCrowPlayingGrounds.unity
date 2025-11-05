@@ -6506,7 +6506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8111732444922693991, guid: b8884c110a136f642968b0bcbd82b94c, type: 3}
       propertyPath: traversableTags
-      value: -23
+      value: -19
       objectReference: {fileID: 0}
     - target: {fileID: 8707968407589381669, guid: b8884c110a136f642968b0bcbd82b94c, type: 3}
       propertyPath: m_Name
