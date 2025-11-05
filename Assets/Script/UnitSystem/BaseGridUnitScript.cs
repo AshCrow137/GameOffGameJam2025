@@ -17,10 +17,7 @@ public class BaseGridUnitScript : MonoBehaviour
     [SerializeField]
     private float MovementSpeed = 3;
 
-
-
-    [SerializeField]
-    private GameObject owner;
+    private BaseKingdom Owner;
     private Seeker seeker;
     private Path path;
     private int tilesRemain;
@@ -40,7 +37,7 @@ public class BaseGridUnitScript : MonoBehaviour
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
     ///</summary>
-    public void Initialize()
+    public void Initialize(BaseKingdom owner)
     {
 
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
@@ -50,7 +47,9 @@ public class BaseGridUnitScript : MonoBehaviour
         hTM = HexTilemapManager.Instance;
         hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
         spriteRenderer = GetComponent<SpriteRenderer>();
+        Owner = owner;
     }
+    public BaseKingdom GetOwner() { return Owner; }
     public void OnUnitSelect()
     {
         Debug.Log($"Select {this.name} unit");
@@ -64,9 +63,9 @@ public class BaseGridUnitScript : MonoBehaviour
         spriteRenderer.color = Color.white;
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
-    private void OnEndTurn(GameObject entity)
+    private void OnEndTurn(BaseKingdom entity)
     {
-        if (entity ==owner) 
+        if (entity == Owner) 
         {
             tilesRemain = MovementDistance;
             remainMovementText.text = tilesRemain.ToString();

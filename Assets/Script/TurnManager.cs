@@ -6,7 +6,7 @@ public class TurnManager : MonoBehaviour
 {
     public int currentTurnCount { get; private set; } = 1;
     [SerializeField]
-    private List<GameObject> turnOrder; //player and enemy turn order
+    private List<BaseKingdom> turnOrder; //player and enemy turn order
     private int currentOrderIndex; //player
     public static TurnManager instance { get; private set; }
 
@@ -22,7 +22,7 @@ public class TurnManager : MonoBehaviour
         instance = this;
     }
 
-    public void OnTurnStart(GameObject entity)
+    public void OnTurnStart(BaseKingdom entity)
     {
         //camera focus on the current Player/Unit
         Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");

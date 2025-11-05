@@ -6,7 +6,8 @@ public class BaseKingdom : Entity
 {
     Resource currentResources = new Resource();
     List<HexTile> occupiedTiles = new();
-    //List<Unit> controlledUnits = new();
+    List<BaseGridUnitScript> controlledUnits = new();
     List<HexTile> visibleTiles = new();
     Dictionary<AIKingdom, int> relationsWithOtherKingdoms = new();
+ 
 }

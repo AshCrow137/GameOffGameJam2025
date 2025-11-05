@@ -11,8 +11,6 @@ public class BootManager : MonoBehaviour
         [SerializeField]
         private TurnManager turnManager;
         [SerializeField]
-        private BaseGridUnitScript[] units;
-        [SerializeField]
         private BuildingManager buildingManager;
         [SerializeField]
         private CityManager cityManager;
@@ -27,10 +25,7 @@ public class BootManager : MonoBehaviour
         
         turnManager?.Initialize();
         //grid units should initialize afte hexTilemapManager
-            foreach (var unit in units)
-        {
-            unit?.Initialize();
-        }
+
         
         buildingManager?.Instantiate();
         AstarPath.active.Scan();
