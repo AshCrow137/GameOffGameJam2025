@@ -1,21 +1,34 @@
 ﻿using UnityEngine;
 
 
-    public class BootManager : MonoBehaviour
-    {
-        //In this example, you have to put value in testScript directly from Inspector in Unity
-        [SerializeField] 
-        private TestScript testScript;
+public class BootManager : MonoBehaviour
+{
+        ////In this example, you have to put value in testScript directly from Inspector in Unity
+        //[SerializeField] 
+        //private TestScript testScript;
         [SerializeField]
         private HexTilemapManager hexTilemapManager;
-    [SerializeField]
-    private TurnManager turnManager;
+        [SerializeField]
+        private TurnManager turnManager;
+        [SerializeField]
+        private BaseGridUnitScript unit;
+        [SerializeField]
+        private BuildingManager buildingManager;
+        [SerializeField]
+        private CityManager cityManager;
+
+    
 
 
     void Start()
-        {
+    {
             // testScript.Initialize();
-            hexTilemapManager?.Initialize();
+        hexTilemapManager?.Initialize();
+        AstarPath.active.Scan();
         turnManager?.Initialize();
-        }
+            
+        unit?.Initialize();
+        buildingManager?.Instantiate();
+        cityManager?.Instantiate();
     }
+}

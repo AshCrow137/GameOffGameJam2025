@@ -8,12 +8,18 @@ public class TurnManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> turnOrder; //player and enemy turn order
     private int currentOrderIndex; //player
+    public static TurnManager instance { get; private set; }
+
+    //public TurnManager(List<GameObject> turnOrder)
+    //{
+    //    this.turnOrder = turnOrder;
+    //}
 
     public void Initialize()
     {
         currentOrderIndex = 0;
-        //turnOrder = new List<GameObject>();
         OnTurnStart(turnOrder[currentOrderIndex]);
+        instance = this;
     }
 
     public void OnTurnStart(GameObject entity)
@@ -21,10 +27,14 @@ public class TurnManager : MonoBehaviour
         //camera focus on the current Player/Unit
         Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
 
+        //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
+        entity.GetComponent<EntityTurnHandler>()?.OnTurnStart();
+
     }
 
     public void OnTurnEnd()
     {
+        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
         //do something at the end of the turn
         currentOrderIndex++;
         if (currentOrderIndex >= turnOrder.Count)
@@ -33,9 +43,11 @@ public class TurnManager : MonoBehaviour
         }
 
         Debug.Log($"Turn {currentTurnCount} End: {turnOrder[currentOrderIndex].name}'s turn.");
+        
         //when finish the turn, call NextTurn
         NextTurn();
     }
+
     private void NextTurn()
     {
         Debug.Log("Next Turn");
