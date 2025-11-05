@@ -30,7 +30,7 @@ public class HexTilemapManager : MonoBehaviour
     /// </summary>
     public void Initialize(){
         Instantiate();
-        //InitializeTileStates();
+        InitializeTileStates();
         tilemap.RefreshAllTiles();
         GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
     }
@@ -90,14 +90,15 @@ public class HexTilemapManager : MonoBehaviour
             {
                 // Get default state from the tile or use Land
                 HexTile hexTile = tile as HexTile;
-                int rand = Random.Range(0, System.Enum.GetValues(typeof(TileState)).Length);
-                TileState state = (TileState)rand;
-                tileStates[pos] = state;
-                if (state==TileState.Unavailable ||  state==TileState.OccuppiedByBuilding || state== TileState.OccupiedByUnit)
-                {
-                    blockedTiles.SetTile(pos, tile);
-                    blockedTiles.RefreshTile(pos);
-                }
+                UpdateTileWalkability(pos, hexTile.defaultState);
+                //int rand = Random.Range(0, System.Enum.GetValues(typeof(TileState)).Length);
+                //TileState state = (TileState)rand;
+                //tileStates[pos] = state;
+                //if (state==TileState.Unavailable ||  state==TileState.OccuppiedByBuilding || state== TileState.OccupiedByUnit)
+                //{
+                //    blockedTiles.SetTile(pos, tile);
+                //    blockedTiles.RefreshTile(pos);
+                //}
                 
             }
         }
@@ -106,7 +107,10 @@ public class HexTilemapManager : MonoBehaviour
 
     }
 
-
+    public Vector3Int PositionToCellPosition(Vector3 pos)
+    {
+        return tilemap.WorldToCell(pos);
+    }
     public Color GetTileColor(TileState state)
     {
         if (state == TileState.Land)
@@ -149,13 +153,13 @@ public class HexTilemapManager : MonoBehaviour
             if (clickedTile is HexTile)
             {
             HexTile hexTile = (HexTile)clickedTile;
-            Debug.Log($"clicked tile type: {hexTile.state}");
+            
                 GlobalEventManager.InvokeOnTileClickEvent(hexTile, cellPosition);
                 // Get current state (default to Land if not in dictionary)
                 TileState currentState = GetTileState(cellPosition);
-                
-                // Check if tile can be clicked (is available)
-                if (currentState == TileState.Land)
+            Debug.Log($"clicked tile type: {currentState}");
+            // Check if tile can be clicked (is available)
+            if (currentState == TileState.Land)
                 {
                     // Change state from Land to Occupied
                     //SetTileState(cellPosition, TileState.Occupied);
@@ -169,7 +173,23 @@ public class HexTilemapManager : MonoBehaviour
             }
         
     }
+    public TileState GetHoweredTileState()
+    {
+        Vector3Int cellPosition = GetCellAtMousePosition();
+        // if cellposition is infinite, return
+        if (cellPosition.x == int.MaxValue) return TileState.Unavailable;
 
+        // Get the tile at the clicked position
+        TileBase clickedTile = tilemap.GetTile(cellPosition);
+
+        if (clickedTile is HexTile)
+        {
+            HexTile hexTile = (HexTile)clickedTile;
+            
+            return hexTile.state;
+        }
+        return TileState.Unavailable;
+    }
     /// <summary>
     /// Manually set a tile's state (useful for initialization or programmatic changes)
     /// </summary>

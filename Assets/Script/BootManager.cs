@@ -24,6 +24,7 @@ public class BootManager : MonoBehaviour
         hexTilemapManager?.Initialize();
         
         turnManager?.Initialize();
+        //grid units should initialize afte hexTilemapManager
             foreach (var unit in units)
         {
             unit?.Initialize();

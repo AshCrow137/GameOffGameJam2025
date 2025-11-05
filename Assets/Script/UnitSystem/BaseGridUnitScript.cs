@@ -15,8 +15,6 @@ public class BaseGridUnitScript : MonoBehaviour
     [SerializeField]
     protected int MovementDistance = 5;
     [SerializeField]
-    private Tilemap tilemap;
-    [SerializeField]
     private float MovementSpeed = 3;
 
 
@@ -37,14 +35,18 @@ public class BaseGridUnitScript : MonoBehaviour
     private TMP_Text remainMovementText;
 
     private SpriteRenderer spriteRenderer;
+    private HexTilemapManager hTM = HexTilemapManager.Instance;
+    ///<summary>
+    ///grid units depends on HexTilemapManager, so they should initialize after them
+    ///</summary>
     public void Initialize()
     {
-        
+
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         seeker = GetComponent<Seeker>();
         tilesRemain = MovementDistance;
         remainMovementText.text = tilesRemain.ToString();
-        HexTilemapManager hTM = HexTilemapManager.Instance;
+        hTM = HexTilemapManager.Instance;
         hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -80,15 +82,14 @@ public class BaseGridUnitScript : MonoBehaviour
         //    return;
         //}
             if (tilesRemain>0)
-        {//TODO Fix this shitcode
-            
-            HexTilemapManager.Instance.RemoveUnitFromTile(HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position));
-            HexTilemapManager.Instance.SetTileState(HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position), TileState.Land);
+        {
 
-            CreatePath(tilemap.CellToWorld(cellPos));
+            hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
+            hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Land);
+
+            CreatePath(hTM.GetMainTilemap().CellToWorld(cellPos));
+
             
-            movementCoroutine = MovementCycle();
-            StartCoroutine(MovementCycle());
         }
 
         
@@ -96,7 +97,6 @@ public class BaseGridUnitScript : MonoBehaviour
     private void CreatePath(Vector3 target)
     {
         seeker.StartPath(transform.position, target, OnPathComplete);
-
     }
     
     private void OnPathComplete(Path p)
@@ -107,6 +107,13 @@ public class BaseGridUnitScript : MonoBehaviour
         {
             path = p;
             CurrentWaypoint = 0;
+            movementCoroutine = MovementCycle();
+            StartCoroutine(MovementCycle());
+        }
+        else
+        {
+            path = null;
+            Debug.LogError(p.errorLog.ToString());
         }
     }
     public void MoveToTargetWithPathfinding(Vector3 pathTarget)
@@ -177,8 +184,8 @@ public class BaseGridUnitScript : MonoBehaviour
 
     private void OnEndOfPathReached()
     {
-        HexTilemapManager hTM = HexTilemapManager.Instance;
-        hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
+
+        hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position),this);
         if(movementCoroutine != null)
         {
             StopCoroutine(movementCoroutine);

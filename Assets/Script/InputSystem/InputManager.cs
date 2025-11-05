@@ -118,7 +118,9 @@ public class InputManager : MonoBehaviour
         if (value.performed)
         {
             Debug.Log("OnClick at position: " + mousePos);
-            if(selectedUnit)
+            TileState state = HexTilemapManager.Instance.GetHoweredTileState();
+            Debug.Log($"clicked tile type: {state}");
+            if (selectedUnit)
             {
                 selectedUnit.OnUnitDeselect();
             }
