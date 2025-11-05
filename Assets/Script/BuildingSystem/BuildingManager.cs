@@ -104,13 +104,14 @@ public class BuildingManager : MonoBehaviour
             PlaceBuilding(building, mousePosition);
         }
 
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.Occupied);
+        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+
 
     }
 
     private bool CanBuildingBePlaced(Building building, Vector3Int position){
 
-        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Available){
+        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land){
             return false;
         }
 

@@ -8,8 +8,9 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "HexTile", menuName = "Tilemap/Hex Tile")]
 public class HexTile : Tile
 {
-    public TileState defaultState = TileState.Available;
+    public TileState defaultState = TileState.Land;
     public TileState state { get; private set; }
+    public TileState temporaryState {  get; private set; }
     public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
     {
         base.GetTileData(position, tilemap, ref tileData);

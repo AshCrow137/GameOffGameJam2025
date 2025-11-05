@@ -102,7 +102,7 @@ public class CityManager : MonoBehaviour
 
         PlaceCity(cityData, mousePosition);
 
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.Occupied);
+        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public class CityManager : MonoBehaviour
     /// <returns>True if the city can be placed at the specified position, false otherwise</returns>
     private bool CanCityBePlaced(Vector3Int position)
     {
-        if (HexTilemapManager.Instance.GetTileState(position) != TileState.Available)
+        if (HexTilemapManager.Instance.GetTileState(position) != TileState.Water|| HexTilemapManager.Instance.GetTileState(position) != TileState.Land)
         {
             return false;
         }
