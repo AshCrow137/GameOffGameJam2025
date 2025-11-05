@@ -14,3 +14,10 @@
         Unavailable,
         Default
     }
+
+    public enum ToggleUseCase
+    {
+        UnitPlacement,
+        BuildingPlacement,
+        CityPlacement
+    }

@@ -49,6 +49,20 @@ public class BaseGridUnitScript : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         Owner = owner;
     }
+
+    
+    // public void Initialize(BaseKingdom owner, Vector3Int cellPosition)
+    // {
+
+    //     GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
+    //     seeker = GetComponent<Seeker>();
+    //     tilesRemain = MovementDistance;
+    //     remainMovementText.text = tilesRemain.ToString();
+    //     hTM = HexTilemapManager.Instance;
+    //     hTM.PlaceUnitOnTile(cellPosition,this);
+    //     spriteRenderer = GetComponent<SpriteRenderer>();
+    //     Owner = owner;
+    // }
     public BaseKingdom GetOwner() { return Owner; }
     public void OnUnitSelect()
     {

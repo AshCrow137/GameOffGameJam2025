@@ -94,6 +94,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     public void TestPlaceCity()
     {
+        if(!ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement)) return;
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue) return;
 
@@ -112,8 +113,9 @@ public class CityManager : MonoBehaviour
     /// <returns>True if the city can be placed at the specified position, false otherwise</returns>
     private bool CanCityBePlaced(Vector3Int position)
     {
-        if (HexTilemapManager.Instance.GetTileState(position) != TileState.Water|| HexTilemapManager.Instance.GetTileState(position) != TileState.Land)
+        if (HexTilemapManager.Instance.GetTileState(position) != TileState.Water && HexTilemapManager.Instance.GetTileState(position) != TileState.Land)
         {
+            Debug.LogWarning("Tile state: " + HexTilemapManager.Instance.GetTileState(position));
             return false;
         }
         
@@ -179,8 +181,22 @@ public class CityManager : MonoBehaviour
         return false;
     }
 
-    public void SpawnUnit(){
-        // to be done
+    // Unit Spawning logic. Does it really belong here?
+
+    [SerializeField]
+    private GameObject unitPrefab;
+    [SerializeField]
+    private BaseKingdom unitOwner;
+    
+    public void TestSpawnUnit()
+    {
+        if(!ToggleManager.Instance.GetToggleState(ToggleUseCase.UnitPlacement)) return;
+        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+        if (mousePosition.x == int.MaxValue) return;
+        //instantiate gameobject
+        GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(mousePosition), Quaternion.identity);
+        unit.GetComponent<BaseGridUnitScript>().Initialize(unitOwner);
+        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccupiedByUnit);
     }
 
 }
