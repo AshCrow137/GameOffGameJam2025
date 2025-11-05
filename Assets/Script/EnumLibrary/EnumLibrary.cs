@@ -11,5 +11,6 @@
         OccuppiedByBuilding,
         OccupiedByUnit,
         Water,
-        Unavailable
+        Unavailable,
+        Default
     }

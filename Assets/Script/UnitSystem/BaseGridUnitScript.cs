@@ -83,7 +83,7 @@ public class BaseGridUnitScript : MonoBehaviour
         {
 
             hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
-            hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Land);
+            hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
 
             CreatePath(hTM.GetMainTilemap().CellToWorld(cellPos));
 

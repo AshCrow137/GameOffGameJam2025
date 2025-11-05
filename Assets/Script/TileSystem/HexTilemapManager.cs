@@ -202,6 +202,11 @@ public class HexTilemapManager : MonoBehaviour
         
         if (tile is HexTile)
         {
+            if (newState == TileState.Default)
+            {
+                HexTile htile = (HexTile)tile;
+                newState = htile.defaultState;
+            }
             tileStates[cellPosition] = newState;
             tilemap.RefreshTile(cellPosition);
             UpdateTileWalkability(cellPosition, newState);
