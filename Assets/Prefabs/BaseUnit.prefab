@@ -331,10 +331,15 @@ MonoBehaviour:
   Health: 2
   CurrentHealth: 2
   MovementDistance: 5
-  MovementSpeed: 1
+  MovementSpeed: 3
+  AttackDistance: 1
+  AttackDamage: 1
+  AttacksPerTurn: 1
+  CanMoveAfterattack: 0
   remainMovementText: {fileID: 1549160334076873660}
+  spriteRenderer: {fileID: 0}
   bodySprite: {fileID: 984558751739714587}
-  rotationAngles: {x: 0, y: 0, z: 0}
+  rotatebleCanvas: {fileID: 8980837208030950655}
   CameraArm: {fileID: 0}
 --- !u!114 &8111732444922693991
 MonoBehaviour:

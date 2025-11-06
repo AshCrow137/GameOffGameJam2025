@@ -4,12 +4,17 @@ using System.Collections.Generic;
 // Base kingdom class
 public class BaseKingdom : Entity, IMadnessable
 {
-    Resource currentResources = new Resource();
-    List<HexTile> occupiedTiles = new();
-    List<BaseGridUnitScript> controlledUnits = new();
-    List<HexTile> visibleTiles = new();
-    Dictionary<AIKingdom, int> relationsWithOtherKingdoms = new();
-    Color kingdomColor = new Color();
+    private Resource currentResources = new Resource();
+    public List<HexTile> occupiedTiles { get; protected set; } = new();
+    [SerializeField]
+    protected List<BaseGridUnitScript> controlledUnits = new();
+
+    public List<HexTile> visibleTiles { get; protected set; } = new();
+    public Dictionary<AIKingdom, int> relationsWithOtherKingdoms { get; protected set; } = new();
+    [SerializeField]
+    protected Color kingdomColor  = new Color();
+
+    public Color GetKingdomColor() { return kingdomColor; }
 
     public void Initialize()
     {
