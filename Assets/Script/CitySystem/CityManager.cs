@@ -187,16 +187,29 @@ public class CityManager : MonoBehaviour
     private GameObject unitPrefab;
     [SerializeField]
     private BaseKingdom unitOwner;
-    
+
     public void TestSpawnUnit()
     {
-        if(!ToggleManager.Instance.GetToggleState(ToggleUseCase.UnitPlacement)) return;
+        if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.UnitPlacement)) return;
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue) return;
+        if (!CanUnitBePlaced(mousePosition))
+            return;
         //instantiate gameobject
         GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(mousePosition), Quaternion.identity);
         unit.GetComponent<BaseGridUnitScript>().Initialize(unitOwner);
         HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccupiedByUnit);
+    }
+    
+    private bool CanUnitBePlaced(Vector3Int position)
+    {
+        if (HexTilemapManager.Instance.GetTileState(position) != TileState.Water && HexTilemapManager.Instance.GetTileState(position) != TileState.Land)
+        {
+            Debug.LogWarning("Tile state: " + HexTilemapManager.Instance.GetTileState(position));
+            return false;
+        }
+        
+        return true;
     }
 
 }
