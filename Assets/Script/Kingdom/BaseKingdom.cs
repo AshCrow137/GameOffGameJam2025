@@ -9,6 +9,16 @@ public class BaseKingdom : Entity, IMadnessable
     List<BaseGridUnitScript> controlledUnits = new();
     List<HexTile> visibleTiles = new();
     Dictionary<AIKingdom, int> relationsWithOtherKingdoms = new();
+    Color kingdomColor = new Color();
+
+    public void Initialize()
+    {
+        // Initializing controlled units
+        foreach ( BaseGridUnitScript unit in controlledUnits)
+        {
+            unit.Initialize(this);
+        }
+    }
 
     public float madnessLevel { get; private set; } = 0f;
     [SerializeField]
