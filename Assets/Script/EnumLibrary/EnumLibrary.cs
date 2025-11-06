@@ -14,3 +14,12 @@
         Unavailable,
         Default
     }
+
+    public enum MadnessEffect
+    {
+        None,
+        BetterDeal,
+        FreeUnits,
+        ImproveUnits,
+        PreventAttacks
+    }
