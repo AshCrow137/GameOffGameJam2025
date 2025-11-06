@@ -32,7 +32,7 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
-    public MadnessEffect GetMadnessEffects()
+    public virtual MadnessEffect GetMadnessEffects()
     {
         if(madnessLevel == MadnessCosts.PreventAttacks)
         {
