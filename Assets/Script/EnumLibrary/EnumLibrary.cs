@@ -21,3 +21,12 @@
         BuildingPlacement,
         CityPlacement
     }
+
+    public enum MadnessEffect
+    {
+        None,
+        BetterDeal,
+        FreeUnits,
+        ImproveUnits,
+        PreventAttacks
+    }

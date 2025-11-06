@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem.LowLevel;
+using static Unity.Burst.Intrinsics.X86;
 
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
@@ -113,6 +114,7 @@ public class HexTilemapManager : MonoBehaviour
     public Vector3Int PositionToCellPosition(Vector3 pos)
     {
         return tilemap.WorldToCell(pos);
+        
     }
     public Color GetTileColor(TileState state)
     {
@@ -140,7 +142,19 @@ public class HexTilemapManager : MonoBehaviour
         return Color.green;
     }
 
-
+    public int GetDistanceInCells(Vector3Int startPoint, Vector3Int endPoint)
+    {
+        int dx = endPoint.x - startPoint.x;     // signed deltas
+        int dy = endPoint.y - startPoint.y;
+        int x = Mathf.Abs(dx);  // absolute deltas
+        int y = Mathf.Abs(dy);
+        // special case if we start on an odd row or if we move into negative x direction
+        if ((dx < 0) ^ ((startPoint.y & 1) == 1))
+            x = Mathf.Max(0, x - (y + 1) / 2);
+        else
+            x = Mathf.Max(0, x - (y) / 2);
+        return x + y;
+    }
     /// <summary>
     /// Handles mouse click on the tilemap using 3D raycasting
     /// </summary>
@@ -160,7 +174,7 @@ public class HexTilemapManager : MonoBehaviour
                 GlobalEventManager.InvokeOnTileClickEvent(hexTile, cellPosition);
                 // Get current state (default to Land if not in dictionary)
                 TileState currentState = GetTileState(cellPosition);
-            Debug.Log($"clicked tile type: {currentState}");
+            //Debug.Log($"clicked tile type: {currentState}");
             // Check if tile can be clicked (is available)
             if (currentState == TileState.Land)
                 {
@@ -171,7 +185,7 @@ public class HexTilemapManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"Tile at {cellPosition} is {currentState} and cannot be clicked");
+                    //Debug.Log($"Tile at {cellPosition} is {currentState} and cannot be clicked");
                 }
             }
         

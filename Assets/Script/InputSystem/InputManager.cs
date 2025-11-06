@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
 
     private BaseGridUnitScript selectedUnit;
 
+    [SerializeField]
+    private PlayerKingdom playerKngdom;
 
 
     //Menu Inputs
@@ -115,7 +117,7 @@ public class InputManager : MonoBehaviour
 
     public void OnSelectUnitWithMouse(CallbackContext value)
     {
-        if (value.performed)
+        if (value.performed&&TurnManager.instance.GetCurrentActingKingdom()==playerKngdom)
         {
             Debug.Log("OnClick at position: " + mousePos);
             TileState state = HexTilemapManager.Instance.GetHoweredTileState();
@@ -123,11 +125,12 @@ public class InputManager : MonoBehaviour
             if (selectedUnit)
             {
                 selectedUnit.OnUnitDeselect();
+                selectedUnit = null;
             }
             BaseGridUnitScript unit= HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
             if(unit)
             {
-                unit.OnUnitSelect();
+                unit.OnUnitSelect(playerKngdom);
                 selectedUnit = unit;
             }
             //send a position to Selection Manager
