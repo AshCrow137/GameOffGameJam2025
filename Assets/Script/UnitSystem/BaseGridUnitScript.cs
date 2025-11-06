@@ -223,6 +223,7 @@ public class BaseGridUnitScript : MonoBehaviour
             }
             else
             {
+                //
                 hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
                 Debug.Log($"Unavailable tile for {this.gameObject} unit!");
             }
@@ -233,8 +234,10 @@ public class BaseGridUnitScript : MonoBehaviour
         {
             path = null;
             Debug.LogError(p.errorLog.ToString());
+            hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
         }
     }
+    //Main movement cycle
     private void  MovementCycle()
     {
         if (bIsMoving)
