@@ -4155,9 +4155,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cityData: {fileID: 11400000, guid: 99b31f0fe19403e459d44bbacb35203b, type: 2}
   tilemap: {fileID: 4958529}
-  resourceManager: {fileID: 1583622226}
-  unitPrefab: {fileID: 0}
-  unitOwner: {fileID: 0}
+  resourceManager: {fileID: 1583622228}
+  unitPrefab: {fileID: 8707968407589381669, guid: b8884c110a136f642968b0bcbd82b94c, type: 3}
+  unitOwner: {fileID: 1507932131}
 --- !u!114 &28648849
 MonoBehaviour:
   m_ObjectHideFlags: 0
