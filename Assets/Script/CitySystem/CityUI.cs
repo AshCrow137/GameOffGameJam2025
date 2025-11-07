@@ -13,10 +13,10 @@ public class CityUI : MonoBehaviour
 {
     [SerializeField]
     private GameObject cityUIPanel;
-    [SerializeField]
-    private Button spawnUnitButton;
-    [SerializeField]
-    private Button spawnBuildingButton;
+    // [SerializeField]
+    // private Button spawnUnitButton;
+    // [SerializeField]
+    // private Button spawnBuildingButton;
     //get; set;
     public CityMenuMode cityMenuMode { get; private set; } = CityMenuMode.None;
 
@@ -40,13 +40,11 @@ public class CityUI : MonoBehaviour
     public void ShowCityUI(City city)
     {
         cityUIPanel.SetActive(true);
-        // Placeholder for UI logic
     }
 
     private void HideCityUI()
     {
         cityUIPanel.SetActive(false);
-        // Placeholder for UI logic
     }
     private void UpdateCityUI(City city)
     {
