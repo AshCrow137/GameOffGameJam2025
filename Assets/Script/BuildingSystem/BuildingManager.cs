@@ -157,8 +157,8 @@ public class BuildingManager : MonoBehaviour
 
         // Get building's resource requirements
         Dictionary<ResourceType, int> resourceRequirements = building.resource;
-
-        return resourceManager.HasEnough(resourceRequirements);
+        return true;
+        //return resourceManager.HasEnough(resourceRequirements);
     }
 
     /// <summary>
