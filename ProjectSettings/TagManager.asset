@@ -41,6 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: GridBackground
+    uniqueID: 717043553
+    locked: 0
+  - name: GridBuilding
+    uniqueID: 2570558669
+    locked: 0
+  - name: GridUnit
+    uniqueID: 3656514395
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1

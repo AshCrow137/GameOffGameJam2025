@@ -1,5 +1,5 @@
-using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
@@ -10,6 +10,9 @@ public class TurnManager : MonoBehaviour
     private int currentOrderIndex; //player
     public static TurnManager instance { get; private set; }
 
+    [SerializeField]
+    private TMP_Text turnText;
+
     //public TurnManager(List<GameObject> turnOrder)
     //{
     //    this.turnOrder = turnOrder;
@@ -17,19 +20,29 @@ public class TurnManager : MonoBehaviour
 
     public void Initialize()
     {
+        instance = this;
         currentOrderIndex = 0;
         OnTurnStart(turnOrder[currentOrderIndex]);
-        instance = this;
+       
     }
 
     public void OnTurnStart(BaseKingdom entity)
     {
         //camera focus on the current Player/Unit
         Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
+        turnText.text = $"Current turn: {entity.name} N {currentTurnCount}";
 
         //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
         entity.GetComponent<EntityTurnHandler>()?.OnTurnStart();
 
+    }
+    /// <summary>
+    /// Method to get current active kingdom
+    /// </summary>
+    /// <returns>Returns BaseKingdom whose turn is it now </returns>
+    public BaseKingdom GetCurrentActingKingdom()
+    {
+        return turnOrder[currentOrderIndex];
     }
 
     public void OnTurnEnd()
@@ -40,6 +53,7 @@ public class TurnManager : MonoBehaviour
         if (currentOrderIndex >= turnOrder.Count)
         {
             currentOrderIndex = 0;
+            currentTurnCount++;
         }
 
         Debug.Log($"Turn {currentTurnCount} End: {turnOrder[currentOrderIndex].name}'s turn.");
@@ -52,7 +66,7 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log("Next Turn");
         //increment turn count
-        currentTurnCount++;
+        
 
         //call OnTurnStart to start the next turn
         OnTurnStart(turnOrder[currentOrderIndex]);

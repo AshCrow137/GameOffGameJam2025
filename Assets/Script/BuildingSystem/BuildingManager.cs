@@ -91,6 +91,7 @@ public class BuildingManager : MonoBehaviour
     /// Places the assigned building at the mouse position
     /// </summary>
     public void TestPlaceBuilding(){
+        if(!ToggleManager.Instance.GetToggleState(ToggleUseCase.BuildingPlacement)) return;
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue) return;
 
