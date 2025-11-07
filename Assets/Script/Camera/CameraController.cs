@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     private InputAction moveActionMouse;
     private InputAction rotateAction;
     private const float EDGE_THRESHOLD = 0.4f;//a variable indicating how far the camera will move to the end of the screen.
-    private const float EDGE_THRESHOLD = 0.45f;//a variable indicating how far the camera will move to the end of the screen.
+
     public float moveSpeed = 5f;//Speed Camera
     private void OnEnable()
     {
