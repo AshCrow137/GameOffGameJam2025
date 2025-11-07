@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     private InputAction moveActionMouse;
     private InputAction rotateAction;
     private const float EDGE_THRESHOLD = 0.4f;//a variable indicating how far the camera will move to the end of the screen.
+
     public float moveSpeed = 5f;//Speed Camera
     private void OnEnable()
     {
@@ -33,9 +34,7 @@ public class CameraController : MonoBehaviour
         if (screenUV.y < -EDGE_THRESHOLD) move.y = -1f;
         if (screenUV.y > EDGE_THRESHOLD)  move.y =  1f;
         Vector2 movementInput = moveAction.ReadValue<Vector2>();
-        
-        
-
+        // the final calculation of the movement vector and the movement itself
         Vector3 movement = new Vector3(movementInput.x, movementInput.y, 0f);
         transform.Translate(Time.deltaTime * (move+movement) * moveSpeed);
         transform.Rotate(Vector3.forward * rotateValue*CameraRotationSpeed);
