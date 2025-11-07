@@ -188,29 +188,111 @@ public class CityManager : MonoBehaviour
     [SerializeField]
     private BaseKingdom unitOwner;
 
-    public void TestSpawnUnit()
+    // public void TestSpawnUnit()
+    // {
+    //     if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.UnitPlacement)) return;
+    //     Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+    //     if (mousePosition.x == int.MaxValue) return;
+    //     if (!CanUnitBePlaced(mousePosition))
+    //         return;
+    //     //instantiate gameobject
+    //     GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(mousePosition), Quaternion.identity);
+    //     unit.GetComponent<BaseGridUnitScript>().Initialize(unitOwner);
+    //     HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccupiedByUnit);
+    // }
+
+
+
+    // public void OnCitySelected(City city)
+    // {
+    //     Debug.Log($"City at {city.gridPosition} selected.");
+    //     // Additional logic for when a city is selected can be added here
+    //     ShowCityUI(city);
+    //     UpdateCityUI(city);
+    // }
+
+    // public void OnCityDeselected(City city)
+    // {
+    //     Debug.Log($"City at {city.gridPosition} deselected.");
+    //     // Additional logic for when a city is deselected can be added here
+    //     HideCityUI();
+    // }
+
+    // [SerializeField]
+    // private CityUIMan cityUI;
+
+    // private void ShowCityUI(City city)
+    // {
+    //     // Placeholder for UI logic
+    // }
+
+    // private void HideCityUI()
+    // {
+    //     // Placeholder for UI logic
+    // }
+    // private void UpdateCityUI(City city)
+    // {
+    //     // Placeholder for UI logic
+    // }
+
+    // private bool spawnUnitMode = false;
+    // public void ToggleSpawnUnitMode()
+    // {
+    //     spawnUnitMode = !spawnUnitMode;
+    //     Debug.Log("Spawn Unit Mode: " + (spawnUnitMode ? "ON" : "OFF"));
+    // }
+
+    // public void SetSpawnUnitMode(bool state)
+    // {
+    //     spawnUnitMode = state;
+    //     Debug.Log("Spawn Unit Mode set to: " + (spawnUnitMode ? "ON" : "OFF"));
+    // }
+
+    public void SpawnUnitAtMousePosition(City city)
     {
-        if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.UnitPlacement)) return;
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue) return;
-        if (!CanUnitBePlaced(mousePosition))
+
+        SpawnUnit(city, mousePosition);
+    }
+
+    public void SpawnUnit(City city, Vector3Int position)
+    {
+
+        if (!CanUnitBePlaced(city, position))
             return;
         //instantiate gameobject
-        GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(mousePosition), Quaternion.identity);
+        GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(position), Quaternion.identity);
         unit.GetComponent<BaseGridUnitScript>().Initialize(unitOwner);
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccupiedByUnit);
+        HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByUnit);
     }
-    
-    private bool CanUnitBePlaced(Vector3Int position)
+
+    private bool CanUnitBePlaced(City city, Vector3Int position)
     {
-        if (HexTilemapManager.Instance.GetTileState(position) != TileState.Water && HexTilemapManager.Instance.GetTileState(position) != TileState.Land)
+        HexTilemapManager tileManager = HexTilemapManager.Instance;
+        if (tileManager.GetDistanceInCells(city.position, position) > city.unitSpawnRadius)
         {
-            Debug.LogWarning("Tile state: " + HexTilemapManager.Instance.GetTileState(position));
+            Debug.LogWarning("Unit spawn position is outside city vision radius.");
             return false;
         }
-        
+
+        if (tileManager.GetTileState(position) != TileState.Water && tileManager.GetTileState(position) != TileState.Land)
+        {
+            Debug.LogWarning("Tile state: " + tileManager.GetTileState(position));
+            return false;
+        }
+
         return true;
     }
+    
+    // public void SpawnBuilding(City city, Vector3Int position, BuildingData buildingData)
+    // {
+    //     if (!CanCityBePlaced(position))
+    //         return;
+    //     // Logic to place building in the city
+    //     city.AddBuilding(buildingData);
+    //     HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
+    // }
 
 }
 

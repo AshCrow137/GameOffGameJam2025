@@ -30,3 +30,17 @@
         ImproveUnits,
         PreventAttacks
     }
+
+public enum SelectionType
+{
+    None,
+    City,
+    Unit
+}
+    
+    public enum CityMenuMode
+    {
+        None,
+        SpawnUnit,
+        SpawnBuilding
+    }

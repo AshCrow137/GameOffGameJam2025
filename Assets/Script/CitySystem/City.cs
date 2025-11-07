@@ -14,6 +14,7 @@ public class City
     public float currentHP;
 
     public int visionRadius;
+    public int unitSpawnRadius;
 
     public GameObject owner;
 
@@ -27,6 +28,7 @@ public class City
         this.maxHP = cityData.maxHP;
         this.currentHP = cityData.maxHP;
         this.visionRadius = cityData.visionRadius;
+        this.unitSpawnRadius = 1;
         this.owner = null;
         
         // Initialize empty resource dictionary - will be populated by other means
