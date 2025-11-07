@@ -156,6 +156,15 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Left Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e67b6bd-b2ab-4a62-94d2-46d1408f6608"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""RotateCamera"",
                     ""type"": ""Value"",
                     ""id"": ""99b486c8-8998-4f77-8f85-7ca29d11ce29"",
@@ -328,6 +337,17 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MoveUnitToTile"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""575940f4-f3cc-4578-9d56-4aab5814425d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -596,6 +616,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         m_InGame_MoveCameraWithMouse = m_InGame.FindAction("MoveCameraWithMouse", throwIfNotFound: true);
         m_InGame_SelectUnitWithMouse = m_InGame.FindAction("SelectUnitWithMouse", throwIfNotFound: true);
         m_InGame_MoveUnitToTile = m_InGame.FindAction("MoveUnitToTile", throwIfNotFound: true);
+        m_InGame_LeftClick = m_InGame.FindAction("Left Click", throwIfNotFound: true);
         m_InGame_RotateCamera = m_InGame.FindAction("RotateCamera", throwIfNotFound: true);
         // InMenu
         m_InMenu = asset.FindActionMap("InMenu", throwIfNotFound: true);
@@ -692,6 +713,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_MoveCameraWithMouse;
     private readonly InputAction m_InGame_SelectUnitWithMouse;
     private readonly InputAction m_InGame_MoveUnitToTile;
+    private readonly InputAction m_InGame_LeftClick;
     private readonly InputAction m_InGame_RotateCamera;
     /// <summary>
     /// Provides access to input actions defined in input action map "InGame".
@@ -732,6 +754,10 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "InGame/MoveUnitToTile".
         /// </summary>
         public InputAction @MoveUnitToTile => m_Wrapper.m_InGame_MoveUnitToTile;
+        /// <summary>
+        /// Provides access to the underlying input action "InGame/LeftClick".
+        /// </summary>
+        public InputAction @LeftClick => m_Wrapper.m_InGame_LeftClick;
         /// <summary>
         /// Provides access to the underlying input action "InGame/RotateCamera".
         /// </summary>
@@ -783,6 +809,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @MoveUnitToTile.started += instance.OnMoveUnitToTile;
             @MoveUnitToTile.performed += instance.OnMoveUnitToTile;
             @MoveUnitToTile.canceled += instance.OnMoveUnitToTile;
+            @LeftClick.started += instance.OnLeftClick;
+            @LeftClick.performed += instance.OnLeftClick;
+            @LeftClick.canceled += instance.OnLeftClick;
             @RotateCamera.started += instance.OnRotateCamera;
             @RotateCamera.performed += instance.OnRotateCamera;
             @RotateCamera.canceled += instance.OnRotateCamera;
@@ -818,6 +847,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @MoveUnitToTile.started -= instance.OnMoveUnitToTile;
             @MoveUnitToTile.performed -= instance.OnMoveUnitToTile;
             @MoveUnitToTile.canceled -= instance.OnMoveUnitToTile;
+            @LeftClick.started -= instance.OnLeftClick;
+            @LeftClick.performed -= instance.OnLeftClick;
+            @LeftClick.canceled -= instance.OnLeftClick;
             @RotateCamera.started -= instance.OnRotateCamera;
             @RotateCamera.performed -= instance.OnRotateCamera;
             @RotateCamera.canceled -= instance.OnRotateCamera;
@@ -1050,6 +1082,13 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveUnitToTile(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Left Click" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftClick(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "RotateCamera" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
