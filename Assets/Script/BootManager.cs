@@ -14,6 +14,8 @@ public class BootManager : MonoBehaviour
         private BuildingManager buildingManager;
         [SerializeField]
         private CityManager cityManager;
+        [SerializeField]
+        private ToggleManager toggleManager;
     [SerializeField]
     private BaseKingdom[] kingdoms;
 
@@ -34,5 +36,6 @@ public class BootManager : MonoBehaviour
         buildingManager?.Instantiate();
         AstarPath.active.Scan();
         cityManager?.Instantiate();
+        toggleManager?.Initialize();
     }
 }
