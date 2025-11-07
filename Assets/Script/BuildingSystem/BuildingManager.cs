@@ -91,6 +91,7 @@ public class BuildingManager : MonoBehaviour
     /// Places the assigned building at the mouse position
     /// </summary>
     public void TestPlaceBuilding(){
+        if(!ToggleManager.Instance.GetToggleState(ToggleUseCase.BuildingPlacement)) return;
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue) return;
 
@@ -117,8 +118,8 @@ public class BuildingManager : MonoBehaviour
 
         // Get building's resource requirements
         Dictionary<ResourceType, int> resourceRequirements = building.resource;
-
-        return resourceManager.HasEnough(resourceRequirements);
+        return true;
+        //return resourceManager.HasEnough(resourceRequirements);
     }
 
     /// <summary>

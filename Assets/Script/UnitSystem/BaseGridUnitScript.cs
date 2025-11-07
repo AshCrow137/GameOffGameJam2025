@@ -71,6 +71,10 @@ public class BaseGridUnitScript : MonoBehaviour
         
         Owner = owner;
         spriteRenderer.color = Owner.GetKingdomColor();
+        if(Camera.main != null && Camera.main.transform.parent != null)
+        {
+            CameraArm = Camera.main.transform.parent;
+        }
     }
    
     public BaseKingdom GetOwner() { return Owner; }

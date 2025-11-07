@@ -15,6 +15,13 @@
         Default
     }
 
+    public enum ToggleUseCase
+    {
+        UnitPlacement,
+        BuildingPlacement,
+        CityPlacement
+    }
+
     public enum MadnessEffect
     {
         None,

@@ -70,6 +70,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Left Click",
+                    "type": "Button",
+                    "id": "5e67b6bd-b2ab-4a62-94d2-46d1408f6608",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "RotateCamera",
                     "type": "Value",
                     "id": "99b486c8-8998-4f77-8f85-7ca29d11ce29",
@@ -242,6 +251,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "MoveUnitToTile",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "575940f4-f3cc-4578-9d56-4aab5814425d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
