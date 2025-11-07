@@ -1,9 +1,8 @@
 using UnityEngine;
 using Pathfinding;
-using UnityEngine.Tilemaps;
-using System.Collections;
-using System;
 using TMPro;
+using static Unity.Burst.Intrinsics.X86;
+using Unity.IO.LowLevel.Unsafe;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : MonoBehaviour
@@ -16,6 +15,14 @@ public class BaseGridUnitScript : MonoBehaviour
     protected int MovementDistance = 5;
     [SerializeField]
     private float MovementSpeed = 3;
+    [SerializeField]
+    private int AttackDistance = 1;
+    [SerializeField]
+    private int AttackDamage = 1;
+    [SerializeField]
+    private int AttacksPerTurn = 1;
+    [SerializeField]
+    private bool CanMoveAfterattack = false;
 
     private BaseKingdom Owner;
     private Seeker seeker;
@@ -25,15 +32,26 @@ public class BaseGridUnitScript : MonoBehaviour
     private float nextWaypointDistance = 0.01f;
     private bool bReachedEndOfPath;
     private Vector3 previousTargetPosition;
+    private int attacksRemain = 1;
 
     //TODO Replace with normal UI
     [SerializeField]
     private TMP_Text remainMovementText;
 
+    [SerializeField]
     private SpriteRenderer spriteRenderer;
     private HexTilemapManager hTM = HexTilemapManager.Instance;
 
     private bool bIsMoving = false;
+    private Vector3 PathTarget;
+
+    [SerializeField]
+    private GameObject bodySprite;
+    [SerializeField]
+    private Canvas rotatebleCanvas;
+    [SerializeField]
+    private Transform CameraArm;
+
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
     ///</summary>
@@ -46,12 +64,22 @@ public class BaseGridUnitScript : MonoBehaviour
         remainMovementText.text = tilesRemain.ToString();
         hTM = HexTilemapManager.Instance;
         hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        if(!spriteRenderer)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+        
         Owner = owner;
+        spriteRenderer.color = Owner.GetKingdomColor();
     }
+   
     public BaseKingdom GetOwner() { return Owner; }
-    public void OnUnitSelect()
+    public void OnUnitSelect(BaseKingdom selector)
     {
+        if(selector!= Owner)
+        {
+            return;
+        }
         Debug.Log($"Select {this.name} unit");
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
         spriteRenderer.color = Color.gray;
@@ -60,7 +88,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
-        spriteRenderer.color = Color.white;
+        spriteRenderer.color = Owner.GetKingdomColor();
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
     private void OnEndTurn(BaseKingdom entity)
@@ -68,6 +96,7 @@ public class BaseGridUnitScript : MonoBehaviour
         if (entity == Owner) 
         {
             tilesRemain = MovementDistance;
+            attacksRemain = AttacksPerTurn;
             remainMovementText.text = tilesRemain.ToString();
         }
     }
@@ -75,56 +104,136 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, target, MovementSpeed * Time.deltaTime);
     }
+    public Vector3Int UnitPositionOnCell()
+    {
+        return hTM.GetMainTilemap().WorldToCell(transform.position);
+    }
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
-
-            if (tilesRemain>0&&!bIsMoving)
+        BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
+        if(targetedUnit != null)
         {
-
-            hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
-            hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
-
-            CreatePath(hTM.GetMainTilemap().CellToWorld(cellPos));
-
-            
+            TryToAttack(targetedUnit, cellPos);
         }
+        else
+        {
+            TryToMoveUnitToTile(tile, cellPos);
+        }
+        
+
+        
 
         
     }
+   private void TryToAttack(BaseGridUnitScript targetUnit, Vector3Int targetUnitPosition)
+    {
+        if (targetUnit.GetOwner() == Owner)
+        {
+            Debug.Log($"{name} try to attack his kingdom unit!");
+            return;
+        }
+        int intDistance = hTM.GetDistanceInCells(UnitPositionOnCell(), targetUnitPosition);
+        Debug.Log($"Distance between {this.name} and target cell: {intDistance}");
+        if(intDistance <=AttackDistance) 
+        {
+            Debug.Log($"{name} try to attack {targetUnit.name}!");
+            if(attacksRemain>0)
+            {
+                attacksRemain--;
+                Attack(targetUnit);
+            }
+            else
+            {
+                Debug.Log($"{name} has not enough attacks!");
+            }
+            
+        }
+        else
+        {
+            Debug.Log($"{targetUnit.name} too far!");
+        }
+        
+    }
+
+    protected virtual void Attack(BaseGridUnitScript targetUnit)
+    {
+        targetUnit.TakeDamage(AttackDamage);
+        if(!CanMoveAfterattack)
+        {
+            tilesRemain=0;
+            remainMovementText.text = tilesRemain.ToString();
+        }
+    }
+    public virtual void TakeDamage(int amount)
+    {
+        //TODO Calculate result damage
+        CurrentHealth -= amount;
+        if (CurrentHealth <= 0 ) 
+        {
+            Death();
+        }
+    }
+    protected virtual void Death()
+    {
+        hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
+        hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
+        gameObject.SetActive(false);
+    }
+
+
+    /// <summary>
+    /// Can be used to move unit to target position in cell, using pathfinding
+    /// </summary>
+    /// <param name="tile">where you wish to move</param>
+    /// <param name="cellPos">tile position you wish to move </param>
+    public void TryToMoveUnitToTile(HexTile tile, Vector3Int cellPos)
+    {
+        if (tilesRemain > 0 && !bIsMoving)
+        {
+
+
+            hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
+            hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
+            CreatePath(hTM.GetMainTilemap().CellToWorld(cellPos));
+
+
+        }
+    }
+
+    
     private void CreatePath(Vector3 target)
     {
+
+        PathTarget = target;
         seeker.StartPath(transform.position, target, OnPathComplete);
     }
     
     private void OnPathComplete(Path p)
     {
-        // Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
 
         if (!p.error)
         {
-            path = p;
-            CurrentWaypoint = 0;
-            bIsMoving = true;
+            //Check if path end on traversable tile, if not do not start moving.
+            if( p.CanTraverse(AstarPath.active.GetNearest(PathTarget).node))
+            {
+
+                path = p;
+                CurrentWaypoint = 0;
+                bIsMoving = true;
+            }
+            else
+            {
+                hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
+                Debug.Log($"Unavailable tile for {this.gameObject} unit!");
+            }
+            
+            
         }
         else
         {
             path = null;
             Debug.LogError(p.errorLog.ToString());
         }
-    }
-    public void MoveToTargetWithPathfinding(Vector3 pathTarget)
-    {
-        if (path == null)
-        {
-            return;
-        }
-        if (previousTargetPosition != pathTarget)
-        {
-            CreatePath(pathTarget);
-        }
-        MovementCycle();
-
-
     }
     private void  MovementCycle()
     {
@@ -160,7 +269,7 @@ public class BaseGridUnitScript : MonoBehaviour
             }
             if (tilesRemain < 0)
             {
-                bIsMoving = false;
+                OnEndOfPathReached();
             }
             MoveTo(path.vectorPath[CurrentWaypoint]);
         }
@@ -177,5 +286,12 @@ public class BaseGridUnitScript : MonoBehaviour
     protected virtual void Update()
     {
        MovementCycle();
+    }
+  
+    void LateUpdate()
+    {
+        //rotating unit body sprite
+        bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z+90,-90,-90));
+        rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
     }
 }
