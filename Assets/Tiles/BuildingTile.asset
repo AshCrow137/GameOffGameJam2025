@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BuildingTile
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -2089718405, guid: 488ea90a4c75e9146adead1269341ac6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.35283017, g: 1, b: 0.40801755, a: 1}
   m_Transform:
     e00: 1
     e01: 0

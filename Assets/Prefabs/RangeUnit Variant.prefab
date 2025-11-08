@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: AttackDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4353513174463890808, guid: b8884c110a136f642968b0bcbd82b94c, type: 3}
+      propertyPath: possibleSpawnTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353513174463890808, guid: b8884c110a136f642968b0bcbd82b94c, type: 3}
+      propertyPath: 'possibleSpawnTiles.Array.data[0]'
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6282883947977642725, guid: b8884c110a136f642968b0bcbd82b94c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.16

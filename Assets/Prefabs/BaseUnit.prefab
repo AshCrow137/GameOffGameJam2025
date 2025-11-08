@@ -417,6 +417,7 @@ MonoBehaviour:
   bodySprite: {fileID: 984558751739714587}
   rotatebleCanvas: {fileID: 8980837208030950655}
   CameraArm: {fileID: 0}
+  possibleSpawnTiles: 0000000003000000
 --- !u!114 &8111732444922693991
 MonoBehaviour:
   m_ObjectHideFlags: 0

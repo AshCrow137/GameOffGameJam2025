@@ -37,7 +37,7 @@ public class BootManager : MonoBehaviour
     {
             // testScript.Initialize();
         hexTilemapManager?.Initialize();
-        
+
         turnManager?.Initialize();
         buildingManager?.Instantiate();
 
@@ -50,13 +50,7 @@ public class BootManager : MonoBehaviour
         {
             kingdom.Initialize();
         }
-        AstarPath.active.Scan();
-
-        
-        buildingManager?.Instantiate();
-        AstarPath.active.Scan();
-        cityManager?.Instantiate();
-        toggleManager?.Initialize();
+    
         selectionManager?.Instantiate();
         cityUI?.Instantiate();
         kingdomUI?.Initialize();

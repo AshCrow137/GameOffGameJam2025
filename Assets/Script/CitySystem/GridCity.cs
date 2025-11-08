@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -41,7 +42,17 @@ public class GridCity : MonoBehaviour
         spriteRenderer.color = Owner.GetKingdomColor();
         position = HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position);
         CityManager.Instance.AddCity(HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position), this);
+        GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
     }
+
+    private void OnEndTurn(BaseKingdom entity)
+    {
+        if (entity == Owner)
+        {
+            bCanSpawnUnits = true;
+        }
+    }
+
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
     {
         this.sprite = cityData.sprite;
@@ -81,6 +92,28 @@ public class GridCity : MonoBehaviour
     }
     public void TryToSpawnUnitInCity(GameObject unitPrefab)
     {
-        List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(position, 1);
+        if(bCanSpawnUnits) 
+        {
+            List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(position, 1,unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+            if(possiblePositions.Count <= 0)
+            {
+                GlobalEventManager.InvokeShowUIMessageEvent($"This have no available tiles to spawn {unitPrefab.name}!");
+                return;
+            }
+            Vector3Int randomPos = possiblePositions[Random.Range(0, possiblePositions.Count - 1)];
+            GameObject newUnit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(randomPos), Quaternion.identity);
+            BaseGridUnitScript unitScript = newUnit.GetComponent<BaseGridUnitScript>();
+            Seeker seeker = newUnit.GetComponent<Seeker>();
+            var r = seeker.traversableTags;
+            Debug.Log(r);
+            unitScript.Initialize(Owner);
+            bCanSpawnUnits = false;
+        }
+        else
+        {
+            GlobalEventManager.InvokeShowUIMessageEvent($"This city already placed a unit this turn!");
+        }
+       
     }
+    
 }

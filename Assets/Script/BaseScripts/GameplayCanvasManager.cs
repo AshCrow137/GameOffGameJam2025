@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameplayCanvasManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameplayCanvasManager : MonoBehaviour
     private TMP_Text messageText;
     [SerializeField]
     private float showMessageTime = 3;
+    [SerializeField]
+    private GameObject victoryPanel;
 
     private GridCity selectedCity;
     private IEnumerator showMessageCoroutine;
@@ -21,6 +24,18 @@ public class GameplayCanvasManager : MonoBehaviour
             Destroy(this);
         }
         instance = this;
+        GlobalEventManager.ShowUIMessageEvent.AddListener(ShowMessageText);
+        GlobalEventManager.KingdomDefeatEvent.AddListener(OnVictory);
+    }
+    public void OnVictory(BaseKingdom kingdom)
+    {
+        victoryPanel.SetActive(true);
+        StartCoroutine(winScreenCoroutine());
+    }
+    private IEnumerator winScreenCoroutine()
+    {
+        yield return new WaitForSeconds(showMessageTime);
+        SceneManager.LoadSceneAsync("MainMenu");
     }
     public void ActivateUnitProductionPanel(GridCity city)
     {

@@ -2,12 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 using Pathfinding;
-using Unity.VisualScripting;
-using UnityEngine.InputSystem.LowLevel;
-using static Unity.Burst.Intrinsics.X86;
-using System.Linq;
+
 
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
@@ -35,6 +31,7 @@ public class HexTilemapManager : MonoBehaviour
     /// </summary>
     public void Initialize(){
         Instantiate();
+        AstarPath.active.Scan();
         InitializeTileStates();
         tilemap.RefreshAllTiles();
         GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
@@ -119,17 +116,13 @@ public class HexTilemapManager : MonoBehaviour
         {
             for (int y = startPos.y - range; y <= startPos.y+range; y++)
             {
-                if((y== startPos.y+range&&x == startPos.x+range)|| (y == startPos.y - range && x == startPos.x + range))
-                { continue; }
                 Vector3Int pos = new Vector3Int(x, y,0);
-                HexTile tile = tilemap.GetTile(pos) as HexTile;
-                tile.color = Color.red;
-                tilemap.RefreshTile(pos);
+                int distance = GetDistanceInCells(startPos, pos);
+                if (distance > range) { continue; }
                 if (possibleStates.Contains(GetTileState(pos)))
                 {
                     possibleCellsInRage.Add(pos);
-                    tile.color = Color.green;
-                    tilemap.RefreshTile(pos);
+
                 }
             }
         }

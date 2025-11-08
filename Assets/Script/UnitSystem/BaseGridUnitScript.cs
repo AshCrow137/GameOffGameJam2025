@@ -2,7 +2,7 @@ using UnityEngine;
 using Pathfinding;
 using TMPro;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : MonoBehaviour
@@ -52,6 +52,13 @@ public class BaseGridUnitScript : MonoBehaviour
     [SerializeField]
     private Transform CameraArm;
     private Vector3Int gridPosition;
+    [SerializeField]
+    private List<TileState> possibleSpawnTiles = new List<TileState>();
+
+    public List<TileState> GetPossibleSpawnTiles()
+    {
+        return possibleSpawnTiles;
+    }
 
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
@@ -81,6 +88,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         if(selector!= Owner)
         {
+            GlobalEventManager.InvokeShowUIMessageEvent($"This is not your unit!");
             return;
         }
         Debug.Log($"Select {this.name} unit");
@@ -132,7 +140,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         if (targetUnit.GetOwner() == Owner)
         {
-            Debug.Log($"{name} try to attack his kingdom unit!");
+            GlobalEventManager.InvokeShowUIMessageEvent($"You try to attack your kingdom unit!");
             return;
         }
         int intDistance = hTM.GetDistanceInCells(UnitPositionOnCell(), targetUnitPosition);
@@ -147,13 +155,13 @@ public class BaseGridUnitScript : MonoBehaviour
             }
             else
             {
-                Debug.Log($"{name} has not enough attacks!");
+                GlobalEventManager.InvokeShowUIMessageEvent($"This unit has not enough attacks!");
             }
             
         }
         else
         {
-            Debug.Log($"{targetUnit.name} too far!");
+            GlobalEventManager.InvokeShowUIMessageEvent($"Target unit too far!");
         }
         
     }
@@ -181,6 +189,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
+        Owner.RemoveUnitFromKingdom(this);
         gameObject.SetActive(false);
     }
 
@@ -201,6 +210,10 @@ public class BaseGridUnitScript : MonoBehaviour
             CreatePath(hTM.GetMainTilemap().CellToWorld(cellPos));
 
 
+        }
+        else
+        {
+            GlobalEventManager.InvokeShowUIMessageEvent($"Not enough movement points remain!");
         }
     }
 
@@ -229,7 +242,7 @@ public class BaseGridUnitScript : MonoBehaviour
             {
                 //
                 hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
-                Debug.Log($"Unavailable tile for {this.gameObject} unit!");
+                GlobalEventManager.InvokeShowUIMessageEvent($"Unavailable tile for {this.gameObject.name} unit!");
             }
             
             
