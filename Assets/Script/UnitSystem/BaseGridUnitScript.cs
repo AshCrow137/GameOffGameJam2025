@@ -1,8 +1,8 @@
 using UnityEngine;
 using Pathfinding;
 using TMPro;
-using static Unity.Burst.Intrinsics.X86;
-using Unity.IO.LowLevel.Unsafe;
+using UnityEngine.UI;
+
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : MonoBehaviour
@@ -39,7 +39,7 @@ public class BaseGridUnitScript : MonoBehaviour
     private TMP_Text remainMovementText;
 
     [SerializeField]
-    private SpriteRenderer spriteRenderer;
+    private Image HPImage;
     private HexTilemapManager hTM = HexTilemapManager.Instance;
 
     private bool bIsMoving = false;
@@ -51,6 +51,7 @@ public class BaseGridUnitScript : MonoBehaviour
     private Canvas rotatebleCanvas;
     [SerializeField]
     private Transform CameraArm;
+    private Vector3Int gridPosition;
 
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
@@ -64,17 +65,15 @@ public class BaseGridUnitScript : MonoBehaviour
         remainMovementText.text = tilesRemain.ToString();
         hTM = HexTilemapManager.Instance;
         hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
-        if(!spriteRenderer)
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
+
         
         Owner = owner;
-        spriteRenderer.color = Owner.GetKingdomColor();
+        HPImage.color = Owner.GetKingdomColor();
         if(Camera.main != null && Camera.main.transform.parent != null)
         {
             CameraArm = Camera.main.transform.parent;
         }
+        gridPosition = HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position);
     }
    
     public BaseKingdom GetOwner() { return Owner; }
@@ -86,13 +85,13 @@ public class BaseGridUnitScript : MonoBehaviour
         }
         Debug.Log($"Select {this.name} unit");
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
-        spriteRenderer.color = Color.gray;
+        HPImage.color = Color.gray;
     }
     public void OnUnitDeselect()
     {
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
-        spriteRenderer.color = Owner.GetKingdomColor();
+        HPImage.color = Owner.GetKingdomColor();
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
     private void OnEndTurn(BaseKingdom entity)
@@ -172,6 +171,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         //TODO Calculate result damage
         CurrentHealth -= amount;
+        HPImage.fillAmount = (float)CurrentHealth / Health;
         if (CurrentHealth <= 0 ) 
         {
             Death();

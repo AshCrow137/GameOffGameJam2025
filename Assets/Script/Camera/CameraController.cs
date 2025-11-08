@@ -11,6 +11,11 @@ public class CameraController : MonoBehaviour
     private const float EDGE_THRESHOLD = 0.4f;//a variable indicating how far the camera will move to the end of the screen.
 
     public float moveSpeed = 5f;//Speed Camera
+    [SerializeField]
+    private Transform CameraArm;
+
+    public Transform GetCameraArmTransform()
+    { return CameraArm; }
     private void OnEnable()
     {
         var map = CustomInput.FindActionMap("InGame");
@@ -23,7 +28,7 @@ public class CameraController : MonoBehaviour
     {
         moveAction.Disable();
     }
-    void Update()
+    void LateUpdate()
     {
         Vector2 mousepos = moveActionMouse.ReadValue<Vector2>();
         Vector2 screenUV = new Vector2(mousepos.x / Screen.width - .5f, mousepos.y / Screen.height - .5f);

@@ -7,6 +7,7 @@ using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem.LowLevel;
 using static Unity.Burst.Intrinsics.X86;
+using System.Linq;
 
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
@@ -110,7 +111,28 @@ public class HexTilemapManager : MonoBehaviour
 
 
     }
-
+    public List<Vector3Int> GetCellsInRange(Vector3Int startPos, int range, List<TileState> possibleStates = null )
+    {
+        possibleStates = possibleStates ?? new List<TileState> { TileState.Land, TileState.Water };
+        List<Vector3Int> possibleCellsInRage = new List<Vector3Int>();
+        for (int x = startPos.x-range; x<=startPos.x+range; x++)
+        {
+            for (int y = startPos.y - range; y <= startPos.y+range; y++)
+            {
+                Vector3Int pos = new Vector3Int(x, y,0);
+                HexTile tile = tilemap.GetTile(pos) as HexTile;
+                tile.color = Color.red;
+                tilemap.RefreshTile(pos);
+                if (possibleStates.Contains(GetTileState(pos)))
+                {
+                    possibleCellsInRage.Add(pos);
+                    tile.color = Color.green;
+                    tilemap.RefreshTile(pos);
+                }
+            }
+        }
+        return possibleCellsInRage;
+    }
     public Vector3Int PositionToCellPosition(Vector3 pos)
     {
         return tilemap.WorldToCell(pos);

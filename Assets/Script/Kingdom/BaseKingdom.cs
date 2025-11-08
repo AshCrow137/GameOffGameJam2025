@@ -8,6 +8,8 @@ public class BaseKingdom : Entity, IMadnessable
     public List<HexTile> occupiedTiles { get; protected set; } = new();
     [SerializeField]
     protected List<BaseGridUnitScript> controlledUnits = new();
+    [SerializeField]
+    protected List<GridCity> controlledCities = new();
 
     public List<HexTile> visibleTiles { get; protected set; } = new();
     public Dictionary<AIKingdom, int> relationsWithOtherKingdoms { get; protected set; } = new();
@@ -22,6 +24,38 @@ public class BaseKingdom : Entity, IMadnessable
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
             unit.Initialize(this);
+        }
+        foreach ( GridCity city in controlledCities)
+        {
+            city.Initialize();
+        }
+    }
+    public void AddUnitToKingdom(BaseGridUnitScript unit)
+    {
+        if(!controlledUnits.Contains(unit))
+        {
+            controlledUnits.Add(unit);
+        }
+    }
+    public void RemoveUnitFromKingdom(BaseGridUnitScript unit)
+    {
+        if (controlledUnits.Contains(unit))
+        {
+            controlledUnits.Remove(unit);
+        }
+    }
+    public void AddCityToKingdom(GridCity city)
+    {
+        if(!controlledCities.Contains(city))
+        {
+            controlledCities.Add(city);
+        }
+    }
+    public void RemoveCityFromKingdom(GridCity city)
+    {
+        if (controlledCities.Contains(city))
+        {
+            controlledCities.Remove(city);
         }
     }
 
