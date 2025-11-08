@@ -63,6 +63,8 @@ public class AddVisibleTiles : MonoBehaviour
         {
             AddCurrentTileToVisibleTiles();
             UpdateVisibleTilesText();
+            StopAddVisibleTileMode();
+
         }
     }
 
