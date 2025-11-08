@@ -69,7 +69,7 @@ public class InputManager : MonoBehaviour
         Debug.Log("OnMove: " + directionInput);
 
         //send a direction to Camera Controller
-        //Eu preciso de um método que receba um vetor 2D e mova a camera nessa direção.
+        //Eu preciso de um mï¿½todo que receba um vetor 2D e mova a camera nessa direï¿½ï¿½o.
     }
 
     public void OnEndTurn(CallbackContext value)

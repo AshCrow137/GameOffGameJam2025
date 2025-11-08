@@ -3,22 +3,30 @@
 
 public class BootManager : MonoBehaviour
 {
-        ////In this example, you have to put value in testScript directly from Inspector in Unity
-        //[SerializeField] 
-        //private TestScript testScript;
-        [SerializeField]
-        private HexTilemapManager hexTilemapManager;
-        [SerializeField]
-        private TurnManager turnManager;
-        [SerializeField]
-        private BuildingManager buildingManager;
-        [SerializeField]
-        private CityManager cityManager;
-        [SerializeField]
-        private ToggleManager toggleManager;
+    ////In this example, you have to put value in testScript directly from Inspector in Unity
+    //[SerializeField] 
+    //private TestScript testScript;
+    [SerializeField]
+    private HexTilemapManager hexTilemapManager;
+    [SerializeField]
+    private TurnManager turnManager;
+    [SerializeField]
+    private BuildingManager buildingManager;
+    [SerializeField]
+    private CityManager cityManager;
+    [SerializeField]
+    private ToggleManager toggleManager;
     [SerializeField]
     private BaseKingdom[] kingdoms;
+    [SerializeField]
+    private SelectionManager selectionManager;
 
+    [SerializeField]
+    private CityUI cityUI;
+    [SerializeField]
+    private KingdomUI kingdomUI;
+    [SerializeField]
+    private AddVisibleTiles addVisibleTiles;
 
 
     void Start()
@@ -37,5 +45,9 @@ public class BootManager : MonoBehaviour
         AstarPath.active.Scan();
         cityManager?.Instantiate();
         toggleManager?.Initialize();
+        selectionManager?.Instantiate();
+        cityUI?.Instantiate();
+        kingdomUI?.Initialize();
+        addVisibleTiles?.Initialize();
     }
 }
