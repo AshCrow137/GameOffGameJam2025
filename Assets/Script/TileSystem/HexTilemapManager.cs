@@ -119,6 +119,8 @@ public class HexTilemapManager : MonoBehaviour
         {
             for (int y = startPos.y - range; y <= startPos.y+range; y++)
             {
+                if((y== startPos.y+range&&x == startPos.x+range)|| (y == startPos.y - range && x == startPos.x + range))
+                { continue; }
                 Vector3Int pos = new Vector3Int(x, y,0);
                 HexTile tile = tilemap.GetTile(pos) as HexTile;
                 tile.color = Color.red;

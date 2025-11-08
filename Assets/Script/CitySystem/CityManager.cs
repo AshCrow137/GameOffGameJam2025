@@ -39,7 +39,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <param name="cityData">The city data to use for creating the city</param>
     /// <param name="gridPosition">The position on the grid (Vector3Int)</param>
-    public City PlaceCity(CityData cityData, Vector3Int gridPosition)
+    public GridCity PlaceCity(CityData cityData, Vector3Int gridPosition)
     {
         if (cityData == null)
         {
@@ -119,8 +119,8 @@ public class CityManager : MonoBehaviour
         if (!CanCityBePlaced(mousePosition, kingdom))
             return;
 
-        City newCity = PlaceCity(cityData, mousePosition);
-        kingdom.AddCity(newCity);
+        GridCity newCity = PlaceCity(cityData, mousePosition);
+        kingdom.AddCityToKingdom(newCity);
 
         HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
     }
