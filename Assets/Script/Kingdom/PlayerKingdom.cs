@@ -3,8 +3,6 @@ using UnityEngine;
 // Player controlled kingdom class
 public class PlayerKingdom : BaseKingdom
 {
-<<<<<<< HEAD
-=======
 
     public MadnessEffect GetMadnessEffects()
     {
@@ -15,6 +13,5 @@ public class PlayerKingdom : BaseKingdom
     {
         KingdomUI.Instance?.StartTurn();
     }
->>>>>>> main
    
 }
