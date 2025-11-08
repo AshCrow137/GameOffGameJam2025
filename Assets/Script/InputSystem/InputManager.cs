@@ -5,15 +5,29 @@ using static UnityEngine.InputSystem.InputAction;
 public class InputManager : MonoBehaviour
 {
     //Class to handles all inputs from player.
-
+    public static InputManager instance { get; private set; }
     private Vector2 mousePos;
 
     private BaseGridUnitScript selectedUnit;
+    private GridCity selectedCity;
 
     [SerializeField]
     private PlayerKingdom playerKngdom;
 
+    private bool bIsOnUIElement = false;
 
+    public void Initialize()
+    {
+        if(instance != null)
+        {
+            Destroy(instance); 
+        }
+        instance = this;
+    }
+    public void SetOnUiElement(bool value)
+    {
+        bIsOnUIElement = value;
+    }
     //Menu Inputs
     public void OnNavigate(CallbackContext value)
     {
@@ -69,7 +83,7 @@ public class InputManager : MonoBehaviour
         Debug.Log("OnMove: " + directionInput);
 
         //send a direction to Camera Controller
-        //Eu preciso de um método que receba um vetor 2D e mova a camera nessa direção.
+        //Eu preciso de um mï¿½todo que receba um vetor 2D e mova a camera nessa direï¿½ï¿½o.
     }
 
     public void OnEndTurn(CallbackContext value)
@@ -115,11 +129,19 @@ public class InputManager : MonoBehaviour
         //For example, if the mouse is 100 pixels from the edge, move the camera in the desired direction.
     }
 
-    public void OnSelectUnitWithMouse(CallbackContext value)
+    //method to any sort of tile interactions
+    public void OnTileInteraction(CallbackContext value)
     {
-        if (value.performed&&TurnManager.instance.GetCurrentActingKingdom()==playerKngdom)
+        Debug.Log("OnClick at position: " + mousePos);
+        if (bIsOnUIElement) { return; }
+        if (!value.performed || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
+        if (ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement))
         {
-            Debug.Log("OnClick at position: " + mousePos);
+            CityManager.Instance.TestPlaceCity();
+        }
+        else
+        {
+            
             TileState state = HexTilemapManager.Instance.GetHoweredTileState();
             Debug.Log($"clicked tile type: {state}");
             if (selectedUnit)
@@ -127,18 +149,31 @@ public class InputManager : MonoBehaviour
                 selectedUnit.OnUnitDeselect();
                 selectedUnit = null;
             }
-            BaseGridUnitScript unit= HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
-            if(unit)
+            if(selectedCity)
+            {
+                selectedCity.OnCityDeselect();
+                selectedCity = null;
+            }
+            BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
+            GridCity city = CityManager.Instance.GetCity(HexTilemapManager.Instance.GetCellAtMousePosition());
+            if (unit)
             {
                 unit.OnUnitSelect(playerKngdom);
                 selectedUnit = unit;
             }
+            else if(city)
+            {
+                selectedCity = city;
+                selectedCity.OnCitySelect(playerKngdom);
+            }
+        }
+       
             //send a position to Selection Manager
             //I need a mathod that receives a screen position (Vector2)
             //and converts it to a raycast in the world,
-        }
+
     }
-    public void OnMoveUnitToTile(CallbackContext value)
+    public void OnAlternativeTileInteraction(CallbackContext value)
     {
         if (value.performed)
         {

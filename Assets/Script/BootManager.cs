@@ -8,6 +8,8 @@ public class BootManager : MonoBehaviour
         //private TestScript testScript;
         [SerializeField]
         private HexTilemapManager hexTilemapManager;
+    [SerializeField]
+    private InputManager inputManager;
         [SerializeField]
         private TurnManager turnManager;
         [SerializeField]
@@ -18,24 +20,40 @@ public class BootManager : MonoBehaviour
         private ToggleManager toggleManager;
     [SerializeField]
     private BaseKingdom[] kingdoms;
+    [SerializeField]
+    private SelectionManager selectionManager;
+    [SerializeField]
+    private GameplayCanvasManager gameplayCanvasManager;
 
+    [SerializeField]
+    private CityUI cityUI;
+    [SerializeField]
+    private KingdomUI kingdomUI;
+    [SerializeField]
+    private AddVisibleTiles addVisibleTiles;
 
 
     void Start()
     {
             // testScript.Initialize();
         hexTilemapManager?.Initialize();
-        
+
         turnManager?.Initialize();
-        //grid units should initialize afte hexTilemapManager
+        buildingManager?.Instantiate();
+
+        cityManager?.Instantiate();
+        toggleManager?.Initialize();
+        inputManager?.Initialize();
+        gameplayCanvasManager?.Initialize();
+        //grid units and kingdoms should initialize after hexTilemapManager
         foreach (BaseKingdom kingdom in kingdoms)
         {
             kingdom.Initialize();
         }
-        
-        buildingManager?.Instantiate();
-        AstarPath.active.Scan();
-        cityManager?.Instantiate();
-        toggleManager?.Initialize();
+    
+        selectionManager?.Instantiate();
+        cityUI?.Instantiate();
+        kingdomUI?.Initialize();
+        addVisibleTiles?.Initialize();
     }
 }

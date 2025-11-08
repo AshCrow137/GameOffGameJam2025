@@ -2,11 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 using Pathfinding;
-using Unity.VisualScripting;
-using UnityEngine.InputSystem.LowLevel;
-using static Unity.Burst.Intrinsics.X86;
+
 
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
@@ -34,6 +31,7 @@ public class HexTilemapManager : MonoBehaviour
     /// </summary>
     public void Initialize(){
         Instantiate();
+        AstarPath.active.Scan();
         InitializeTileStates();
         tilemap.RefreshAllTiles();
         GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
@@ -110,7 +108,26 @@ public class HexTilemapManager : MonoBehaviour
 
 
     }
+    public List<Vector3Int> GetCellsInRange(Vector3Int startPos, int range, List<TileState> possibleStates = null )
+    {
+        possibleStates = possibleStates ?? new List<TileState> { TileState.Land, TileState.Water };
+        List<Vector3Int> possibleCellsInRage = new List<Vector3Int>();
+        for (int x = startPos.x-range; x<=startPos.x+range; x++)
+        {
+            for (int y = startPos.y - range; y <= startPos.y+range; y++)
+            {
+                Vector3Int pos = new Vector3Int(x, y,0);
+                int distance = GetDistanceInCells(startPos, pos);
+                if (distance > range) { continue; }
+                if (possibleStates.Contains(GetTileState(pos)))
+                {
+                    possibleCellsInRage.Add(pos);
 
+                }
+            }
+        }
+        return possibleCellsInRage;
+    }
     public Vector3Int PositionToCellPosition(Vector3 pos)
     {
         return tilemap.WorldToCell(pos);

@@ -14,11 +14,13 @@ public class City
     public float currentHP;
 
     public int visionRadius;
+    public int unitSpawnRadius;
 
     public GameObject owner;
 
     // Resources this city generates per turn
     public Dictionary<ResourceType, int> resourceGainPerTurn = new Dictionary<ResourceType, int>();
+    public Dictionary<Vector3Int, Building> buildings = new Dictionary<Vector3Int, Building>();
 
     public City(CityData cityData, Vector3Int position){
         this.name = "City Name";
@@ -27,7 +29,9 @@ public class City
         this.maxHP = cityData.maxHP;
         this.currentHP = cityData.maxHP;
         this.visionRadius = cityData.visionRadius;
+        this.unitSpawnRadius = 1;
         this.owner = null;
+        this.buildings = new Dictionary<Vector3Int, Building>();
         
         // Initialize empty resource dictionary - will be populated by other means
         this.resourceGainPerTurn = new Dictionary<ResourceType, int>();
