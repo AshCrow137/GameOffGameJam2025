@@ -118,13 +118,16 @@ public class CityManager : MonoBehaviour
         City newCity = PlaceCity(cityData, mousePosition);
         kingdom.AddCity(newCity);
 
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByCity);
+        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
     }
 
     private bool CanCityBePlaced(Vector3Int position, BaseKingdom kingdom)
     {
-        if(!kingdom.IsTileVisible(position)) return false;
-
+        if (!kingdom.IsTileVisible(position))
+        {
+            Debug.LogWarning("Cannot place city on a tile that is not visible to the kingdom.");
+            return false;
+        }
         return CanCityBePlaced(position);
     }
 
@@ -209,66 +212,6 @@ public class CityManager : MonoBehaviour
     private GameObject unitPrefab;
     [SerializeField]
     private BaseKingdom unitOwner;
-
-    // public void TestSpawnUnit()
-    // {
-    //     if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.UnitPlacement)) return;
-    //     Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
-    //     if (mousePosition.x == int.MaxValue) return;
-    //     if (!CanUnitBePlaced(mousePosition))
-    //         return;
-    //     //instantiate gameobject
-    //     GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(mousePosition), Quaternion.identity);
-    //     unit.GetComponent<BaseGridUnitScript>().Initialize(unitOwner);
-    //     HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccupiedByUnit);
-    // }
-
-
-
-    // public void OnCitySelected(City city)
-    // {
-    //     Debug.Log($"City at {city.gridPosition} selected.");
-    //     // Additional logic for when a city is selected can be added here
-    //     ShowCityUI(city);
-    //     UpdateCityUI(city);
-    // }
-
-    // public void OnCityDeselected(City city)
-    // {
-    //     Debug.Log($"City at {city.gridPosition} deselected.");
-    //     // Additional logic for when a city is deselected can be added here
-    //     HideCityUI();
-    // }
-
-    // [SerializeField]
-    // private CityUIMan cityUI;
-
-    // private void ShowCityUI(City city)
-    // {
-    //     // Placeholder for UI logic
-    // }
-
-    // private void HideCityUI()
-    // {
-    //     // Placeholder for UI logic
-    // }
-    // private void UpdateCityUI(City city)
-    // {
-    //     // Placeholder for UI logic
-    // }
-
-    // private bool spawnUnitMode = false;
-    // public void ToggleSpawnUnitMode()
-    // {
-    //     spawnUnitMode = !spawnUnitMode;
-    //     Debug.Log("Spawn Unit Mode: " + (spawnUnitMode ? "ON" : "OFF"));
-    // }
-
-    // public void SetSpawnUnitMode(bool state)
-    // {
-    //     spawnUnitMode = state;
-    //     Debug.Log("Spawn Unit Mode set to: " + (spawnUnitMode ? "ON" : "OFF"));
-    // }
 
     public void SpawnUnitAtMousePosition(City city)
     {

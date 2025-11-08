@@ -9,9 +9,9 @@ public class BaseKingdom : Entity, IMadnessable
     [SerializeField]
     protected List<BaseGridUnitScript> controlledUnits = new();
 
-    public List<HexTile> visibleTiles { get; protected set; } = new();
+    public List<Vector3Int> visibleTiles { get; protected set; } = new();
 
-    public Dictionary<Vector3Int, City> cities cities { get; protected set; } = new();
+    public Dictionary<Vector3Int, City> cities { get; protected set; } = new();
     public void AddCity(City city)
     {
         cities.Add(city.position, city);

@@ -59,15 +59,17 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     /// <param name="building">The building object to place</param>
     /// <param name="gridPosition">The position on the grid (Vector3Int)</param>
-    public void PlaceBuilding(Building building, Vector3Int gridPosition)
+    public Building PlaceBuilding(Building building, Vector3Int gridPosition)
     {
         if (building == null)
         {
-            return;
+            return null;
         }
+        Building copy = building.Clone();
 
-        buildings[gridPosition] = building;
+        buildings[gridPosition] = copy;
         tilemap.RefreshTile(gridPosition);
+        return copy;
     }
 
     /// <summary>
@@ -129,7 +131,10 @@ public class BuildingManager : MonoBehaviour
         else
         {
             Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
-            PlaceBuilding(building, mousePosition);
+            if( PlaceBuilding(building, mousePosition) != null)
+            {
+                city.buildings[mousePosition] = building;
+            }
         }
 
         HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);

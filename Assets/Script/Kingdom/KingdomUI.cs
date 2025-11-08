@@ -1,11 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
+using static UnityEngine.InputSystem.InputAction;
 
 // Base kingdom class
-public class BaseKingdom : MonoBehaviour
+public class KingdomUI : MonoBehaviour
 {
     public static KingdomUI Instance { get; private set; }
-    public void Instantiate()
+
+    public void Initialize()
+    {
+        Instantiate();
+        InitializeEndTurn();
+    }
+
+    private void Instantiate()
     {
         if (Instance == null)
         {
@@ -16,13 +24,17 @@ public class BaseKingdom : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void InitializeEndTurn(){
+        GlobalEventManager.EndTurnEvent.AddListener(EndTurn);
+    }
     [SerializeField]
     private PlayerKingdom playerKingdom;
 
     [SerializeField]
     private GameObject kingdomUIPanel;
 
-    private void ShowKingdomUI(BaseKingdom kingdom){
+    private void ShowKingdomUI(){
         kingdomUIPanel.SetActive(true);
     }
 
@@ -30,15 +42,26 @@ public class BaseKingdom : MonoBehaviour
         kingdomUIPanel.SetActive(false);
     }
 
-    public void OnTurnStart(){
-        if(TurnManager.instance.GetCurrentActingKingdom() == playerKingdom){
-            ShowKingdomUI();
-        }else{
-            HideKingdomUI();
-            StopPlaceCityMode();
-        }
+    public void StartTurn(){
+        ShowKingdomUI();
+
+        // if(TurnManager.instance.GetCurrentActingKingdom() == playerKingdom){
+        //     ShowKingdomUI();
+        // }
+        // else{
+        //     HideKingdomUI();
+        //     StopPlaceCityMode();
+        // }
     }
     
+    public void EndTurn(BaseKingdom entity)
+    {
+        if(entity != playerKingdom)
+            return;
+        HideKingdomUI();
+        StopPlaceCityMode();
+    }
+
     private bool shouldPlaceCity = false;
     public void StartPlaceCityMode()
     {
