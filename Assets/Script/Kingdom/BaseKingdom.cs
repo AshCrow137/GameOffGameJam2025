@@ -33,7 +33,7 @@ public class BaseKingdom : Entity, IMadnessable
 
     public Color GetKingdomColor() { return kingdomColor; }
 
-    public void Initialize()
+    public virtual void Initialize()
     {
         // Initializing controlled units
         foreach ( BaseGridUnitScript unit in controlledUnits)
@@ -42,7 +42,7 @@ public class BaseKingdom : Entity, IMadnessable
         }
         foreach ( GridCity city in controlledCities)
         {
-            city.Initialize();
+            city.Initialize(this);
         }
     }
     public void AddUnitToKingdom(BaseGridUnitScript unit)

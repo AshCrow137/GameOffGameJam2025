@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using Pathfinding;
+using static UnityEditor.PlayerSettings;
 
 
 /// <summary>
@@ -322,6 +323,14 @@ public class HexTilemapManager : MonoBehaviour
     public Tilemap GetMainTilemap()
     {
         return tilemap;
+    }
+   public Vector3Int WorldToCellPos(Vector3 pos)
+    {
+        return tilemap.WorldToCell(pos);
+    }
+    public Vector3 CellToWorldPos(Vector3Int cellPos)
+    {
+        return tilemap.CellToWorld(cellPos);
     }
 }
 
