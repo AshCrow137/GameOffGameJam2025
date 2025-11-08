@@ -11,7 +11,14 @@ public class BaseKingdom : Entity, IMadnessable
     [SerializeField]
     protected List<GridCity> controlledCities = new();
 
-    public List<HexTile> visibleTiles { get; protected set; } = new();
+    public List<Vector3Int> visibleTiles { get; protected set; } = new();
+
+    public Dictionary<Vector3Int, City> cities { get; protected set; } = new();
+    public void AddCity(City city)
+    {
+        cities.Add(city.position, city);
+    }
+    
     public Dictionary<AIKingdom, int> relationsWithOtherKingdoms { get; protected set; } = new();
     [SerializeField]
     protected Color kingdomColor  = new Color();
@@ -57,6 +64,11 @@ public class BaseKingdom : Entity, IMadnessable
         {
             controlledCities.Remove(city);
         }
+    }
+
+    public bool IsTileVisible(Vector3Int position)
+    {
+        return visibleTiles.Contains(position);
     }
 
     public float madnessLevel { get; private set; } = 0f;

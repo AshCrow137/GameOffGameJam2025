@@ -27,6 +27,31 @@ public class Building : ScriptableObject
             return dict;
         }
     }
+
+    /// <summary>
+    /// Creates a clone of this building with all its data
+    /// </summary>
+    public Building Clone()
+    {
+        Building clone = ScriptableObject.CreateInstance<Building>();
+        clone.buildingName = this.buildingName;
+        clone.sprite = this.sprite;
+        clone.duration = this.duration;
+        clone.owner = this.owner;
+        
+        // Clone resource requirements
+        clone.resourceRequirements = new List<ResourceRequirement>();
+        foreach (var req in this.resourceRequirements)
+        {
+            clone.resourceRequirements.Add(new ResourceRequirement 
+            { 
+                resourceType = req.resourceType, 
+                amount = req.amount 
+            });
+        }
+        
+        return clone;
+    }
 }
 
 [System.Serializable]

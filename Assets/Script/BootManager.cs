@@ -21,8 +21,16 @@ public class BootManager : MonoBehaviour
     [SerializeField]
     private BaseKingdom[] kingdoms;
     [SerializeField]
+    private SelectionManager selectionManager;
+    [SerializeField]
     private GameplayCanvasManager gameplayCanvasManager;
 
+    [SerializeField]
+    private CityUI cityUI;
+    [SerializeField]
+    private KingdomUI kingdomUI;
+    [SerializeField]
+    private AddVisibleTiles addVisibleTiles;
 
 
     void Start()
@@ -44,5 +52,14 @@ public class BootManager : MonoBehaviour
         }
         AstarPath.active.Scan();
 
+        
+        buildingManager?.Instantiate();
+        AstarPath.active.Scan();
+        cityManager?.Instantiate();
+        toggleManager?.Initialize();
+        selectionManager?.Instantiate();
+        cityUI?.Instantiate();
+        kingdomUI?.Initialize();
+        addVisibleTiles?.Initialize();
     }
 }

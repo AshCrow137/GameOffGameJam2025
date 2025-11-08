@@ -8,5 +8,10 @@ public class PlayerKingdom : BaseKingdom
     {
         return MadnessEffect.None;
     }
+
+    public void StartTurn()
+    {
+        KingdomUI.Instance?.StartTurn();
+    }
    
 }
