@@ -1,8 +1,8 @@
 using UnityEngine;
 using Pathfinding;
 using TMPro;
-using static Unity.Burst.Intrinsics.X86;
-using Unity.IO.LowLevel.Unsafe;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : MonoBehaviour
@@ -39,7 +39,7 @@ public class BaseGridUnitScript : MonoBehaviour
     private TMP_Text remainMovementText;
 
     [SerializeField]
-    private SpriteRenderer spriteRenderer;
+    private Image HPImage;
     private HexTilemapManager hTM = HexTilemapManager.Instance;
 
     private bool bIsMoving = false;
@@ -51,6 +51,14 @@ public class BaseGridUnitScript : MonoBehaviour
     private Canvas rotatebleCanvas;
     [SerializeField]
     private Transform CameraArm;
+    private Vector3Int gridPosition;
+    [SerializeField]
+    private List<TileState> possibleSpawnTiles = new List<TileState>();
+
+    public List<TileState> GetPossibleSpawnTiles()
+    {
+        return possibleSpawnTiles;
+    }
 
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
@@ -64,17 +72,15 @@ public class BaseGridUnitScript : MonoBehaviour
         remainMovementText.text = tilesRemain.ToString();
         hTM = HexTilemapManager.Instance;
         hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
-        if(!spriteRenderer)
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
+
         
         Owner = owner;
-        spriteRenderer.color = Owner.GetKingdomColor();
+        HPImage.color = Owner.GetKingdomColor();
         if(Camera.main != null && Camera.main.transform.parent != null)
         {
             CameraArm = Camera.main.transform.parent;
         }
+        gridPosition = HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position);
     }
    
     public BaseKingdom GetOwner() { return Owner; }
@@ -82,17 +88,18 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         if(selector!= Owner)
         {
+            GlobalEventManager.InvokeShowUIMessageEvent($"This is not your unit!");
             return;
         }
         Debug.Log($"Select {this.name} unit");
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
-        spriteRenderer.color = Color.gray;
+        HPImage.color = Color.gray;
     }
     public void OnUnitDeselect()
     {
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
-        spriteRenderer.color = Owner.GetKingdomColor();
+        HPImage.color = Owner.GetKingdomColor();
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
     private void OnEndTurn(BaseKingdom entity)
@@ -133,7 +140,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         if (targetUnit.GetOwner() == Owner)
         {
-            Debug.Log($"{name} try to attack his kingdom unit!");
+            GlobalEventManager.InvokeShowUIMessageEvent($"You try to attack your kingdom unit!");
             return;
         }
         int intDistance = hTM.GetDistanceInCells(UnitPositionOnCell(), targetUnitPosition);
@@ -148,13 +155,13 @@ public class BaseGridUnitScript : MonoBehaviour
             }
             else
             {
-                Debug.Log($"{name} has not enough attacks!");
+                GlobalEventManager.InvokeShowUIMessageEvent($"This unit has not enough attacks!");
             }
             
         }
         else
         {
-            Debug.Log($"{targetUnit.name} too far!");
+            GlobalEventManager.InvokeShowUIMessageEvent($"Target unit too far!");
         }
         
     }
@@ -172,6 +179,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         //TODO Calculate result damage
         CurrentHealth -= amount;
+        HPImage.fillAmount = (float)CurrentHealth / Health;
         if (CurrentHealth <= 0 ) 
         {
             Death();
@@ -181,6 +189,7 @@ public class BaseGridUnitScript : MonoBehaviour
     {
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
+        Owner.RemoveUnitFromKingdom(this);
         gameObject.SetActive(false);
     }
 
@@ -201,6 +210,10 @@ public class BaseGridUnitScript : MonoBehaviour
             CreatePath(hTM.GetMainTilemap().CellToWorld(cellPos));
 
 
+        }
+        else
+        {
+            GlobalEventManager.InvokeShowUIMessageEvent($"Not enough movement points remain!");
         }
     }
 
@@ -227,8 +240,9 @@ public class BaseGridUnitScript : MonoBehaviour
             }
             else
             {
+                //
                 hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
-                Debug.Log($"Unavailable tile for {this.gameObject} unit!");
+                GlobalEventManager.InvokeShowUIMessageEvent($"Unavailable tile for {this.gameObject.name} unit!");
             }
             
             
@@ -237,8 +251,10 @@ public class BaseGridUnitScript : MonoBehaviour
         {
             path = null;
             Debug.LogError(p.errorLog.ToString());
+            hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
         }
     }
+    //Main movement cycle
     private void  MovementCycle()
     {
         if (bIsMoving)

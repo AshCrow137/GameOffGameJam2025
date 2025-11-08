@@ -8,15 +8,25 @@ public class BaseKingdom : Entity, IMadnessable
     public List<HexTile> occupiedTiles { get; protected set; } = new();
     [SerializeField]
     protected List<BaseGridUnitScript> controlledUnits = new();
+    [SerializeField]
+    protected List<GridCity> controlledCities = new();
 
     public List<Vector3Int> visibleTiles { get; protected set; } = new();
 
     public Dictionary<Vector3Int, City> cities { get; protected set; } = new();
+    protected bool isDefeated = false;
     public void AddCity(City city)
     {
         cities.Add(city.position, city);
     }
-    
+    private void DefeatCheck()
+    {
+        if(controlledCities.Count<=0 &&controlledUnits.Count<=0)
+        {
+            isDefeated=true;
+            GlobalEventManager.InvokeKingdomDefeat(this);
+        }
+    }
     public Dictionary<AIKingdom, int> relationsWithOtherKingdoms { get; protected set; } = new();
     [SerializeField]
     protected Color kingdomColor  = new Color();
@@ -29,6 +39,40 @@ public class BaseKingdom : Entity, IMadnessable
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
             unit.Initialize(this);
+        }
+        foreach ( GridCity city in controlledCities)
+        {
+            city.Initialize();
+        }
+    }
+    public void AddUnitToKingdom(BaseGridUnitScript unit)
+    {
+        if(!controlledUnits.Contains(unit))
+        {
+            controlledUnits.Add(unit);
+        }
+    }
+    public void RemoveUnitFromKingdom(BaseGridUnitScript unit)
+    {
+        if (controlledUnits.Contains(unit))
+        {
+            controlledUnits.Remove(unit);
+            DefeatCheck();
+        }
+    }
+    public void AddCityToKingdom(GridCity city)
+    {
+        if(!controlledCities.Contains(city))
+        {
+            controlledCities.Add(city);
+        }
+    }
+    public void RemoveCityFromKingdom(GridCity city)
+    {
+        if (controlledCities.Contains(city))
+        {
+            controlledCities.Remove(city);
+            DefeatCheck();
         }
     }
 

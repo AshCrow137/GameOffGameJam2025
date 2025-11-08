@@ -9,11 +9,13 @@ using UnityEngine.Tilemaps;
 public class CityManager : MonoBehaviour
 {
     // Dictionary to store city data per position
-    private Dictionary<Vector3Int, City> cities = new Dictionary<Vector3Int, City>();
+    private Dictionary<Vector3Int, GridCity> cities = new Dictionary<Vector3Int, GridCity>();
     public static CityManager Instance { get; private set; }
 
     [SerializeField]
     private CityData cityData;
+    [SerializeField]
+    private GameObject cityPrefab;
     [SerializeField]
     private Tilemap tilemap;
     
@@ -37,7 +39,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <param name="cityData">The city data to use for creating the city</param>
     /// <param name="gridPosition">The position on the grid (Vector3Int)</param>
-    public City PlaceCity(CityData cityData, Vector3Int gridPosition)
+    public GridCity PlaceCity(CityData cityData, Vector3Int gridPosition)
     {
         if (cityData == null)
         {
@@ -45,8 +47,10 @@ public class CityManager : MonoBehaviour
         }
 
         // Create a new city instance from the city data
-        City newCity = new City(cityData, gridPosition);
-
+        //City newCity = new City(cityData, gridPosition);
+        GameObject newCityObject = Instantiate(cityPrefab,HexTilemapManager.Instance.GetMainTilemap().CellToWorld(gridPosition),Quaternion.identity);
+        GridCity newCity = newCityObject.GetComponent<GridCity>();
+        newCity.InstantiateCity(cityData, gridPosition, unitOwner);
         // TODO: JUST FOR TESTING. REMOVE LATER AND ADD LOGIC FOR FINDING RESOURCE PER CITY
         newCity.resourceGainPerTurn = new Dictionary<ResourceType, int>
         {
@@ -66,7 +70,7 @@ public class CityManager : MonoBehaviour
     /// <returns>The sprite of the city at that position, or null if no city exists</returns>
     public Sprite GetCitySprite(Vector3Int position)
     {
-        if (cities.TryGetValue(position, out City city))
+        if (cities.TryGetValue(position, out GridCity city))
         {
             return city.sprite;
         }
@@ -79,9 +83,9 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <param name="position">The grid position to check</param>
     /// <returns>The city at that position, or null if no city exists</returns>
-    public City GetCity(Vector3Int position)
+    public GridCity GetCity(Vector3Int position)
     {
-        if (cities.TryGetValue(position, out City city))
+        if (cities.TryGetValue(position, out GridCity city))
         {
             return city;
         }
@@ -115,8 +119,8 @@ public class CityManager : MonoBehaviour
         if (!CanCityBePlaced(mousePosition, kingdom))
             return;
 
-        City newCity = PlaceCity(cityData, mousePosition);
-        kingdom.AddCity(newCity);
+        GridCity newCity = PlaceCity(cityData, mousePosition);
+        kingdom.AddCityToKingdom(newCity);
 
         HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
     }
@@ -170,7 +174,7 @@ public class CityManager : MonoBehaviour
         // Iterate through all cities
         foreach (var cityEntry in cities)
         {
-            City city = cityEntry.Value;
+            GridCity city = cityEntry.Value;
             
             // Skip if city has no resources to generate
             if (city.resourceGainPerTurn == null || city.resourceGainPerTurn.Count == 0)
@@ -186,9 +190,9 @@ public class CityManager : MonoBehaviour
     /// Gets all cities currently on the map
     /// </summary>
     /// <returns>Dictionary of all cities with their positions</returns>
-    public Dictionary<Vector3Int, City> GetAllCities()
+    public Dictionary<Vector3Int, GridCity> GetAllCities()
     {
-        return new Dictionary<Vector3Int, City>(cities);
+        return new Dictionary<Vector3Int, GridCity>(cities);
     }
 
     /// <summary>
@@ -205,7 +209,16 @@ public class CityManager : MonoBehaviour
         }
         return false;
     }
-
+    public bool AddCity(Vector3Int position,GridCity city)
+    {
+        if(!cities.ContainsKey(position))
+        {
+            cities.Add(position, city);
+            tilemap.RefreshTile(position);
+            return true;
+        }
+        return false;
+    }
     // Unit Spawning logic. Does it really belong here?
 
     [SerializeField]

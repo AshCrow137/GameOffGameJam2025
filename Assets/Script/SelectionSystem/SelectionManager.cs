@@ -74,55 +74,55 @@ public class SelectionManager : MonoBehaviour
     //     tapHeld = false;
     // }
 
-    public void SelectItem(CallbackContext context)
-    {
-        if (!context.performed) return;
-        if (CityUI.Instance.cityMenuMode != CityMenuMode.None) return;
+    //public void SelectItem(CallbackContext context)
+    //{
+    //    if (!context.performed) return;
+    //    if (CityUI.Instance.cityMenuMode != CityMenuMode.None) return;
         
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Ray ray = mainCamera.ScreenPointToRay(mousePos);
+    //    Vector2 mousePos = Mouse.current.position.ReadValue();
+    //    Ray ray = mainCamera.ScreenPointToRay(mousePos);
         
-        // Cast a 3d ray onto a 2d plane and get all hits
-        // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
-        RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity);
+    //    // Cast a 3d ray onto a 2d plane and get all hits
+    //    // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
+    //    RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity);
         
-        if (hits.Length == 0)
-            return;
+    //    if (hits.Length == 0)
+    //        return;
         
-        // Prioritize unit selection - check all hits for units first
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit.collider.CompareTag("Unit"))
-            {
-                BaseGridUnitScript unit = hit.collider.GetComponent<BaseGridUnitScript>();
-                if (unit != null)
-                {
-                    SelectUnit(unit);
-                    return;
-                }
-            }
-        }
+    //    // Prioritize unit selection - check all hits for units first
+    //    foreach (RaycastHit2D hit in hits)
+    //    {
+    //        if (hit.collider.CompareTag("Unit"))
+    //        {
+    //            BaseGridUnitScript unit = hit.collider.GetComponent<BaseGridUnitScript>();
+    //            if (unit != null)
+    //            {
+    //                SelectUnit(unit);
+    //                return;
+    //            }
+    //        }
+    //    }
 
-        // If no unit was found, check for cities
-        foreach (RaycastHit2D hit in hits)
-        {
-            selectedPosition = tilemap.WorldToCell(hit.point);
-            City city = cityManager.GetCity(selectedPosition);
-            if (city != null)
-            {
-                SelectCity(city);
-                return;
-            }
-        }
-        Deselect();
+    //    // If no unit was found, check for cities
+    //    foreach (RaycastHit2D hit in hits)
+    //    {
+    //        selectedPosition = tilemap.WorldToCell(hit.point);
+    //        City city = cityManager.GetCity(selectedPosition);
+    //        if (city != null)
+    //        {
+    //            SelectCity(city);
+    //            return;
+    //        }
+    //    }
+    //    Deselect();
         
         
-        // if(CityUI.Instance.cityMenuMode == CityMenuMode.None)
-        // {
+    //    // if(CityUI.Instance.cityMenuMode == CityMenuMode.None)
+    //    // {
 
-        // }
+    //    // }
 
-        // If nothing selectable was found, optionally deselect
-        // Deselect();
-    }
+    //    // If nothing selectable was found, optionally deselect
+    //    // Deselect();
+    //}
 }
