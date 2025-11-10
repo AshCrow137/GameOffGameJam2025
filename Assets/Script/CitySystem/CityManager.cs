@@ -48,7 +48,7 @@ public class CityManager : MonoBehaviour
 
         // Create a new city instance from the city data
         //City newCity = new City(cityData, gridPosition);
-        GameObject newCityObject = Instantiate(cityPrefab,HexTilemapManager.Instance.GetMainTilemap().CellToWorld(gridPosition),Quaternion.identity);
+        GameObject newCityObject = Instantiate(cityPrefab,HexTilemapManager.Instance.CellToWorldPos(gridPosition),Quaternion.identity);
         GridCity newCity = newCityObject.GetComponent<GridCity>();
         newCity.InstantiateCity(cityData, gridPosition, unitOwner);
         // TODO: JUST FOR TESTING. REMOVE LATER AND ADD LOGIC FOR FINDING RESOURCE PER CITY
@@ -240,7 +240,7 @@ public class CityManager : MonoBehaviour
         if (!CanUnitBePlaced(city, position))
             return;
         //instantiate gameobject
-        GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(position), Quaternion.identity);
+        GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.CellToWorldPos(position), Quaternion.identity);
         unit.GetComponent<BaseGridUnitScript>().Initialize(unitOwner);
         HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByUnit);
     }

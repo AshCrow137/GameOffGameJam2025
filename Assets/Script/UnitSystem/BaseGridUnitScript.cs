@@ -5,26 +5,30 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Seeker))]
-public class BaseGridUnitScript : MonoBehaviour
+public class BaseGridUnitScript : BaseGridEntity
 {
+    [Header("Unit stats")]
     [SerializeField]
-    protected int Health=2;
+    protected UnitType unitType;
     [SerializeField]
-    protected int CurrentHealth = 2;
+    protected int AttackDamage = 1;    
+    [SerializeField]
+    protected int RetallitionAttackDamage = 1;
+    [SerializeField]
+    protected int AttackRange = 1;
     [SerializeField]
     protected int MovementDistance = 5;
+    //TODO Convert cost to sctuct and add cost variable;
+    [SerializeField]
+    protected int ProductionTime = 1;
     [SerializeField]
     private float MovementSpeed = 3;
-    [SerializeField]
-    private int AttackDistance = 1;
-    [SerializeField]
-    private int AttackDamage = 1;
     [SerializeField]
     private int AttacksPerTurn = 1;
     [SerializeField]
     private bool CanMoveAfterattack = false;
 
-    private BaseKingdom Owner;
+
     private Seeker seeker;
     private Path path;
     private int tilesRemain;
@@ -38,20 +42,9 @@ public class BaseGridUnitScript : MonoBehaviour
     [SerializeField]
     private TMP_Text remainMovementText;
 
-    [SerializeField]
-    private Image HPImage;
-    private HexTilemapManager hTM = HexTilemapManager.Instance;
-
     private bool bIsMoving = false;
     private Vector3 PathTarget;
 
-    [SerializeField]
-    private GameObject bodySprite;
-    [SerializeField]
-    private Canvas rotatebleCanvas;
-    [SerializeField]
-    private Transform CameraArm;
-    private Vector3Int gridPosition;
     [SerializeField]
     private List<TileState> possibleSpawnTiles = new List<TileState>();
 
@@ -63,28 +56,19 @@ public class BaseGridUnitScript : MonoBehaviour
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
     ///</summary>
-    public void Initialize(BaseKingdom owner)
+    public override void Initialize(BaseKingdom owner)
     {
-
-        GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
+        base.Initialize(owner);
         seeker = GetComponent<Seeker>();
         tilesRemain = MovementDistance;
         remainMovementText.text = tilesRemain.ToString();
-        hTM = HexTilemapManager.Instance;
-        hTM.PlaceUnitOnTile(hTM.GetMainTilemap().WorldToCell(transform.position),this);
 
+        hTM.PlaceUnitOnTile(hTM.WorldToCellPos(transform.position),this);
         
-        Owner = owner;
-        HPImage.color = Owner.GetKingdomColor();
-        if(Camera.main != null && Camera.main.transform.parent != null)
-        {
-            CameraArm = Camera.main.transform.parent;
-        }
-        gridPosition = HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position);
     }
    
-    public BaseKingdom GetOwner() { return Owner; }
-    public void OnUnitSelect(BaseKingdom selector)
+    
+    public override void OnEntitySelect(BaseKingdom selector)
     {
         if(selector!= Owner)
         {
@@ -95,21 +79,21 @@ public class BaseGridUnitScript : MonoBehaviour
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
         HPImage.color = Color.gray;
     }
-    public void OnUnitDeselect()
+    public override void OnEntityDeselect()
     {
+        base.OnEntityDeselect();
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
         HPImage.color = Owner.GetKingdomColor();
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
-    private void OnEndTurn(BaseKingdom entity)
+    protected override void OnEndTurn(BaseKingdom entity)
     {
-        if (entity == Owner) 
-        {
+        base.OnEndTurn(entity);
             tilesRemain = MovementDistance;
             attacksRemain = AttacksPerTurn;
             remainMovementText.text = tilesRemain.ToString();
-        }
+        
     }
     protected virtual void MoveTo(Vector3 target)
     {
@@ -117,7 +101,7 @@ public class BaseGridUnitScript : MonoBehaviour
     }
     public Vector3Int UnitPositionOnCell()
     {
-        return hTM.GetMainTilemap().WorldToCell(transform.position);
+        return hTM.WorldToCellPos(transform.position);
     }
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
@@ -145,7 +129,7 @@ public class BaseGridUnitScript : MonoBehaviour
         }
         int intDistance = hTM.GetDistanceInCells(UnitPositionOnCell(), targetUnitPosition);
         Debug.Log($"Distance between {this.name} and target cell: {intDistance}");
-        if(intDistance <=AttackDistance) 
+        if(intDistance <=AttackRange) 
         {
             Debug.Log($"{name} try to attack {targetUnit.name}!");
             if(attacksRemain>0)
@@ -207,7 +191,7 @@ public class BaseGridUnitScript : MonoBehaviour
 
             hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
             hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
-            CreatePath(hTM.GetMainTilemap().CellToWorld(cellPos));
+            CreatePath(hTM.CellToWorldPos(cellPos));
 
 
         }
@@ -308,10 +292,5 @@ public class BaseGridUnitScript : MonoBehaviour
        MovementCycle();
     }
   
-    void LateUpdate()
-    {
-        //rotating unit body sprite
-        bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z+90,-90,-90));
-        rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
-    }
+
 }
