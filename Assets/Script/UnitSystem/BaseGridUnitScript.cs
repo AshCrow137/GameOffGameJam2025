@@ -7,15 +7,22 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : BaseGridEntity
 {
-
+    [Header("Unit stats")]
+    [SerializeField]
+    protected UnitType unitType;
+    [SerializeField]
+    protected int AttackDamage = 1;    
+    [SerializeField]
+    protected int RetallitionAttackDamage = 1;
+    [SerializeField]
+    protected int AttackRange = 1;
     [SerializeField]
     protected int MovementDistance = 5;
+    //TODO Convert cost to sctuct and add cost variable;
+    [SerializeField]
+    protected int ProductionTime = 1;
     [SerializeField]
     private float MovementSpeed = 3;
-    [SerializeField]
-    private int AttackDistance = 1;
-    [SerializeField]
-    private int AttackDamage = 1;
     [SerializeField]
     private int AttacksPerTurn = 1;
     [SerializeField]
@@ -122,7 +129,7 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         int intDistance = hTM.GetDistanceInCells(UnitPositionOnCell(), targetUnitPosition);
         Debug.Log($"Distance between {this.name} and target cell: {intDistance}");
-        if(intDistance <=AttackDistance) 
+        if(intDistance <=AttackRange) 
         {
             Debug.Log($"{name} try to attack {targetUnit.name}!");
             if(attacksRemain>0)

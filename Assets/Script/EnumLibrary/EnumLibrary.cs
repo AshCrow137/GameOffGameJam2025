@@ -44,3 +44,10 @@ public enum SelectionType
         SpawnUnit,
         SpawnBuilding
     }
+public enum UnitType
+{
+    Infantry,
+    Archer,
+    Cavalry,
+    Special
+}

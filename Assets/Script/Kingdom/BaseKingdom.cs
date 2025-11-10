@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 // Base kingdom class
 public class BaseKingdom : Entity, IMadnessable
@@ -35,6 +36,8 @@ public class BaseKingdom : Entity, IMadnessable
 
     public virtual void Initialize()
     {
+        GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
+        GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
         // Initializing controlled units
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
@@ -45,6 +48,17 @@ public class BaseKingdom : Entity, IMadnessable
             city.Initialize(this);
         }
     }
+
+    private void OnStartTurn(BaseKingdom kingdom)
+    {
+        if (kingdom != this) return;
+    }
+
+    private void OnEndTurn(BaseKingdom kingdom)
+    {
+        if (kingdom != this) return;
+    }
+
     public void AddUnitToKingdom(BaseGridUnitScript unit)
     {
         if(!controlledUnits.Contains(unit))

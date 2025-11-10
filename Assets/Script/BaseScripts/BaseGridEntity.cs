@@ -3,10 +3,13 @@ using UnityEngine.UI;
 
 public class BaseGridEntity : MonoBehaviour
 {
+    [Header("Grid entity variables")]
     [SerializeField]
     protected int Health = 2;
     [SerializeField]
     protected int CurrentHealth = 2;
+    [SerializeField]
+    protected int Vision = 5;
     [SerializeField]
     protected Image HPImage;
     [SerializeField]
