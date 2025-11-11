@@ -34,7 +34,7 @@ public class TurnManager : MonoBehaviour
 
         //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
         entity.GetComponent<EntityTurnHandler>()?.OnTurnStart();
-
+        GlobalEventManager.InvokeStartTurnEvent(entity);
     }
     /// <summary>
     /// Method to get current active kingdom

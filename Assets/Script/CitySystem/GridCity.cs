@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GridCity : MonoBehaviour
+public class GridCity : BaseGridEntity
 {
     public Sprite sprite;
     public Vector3Int position;
@@ -16,41 +16,23 @@ public class GridCity : MonoBehaviour
 
     public int visionRadius;
 
-    public BaseKingdom Owner;
+
 
     // Resources this city generates per turn
     public Dictionary<ResourceType, int> resourceGainPerTurn = new Dictionary<ResourceType, int>();
-    [SerializeField]
-    private Transform CameraArm;
-    [SerializeField]
-    private GameObject bodySprite;
-    [SerializeField]
-    private Canvas rotatebleCanvas;
-    private SpriteRenderer spriteRenderer;
     private bool bCanSpawnUnits = true;
-    public void Initialize()
+    public override void Initialize(BaseKingdom owner)
     {
-        sprite = GetComponent<Sprite>();
-        if (Camera.main != null && Camera.main.transform.parent != null)
-        {
-            CameraArm = Camera.main.transform.parent;
-        }
-        if (!spriteRenderer)
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-        spriteRenderer.color = Owner.GetKingdomColor();
-        position = HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position);
-        CityManager.Instance.AddCity(HexTilemapManager.Instance.GetMainTilemap().WorldToCell(transform.position), this);
-        GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
+        base.Initialize(owner);
+        CityManager.Instance.AddCity(HexTilemapManager.Instance.WorldToCellPos(transform.position), this);
+        
     }
 
-    private void OnEndTurn(BaseKingdom entity)
+    protected override void OnEndTurn(BaseKingdom entity)
     {
-        if (entity == Owner)
-        {
+            base.OnEndTurn(entity);
             bCanSpawnUnits = true;
-        }
+        
     }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
@@ -66,42 +48,34 @@ public class GridCity : MonoBehaviour
         this.resourceGainPerTurn = new Dictionary<ResourceType, int>();
         Owner.AddCityToKingdom(this);
         
-        Initialize();
+        Initialize(Owner);
     }
-    public void OnCitySelect(BaseKingdom selector)
+    public override void OnEntitySelect(BaseKingdom selector)
     {
-        if (selector != Owner)
-        {
-            return;
-        }
+        base.OnEntitySelect(selector);
         Debug.Log($"Select {this.name} city");
-        spriteRenderer.color = Color.gray;
+        HPImage.color = Color.gray;
         GameplayCanvasManager.instance.ActivateUnitProductionPanel(this);
     }
-    public void OnCityDeselect()
+    public override void OnEntityDeselect()
     {
         Debug.Log($"Deselect {this.name} city");
-        spriteRenderer.color = Owner.GetKingdomColor();
+        HPImage.color = Owner.GetKingdomColor();
         GameplayCanvasManager.instance.DeactivateUnitProductionPanel();
     }
-    void LateUpdate()
-    {
-        //rotating unit body sprite
-        bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
-        rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
-    }
+
     public void TryToSpawnUnitInCity(GameObject unitPrefab)
     {
         if(bCanSpawnUnits) 
         {
-            List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(position, 1,unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+            List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(gridPosition, 1,unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
             if(possiblePositions.Count <= 0)
             {
                 GlobalEventManager.InvokeShowUIMessageEvent($"This have no available tiles to spawn {unitPrefab.name}!");
                 return;
             }
             Vector3Int randomPos = possiblePositions[Random.Range(0, possiblePositions.Count - 1)];
-            GameObject newUnit = Instantiate(unitPrefab, HexTilemapManager.Instance.GetMainTilemap().CellToWorld(randomPos), Quaternion.identity);
+            GameObject newUnit = Instantiate(unitPrefab, HexTilemapManager.Instance.CellToWorldPos(randomPos), Quaternion.identity);
             BaseGridUnitScript unitScript = newUnit.GetComponent<BaseGridUnitScript>();
             Seeker seeker = newUnit.GetComponent<Seeker>();
             var r = seeker.traversableTags;

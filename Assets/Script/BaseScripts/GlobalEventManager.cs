@@ -8,6 +8,7 @@ using UnityEngine.Events;
         public static UnityEvent<float> TestUnityEvent { get; private set; } = new UnityEvent<float>();
         public static UnityEvent<HexTile, Vector3Int> OnTileClickEvent { get; private set; } = new UnityEvent<HexTile, Vector3Int>();
     public static UnityEvent<BaseKingdom> EndTurnEvent { get; private set; } = new UnityEvent<BaseKingdom>();
+    public static UnityEvent<BaseKingdom> StartTurnEvent { get; private set; } = new UnityEvent<BaseKingdom> { };
     public static UnityEvent<Vector3> MouseClickedEvent { get; private set; } = new UnityEvent<Vector3>();
     public static UnityEvent<string> ShowUIMessageEvent { get; private set; } = new UnityEvent<string> ();
     public static UnityEvent<BaseKingdom> KingdomDefeatEvent { get; private set; } = new UnityEvent<BaseKingdom>();
@@ -27,6 +28,10 @@ using UnityEngine.Events;
         public static void InvokeEndTurnEvent(BaseKingdom entity)
         {
             EndTurnEvent.Invoke(entity);
+        } 
+    public static void InvokeStartTurnEvent(BaseKingdom entity)
+        {
+            StartTurnEvent.Invoke(entity);
         }
         public static void InvokeTestUnityEvent(float someVariable)
         {

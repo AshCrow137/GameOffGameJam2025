@@ -146,25 +146,25 @@ public class InputManager : MonoBehaviour
             Debug.Log($"clicked tile type: {state}");
             if (selectedUnit)
             {
-                selectedUnit.OnUnitDeselect();
+                selectedUnit.OnEntityDeselect();
                 selectedUnit = null;
             }
             if(selectedCity)
             {
-                selectedCity.OnCityDeselect();
+                selectedCity.OnEntityDeselect();
                 selectedCity = null;
             }
             BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
             GridCity city = CityManager.Instance.GetCity(HexTilemapManager.Instance.GetCellAtMousePosition());
             if (unit)
             {
-                unit.OnUnitSelect(playerKngdom);
+                unit.OnEntitySelect(playerKngdom);
                 selectedUnit = unit;
             }
             else if(city)
             {
                 selectedCity = city;
-                selectedCity.OnCitySelect(playerKngdom);
+                selectedCity.OnEntitySelect(playerKngdom);
             }
         }
        
