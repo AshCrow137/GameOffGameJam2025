@@ -57,6 +57,9 @@ public class BaseKingdom : Entity, IMadnessable
     private void OnEndTurn(BaseKingdom kingdom)
     {
         if (kingdom != this) return;
+
+        //TODO: fazer um for para cada unidade para saber quantas estão a 5 de distancia das cidades
+        // usando os metodos get cell position e get distance is cells
     }
 
     public void AddUnitToKingdom(BaseGridUnitScript unit)
@@ -95,11 +98,11 @@ public class BaseKingdom : Entity, IMadnessable
         return visibleTiles.Contains(position);
     }
 
-    public float madnessLevel { get; private set; } = 0f;
+    public int madnessLevel { get; private set; } = 0;
     [SerializeField]
-    public float maxMadnessLevel { get; private set; } = 100f;
+    public int maxMadnessLevel { get; private set; } = 100;
 
-    public void IncreaseMadness(float amount)
+    public void IncreaseMadness(int amount)
     {
         madnessLevel += amount;
         if(madnessLevel > maxMadnessLevel)
@@ -108,36 +111,32 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
-    public void DecreaseMadness(float amount)
+    public void DecreaseMadness(int amount)
     {
         madnessLevel -= amount;
-        if(madnessLevel < 0f)
+        if(madnessLevel < 0)
         {
-            madnessLevel = 0f;
+            madnessLevel = 0;
         }
     }
 
     public virtual MadnessEffect GetMadnessEffects()
     {
-        if(madnessLevel == MadnessCosts.PreventAttacks)
+        if(madnessLevel == MadnessCosts.almostDefeat)
         {
-            DecreaseMadness(MadnessCosts.PreventAttacks);
-            return MadnessEffect.PreventAttacks;
+            return MadnessEffect.almostDefeat;
         }
-        else if(madnessLevel >= MadnessCosts.ImproveUnits)
+        else if(madnessLevel >= MadnessCosts.less35)
         {
-            DecreaseMadness(MadnessCosts.ImproveUnits);
-            return MadnessEffect.ImproveUnits;
+            return MadnessEffect.less35;
         }
-        else if(madnessLevel >= MadnessCosts.FreeUnits)
+        else if(madnessLevel >= MadnessCosts.less25)
         {
-            DecreaseMadness(MadnessCosts.FreeUnits);
-            return MadnessEffect.FreeUnits;
+            return MadnessEffect.less25;
         }
-        else if(madnessLevel >= MadnessCosts.BetterDeal)
+        else if(madnessLevel >= MadnessCosts.less10)
         {
-            DecreaseMadness(MadnessCosts.BetterDeal);
-            return MadnessEffect.BetterDeal;
+            return MadnessEffect.less10;
         }
         else
         {

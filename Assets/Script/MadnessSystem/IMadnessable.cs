@@ -2,9 +2,9 @@ using UnityEngine;
 
 public interface IMadnessable
 {
-    void IncreaseMadness(float amount);
+    void IncreaseMadness(int amount);
 
-    void DecreaseMadness(float amount);
+    void DecreaseMadness(int amount);
 
     MadnessEffect GetMadnessEffects();
 }
