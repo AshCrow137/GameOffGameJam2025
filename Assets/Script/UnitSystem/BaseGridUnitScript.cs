@@ -26,12 +26,12 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     private int AttacksPerTurn = 1;
     [SerializeField]
-    private bool CanMoveAfterattack = false;
+    protected bool CanMoveAfterattack = false;
 
 
     private Seeker seeker;
     private Path path;
-    private int tilesRemain;
+    protected int tilesRemain;
     private int CurrentWaypoint = 0;
     private float nextWaypointDistance = 0.01f;
     private bool bReachedEndOfPath;
@@ -40,7 +40,7 @@ public class BaseGridUnitScript : BaseGridEntity
 
     //TODO Replace with normal UI
     [SerializeField]
-    private TMP_Text remainMovementText;
+    protected TMP_Text remainMovementText;
 
     private bool bIsMoving = false;
     private Vector3 PathTarget;
@@ -52,6 +52,8 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         return possibleSpawnTiles;
     }
+
+    public UnitType GetUnitType() => unitType;
 
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
