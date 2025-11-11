@@ -25,10 +25,10 @@
     public enum MadnessEffect
     {
         None,
-        BetterDeal,
-        FreeUnits,
-        ImproveUnits,
-        PreventAttacks
+        less10,
+        less25,
+        less35,
+        almostDefeat
     }
 
 public enum SelectionType

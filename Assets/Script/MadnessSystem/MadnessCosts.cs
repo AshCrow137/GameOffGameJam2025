@@ -2,9 +2,9 @@ using UnityEngine;
 
 public static class MadnessCosts
 {
-    public const float NONE = 0f;
-    public const float BetterDeal = 40f;
-    public const float FreeUnits = 60f;
-    public const float ImproveUnits = 80f;
-    public const float PreventAttacks = 100f;
+    public const int NONE = 0;
+    public const int less10 = 25;
+    public const int less25 = 50;
+    public const int less35 = 75;
+    public const int almostDefeat = 100;
 }
