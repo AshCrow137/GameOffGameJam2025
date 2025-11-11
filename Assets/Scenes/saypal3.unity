@@ -6262,6 +6262,7 @@ MonoBehaviour:
   turnOrder:
   - {fileID: 1507932131}
   - {fileID: 788129470}
+  - {fileID: 991753257}
   turnText: {fileID: 284602317}
 --- !u!4 &924946558
 Transform:
@@ -6290,6 +6291,7 @@ GameObject:
   - component: {fileID: 991753255}
   - component: {fileID: 991753254}
   - component: {fileID: 991753253}
+  - component: {fileID: 991753257}
   m_Layer: 0
   m_Name: BuildingManager
   m_TagString: Untagged
@@ -6368,8 +6370,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   building: {fileID: 11400000, guid: da0836b485bfeb74284aa57b713bacee, type: 2}
+  buildingPrefab: {fileID: 1759148930670143516, guid: 33a81bf3a3bf3494a9407103e40a30c0, type: 3}
   tilemap: {fileID: 4958529}
   resourceManager: {fileID: 1583622226}
+  playerKngdom: {fileID: 1507932131}
 --- !u!4 &991753256
 Transform:
   m_ObjectHideFlags: 0
@@ -6385,6 +6389,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 140203639}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &991753257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991753252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae710e1e3b187141bcb0411c485c618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlledUnits: []
+  controlledCities: []
+  kingdomColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1009905321 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6744221943660887454, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
@@ -6436,7 +6455,7 @@ MonoBehaviour:
   - {fileID: 788129470}
   selectionManager: {fileID: 0}
   gameplayCanvasManager: {fileID: 363294321}
-  cityUI: {fileID: 0}
+  cityUI: {fileID: 28648849}
   kingdomUI: {fileID: 0}
   addVisibleTiles: {fileID: 0}
 --- !u!4 &1011269897
