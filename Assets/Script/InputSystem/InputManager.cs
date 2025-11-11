@@ -134,6 +134,7 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("OnClick at position: " + mousePos);
         if (bIsOnUIElement) { return; }
+        if (CityUI.Instance && CityUI.Instance.cityMenuMode != CityMenuMode.None) return; // if we are trying to place a building on the tile then don't do tile interaction from here.
         if (!value.performed || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
         if (ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement))
         {
