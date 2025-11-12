@@ -32,13 +32,15 @@ public class BootManager : MonoBehaviour
     [SerializeField]
     private AddVisibleTiles addVisibleTiles;
 
-    [SerializeField]
-    private VisionManager visionManager;
+    //[SerializeField]
+    //private VisionManager visionManager;
 
 
     void Start()
     {
-            // testScript.Initialize();
+        //visionManager?.Instantiate();
+
+        // testScript.Initialize();
         hexTilemapManager?.Initialize();
 
         turnManager?.Initialize();
@@ -58,6 +60,5 @@ public class BootManager : MonoBehaviour
         cityUI?.Instantiate();
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
-        visionManager?.Initialize();
     }
 }

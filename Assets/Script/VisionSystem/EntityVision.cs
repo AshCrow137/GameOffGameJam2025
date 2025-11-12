@@ -34,6 +34,11 @@ public class EntityVision : MonoBehaviour
         List<Vector3Int> updatedTiles = new List<Vector3Int>();
 
         VisionManager visionManager = entity.GetOwner().GetComponent<VisionManager>();
+        if(visionManager == null)
+        {
+            Debug.LogError("VisionManager not found on owner of entity: " + entity.name);
+            return updatedTiles;
+        }
         Vector3Int entityPosition = entity.GetCellPosition();
 
         // Loop through all tiles in vision radius (includes entity's own tile at distance 0)

@@ -57,6 +57,9 @@ public class BaseGridUnitScript : BaseGridEntity
     private bool bTryToAttack = false;
     private BaseGridUnitScript attackTarget;
 
+    // Vision system - track previous position for fog updates during movement
+    private Vector3Int previousCellPosition;
+
     private static readonly float[,] AttackModifiers = {
     /*Cavalry*/{1.0f,1.0f,1.5f,1f },
     /*Infantry*/{1.5f,1.0f,1.0f,1f },
@@ -391,6 +394,9 @@ public class BaseGridUnitScript : BaseGridEntity
                 path = p;
                 CurrentWaypoint = 0;
                 bIsMoving = true;
+                
+                // Store initial cell position for vision updates
+                previousCellPosition = GetCellPosition();
             }
             else
             {
@@ -427,6 +433,18 @@ public class BaseGridUnitScript : BaseGridEntity
                         CurrentWaypoint++;
                         tilesRemain--;
                         remainMovementText.text = tilesRemain.ToString();
+                        
+                        // Update vision when entering a new cell
+                        Vector3Int currentCellPosition = GetCellPosition();
+                        if (currentCellPosition != previousCellPosition)
+                        {
+                            EntityVision entityVision = GetComponent<EntityVision>();
+                            if (entityVision != null)
+                            {
+                                entityVision.UpdateVisibilityOnMovement(previousCellPosition);
+                                previousCellPosition = currentCellPosition;
+                            }
+                        }
                     }
                     else
                     {
@@ -457,6 +475,19 @@ public class BaseGridUnitScript : BaseGridEntity
 
         hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position),this);
         bIsMoving = false;
+        
+        // Final vision update at destination
+        Vector3Int finalCellPosition = GetCellPosition();
+        if (finalCellPosition != previousCellPosition)
+        {
+            EntityVision entityVision = GetComponent<EntityVision>();
+            if (entityVision != null)
+            {
+                entityVision.UpdateVisibilityOnMovement(previousCellPosition);
+                previousCellPosition = finalCellPosition;
+            }
+        }
+        
         if(bTryToAttack)
         {
             TryToAttack(attackTarget, attackTarget.GetCellPosition());
