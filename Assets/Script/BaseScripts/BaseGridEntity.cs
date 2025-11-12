@@ -25,6 +25,8 @@ public class BaseGridEntity : MonoBehaviour
     protected BaseKingdom Owner;
     protected SpriteRenderer baseSprite;
 
+    protected bool visibleUnderGreyFog = true;
+
     public virtual void Initialize(BaseKingdom owner)
     {
         hTM = HexTilemapManager.Instance;
@@ -77,4 +79,46 @@ public class BaseGridEntity : MonoBehaviour
         return hTM.GetMainTilemap().WorldToCell(transform.position);
     }
     public BaseKingdom GetOwner() { return Owner; }
+
+    /// <summary>
+    /// Makes the entity invisible/visible without disabling the GameObject
+    /// </summary>
+    public void SetEntityVisibility(bool visible)
+    {
+        // Hide/show all sprite renderers
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer renderer in renderers)
+        {
+            renderer.enabled = visible;
+        }
+
+        // Hide/show canvas
+        if (rotatebleCanvas != null)
+        {
+            rotatebleCanvas.gameObject.SetActive(visible);
+        }
+    }
+
+    /// <summary>
+    /// Covers entity with fog, hiding/showing based on fog type and entity settings
+    /// </summary>
+    public void CoverByFog(Fog fog)
+    {
+        bool shouldBeVisible = true;
+
+        switch (fog)
+        {
+            case Fog.None:
+                shouldBeVisible = true;
+                break;
+            case Fog.Grey:
+                shouldBeVisible = visibleUnderGreyFog;
+                break;
+            case Fog.Black:
+                shouldBeVisible = false;
+                break;
+        }
+
+        SetEntityVisibility(shouldBeVisible);
+    }
 }

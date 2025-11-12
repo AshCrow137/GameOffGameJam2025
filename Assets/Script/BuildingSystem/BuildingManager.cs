@@ -142,8 +142,9 @@ public class BuildingManager : MonoBehaviour
         }
 
         HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+
     }
-    
+
     private bool CanBuildingBePlaced(GridCity city, Building building, Vector3Int position)
     {
         // Check if within city boundaries
