@@ -85,8 +85,7 @@ public class BaseGridUnitScript : BaseGridEntity
         hTM.PlaceUnitOnTile(hTM.WorldToCellPos(transform.position),this);
 
     }
-   
-    
+    //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
         if(selector!= Owner)
@@ -123,6 +122,11 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         return hTM.WorldToCellPos(transform.position);
     }
+    /// <summary>
+    /// Invokes when player press alternative tile interaction button (default RightMouseButton)
+    /// </summary>
+    /// <param name="tile">clicked tile</param>
+    /// <param name="cellPos">position of clicked tile</param>
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
@@ -141,7 +145,11 @@ public class BaseGridUnitScript : BaseGridEntity
 
         
     }
-
+    /// <summary>
+    /// determinate can we attack unit or not
+    /// </summary>
+    /// <param name="targetUnit">attacked unit</param>
+    /// <param name="targetUnitPosition">attacked unit position</param>
    private void TryToAttack(BaseGridUnitScript targetUnit, Vector3Int targetUnitPosition)
     {
         if (targetUnit.GetOwner() == Owner)
@@ -168,6 +176,7 @@ public class BaseGridUnitScript : BaseGridEntity
             }
             
         }
+        //Calculate direction of attack (depends on mouse position on target unit's cell) and move unit to calculated cell
         else
         {
             if(AttackRange==1)
@@ -183,16 +192,11 @@ public class BaseGridUnitScript : BaseGridEntity
                 else if (angle < -120 && angle >= -180) i = 3;
                 else if (angle <= 120 && angle > 60) i = 5;
                 else if (angle < 180 && angle > 120) i = 2;
-                //targetCellToMove = targetUnitPosition - direction;
                 var node = AstarPath.active.data.gridGraph.GetNearest(tilePos).node as GridNode;
                 var nodeConnections = AstarPath.active.data.gridGraph.GetNodeConnection(node, i);
                 var nodePos = (Vector3)nodeConnections.position;
                 Vector3Int resPos = hTM.WorldToCellPos(nodePos);
-
-                //StartCoroutine(c(tilePos));
                 //Debug.Log($"selected angle: {angle}");
-
-
                 int distance = hTM.GetDistanceInCells(GetCellPosition(), resPos);
                 if (distance <= tilesRemain)
                 {
@@ -212,6 +216,7 @@ public class BaseGridUnitScript : BaseGridEntity
             InputManager.instance.SetAttackCursor();
         }
     }
+    //show marker tile if we try to attack this unit
     void OnMouseOver()
     {
         
@@ -239,16 +244,18 @@ public class BaseGridUnitScript : BaseGridEntity
             }
         }
     }
-
+    //resets cursor and remove markers 
     void OnMouseExit()
     {
-        //The mouse is no longer hovering over the GameObject so output this message each frame
         hTM.RemoveMarkerOnTilePosition(previousMarkerPos);
         previousMarkerPos = Vector3Int.zero;
         InputManager.instance.SetDefaultCursor();
     }
 
-
+    /// <summary>
+    /// Base attack function, controls what kind of attack is used, ranged or melee
+    /// </summary>
+    /// <param name="targetUnit"></param>
     protected virtual void Attack(BaseGridUnitScript targetUnit)
     {
         if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetUnit.transform.position)) == 1)
@@ -259,7 +266,7 @@ public class BaseGridUnitScript : BaseGridEntity
         {
             targetUnit.TakeDamage(RangeAttackDamage, this, false);
         }
-       
+       //if property true, unit can move after attack
         if(!CanMoveAfterattack)
         {
             tilesRemain=0;
@@ -268,12 +275,20 @@ public class BaseGridUnitScript : BaseGridEntity
         bTryToAttack = false;
         attackTarget = null;
     }
+
+    /// <summary>
+    /// calculate and apply final damage to unit
+    /// </summary>
+    /// <param name="amount">amount of taken damage before calculation</param>
+    /// <param name="attacker">unit that attack this unit</param>
+    /// <param name="retallitionAttack">bool if this damage was retallition damage or not</param>
     public virtual void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
     {
         //TODO Calculate result damage
         int resultDamage = amount;
         if(!retallitionAttack)
         {
+            //if not retallition  damage calculate result damage using matrix of units
             resultDamage = (int)Mathf.Round( resultDamage * GetDamageModifier(attacker.unitType, unitType));
         }
         CurrentHealth -= resultDamage;
@@ -290,11 +305,16 @@ public class BaseGridUnitScript : BaseGridEntity
             Death();
             return;
         }
+        //if attack is not retallition attack and this unit survives, this unit try to do retallition attack to it's attacker
         if(!retallitionAttack)
         {
             RetallitionAttack(attacker);
         }
     }
+    /// <summary>
+    /// base retallition attack
+    /// </summary>
+    /// <param name="attacker"></param>
     public virtual void RetallitionAttack(BaseGridUnitScript attacker)
     {
         if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
@@ -303,6 +323,10 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         
     }
+
+    /// <summary>
+    /// invokes when unit dies
+    /// </summary>
     protected virtual void Death()
     {
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
@@ -351,7 +375,10 @@ public class BaseGridUnitScript : BaseGridEntity
         PathTarget = target;
         seeker.StartPath(transform.position, target, OnPathComplete);
     }
-    
+    /// <summary>
+    /// calls when path constucting is complete
+    /// </summary>
+    /// <param name="p">result path</param>
     private void OnPathComplete(Path p)
     {
 
@@ -422,7 +449,9 @@ public class BaseGridUnitScript : BaseGridEntity
             MoveTo(path.vectorPath[CurrentWaypoint]);
         }
     }
-
+    /// <summary>
+    /// invokes when unit finnish his movement
+    /// </summary>
     private void OnEndOfPathReached()
     {
 
