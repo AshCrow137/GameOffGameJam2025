@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using System.Collections;
 using System.Linq;
+using System.Data;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : BaseGridEntity
@@ -56,6 +57,16 @@ public class BaseGridUnitScript : BaseGridEntity
     private bool bTryToAttack = false;
     private BaseGridUnitScript attackTarget;
 
+    private static readonly float[,] AttackModifiers = {
+    /*Cavalry*/{1.0f,1.0f,1.5f,1f },
+    /*Infantry*/{1.5f,1.0f,1.0f,1f },
+    /*Archers*/{1.0f,1.5f,1.0f,1f },
+    /*Special*/{1.0f,1.0f,1.0f,1f },
+    };
+    private float GetDamageModifier(UnitType attacker,UnitType defender)
+    {
+        return AttackModifiers[(int)attacker, (int)defender];
+    }
     public List<TileState> GetPossibleSpawnTiles()
     {
         return possibleSpawnTiles;
@@ -72,7 +83,7 @@ public class BaseGridUnitScript : BaseGridEntity
         remainMovementText.text = tilesRemain.ToString();
 
         hTM.PlaceUnitOnTile(hTM.WorldToCellPos(transform.position),this);
-        
+
     }
    
     
@@ -164,26 +175,7 @@ public class BaseGridUnitScript : BaseGridEntity
                 var tilePos = hTM.CellToWorldPos(targetUnitPosition);
                 Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
                 float angle = Mathf.Atan2(mousePos.y - tilePos.y, mousePos.x - tilePos.x) * Mathf.Rad2Deg;
-                //List<Vector3Int> adjacentPos = hTM.GetCellsInRange(targetUnitPosition, 1,new List<TileState> { TileState.Land,TileState.OccuppiedByBuilding,TileState.OccupiedByUnit,TileState.Water,TileState.Unavailable});
-                //List<float> angles = new List<float>();
-                //adjacentPos.Remove(targetUnitPosition);
-                //foreach (var cell in adjacentPos)
-                //{
-                //    //hTM.PlaceMarkerOnTilePosition(cell);
-                //    float angleBetween = Mathf.Atan2(cell.y - targetUnitPosition.y, cell.x - targetUnitPosition.x)*Mathf.Rad2Deg;
-                //    angles.Add(angleBetween);
-                //}
-                //Debug.Log(angles);
-                //var closest = angles.OrderBy(sangle => Mathf.Abs(sangle-angle)).FirstOrDefault();
-                //closest = closest * Mathf.Deg2Rad;
-                //Debug.Log(closest);
-                //Vector3Int direction = new Vector3Int((int)Mathf.Round(Mathf.Cos(closest)), (int)Mathf.Round(Mathf.Sin(closest)), 0);
-                //if (angle >= 0 && angle <= 60) targetCellToMove = targetUnitPosition + new Vector3Int(0, 1, 0);
-                //else if (angle < 0 && angle >= -60) targetCellToMove = targetUnitPosition + new Vector3Int(-1, 1, 0);
-                //else if (angle < -60 && angle >= -120) targetCellToMove = targetUnitPosition + new Vector3Int(-1, 0, 0);
-                //else if (angle < -120 && angle >= -180) targetCellToMove = targetUnitPosition + new Vector3Int(-1, -1, 0);
-                //else if (angle <= 120 && angle > 60) targetCellToMove = targetUnitPosition + new Vector3Int(1, 0, 0);
-                //else if (angle < 180 && angle > 120) targetCellToMove = targetUnitPosition + new Vector3Int(0, -1, 0);
+
                 int i = 0;
                 if (angle >= 0 && angle <= 60) i=1;
                 else if (angle < 0 && angle >= -60) i=0;
@@ -191,13 +183,11 @@ public class BaseGridUnitScript : BaseGridEntity
                 else if (angle < -120 && angle >= -180) i = 3;
                 else if (angle <= 120 && angle > 60) i = 5;
                 else if (angle < 180 && angle > 120) i = 2;
-                Debug.Log($"{angle} ; {i}");
                 //targetCellToMove = targetUnitPosition - direction;
                 var node = AstarPath.active.data.gridGraph.GetNearest(tilePos).node as GridNode;
                 var nodeConnections = AstarPath.active.data.gridGraph.GetNodeConnection(node, i);
                 var nodePos = (Vector3)nodeConnections.position;
                 Vector3Int resPos = hTM.WorldToCellPos(nodePos);
-                hTM.PlaceMarkerOnTilePosition(resPos);
 
                 //StartCoroutine(c(tilePos));
                 //Debug.Log($"selected angle: {angle}");
@@ -215,6 +205,13 @@ public class BaseGridUnitScript : BaseGridEntity
         
     }
     private Vector3Int previousMarkerPos;
+    private void OnMouseEnter()
+    {
+        if (InputManager.instance.bHasSelectedEntity && InputManager.instance.selectedUnit != this && InputManager.instance.selectedUnit.GetOwner() != Owner && InputManager.instance.selectedUnit.AttackRange == 1)
+        {
+            InputManager.instance.SetAttackCursor();
+        }
+    }
     void OnMouseOver()
     {
         
@@ -230,7 +227,6 @@ public class BaseGridUnitScript : BaseGridEntity
             else if (angle < -120 && angle >= -180) i = 3;
             else if (angle <= 120 && angle > 60) i = 5;
             else if (angle < 180 && angle > 120) i = 2;
-            Debug.Log($"{angle} ; {i}");
             var node = AstarPath.active.data.gridGraph.GetNearest(transform.position).node as GridNode;
             var nodeConnections = AstarPath.active.data.gridGraph.GetNodeConnection(node, i);
             var nodePos = (Vector3)nodeConnections.position;
@@ -249,6 +245,7 @@ public class BaseGridUnitScript : BaseGridEntity
         //The mouse is no longer hovering over the GameObject so output this message each frame
         hTM.RemoveMarkerOnTilePosition(previousMarkerPos);
         previousMarkerPos = Vector3Int.zero;
+        InputManager.instance.SetDefaultCursor();
     }
 
 
@@ -274,7 +271,13 @@ public class BaseGridUnitScript : BaseGridEntity
     public virtual void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
     {
         //TODO Calculate result damage
-        CurrentHealth -= amount;
+        int resultDamage = amount;
+        if(!retallitionAttack)
+        {
+            resultDamage = (int)Mathf.Round( resultDamage * GetDamageModifier(attacker.unitType, unitType));
+        }
+        CurrentHealth -= resultDamage;
+        Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
         HPImage.fillAmount = (float)CurrentHealth / Health;
         if (CurrentHealth <= 0 ) 
         {

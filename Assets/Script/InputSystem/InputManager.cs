@@ -6,11 +6,14 @@ using static UnityEngine.InputSystem.InputAction;
 public class InputManager : MonoBehaviour
 {
     //Class to handles all inputs from player.
+    [SerializeField]
+    private Texture2D cursorTexture;
     public static InputManager instance { get; private set; }
     private Vector2 mousePos;
 
     public BaseGridUnitScript selectedUnit { get; private set; }
     private GridCity selectedCity;
+
 
     [SerializeField]
     private PlayerKingdom playerKngdom;
@@ -71,6 +74,17 @@ public class InputManager : MonoBehaviour
         //send a position to Menu Controller
     }
 
+    public void SetAttackCursor()
+    {
+        if(cursorTexture)
+        {
+            Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+        }
+    }
+    public void SetDefaultCursor()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
     //End MenuInputs
 
     //GameInputs
@@ -157,8 +171,12 @@ public class InputManager : MonoBehaviour
             if (unit)
             {
                 unit.OnEntitySelect(playerKngdom);
-                selectedUnit = unit;
-                bHasSelectedEntity = true;
+                if(unit.GetOwner()==playerKngdom)
+                {
+                    selectedUnit = unit;
+                    bHasSelectedEntity = true;
+                }
+
             }
             else if(city)
             {

@@ -4689,6 +4689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitProductionPanel: {fileID: 1372548214}
+  buildingProductionPanel: {fileID: 0}
   messageText: {fileID: 151617130}
   showMessageTime: 3
   victoryPanel: {fileID: 118411093}
@@ -5544,6 +5545,10 @@ PrefabInstance:
       propertyPath: playerKngdom
       value: 
       objectReference: {fileID: 1507932131}
+    - target: {fileID: 8167079571798632465, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: cursorTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 4b138b4150d3a9c4a91721dcb9d5aa5a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6418,8 +6423,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   building: {fileID: 11400000, guid: da0836b485bfeb74284aa57b713bacee, type: 2}
+  buildingPrefab: {fileID: 0}
   tilemap: {fileID: 4958529}
   resourceManager: {fileID: 1583622226}
+  playerKngdom: {fileID: 0}
 --- !u!4 &991753256
 Transform:
   m_ObjectHideFlags: 0
