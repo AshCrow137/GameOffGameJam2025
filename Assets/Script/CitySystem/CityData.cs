@@ -8,6 +8,6 @@ public class CityData : ScriptableObject
     
     [Header("City Stats")]
     public float maxHP = 100f;
-    public int visionRadius = 6;
+    // public int visionRadius = 6;
 }
 

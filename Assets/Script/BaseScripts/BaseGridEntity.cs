@@ -60,6 +60,82 @@ public class BaseGridEntity : MonoBehaviour
     protected virtual void OnStartTurn(BaseKingdom entity)
     {
         if (entity != Owner) { return; }
+        // UpdateFog();
+    }
+
+    /// <summary>
+    /// Updates fog for all tiles within vision radius (includes entity's own position)
+    /// </summary>
+    protected virtual void UpdateFog()
+    {
+        VisionManager visionManager = Owner.GetComponent<VisionManager>();
+        // if (visionManager == null) return;
+
+        Vector3Int entityPosition = GetCellPosition();
+
+        // Loop through all tiles in vision radius (includes entity's own tile at distance 0)
+        for (int x = -Vision; x <= Vision; x++)
+        {
+            for (int y = -Vision; y <= Vision; y++)
+            {
+                for (int z = -Vision; z <= Vision; z++)
+                {
+                    // Cube coordinate constraint
+                    if (x + y + z == 0)
+                    {
+                        Vector3Int tilePosition = new Vector3Int(
+                            entityPosition.x + x,
+                            entityPosition.y + y,
+                            entityPosition.z + z
+                        );
+
+                        // Verify distance
+                        int distance = hTM.GetDistanceInCells(entityPosition, tilePosition);
+                        if (distance <= Vision)
+                        {
+                            visionManager.UpdateGreyFog(tilePosition);
+                            visionManager.UpdateBlackFog(tilePosition);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Removes fog for all tiles within vision radius from the old position (includes the old position itself)
+    /// </summary>
+    protected virtual void RemoveFog(Vector3Int oldPosition)
+    {
+        VisionManager visionManager = Owner.GetComponent<VisionManager>();
+        if (visionManager == null) return;
+
+        // Loop through all tiles in vision radius from old position (includes old position tile at distance 0)
+        for (int x = -Vision; x <= Vision; x++)
+        {
+            for (int y = -Vision; y <= Vision; y++)
+            {
+                for (int z = -Vision; z <= Vision; z++)
+                {
+                    // Cube coordinate constraint
+                    if (x + y + z == 0)
+                    {
+                        Vector3Int tilePosition = new Vector3Int(
+                            oldPosition.x + x,
+                            oldPosition.y + y,
+                            oldPosition.z + z
+                        );
+
+                        // Verify distance
+                        int distance = hTM.GetDistanceInCells(oldPosition, tilePosition);
+                        if (distance <= Vision)
+                        {
+                            visionManager.RemoveGreyFog(tilePosition);
+                        }
+                    }
+                }
+            }
+        }
     }
     protected virtual void LateUpdate()
     {
@@ -124,6 +200,13 @@ public class BaseGridEntity : MonoBehaviour
     /// </summary>
     public void CoverByFog(Fog fog)
     {
+        // Player kingdom entities are never covered by fog
+        if (Owner is PlayerKingdom)
+        {
+            // SetEntityVisibility(true);
+            return;
+        }
+
         bool shouldBeVisible = true;
 
         switch (fog)

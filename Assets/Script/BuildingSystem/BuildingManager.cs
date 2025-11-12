@@ -149,9 +149,9 @@ public class BuildingManager : MonoBehaviour
     {
         // Check if within city boundaries
         int distanceToCity = HexTilemapManager.Instance.GetDistanceInCells(city.position, position);
-        if (distanceToCity > city.visionRadius)
+        if (distanceToCity > city.unitSpawnRadius)
         {
-            Debug.LogWarning($"Cannot place building outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.visionRadius}");
+            Debug.LogWarning($"Cannot place building outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
             return false;
         }
 
