@@ -95,6 +95,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TestMadness",
+                    "type": "Button",
+                    "id": "b5cdf80e-334b-4bb8-922a-188eeec83b99",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -337,6 +346,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Liftleft click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b627e97-d381-438c-8c39-c4f8296dd534",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestMadness",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

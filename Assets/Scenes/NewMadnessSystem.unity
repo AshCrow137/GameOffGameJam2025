@@ -4429,11 +4429,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221693212099817216, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.57
+      value: -2.58
       objectReference: {fileID: 0}
     - target: {fileID: 2221693212099817216, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3
+      value: -3.06
       objectReference: {fileID: 0}
     - target: {fileID: 2221693212099817216, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5296,7 +5296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 14
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_ActionId
@@ -5311,6 +5311,14 @@ PrefabInstance:
       value: 99b486c8-8998-4f77-8f85-7ca29d11ce29
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionId
+      value: 24ee7c2b-6b74-44b5-8207-1ca427676ae7
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionId
+      value: b5cdf80e-334b-4bb8-922a-188eeec83b99
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_ActionName
       value: 'InGame/MoveUnitToTile[/Mouse/rightButton]'
       objectReference: {fileID: 0}
@@ -5323,7 +5331,19 @@ PrefabInstance:
       value: 'InGame/RotateCamera[/Keyboard/q,/Keyboard/comma,/Keyboard/e,/Keyboard/period]'
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionName
+      value: 'InGame/Liftleft click[/Mouse/leftButton]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionName
+      value: 'InGame/TestMadness[/Keyboard/r]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
@@ -5331,11 +5351,23 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 687573196}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 687573196}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
@@ -5347,11 +5379,23 @@ PrefabInstance:
       value: OnAlternativeTileInteraction
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnTestMadness
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: InputManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InputManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8133681193374780087, guid: 25ad381cb2164d649b953707503d4d84, type: 3}

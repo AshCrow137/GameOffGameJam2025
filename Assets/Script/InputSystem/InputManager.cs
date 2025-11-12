@@ -32,9 +32,8 @@ public class InputManager : MonoBehaviour
     public void OnNavigate(CallbackContext value)
     {
         Vector2 directionInput = value.ReadValue<Vector2>();
-        Debug.Log("OnNavigate: " + directionInput);
+        //Debug.Log("OnNavigate: " + directionInput);
 
-        //send a direction to Menu Controller
     }
 
     public void OnSubmit(CallbackContext value)
@@ -59,7 +58,6 @@ public class InputManager : MonoBehaviour
     public void OnPoint(CallbackContext value)
     {
         mousePos = value.ReadValue<Vector2>();
-        Debug.Log("OnPoint: " + mousePos);
         //store the mouse position for other menu inputs
     }
 
@@ -67,7 +65,6 @@ public class InputManager : MonoBehaviour
     {
         if (value.performed)
         {
-            Debug.Log("OnClickMenu at position: " + mousePos);
         }
         //send a position to Menu Controller
     }
@@ -80,10 +77,7 @@ public class InputManager : MonoBehaviour
     public void OnMoveCamera(CallbackContext value)
     {
         Vector2 directionInput = value.ReadValue<Vector2>();
-        Debug.Log("OnMove: " + directionInput);
 
-        //send a direction to Camera Controller
-        //Eu preciso de um m�todo que receba um vetor 2D e mova a camera nessa dire��o.
     }
 
     public void OnEndTurn(CallbackContext value)
@@ -132,7 +126,6 @@ public class InputManager : MonoBehaviour
     //method to any sort of tile interactions
     public void OnTileInteraction(CallbackContext value)
     {
-        Debug.Log("OnClick at position: " + mousePos);
         if (bIsOnUIElement) { return; }
         if (!value.performed || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
         if (ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement))
@@ -177,7 +170,6 @@ public class InputManager : MonoBehaviour
     {
         if (value.performed)
         {
-            Debug.Log("OnClick at position: " + mousePos);
             GlobalEventManager.InvokeMouseClickedEvent(mousePos);
             //send a position to Selection Manager
             //I need a mathod that receives a screen position (Vector2)
@@ -185,4 +177,13 @@ public class InputManager : MonoBehaviour
         }
     }
     //End GameInputs
+
+    //Tests
+    public void OnTestMadness(CallbackContext value)
+    {
+        if (value.performed)
+        {
+            Debug.Log(TurnManager.instance.GetCurrentActingKingdom().GetMadnessEffects());
+        }
+    }
 }

@@ -81,6 +81,7 @@ public class GridCity : BaseGridEntity
             var r = seeker.traversableTags;
             Debug.Log(r);
             unitScript.Initialize(Owner);
+            Owner.AddUnitToKingdom(unitScript);
             bCanSpawnUnits = false;
         }
         else
