@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
 public class InputManager : MonoBehaviour
@@ -185,4 +186,24 @@ public class InputManager : MonoBehaviour
         }
     }
     //End GameInputs
+    public Vector3 GetMousePosition()
+    {
+        return mousePos;
+    }
+    public Vector3 GetWorldPositionOnMousePosition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+        // cast a 3d ray onto a 2d plane. 
+        // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+        // Raycast to detect what was clicked (adjust layer mask if needed)
+
+        if (!hit.collider)
+        {
+            // return infinite vector
+            return new Vector3Int(int.MaxValue, int.MaxValue, int.MaxValue);
+        }
+        return hit.point;
+    }
 }

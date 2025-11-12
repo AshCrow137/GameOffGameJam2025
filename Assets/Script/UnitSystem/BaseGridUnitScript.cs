@@ -3,6 +3,9 @@ using Pathfinding;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using System.Collections;
+using System.Linq;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : BaseGridEntity
@@ -11,7 +14,9 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     protected UnitType unitType;
     [SerializeField]
-    protected int AttackDamage = 1;    
+    protected int MeleeAttackDamage = 1;
+    [SerializeField]
+    protected int RangeAttackDamage = 1;
     [SerializeField]
     protected int RetallitionAttackDamage = 1;
     [SerializeField]
@@ -47,6 +52,9 @@ public class BaseGridUnitScript : BaseGridEntity
 
     [SerializeField]
     private List<TileState> possibleSpawnTiles = new List<TileState>();
+
+    private bool bTryToAttack = false;
+    private BaseGridUnitScript attackTarget;
 
     public List<TileState> GetPossibleSpawnTiles()
     {
@@ -85,6 +93,7 @@ public class BaseGridUnitScript : BaseGridEntity
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
         HPImage.color = Owner.GetKingdomColor();
+        hTM.RemoveAllMarkers();
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
     protected override void OnEndTurn(BaseKingdom entity)
@@ -109,10 +118,11 @@ public class BaseGridUnitScript : BaseGridEntity
         if(targetedUnit != null)
         {
             TryToAttack(targetedUnit, cellPos);
+            
         }
         else
         {
-            TryToMoveUnitToTile(tile, cellPos);
+            TryToMoveUnitToTile( cellPos);
         }
         
 
@@ -127,6 +137,8 @@ public class BaseGridUnitScript : BaseGridEntity
             GlobalEventManager.InvokeShowUIMessageEvent($"You try to attack your kingdom unit!");
             return;
         }
+        bTryToAttack = true;
+        attackTarget = targetUnit;
         int intDistance = hTM.GetDistanceInCells(UnitPositionOnCell(), targetUnitPosition);
         Debug.Log($"Distance between {this.name} and target cell: {intDistance}");
         if(intDistance <=AttackRange) 
@@ -140,26 +152,85 @@ public class BaseGridUnitScript : BaseGridEntity
             else
             {
                 GlobalEventManager.InvokeShowUIMessageEvent($"This unit has not enough attacks!");
+                bTryToAttack = false;
             }
             
         }
         else
         {
+            if(AttackRange==1)
+            {
+                var tilePos = hTM.CellToWorldPos(targetUnitPosition);
+                Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
+                float angle = Mathf.Atan2(mousePos.y - tilePos.y, mousePos.x - tilePos.x) * Mathf.Rad2Deg;
+                Vector3Int targetCellToMove = targetUnitPosition;
+                List<Vector3Int> adjacentPos = hTM.GetCellsInRange(targetUnitPosition, 1,new List<TileState> { TileState.Land,TileState.OccuppiedByBuilding,TileState.OccupiedByUnit,TileState.Water,TileState.Unavailable});
+                List<float> angles = new List<float>();
+                adjacentPos.Remove(targetUnitPosition);
+                foreach (var cell in adjacentPos)
+                {
+                    //hTM.PlaceMarkerOnTilePosition(cell);
+                    float angleBetween = Mathf.Atan2(cell.y - targetUnitPosition.y, cell.x - targetUnitPosition.x)*Mathf.Rad2Deg;
+                    angles.Add(angleBetween);
+                }
+                Debug.Log(angles);
+                var closest = angles.OrderBy(sangle => Mathf.Abs(sangle-angle)).FirstOrDefault();
+                closest = closest * Mathf.Deg2Rad;
+                Debug.Log(closest);
+                Vector3Int direction = new Vector3Int((int)Mathf.Round(Mathf.Cos(closest)), (int)Mathf.Round(Mathf.Sin(closest)), 0);
+                //if (angle >= 0 && angle <= 60) targetCellToMove = targetUnitPosition + new Vector3Int(0, 1, 0);
+                //else if (angle < 0 && angle >= -60) targetCellToMove = targetUnitPosition + new Vector3Int(-1, 1, 0);
+                //else if (angle < -60 && angle >= -120) targetCellToMove = targetUnitPosition + new Vector3Int(-1, 0, 0);
+                //else if (angle < -120 && angle >= -180) targetCellToMove = targetUnitPosition + new Vector3Int(-1, -1, 0);
+                //else if (angle <= 120 && angle > 60) targetCellToMove = targetUnitPosition + new Vector3Int(1, 0, 0);
+                //else if (angle < 180 && angle > 120) targetCellToMove = targetUnitPosition + new Vector3Int(0, -1, 0);
+                targetCellToMove = targetUnitPosition - direction;
+
+
+                //StartCoroutine(c(adjacentPos));
+                Debug.Log($"selected angle: {angle}");
+                hTM.PlaceMarkerOnTilePosition(targetCellToMove);
+
+                //int distance = hTM.GetDistanceInCells(GetCellPosition(), targetCellToMove);
+                //if (distance <= tilesRemain)
+                //{
+                //    TryToMoveUnitToTile(targetCellToMove);
+                //}
+
+            }
             GlobalEventManager.InvokeShowUIMessageEvent($"Target unit too far!");
         }
         
     }
+    private IEnumerator c(List<Vector3Int> adjacentPos)
+    {
+        foreach (var cell in adjacentPos)
+        {
+            hTM.PlaceMarkerOnTilePosition(cell);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
 
     protected virtual void Attack(BaseGridUnitScript targetUnit)
     {
-        targetUnit.TakeDamage(AttackDamage);
+        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetUnit.transform.position)) == 1)
+        {
+            targetUnit.TakeDamage(MeleeAttackDamage, this, false);
+        }
+        else
+        {
+            targetUnit.TakeDamage(RangeAttackDamage, this, false);
+        }
+       
         if(!CanMoveAfterattack)
         {
             tilesRemain=0;
             remainMovementText.text = tilesRemain.ToString();
         }
+        bTryToAttack = false;
+        attackTarget = null;
     }
-    public virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
     {
         //TODO Calculate result damage
         CurrentHealth -= amount;
@@ -167,7 +238,20 @@ public class BaseGridUnitScript : BaseGridEntity
         if (CurrentHealth <= 0 ) 
         {
             Death();
+            return;
         }
+        if(!retallitionAttack)
+        {
+            RetallitionAttack(attacker);
+        }
+    }
+    public virtual void RetallitionAttack(BaseGridUnitScript attacker)
+    {
+        if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
+        {
+            attacker.TakeDamage(RetallitionAttackDamage, this, true);
+        }
+        
     }
     protected virtual void Death()
     {
@@ -183,7 +267,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="tile">where you wish to move</param>
     /// <param name="cellPos">tile position you wish to move </param>
-    public void TryToMoveUnitToTile(HexTile tile, Vector3Int cellPos)
+    public void TryToMoveUnitToTile( Vector3Int cellPos)
     {
         if (tilesRemain > 0 && !bIsMoving)
         {
@@ -225,6 +309,7 @@ public class BaseGridUnitScript : BaseGridEntity
             else
             {
                 //
+                
                 hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
                 GlobalEventManager.InvokeShowUIMessageEvent($"Unavailable tile for {this.gameObject.name} unit!");
             }
@@ -284,7 +369,10 @@ public class BaseGridUnitScript : BaseGridEntity
 
         hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position),this);
         bIsMoving = false;
-
+        if(bTryToAttack)
+        {
+            TryToAttack(attackTarget, attackTarget.GetCellPosition());
+        }
         
     }
     protected virtual void Update()

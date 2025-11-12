@@ -15,11 +15,12 @@ using static UnityEditor.PlayerSettings;
 /// </summary>
 public class HexTilemapManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private Tilemap tilemap; 
+    [SerializeField] private Tilemap markerTilemap;
+    [SerializeField] private TileBase markerTile;
 
     [SerializeField] private Camera mainCamera;
-    //pahtfinding variable
-    [SerializeField] private Tilemap blockedTiles;
+
 
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
@@ -75,6 +76,15 @@ public class HexTilemapManager : MonoBehaviour
         Vector3 hitPoint = hit.point;
         Vector3Int cellPosition = tilemap.WorldToCell(hitPoint);
         return cellPosition;
+    }
+    public void PlaceMarkerOnTilePosition(Vector3Int cellPosition)
+    {
+        markerTilemap.SetTile(cellPosition, markerTile);
+        markerTilemap.RefreshTile(cellPosition);
+    }
+    public void RemoveAllMarkers()
+    {
+        markerTilemap.ClearAllTiles();
     }
 
     /// <summary>
