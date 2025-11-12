@@ -161,7 +161,8 @@ public class BuildingManager : MonoBehaviour
 
     private bool CanBuildingBePlaced(Building building, Vector3Int position){
 
-        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land){
+        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land && HexTilemapManager.Instance.GetTileState(position) != TileState.Water)
+        {
             return false;
         }
 

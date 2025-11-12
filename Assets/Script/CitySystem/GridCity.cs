@@ -25,6 +25,8 @@ public class GridCity : BaseGridEntity
     public override void Initialize(BaseKingdom owner)
     {
         base.Initialize(owner);
+        position = HexTilemapManager.Instance.WorldToCellPos(transform.position);
+        Debug.Log("position :" + position);
         CityManager.Instance.AddCity(HexTilemapManager.Instance.WorldToCellPos(transform.position), this);
         
     }

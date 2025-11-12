@@ -214,7 +214,8 @@ public class BaseGridUnitScript : BaseGridEntity
     private Vector3Int previousMarkerPos;
     private void OnMouseEnter()
     {
-        if (InputManager.instance.bHasSelectedEntity && InputManager.instance.selectedUnit != this && InputManager.instance.selectedUnit.GetOwner() != Owner && InputManager.instance.selectedUnit.AttackRange == 1)
+        // added InputManager.instance.selectedUnit != null cause could be city selection
+        if (InputManager.instance.bHasSelectedEntity && InputManager.instance.selectedUnit != null && InputManager.instance.selectedUnit != this && InputManager.instance.selectedUnit.GetOwner() != Owner && InputManager.instance.selectedUnit.AttackRange == 1)
         {
             InputManager.instance.SetAttackCursor();
         }
@@ -223,7 +224,7 @@ public class BaseGridUnitScript : BaseGridEntity
     void OnMouseOver()
     {
         
-        if (InputManager.instance.bHasSelectedEntity&&InputManager.instance.selectedUnit!=this&& InputManager.instance.selectedUnit.GetOwner()!=Owner&& InputManager.instance.selectedUnit.AttackRange==1)
+        if (InputManager.instance.bHasSelectedEntity&& InputManager.instance.selectedUnit != null&&InputManager.instance.selectedUnit!=this&& InputManager.instance.selectedUnit.GetOwner()!=Owner&& InputManager.instance.selectedUnit.AttackRange==1)
         {
 
             Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();

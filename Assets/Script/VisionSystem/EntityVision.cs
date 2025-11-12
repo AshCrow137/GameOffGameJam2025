@@ -23,6 +23,7 @@ public class EntityVision : MonoBehaviour
         entity = gridEntity;
         hTM = HexTilemapManager.Instance;
         UpdateFog();
+        CoverByFog();
     }
 
     /// <summary>
@@ -31,43 +32,33 @@ public class EntityVision : MonoBehaviour
     /// <returns>List of tile positions that were updated</returns>
     public List<Vector3Int> UpdateFog()
     {
-        List<Vector3Int> updatedTiles = new List<Vector3Int>();
-
         VisionManager visionManager = entity.GetOwner().GetComponent<VisionManager>();
         if(visionManager == null)
         {
             Debug.LogError("VisionManager not found on owner of entity: " + entity.name);
-            return updatedTiles;
+            return new List<Vector3Int>();
         }
         Vector3Int entityPosition = entity.GetCellPosition();
 
-        // Loop through all tiles in vision radius (includes entity's own tile at distance 0)
-        for (int x = -visionRadius; x <= visionRadius; x++)
-        {
-            for (int y = -visionRadius; y <= visionRadius; y++)
-            {
-                for (int z = -visionRadius; z <= visionRadius; z++)
-                {
-                    // Cube coordinate constraint
-                    if (x + y + z == 0)
-                    {
-                        Vector3Int tilePosition = new Vector3Int(
-                            entityPosition.x + x,
-                            entityPosition.y + y,
-                            entityPosition.z + z
-                        );
+        // Get all tiles in vision radius (includes all tile states)
+        List<TileState> allStates = new List<TileState> 
+        { 
+            TileState.Land, 
+            TileState.Water, 
+            TileState.OccuppiedByBuilding, 
+            TileState.OccupiedByUnit, 
+            TileState.Unavailable, 
+            TileState.Default 
+        };
+        
+        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(entityPosition, visionRadius, allStates);
 
-                        // Verify distance
-                        int distance = hTM.GetDistanceInCells(entityPosition, tilePosition);
-                        if (distance <= visionRadius)
-                        {
-                            visionManager.UpdateGreyFog(tilePosition);
-                            visionManager.UpdateBlackFog(tilePosition);
-                            updatedTiles.Add(tilePosition);
-                        }
-                    }
-                }
-            }
+        // Update fog for each tile
+        foreach (Vector3Int tilePosition in updatedTiles)
+        {
+            visionManager.UpdateGreyFog(tilePosition);
+            visionManager.UpdateBlackFog(tilePosition);
+            HexTilemapManager.Instance.RefreshTile(tilePosition);
         }
 
         return updatedTiles;
@@ -80,36 +71,27 @@ public class EntityVision : MonoBehaviour
     /// <returns>List of tile positions that were updated</returns>
     public List<Vector3Int> RemoveFog(Vector3Int oldPosition)
     {
-        List<Vector3Int> updatedTiles = new List<Vector3Int>();
-
         VisionManager visionManager = entity.GetOwner().GetComponent<VisionManager>();
 
-        // Loop through all tiles in vision radius from old position (includes old position tile at distance 0)
-        for (int x = -visionRadius; x <= visionRadius; x++)
-        {
-            for (int y = -visionRadius; y <= visionRadius; y++)
-            {
-                for (int z = -visionRadius; z <= visionRadius; z++)
-                {
-                    // Cube coordinate constraint
-                    if (x + y + z == 0)
-                    {
-                        Vector3Int tilePosition = new Vector3Int(
-                            oldPosition.x + x,
-                            oldPosition.y + y,
-                            oldPosition.z + z
-                        );
+        // Get all tiles in vision radius from old position (includes all tile states)
+        List<TileState> allStates = new List<TileState> 
+        { 
+            TileState.Land, 
+            TileState.Water, 
+            TileState.OccuppiedByBuilding, 
+            TileState.OccupiedByUnit, 
+            TileState.Unavailable, 
+            TileState.Default 
+        };
+        
+        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(oldPosition, visionRadius, allStates);
 
-                        // Verify distance
-                        int distance = hTM.GetDistanceInCells(oldPosition, tilePosition);
-                        if (distance <= visionRadius)
-                        {
-                            visionManager.RemoveGreyFog(tilePosition);
-                            updatedTiles.Add(tilePosition);
-                        }
-                    }
-                }
-            }
+        // Remove fog for each tile
+        foreach (Vector3Int tilePosition in updatedTiles)
+        {
+            visionManager.RemoveGreyFog(tilePosition);
+            HexTilemapManager.Instance.RefreshTile(tilePosition);
+
         }
 
         return updatedTiles;
@@ -189,6 +171,11 @@ public class EntityVision : MonoBehaviour
         {
             canvas.gameObject.SetActive(visible);
         }
+    }
+
+    public void CoverByFog()
+    {
+        CoverByFog(HexTilemapManager.Instance.GetPlayerKingdom().GetComponent<VisionManager>().GetFogAtPosition(entity.GetCellPosition()));
     }
 
     /// <summary>
