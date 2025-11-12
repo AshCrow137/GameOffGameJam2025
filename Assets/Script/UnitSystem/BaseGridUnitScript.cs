@@ -130,6 +130,7 @@ public class BaseGridUnitScript : BaseGridEntity
 
         
     }
+
    private void TryToAttack(BaseGridUnitScript targetUnit, Vector3Int targetUnitPosition)
     {
         if (targetUnit.GetOwner() == Owner)
@@ -163,53 +164,93 @@ public class BaseGridUnitScript : BaseGridEntity
                 var tilePos = hTM.CellToWorldPos(targetUnitPosition);
                 Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
                 float angle = Mathf.Atan2(mousePos.y - tilePos.y, mousePos.x - tilePos.x) * Mathf.Rad2Deg;
-                Vector3Int targetCellToMove = targetUnitPosition;
-                List<Vector3Int> adjacentPos = hTM.GetCellsInRange(targetUnitPosition, 1,new List<TileState> { TileState.Land,TileState.OccuppiedByBuilding,TileState.OccupiedByUnit,TileState.Water,TileState.Unavailable});
-                List<float> angles = new List<float>();
-                adjacentPos.Remove(targetUnitPosition);
-                foreach (var cell in adjacentPos)
-                {
-                    //hTM.PlaceMarkerOnTilePosition(cell);
-                    float angleBetween = Mathf.Atan2(cell.y - targetUnitPosition.y, cell.x - targetUnitPosition.x)*Mathf.Rad2Deg;
-                    angles.Add(angleBetween);
-                }
-                Debug.Log(angles);
-                var closest = angles.OrderBy(sangle => Mathf.Abs(sangle-angle)).FirstOrDefault();
-                closest = closest * Mathf.Deg2Rad;
-                Debug.Log(closest);
-                Vector3Int direction = new Vector3Int((int)Mathf.Round(Mathf.Cos(closest)), (int)Mathf.Round(Mathf.Sin(closest)), 0);
+                //List<Vector3Int> adjacentPos = hTM.GetCellsInRange(targetUnitPosition, 1,new List<TileState> { TileState.Land,TileState.OccuppiedByBuilding,TileState.OccupiedByUnit,TileState.Water,TileState.Unavailable});
+                //List<float> angles = new List<float>();
+                //adjacentPos.Remove(targetUnitPosition);
+                //foreach (var cell in adjacentPos)
+                //{
+                //    //hTM.PlaceMarkerOnTilePosition(cell);
+                //    float angleBetween = Mathf.Atan2(cell.y - targetUnitPosition.y, cell.x - targetUnitPosition.x)*Mathf.Rad2Deg;
+                //    angles.Add(angleBetween);
+                //}
+                //Debug.Log(angles);
+                //var closest = angles.OrderBy(sangle => Mathf.Abs(sangle-angle)).FirstOrDefault();
+                //closest = closest * Mathf.Deg2Rad;
+                //Debug.Log(closest);
+                //Vector3Int direction = new Vector3Int((int)Mathf.Round(Mathf.Cos(closest)), (int)Mathf.Round(Mathf.Sin(closest)), 0);
                 //if (angle >= 0 && angle <= 60) targetCellToMove = targetUnitPosition + new Vector3Int(0, 1, 0);
                 //else if (angle < 0 && angle >= -60) targetCellToMove = targetUnitPosition + new Vector3Int(-1, 1, 0);
                 //else if (angle < -60 && angle >= -120) targetCellToMove = targetUnitPosition + new Vector3Int(-1, 0, 0);
                 //else if (angle < -120 && angle >= -180) targetCellToMove = targetUnitPosition + new Vector3Int(-1, -1, 0);
                 //else if (angle <= 120 && angle > 60) targetCellToMove = targetUnitPosition + new Vector3Int(1, 0, 0);
                 //else if (angle < 180 && angle > 120) targetCellToMove = targetUnitPosition + new Vector3Int(0, -1, 0);
-                targetCellToMove = targetUnitPosition - direction;
+                int i = 0;
+                if (angle >= 0 && angle <= 60) i=1;
+                else if (angle < 0 && angle >= -60) i=0;
+                else if (angle < -60 && angle >= -120) i=7;
+                else if (angle < -120 && angle >= -180) i = 3;
+                else if (angle <= 120 && angle > 60) i = 5;
+                else if (angle < 180 && angle > 120) i = 2;
+                Debug.Log($"{angle} ; {i}");
+                //targetCellToMove = targetUnitPosition - direction;
+                var node = AstarPath.active.data.gridGraph.GetNearest(tilePos).node as GridNode;
+                var nodeConnections = AstarPath.active.data.gridGraph.GetNodeConnection(node, i);
+                var nodePos = (Vector3)nodeConnections.position;
+                Vector3Int resPos = hTM.WorldToCellPos(nodePos);
+                hTM.PlaceMarkerOnTilePosition(resPos);
+
+                //StartCoroutine(c(tilePos));
+                //Debug.Log($"selected angle: {angle}");
 
 
-                //StartCoroutine(c(adjacentPos));
-                Debug.Log($"selected angle: {angle}");
-                hTM.PlaceMarkerOnTilePosition(targetCellToMove);
-
-                //int distance = hTM.GetDistanceInCells(GetCellPosition(), targetCellToMove);
-                //if (distance <= tilesRemain)
-                //{
-                //    TryToMoveUnitToTile(targetCellToMove);
-                //}
+                int distance = hTM.GetDistanceInCells(GetCellPosition(), resPos);
+                if (distance <= tilesRemain)
+                {
+                    TryToMoveUnitToTile(resPos);
+                }
 
             }
             GlobalEventManager.InvokeShowUIMessageEvent($"Target unit too far!");
         }
         
     }
-    private IEnumerator c(List<Vector3Int> adjacentPos)
+    private Vector3Int previousMarkerPos;
+    void OnMouseOver()
     {
-        foreach (var cell in adjacentPos)
+        
+        if (InputManager.instance.bHasSelectedEntity&&InputManager.instance.selectedUnit!=this&& InputManager.instance.selectedUnit.GetOwner()!=Owner&& InputManager.instance.selectedUnit.AttackRange==1)
         {
-            hTM.PlaceMarkerOnTilePosition(cell);
-            yield return new WaitForSeconds(0.5f);
+
+            Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
+            float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg;
+            int i = 0;
+            if (angle >= 0 && angle <= 60) i = 1;
+            else if (angle < 0 && angle >= -60) i = 0;
+            else if (angle < -60 && angle >= -120) i = 7;
+            else if (angle < -120 && angle >= -180) i = 3;
+            else if (angle <= 120 && angle > 60) i = 5;
+            else if (angle < 180 && angle > 120) i = 2;
+            Debug.Log($"{angle} ; {i}");
+            var node = AstarPath.active.data.gridGraph.GetNearest(transform.position).node as GridNode;
+            var nodeConnections = AstarPath.active.data.gridGraph.GetNodeConnection(node, i);
+            var nodePos = (Vector3)nodeConnections.position;
+            Vector3Int resPos = hTM.WorldToCellPos(nodePos);
+            if(resPos != previousMarkerPos)
+            {
+                hTM.RemoveMarkerOnTilePosition(previousMarkerPos);
+                previousMarkerPos = resPos;
+                hTM.PlaceMarkerOnTilePosition(resPos);
+            }
         }
     }
+
+    void OnMouseExit()
+    {
+        //The mouse is no longer hovering over the GameObject so output this message each frame
+        hTM.RemoveMarkerOnTilePosition(previousMarkerPos);
+        previousMarkerPos = Vector3Int.zero;
+    }
+
 
     protected virtual void Attack(BaseGridUnitScript targetUnit)
     {

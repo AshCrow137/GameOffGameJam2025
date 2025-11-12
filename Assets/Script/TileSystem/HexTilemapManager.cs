@@ -82,6 +82,11 @@ public class HexTilemapManager : MonoBehaviour
         markerTilemap.SetTile(cellPosition, markerTile);
         markerTilemap.RefreshTile(cellPosition);
     }
+    public void RemoveMarkerOnTilePosition(Vector3Int cellPosition)
+    {
+        markerTilemap.SetTile(cellPosition, null);
+        markerTilemap.RefreshTile(cellPosition);
+    }
     public void RemoveAllMarkers()
     {
         markerTilemap.ClearAllTiles();

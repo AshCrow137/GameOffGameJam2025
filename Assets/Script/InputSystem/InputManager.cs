@@ -9,13 +9,14 @@ public class InputManager : MonoBehaviour
     public static InputManager instance { get; private set; }
     private Vector2 mousePos;
 
-    private BaseGridUnitScript selectedUnit;
+    public BaseGridUnitScript selectedUnit { get; private set; }
     private GridCity selectedCity;
 
     [SerializeField]
     private PlayerKingdom playerKngdom;
 
     private bool bIsOnUIElement = false;
+    public bool bHasSelectedEntity { get; private set; } = false;
 
     public void Initialize()
     {
@@ -149,11 +150,13 @@ public class InputManager : MonoBehaviour
             {
                 selectedUnit.OnEntityDeselect();
                 selectedUnit = null;
+                bHasSelectedEntity = false;
             }
             if(selectedCity)
             {
                 selectedCity.OnEntityDeselect();
                 selectedCity = null;
+                bHasSelectedEntity = false;
             }
             BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
             GridCity city = CityManager.Instance.GetCity(HexTilemapManager.Instance.GetCellAtMousePosition());
@@ -161,11 +164,13 @@ public class InputManager : MonoBehaviour
             {
                 unit.OnEntitySelect(playerKngdom);
                 selectedUnit = unit;
+                bHasSelectedEntity = true;
             }
             else if(city)
             {
                 selectedCity = city;
                 selectedCity.OnEntitySelect(playerKngdom);
+                bHasSelectedEntity= true;
             }
         }
        
