@@ -19,12 +19,12 @@ public class TestMadness : MonoBehaviour
         madnessLevel.value = kingdom.madnessLevel;
     }
 
-    public void Add(float value)
+    public void Add(int value)
     {
         kingdom.IncreaseMadness(value);
     }
 
-    public void Sub(float value)
+    public void Sub(int value)
     {
         kingdom.DecreaseMadness(value);
     }

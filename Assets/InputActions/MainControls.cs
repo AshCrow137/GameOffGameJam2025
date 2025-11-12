@@ -181,6 +181,15 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TestMadness"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5cdf80e-334b-4bb8-922a-188eeec83b99"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -425,6 +434,17 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""action"": ""Liftleft click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b627e97-d381-438c-8c39-c4f8296dd534"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestMadness"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -639,6 +659,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         m_InGame_LeftClick = m_InGame.FindAction("Left Click", throwIfNotFound: true);
         m_InGame_RotateCamera = m_InGame.FindAction("RotateCamera", throwIfNotFound: true);
         m_InGame_Liftleftclick = m_InGame.FindAction("Liftleft click", throwIfNotFound: true);
+        m_InGame_TestMadness = m_InGame.FindAction("TestMadness", throwIfNotFound: true);
         // InMenu
         m_InMenu = asset.FindActionMap("InMenu", throwIfNotFound: true);
         m_InMenu_Navigate = m_InMenu.FindAction("Navigate", throwIfNotFound: true);
@@ -737,6 +758,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_LeftClick;
     private readonly InputAction m_InGame_RotateCamera;
     private readonly InputAction m_InGame_Liftleftclick;
+    private readonly InputAction m_InGame_TestMadness;
     /// <summary>
     /// Provides access to input actions defined in input action map "InGame".
     /// </summary>
@@ -788,6 +810,10 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "InGame/Liftleftclick".
         /// </summary>
         public InputAction @Liftleftclick => m_Wrapper.m_InGame_Liftleftclick;
+        /// <summary>
+        /// Provides access to the underlying input action "InGame/TestMadness".
+        /// </summary>
+        public InputAction @TestMadness => m_Wrapper.m_InGame_TestMadness;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -844,6 +870,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @Liftleftclick.started += instance.OnLiftleftclick;
             @Liftleftclick.performed += instance.OnLiftleftclick;
             @Liftleftclick.canceled += instance.OnLiftleftclick;
+            @TestMadness.started += instance.OnTestMadness;
+            @TestMadness.performed += instance.OnTestMadness;
+            @TestMadness.canceled += instance.OnTestMadness;
         }
 
         /// <summary>
@@ -885,6 +914,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @Liftleftclick.started -= instance.OnLiftleftclick;
             @Liftleftclick.performed -= instance.OnLiftleftclick;
             @Liftleftclick.canceled -= instance.OnLiftleftclick;
+            @TestMadness.started -= instance.OnTestMadness;
+            @TestMadness.performed -= instance.OnTestMadness;
+            @TestMadness.canceled -= instance.OnTestMadness;
         }
 
         /// <summary>
@@ -1135,6 +1167,13 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLiftleftclick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TestMadness" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTestMadness(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "InMenu" which allows adding and removing callbacks.

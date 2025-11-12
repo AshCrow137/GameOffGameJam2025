@@ -29,7 +29,7 @@ public class TurnManager : MonoBehaviour
     public void OnTurnStart(BaseKingdom entity)
     {
         //camera focus on the current Player/Unit
-        Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
+        //Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
         turnText.text = $"Current turn: {entity.name} N {currentTurnCount}";
 
         //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
@@ -47,23 +47,24 @@ public class TurnManager : MonoBehaviour
 
     public void OnTurnEnd()
     {
-        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
         //do something at the end of the turn
         currentOrderIndex++;
         if (currentOrderIndex >= turnOrder.Count)
         {
             currentOrderIndex = 0;
-            currentTurnCount++;
+            NextTurn();
         }
 
-        Debug.Log($"Turn {currentTurnCount} End: {turnOrder[currentOrderIndex].name}'s turn.");
-        
+        //Debug.Log($"Turn {currentTurnCount} End: {turnOrder[currentOrderIndex].name}'s turn.");
+
         //when finish the turn, call NextTurn
-        NextTurn();
+        OnTurnStart(turnOrder[currentOrderIndex]);
     }
 
     private void NextTurn()
     {
+        currentTurnCount++;
+        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
         Debug.Log("Next Turn");
         //increment turn count
         

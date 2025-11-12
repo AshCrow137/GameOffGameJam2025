@@ -278,6 +278,12 @@ public class BaseGridUnitScript : BaseGridEntity
         HPImage.fillAmount = (float)CurrentHealth / Health;
         if (CurrentHealth <= 0 ) 
         {
+            //calculate the distance to main City if equal or less of 5 increase Madness in 5 points
+            if(GetDistanceToMainCity() <= 5)
+            {
+                TurnManager.instance.GetCurrentActingKingdom().IncreaseMadness(MadnessValue.EnemyUnitDead);
+            }
+            
             Death();
             return;
         }
@@ -300,6 +306,15 @@ public class BaseGridUnitScript : BaseGridEntity
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
         Owner.RemoveUnitFromKingdom(this);
         gameObject.SetActive(false);
+    }
+
+    protected int GetDistanceToMainCity()
+    {
+        GridCity mainCity = TurnManager.instance.GetCurrentActingKingdom().GetMainCity();
+        int distanceToMainCity = HexTilemapManager.Instance.GetDistanceInCells
+            (this.GetCellPosition(), mainCity.GetCellPosition());
+
+        return distanceToMainCity;
     }
 
 

@@ -14,9 +14,10 @@ public class GridCity : BaseGridEntity
     public float maxHP = 100f;
     public float currentHP;
 
-    public int visionRadius;
+    public int visionRadius = 1;
+    public int unitSpawnRadius = 1;
 
-
+    public Dictionary<Vector3Int, GridBuilding> buildings = new Dictionary<Vector3Int, GridBuilding>();
 
     // Resources this city generates per turn
     public Dictionary<ResourceType, int> resourceGainPerTurn = new Dictionary<ResourceType, int>();
@@ -42,6 +43,7 @@ public class GridCity : BaseGridEntity
         this.maxHP = cityData.maxHP;
         this.currentHP = cityData.maxHP;
         this.visionRadius = cityData.visionRadius;
+        this.unitSpawnRadius = 1;
         this.Owner = owner;
 
         // Initialize empty resource dictionary - will be populated by other means
@@ -81,6 +83,7 @@ public class GridCity : BaseGridEntity
             var r = seeker.traversableTags;
             Debug.Log(r);
             unitScript.Initialize(Owner);
+            Owner.AddUnitToKingdom(unitScript);
             bCanSpawnUnits = false;
         }
         else

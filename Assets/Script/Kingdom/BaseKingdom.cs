@@ -56,6 +56,16 @@ public class BaseKingdom : Entity, IMadnessable
 
     private void OnEndTurn(BaseKingdom kingdom)
     {
+        int unitsCount = GetUnitsCountInRange(5);
+        if (unitsCount != 0)
+        {
+            IncreaseMadness(unitsCount * 3);
+        }
+        else
+        {
+            DecreaseMadness(3);
+        }
+
         if (kingdom != this) return;
     }
 
@@ -90,54 +100,57 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
+    public GridCity GetMainCity()
+    {
+        return controlledCities[0];
+    }
+
     public bool IsTileVisible(Vector3Int position)
     {
         return visibleTiles.Contains(position);
     }
 
-    public float madnessLevel { get; private set; } = 0f;
+    public int madnessLevel { get; private set; } = 0;
     [SerializeField]
-    public float maxMadnessLevel { get; private set; } = 100f;
+    public int maxMadnessLevel { get; private set; } = 100;
 
-    public void IncreaseMadness(float amount)
+    public void IncreaseMadness(int amount)
     {
         madnessLevel += amount;
         if(madnessLevel > maxMadnessLevel)
         {
             madnessLevel = maxMadnessLevel;
         }
+        Debug.Log($"Increase: Current Madness Level is: {madnessLevel}");
     }
 
-    public void DecreaseMadness(float amount)
+    public void DecreaseMadness(int amount)
     {
         madnessLevel -= amount;
-        if(madnessLevel < 0f)
+        if(madnessLevel < 0)
         {
-            madnessLevel = 0f;
+            madnessLevel = 0;
         }
+        Debug.Log($"Decrease: Current Madness Level is: {madnessLevel}");
     }
 
     public virtual MadnessEffect GetMadnessEffects()
     {
-        if(madnessLevel == MadnessCosts.PreventAttacks)
+        if(madnessLevel == MadnessCosts.almostDefeat)
         {
-            DecreaseMadness(MadnessCosts.PreventAttacks);
-            return MadnessEffect.PreventAttacks;
+            return MadnessEffect.almostDefeat;
         }
-        else if(madnessLevel >= MadnessCosts.ImproveUnits)
+        else if(madnessLevel >= MadnessCosts.less35)
         {
-            DecreaseMadness(MadnessCosts.ImproveUnits);
-            return MadnessEffect.ImproveUnits;
+            return MadnessEffect.less35;
         }
-        else if(madnessLevel >= MadnessCosts.FreeUnits)
+        else if(madnessLevel >= MadnessCosts.less25)
         {
-            DecreaseMadness(MadnessCosts.FreeUnits);
-            return MadnessEffect.FreeUnits;
+            return MadnessEffect.less25;
         }
-        else if(madnessLevel >= MadnessCosts.BetterDeal)
+        else if(madnessLevel >= MadnessCosts.less10)
         {
-            DecreaseMadness(MadnessCosts.BetterDeal);
-            return MadnessEffect.BetterDeal;
+            return MadnessEffect.less10;
         }
         else
         {
@@ -145,5 +158,22 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
+    public virtual int GetUnitsCountInRange(int range)
+    {
+        int result = 0;
+        foreach(GridCity city in controlledCities)
+        {
+            foreach (BaseGridUnitScript unit in controlledUnits)
+            {
+                if(HexTilemapManager.Instance.GetDistanceInCells
+                    (city.GetCellPosition(), unit.GetCellPosition()) <= range)
+                {
+                    result++;
+                }
+            }
+        }
+        Debug.Log("Units in range " + range + ": " + result);
+        return result;
+    }
 
 }
