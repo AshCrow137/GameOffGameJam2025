@@ -136,28 +136,34 @@ public class HexTilemapManager : MonoBehaviour
     }
     public Color GetTileColor(TileState state)
     {
-        if (state == TileState.Land)
-        {
-            return Color.green;
-        }
-        else if (state == TileState.OccuppiedByBuilding)
+        if (state == TileState.OccuppiedByBuilding)
         {
             return Color.blue;
-        }
-        else if (state == TileState.OccupiedByUnit)
-        {
-            return Color.cyan;
-        } 
-        else if (state == TileState.Water)
-        {
+        }else{
             return Color.white;
         }
-        else if (state == TileState.Unavailable)
-        {
-            return Color.red;
-        }
+        // if (state == TileState.Land)
+        // {
+        //     return Color.green;
+        // }
+        // else if (state == TileState.OccuppiedByBuilding)
+        // {
+        //     return Color.blue;
+        // }
+        // else if (state == TileState.OccupiedByUnit)
+        // {
+        //     return Color.cyan;
+        // } 
+        // else if (state == TileState.Water)
+        // {
+        //     return Color.white;
+        // }
+        // else if (state == TileState.Unavailable)
+        // {
+        //     return Color.red;
+        // }
 
-        return Color.green;
+        // return Color.green;
     }
 
     public int GetDistanceInCells(Vector3Int startPoint, Vector3Int endPoint)
