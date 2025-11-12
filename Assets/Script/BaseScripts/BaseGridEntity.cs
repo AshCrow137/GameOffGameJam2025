@@ -54,6 +54,10 @@ public class BaseGridEntity : MonoBehaviour
     protected virtual void LateUpdate()
     {
         //rotating entity body sprite and canvas facing camera 
+        if(CameraArm == null)
+        {
+            Debug.Log("help");
+        }
         bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
         rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
     }

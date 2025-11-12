@@ -127,6 +127,7 @@ public class InputManager : MonoBehaviour
     public void OnTileInteraction(CallbackContext value)
     {
         if (bIsOnUIElement) { return; }
+        if (CityUI.Instance && CityUI.Instance.cityMenuMode != CityMenuMode.None) return; // if we are trying to place a building on the tile then don't do tile interaction from here.
         if (!value.performed || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
         if (ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement))
         {
