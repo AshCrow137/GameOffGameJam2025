@@ -1,20 +1,25 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
 public class InputManager : MonoBehaviour
 {
     //Class to handles all inputs from player.
+    [SerializeField]
+    private Texture2D cursorTexture;
     public static InputManager instance { get; private set; }
     private Vector2 mousePos;
 
-    private BaseGridUnitScript selectedUnit;
+    public BaseGridUnitScript selectedUnit { get; private set; }
     private GridCity selectedCity;
+
 
     [SerializeField]
     private PlayerKingdom playerKngdom;
 
     private bool bIsOnUIElement = false;
+    public bool bHasSelectedEntity { get; private set; } = false;
 
     public void Initialize()
     {
@@ -69,6 +74,17 @@ public class InputManager : MonoBehaviour
         //send a position to Menu Controller
     }
 
+    public void SetAttackCursor()
+    {
+        if(cursorTexture)
+        {
+            Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+        }
+    }
+    public void SetDefaultCursor()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
     //End MenuInputs
 
     //GameInputs
@@ -142,23 +158,31 @@ public class InputManager : MonoBehaviour
             {
                 selectedUnit.OnEntityDeselect();
                 selectedUnit = null;
+                bHasSelectedEntity = false;
             }
             if(selectedCity)
             {
                 selectedCity.OnEntityDeselect();
                 selectedCity = null;
+                bHasSelectedEntity = false;
             }
             BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
             GridCity city = CityManager.Instance.GetCity(HexTilemapManager.Instance.GetCellAtMousePosition());
             if (unit)
             {
                 unit.OnEntitySelect(playerKngdom);
-                selectedUnit = unit;
+                if(unit.GetOwner()==playerKngdom)
+                {
+                    selectedUnit = unit;
+                    bHasSelectedEntity = true;
+                }
+
             }
             else if(city)
             {
                 selectedCity = city;
                 selectedCity.OnEntitySelect(playerKngdom);
+                bHasSelectedEntity= true;
             }
         }
        
@@ -186,5 +210,25 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log(TurnManager.instance.GetCurrentActingKingdom().GetMadnessEffects());
         }
+    }
+    public Vector3 GetMousePosition()
+    {
+        return mousePos;
+    }
+    public Vector3 GetWorldPositionOnMousePosition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+        // cast a 3d ray onto a 2d plane. 
+        // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+        // Raycast to detect what was clicked (adjust layer mask if needed)
+
+        if (!hit.collider)
+        {
+            // return infinite vector
+            return new Vector3Int(int.MaxValue, int.MaxValue, int.MaxValue);
+        }
+        return hit.point;
     }
 }

@@ -148,7 +148,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 483940085929675459, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Name
-      value: BaseMeleeUnit
+      value: BaseUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -271,13 +287,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 2
   CurrentHealth: 2
+  Vision: 5
   HPImage: {fileID: 8078803168960123464}
   bodySprite: {fileID: 566962491661030381}
   rotatebleCanvas: {fileID: 2024809114169191824}
-  MovementDistance: 5
-  MovementSpeed: 3
-  AttackDistance: 1
+  unitType: 0
   AttackDamage: 1
+  RetallitionAttackDamage: 1
+  AttackRange: 1
+  MovementDistance: 5
+  ProductionTime: 1
+  MovementSpeed: 3
   AttacksPerTurn: 1
   CanMoveAfterattack: 0
   remainMovementText: {fileID: 2179247202424280964}
