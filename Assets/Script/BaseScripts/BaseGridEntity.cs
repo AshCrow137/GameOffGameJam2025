@@ -25,8 +25,6 @@ public class BaseGridEntity : MonoBehaviour
     protected BaseKingdom Owner;
     protected SpriteRenderer baseSprite;
 
-    protected bool visibleUnderGreyFog = true;
-
     public virtual void Initialize(BaseKingdom owner)
     {
         hTM = HexTilemapManager.Instance;
@@ -44,6 +42,14 @@ public class BaseGridEntity : MonoBehaviour
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
         HPImage.color = Owner.GetKingdomColor();
         gridPosition = HexTilemapManager.Instance.WorldToCellPos(transform.position);
+
+        // Initialize EntityVision component
+        EntityVision entityVision = GetComponent<EntityVision>();
+        if (entityVision == null)
+        {
+            entityVision = gameObject.AddComponent<EntityVision>();
+        }
+        entityVision.Initialize(this);
     }
     /// <summary>
     /// Invokes whis EndTurnEvent in GlobalEventManager
@@ -63,80 +69,6 @@ public class BaseGridEntity : MonoBehaviour
         // UpdateFog();
     }
 
-    /// <summary>
-    /// Updates fog for all tiles within vision radius (includes entity's own position)
-    /// </summary>
-    protected virtual void UpdateFog()
-    {
-        VisionManager visionManager = Owner.GetComponent<VisionManager>();
-        // if (visionManager == null) return;
-
-        Vector3Int entityPosition = GetCellPosition();
-
-        // Loop through all tiles in vision radius (includes entity's own tile at distance 0)
-        for (int x = -Vision; x <= Vision; x++)
-        {
-            for (int y = -Vision; y <= Vision; y++)
-            {
-                for (int z = -Vision; z <= Vision; z++)
-                {
-                    // Cube coordinate constraint
-                    if (x + y + z == 0)
-                    {
-                        Vector3Int tilePosition = new Vector3Int(
-                            entityPosition.x + x,
-                            entityPosition.y + y,
-                            entityPosition.z + z
-                        );
-
-                        // Verify distance
-                        int distance = hTM.GetDistanceInCells(entityPosition, tilePosition);
-                        if (distance <= Vision)
-                        {
-                            visionManager.UpdateGreyFog(tilePosition);
-                            visionManager.UpdateBlackFog(tilePosition);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Removes fog for all tiles within vision radius from the old position (includes the old position itself)
-    /// </summary>
-    protected virtual void RemoveFog(Vector3Int oldPosition)
-    {
-        VisionManager visionManager = Owner.GetComponent<VisionManager>();
-        if (visionManager == null) return;
-
-        // Loop through all tiles in vision radius from old position (includes old position tile at distance 0)
-        for (int x = -Vision; x <= Vision; x++)
-        {
-            for (int y = -Vision; y <= Vision; y++)
-            {
-                for (int z = -Vision; z <= Vision; z++)
-                {
-                    // Cube coordinate constraint
-                    if (x + y + z == 0)
-                    {
-                        Vector3Int tilePosition = new Vector3Int(
-                            oldPosition.x + x,
-                            oldPosition.y + y,
-                            oldPosition.z + z
-                        );
-
-                        // Verify distance
-                        int distance = hTM.GetDistanceInCells(oldPosition, tilePosition);
-                        if (distance <= Vision)
-                        {
-                            visionManager.RemoveGreyFog(tilePosition);
-                        }
-                    }
-                }
-            }
-        }
-    }
     protected virtual void LateUpdate()
     {
         //rotating entity body sprite and canvas facing camera 
@@ -177,51 +109,7 @@ public class BaseGridEntity : MonoBehaviour
     public BaseKingdom GetOwner() { return Owner; }
 
     /// <summary>
-    /// Makes the entity invisible/visible without disabling the GameObject
+    /// Gets the canvas component
     /// </summary>
-    public void SetEntityVisibility(bool visible)
-    {
-        // Hide/show all sprite renderers
-        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
-        foreach (SpriteRenderer renderer in renderers)
-        {
-            renderer.enabled = visible;
-        }
-
-        // Hide/show canvas
-        if (rotatebleCanvas != null)
-        {
-            rotatebleCanvas.gameObject.SetActive(visible);
-        }
-    }
-
-    /// <summary>
-    /// Covers entity with fog, hiding/showing based on fog type and entity settings
-    /// </summary>
-    public void CoverByFog(Fog fog)
-    {
-        // Player kingdom entities are never covered by fog
-        if (Owner is PlayerKingdom)
-        {
-            // SetEntityVisibility(true);
-            return;
-        }
-
-        bool shouldBeVisible = true;
-
-        switch (fog)
-        {
-            case Fog.None:
-                shouldBeVisible = true;
-                break;
-            case Fog.Grey:
-                shouldBeVisible = visibleUnderGreyFog;
-                break;
-            case Fog.Black:
-                shouldBeVisible = false;
-                break;
-        }
-
-        SetEntityVisibility(shouldBeVisible);
-    }
+    public Canvas GetRotatableCanvas() { return rotatebleCanvas; }
 }

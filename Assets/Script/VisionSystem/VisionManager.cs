@@ -7,23 +7,23 @@ public class VisionManager : MonoBehaviour
     private Dictionary<Vector3Int, int> NotGreyFog = new Dictionary<Vector3Int, int>();
     private Dictionary<Vector3Int, bool> notBlackFog = new Dictionary<Vector3Int, bool>();
     
-    public void Initialize()
-    {
-        GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
-    }
+    // public void Initialize()
+    // {
+    //     GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
+    // }
 
-    private void OnEndTurn(BaseKingdom kingdom)
-    {
-        ClearNotGreyFog();
-    }
+    // private void OnEndTurn(BaseKingdom kingdom)
+    // {
+    //     ClearNotGreyFog();
+    // }
 
-    /// <summary>
-    /// Clears the NotGreyFog dictionary
-    /// </summary>
-    private void ClearNotGreyFog()
-    {
-        NotGreyFog.Clear();
-    }
+    // /// <summary>
+    // /// Clears the NotGreyFog dictionary
+    // /// </summary>
+    // private void ClearNotGreyFog()
+    // {
+    //     NotGreyFog.Clear();
+    // }
 
     /// <summary>
     /// Finds all entities at the given position
@@ -64,7 +64,11 @@ public class VisionManager : MonoBehaviour
 
         foreach (BaseGridEntity entity in entities)
         {
-            entity.CoverByFog(fogState);
+            EntityVision entityVision = entity.GetComponent<EntityVision>();
+            if (entityVision != null)
+            {
+                entityVision.CoverByFog(fogState);
+            }
         }
     }
 
