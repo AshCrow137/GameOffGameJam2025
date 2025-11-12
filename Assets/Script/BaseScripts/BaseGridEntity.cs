@@ -43,10 +43,18 @@ public class BaseGridEntity : MonoBehaviour
         HPImage.color = Owner.GetKingdomColor();
         gridPosition = HexTilemapManager.Instance.WorldToCellPos(transform.position);
     }
+    /// <summary>
+    /// Invokes whis EndTurnEvent in GlobalEventManager
+    /// </summary>
+    /// <param name="entity">Kingdom that end his turn</param>
     protected virtual void OnEndTurn(BaseKingdom entity)
     {
         if (entity != Owner) { return; }
     }
+    /// <summary>
+    /// Invokes whis StartTurnEvent in GlobalEventManager
+    /// </summary>
+    /// <param name="entity">current kingdom's turn</param>
     protected virtual void OnStartTurn(BaseKingdom entity)
     {
         if (entity != Owner) { return; }
@@ -54,9 +62,14 @@ public class BaseGridEntity : MonoBehaviour
     protected virtual void LateUpdate()
     {
         //rotating entity body sprite and canvas facing camera 
+
         bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
         rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
     }
+    /// <summary>
+    /// invokes when kingdom select grid entity
+    /// </summary>
+    /// <param name="selector">kingdom that select this grid entity</param>
     public virtual void OnEntitySelect(BaseKingdom selector)
     {
         if (selector != Owner)
@@ -64,13 +77,24 @@ public class BaseGridEntity : MonoBehaviour
             return;
         }
     }
+    /// <summary>
+    /// invokes when kingdom deselect unit
+    /// </summary>
     public virtual void OnEntityDeselect()
     {
 
     }
+    /// <summary>
+    /// Get cell position of entity on main tilemap
+    /// </summary>
+    /// <returns>Vector3Int position of grid entity on main tilemap </returns>
     public Vector3Int GetCellPosition()
     {
         return hTM.GetMainTilemap().WorldToCell(transform.position);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>Kingdom that own this entity</returns>
     public BaseKingdom GetOwner() { return Owner; }
 }

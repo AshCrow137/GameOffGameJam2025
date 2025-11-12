@@ -56,10 +56,17 @@ public class BaseKingdom : Entity, IMadnessable
 
     private void OnEndTurn(BaseKingdom kingdom)
     {
-        if (kingdom != this) return;
+        int unitsCount = GetUnitsCountInRange(5);
+        if (unitsCount != 0)
+        {
+            IncreaseMadness(unitsCount * 3);
+        }
+        else
+        {
+            DecreaseMadness(3);
+        }
 
-        //TODO: fazer um for para cada unidade para saber quantas estão a 5 de distancia das cidades
-        // usando os metodos get cell position e get distance is cells
+        if (kingdom != this) return;
     }
 
     public void AddUnitToKingdom(BaseGridUnitScript unit)
@@ -93,6 +100,11 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
+    public GridCity GetMainCity()
+    {
+        return controlledCities[0];
+    }
+
     public bool IsTileVisible(Vector3Int position)
     {
         return visibleTiles.Contains(position);
@@ -109,6 +121,7 @@ public class BaseKingdom : Entity, IMadnessable
         {
             madnessLevel = maxMadnessLevel;
         }
+        Debug.Log($"Increase: Current Madness Level is: {madnessLevel}");
     }
 
     public void DecreaseMadness(int amount)
@@ -118,6 +131,7 @@ public class BaseKingdom : Entity, IMadnessable
         {
             madnessLevel = 0;
         }
+        Debug.Log($"Decrease: Current Madness Level is: {madnessLevel}");
     }
 
     public virtual MadnessEffect GetMadnessEffects()
@@ -144,5 +158,22 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
+    public virtual int GetUnitsCountInRange(int range)
+    {
+        int result = 0;
+        foreach(GridCity city in controlledCities)
+        {
+            foreach (BaseGridUnitScript unit in controlledUnits)
+            {
+                if(HexTilemapManager.Instance.GetDistanceInCells
+                    (city.GetCellPosition(), unit.GetCellPosition()) <= range)
+                {
+                    result++;
+                }
+            }
+        }
+        Debug.Log("Units in range " + range + ": " + result);
+        return result;
+    }
 
 }

@@ -214,7 +214,9 @@ public class CityManager : MonoBehaviour
         if(!cities.ContainsKey(position))
         {
             cities.Add(position, city);
+            HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
             tilemap.RefreshTile(position);
+
             return true;
         }
         return false;
