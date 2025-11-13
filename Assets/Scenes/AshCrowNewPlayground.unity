@@ -9224,7 +9224,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5669369260484363274, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
       propertyPath: m_Name
-      value: EnemyMelee
+      value: EnemyCavalry
+      objectReference: {fileID: 0}
+    - target: {fileID: 6744221943660887454, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
+      propertyPath: unitType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9343,6 +9347,10 @@ PrefabInstance:
     - target: {fileID: 1118848318671088554, guid: caab3c2094e87e1458879a9ad0ebfc5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533712875794266420, guid: caab3c2094e87e1458879a9ad0ebfc5b, type: 3}
+      propertyPath: unitType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6917069314663465120, guid: caab3c2094e87e1458879a9ad0ebfc5b, type: 3}
       propertyPath: m_Name

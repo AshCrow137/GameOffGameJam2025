@@ -58,10 +58,10 @@ public class BaseGridUnitScript : BaseGridEntity
     private BaseGridUnitScript attackTarget;
 
     private static readonly float[,] AttackModifiers = {
-    /*Cavalry*/{1.0f,1.0f,1.5f,1f },
+    /*Cavalry*/ {1.0f,1.0f,1.5f,1f },
     /*Infantry*/{1.5f,1.0f,1.0f,1f },
-    /*Archers*/{1.0f,1.5f,1.0f,1f },
-    /*Special*/{1.0f,1.0f,1.0f,1f },
+    /*Archers*/ {1.0f,1.5f,1.0f,1f },
+    /*Special*/ {1.0f,1.0f,1.0f,1f },
     };
     private float GetDamageModifier(UnitType attacker,UnitType defender)
     {
