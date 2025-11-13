@@ -31,10 +31,13 @@ public class BootManager : MonoBehaviour
     private KingdomUI kingdomUI;
     [SerializeField]
     private AddVisibleTiles addVisibleTiles;
+    [SerializeField]
+    private GlobalVisionManager globalVisionManager;
 
     void Start()
     {
         // testScript.Initialize();
+        globalVisionManager?.Initialize();
         hexTilemapManager?.Initialize();
 
         turnManager?.Initialize();
