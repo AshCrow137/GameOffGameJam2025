@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class VisionManager : MonoBehaviour
 {
-    private Dictionary<Vector3Int, Fog> visionDictionary = new Dictionary<Vector3Int, Fog>();
+    // private Dictionary<Vector3Int, Fog> visionDictionary = new Dictionary<Vector3Int, Fog>();
     private Dictionary<Vector3Int, int> NotGreyFog = new Dictionary<Vector3Int, int>();
     private Dictionary<Vector3Int, bool> notBlackFog = new Dictionary<Vector3Int, bool>();
 
