@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8596927101780691322
+--- !u!1001 &3140663974240161210
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -52,13 +52,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1675407508, guid: 91772c389e9f4e0428f7cc5cacf4f6f9, type: 3}
     - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Name
-      value: ManAtArmsUnit
+      value: LongBowManUnit
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -67,58 +63,17 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8529587581568595625}
+      addedObject: {fileID: 6177816509522111356}
   m_SourcePrefab: {fileID: 100100000, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
---- !u!114 &527984432560872242 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 8596927101780691322}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &2939275677540073900 stripped
+--- !u!1 &3191821091930545751 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 8596927101780691322}
+  m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3140663974240161210}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8529587581568595625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2939275677540073900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5fe7f322e444714a858febfc04a7330, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 25
-  CurrentHealth: 25
-  Vision: 5
-  HPImage: {fileID: 527984432560872242}
-  bodySprite: {fileID: 8111029964456598167}
-  rotatebleCanvas: {fileID: 7734926380769879274}
-  unitType: 0
-  MeleeAttackDamage: 8
-  RangeAttackDamage: 1
-  RetallitionAttackDamage: 6
-  AttackRange: 1
-  MovementDistance: 3
-  ProductionTime: 1
-  MovementSpeed: 3
-  AttacksPerTurn: 1
-  CanMoveAfterattack: 0
-  remainMovementText: {fileID: 7597667603428040446}
-  possibleSpawnTiles: 00000000
---- !u!114 &7597667603428040446 stripped
+--- !u!114 &3867427655442815550 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2179247202424280964, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 8596927101780691322}
+  m_PrefabInstance: {fileID: 3140663974240161210}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -126,13 +81,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!223 &7734926380769879274 stripped
+--- !u!223 &4002697416325505066 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 2024809114169191824, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 8596927101780691322}
+  m_PrefabInstance: {fileID: 3140663974240161210}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8111029964456598167 stripped
+--- !u!114 &6595606949505048562 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3140663974240161210}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8363726841908446572 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 8596927101780691322}
+  m_CorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3140663974240161210}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6177816509522111356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363726841908446572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7848d6e1a685e41b1781aa9618d550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 12
+  CurrentHealth: 12
+  Vision: 8
+  HPImage: {fileID: 6595606949505048562}
+  bodySprite: {fileID: 3191821091930545751}
+  rotatebleCanvas: {fileID: 4002697416325505066}
+  unitType: 1
+  MeleeAttackDamage: 1
+  RangeAttackDamage: 13
+  RetallitionAttackDamage: 4
+  AttackRange: 7
+  MovementDistance: 2
+  ProductionTime: 2
+  MovementSpeed: 3
+  AttacksPerTurn: 1
+  CanMoveAfterattack: 0
+  remainMovementText: {fileID: 3867427655442815550}
+  possibleSpawnTiles: 00000000
