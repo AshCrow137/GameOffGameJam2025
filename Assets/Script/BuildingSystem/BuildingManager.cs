@@ -14,6 +14,9 @@ public class BuildingManager : MonoBehaviour
 
     [SerializeField]
     private Building building;
+
+    [SerializeField]
+    private GameObject buildingPrefab;
     [SerializeField]
     private Tilemap tilemap;
     
@@ -22,6 +25,8 @@ public class BuildingManager : MonoBehaviour
 
     // List to track buildings under construction
     private List<BuildingConstruction> ongoingConstructions = new List<BuildingConstruction>();
+    [SerializeField]
+    private PlayerKingdom playerKngdom;
 
     // Nested class to track construction progress
     [System.Serializable]
@@ -59,15 +64,15 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     /// <param name="building">The building object to place</param>
     /// <param name="gridPosition">The position on the grid (Vector3Int)</param>
-    public void PlaceBuilding(Building building, Vector3Int gridPosition)
+    public GameObject PlaceBuilding(Building building, Vector3Int gridPosition)
     {
         if (building == null)
         {
-            return;
+            return null;
         }
-
-        buildings[gridPosition] = building;
-        tilemap.RefreshTile(gridPosition);
+        GameObject buildingPreview = Instantiate(buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
+        buildingPreview.GetComponent<GridBuilding>().Initialize(building, playerKngdom);
+        return buildingPreview;
     }
 
     /// <summary>
@@ -90,17 +95,21 @@ public class BuildingManager : MonoBehaviour
     /// Test function for building system.
     /// Places the assigned building at the mouse position
     /// </summary>
-    public void TestPlaceBuilding(){
-        if(!ToggleManager.Instance.GetToggleState(ToggleUseCase.BuildingPlacement)) return;
+    public void TestPlaceBuilding()
+    {
+        if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.BuildingPlacement)) return;
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue) return;
 
-        if(!CanBuildingBePlaced(building, mousePosition)) return;
+        if (!CanBuildingBePlaced(building, mousePosition)) return;
 
-        if(building.duration > 0){
+        if (building.duration > 0)
+        {
             Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
             StartBuildingConstruction(building, mousePosition);
-        } else {
+        }
+        else
+        {
             Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
             PlaceBuilding(building, mousePosition);
         }
@@ -110,16 +119,57 @@ public class BuildingManager : MonoBehaviour
 
     }
 
+    public void PlaceBuildingAtMousePosition(GridCity city)
+    {
+        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+        if (mousePosition.x == int.MaxValue) return;
+
+        if (!CanBuildingBePlaced(city, building, mousePosition)) return;
+
+        if (building.duration > 0)
+        {
+            Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
+            StartBuildingConstruction(building, mousePosition);
+        }
+        else
+        {
+            Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
+            GameObject gridBuilding = PlaceBuilding(building, mousePosition);
+            if( gridBuilding != null)
+            {
+                city.buildings[mousePosition] = gridBuilding.GetComponent<GridBuilding>();
+            }
+        }
+
+        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+
+    }
+
+    private bool CanBuildingBePlaced(GridCity city, Building building, Vector3Int position)
+    {
+        // Check if within city boundaries
+        int distanceToCity = HexTilemapManager.Instance.GetDistanceInCells(city.position, position);
+        if (distanceToCity > city.unitSpawnRadius)
+        {
+            Debug.LogWarning($"Cannot place building outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
+            return false;
+        }
+
+        return CanBuildingBePlaced(building, position);
+    }
+
+
     private bool CanBuildingBePlaced(Building building, Vector3Int position){
 
-        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land){
+        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land && HexTilemapManager.Instance.GetTileState(position) != TileState.Water)
+        {
             return false;
         }
 
         // Get building's resource requirements
         Dictionary<ResourceType, int> resourceRequirements = building.resource;
-        return true;
-        //return resourceManager.HasEnough(resourceRequirements);
+        // return true;
+        return resourceManager.HasEnough(resourceRequirements);
     }
 
     /// <summary>

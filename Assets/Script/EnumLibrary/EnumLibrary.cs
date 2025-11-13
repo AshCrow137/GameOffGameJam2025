@@ -25,8 +25,36 @@
     public enum MadnessEffect
     {
         None,
-        BetterDeal,
-        FreeUnits,
-        ImproveUnits,
-        PreventAttacks
+        less10,
+        less25,
+        less35,
+        almostDefeat
     }
+
+public enum SelectionType
+{
+    None,
+    City,
+    Unit
+}
+    
+    public enum CityMenuMode
+    {
+        None,
+        SpawnUnit,
+        SpawnBuilding
+    }
+public enum UnitType
+{
+    Infantry,
+    Archer,
+    Cavalry,
+    Special
+}
+
+public enum Fog
+{
+    None,   // No fog - entity fully visible
+    Grey,   // Grey fog - visibility depends on entity settings
+    Black   // Black fog - entity hidden
+}

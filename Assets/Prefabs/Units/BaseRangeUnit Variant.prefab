@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &34429994745497718
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 794239194931534683, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: traversableTags
+      value: -24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.289
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.786
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1418406617, guid: 0443c2d90a44ec8419564e04cc608757, type: 3}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: Health
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: AttackRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: AttackDamage
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: CurrentHealth
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: AttackDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: MovementDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: MeleeAttackDamage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: RangeAttackDamage
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: RetallitionAttackDamage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: possibleSpawnTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: 'possibleSpawnTiles.Array.data[0]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_Name
+      value: BaseRangeUnit Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}

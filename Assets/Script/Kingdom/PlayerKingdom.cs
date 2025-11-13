@@ -4,9 +4,9 @@ using UnityEngine;
 public class PlayerKingdom : BaseKingdom
 {
 
-    public MadnessEffect GetMadnessEffects()
+    public void StartTurn()
     {
-        return MadnessEffect.None;
+        KingdomUI.Instance?.StartTurn();
     }
    
 }

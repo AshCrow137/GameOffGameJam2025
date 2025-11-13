@@ -2,11 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 using Pathfinding;
-using Unity.VisualScripting;
-using UnityEngine.InputSystem.LowLevel;
-using static Unity.Burst.Intrinsics.X86;
+using static UnityEditor.PlayerSettings;
+
 
 /// <summary>
 /// Manages hexagonal tilemap interactions, handles tile clicks and state changes
@@ -17,11 +15,14 @@ using static Unity.Burst.Intrinsics.X86;
 /// </summary>
 public class HexTilemapManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private Tilemap tilemap; 
+    [SerializeField] private Tilemap markerTilemap;
+    [SerializeField] private TileBase markerTile;
 
     [SerializeField] private Camera mainCamera;
-    //pahtfinding variable
-    [SerializeField] private Tilemap blockedTiles;
+
+    [SerializeField] private PlayerKingdom playerKingdom;
+
 
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
@@ -34,6 +35,7 @@ public class HexTilemapManager : MonoBehaviour
     /// </summary>
     public void Initialize(){
         Instantiate();
+        AstarPath.active.Scan();
         InitializeTileStates();
         tilemap.RefreshAllTiles();
         GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
@@ -77,6 +79,20 @@ public class HexTilemapManager : MonoBehaviour
         Vector3Int cellPosition = tilemap.WorldToCell(hitPoint);
         return cellPosition;
     }
+    public void PlaceMarkerOnTilePosition(Vector3Int cellPosition)
+    {
+        markerTilemap.SetTile(cellPosition, markerTile);
+        markerTilemap.RefreshTile(cellPosition);
+    }
+    public void RemoveMarkerOnTilePosition(Vector3Int cellPosition)
+    {
+        markerTilemap.SetTile(cellPosition, null);
+        markerTilemap.RefreshTile(cellPosition);
+    }
+    public void RemoveAllMarkers()
+    {
+        markerTilemap.ClearAllTiles();
+    }
 
     /// <summary>
     /// Initializes tile states for all tiles currently in the tilemap
@@ -110,37 +126,32 @@ public class HexTilemapManager : MonoBehaviour
 
 
     }
+    public List<Vector3Int> GetCellsInRange(Vector3Int startPos, int range, List<TileState> possibleStates = null )
+    {
+        possibleStates = possibleStates ?? new List<TileState> { TileState.Land, TileState.Water };
+        List<Vector3Int> possibleCellsInRage = new List<Vector3Int>();
+        for (int x = startPos.x-range; x<=startPos.x+range; x++)
+        {
+            for (int y = startPos.y - range; y <= startPos.y+range; y++)
+            {
+                Vector3Int pos = new Vector3Int(x, y,0);
+                int distance = GetDistanceInCells(startPos, pos);
+                if (distance > range) { continue; }
+                if (possibleStates.Contains(GetTileState(pos)))
+                {
+                    possibleCellsInRage.Add(pos);
 
+                }
+            }
+        }
+        return possibleCellsInRage;
+    }
     public Vector3Int PositionToCellPosition(Vector3 pos)
     {
         return tilemap.WorldToCell(pos);
         
     }
-    public Color GetTileColor(TileState state)
-    {
-        if (state == TileState.Land)
-        {
-            return Color.green;
-        }
-        else if (state == TileState.OccuppiedByBuilding)
-        {
-            return Color.blue;
-        }
-        else if (state == TileState.OccupiedByUnit)
-        {
-            return Color.cyan;
-        } 
-        else if (state == TileState.Water)
-        {
-            return Color.white;
-        }
-        else if (state == TileState.Unavailable)
-        {
-            return Color.red;
-        }
 
-        return Color.green;
-    }
 
     public int GetDistanceInCells(Vector3Int startPoint, Vector3Int endPoint)
     {
@@ -305,6 +316,49 @@ public class HexTilemapManager : MonoBehaviour
     public Tilemap GetMainTilemap()
     {
         return tilemap;
+    }
+   public Vector3Int WorldToCellPos(Vector3 pos)
+    {
+        return tilemap.WorldToCell(pos);
+    }
+    public Vector3 CellToWorldPos(Vector3Int cellPos)
+    {
+        return tilemap.CellToWorld(cellPos);
+    }
+
+
+    public Color GetTileColorAtPosition(Vector3Int position)
+    {
+        // color derived from fog
+        Fog fog = playerKingdom.GetComponent<VisionManager>().GetFogAtPosition(position);
+        if (fog == Fog.Grey)
+        {
+            return Color.gray;
+        }
+        else if (fog == Fog.Black)
+        {
+            return Color.black;
+        }
+
+        // color derived from tilestate
+        TileState state = GetTileState(position);
+        if (state == TileState.OccuppiedByBuilding)
+        {
+            return Color.blue;
+        }
+
+        return Color.white;
+
+    }
+
+    public void RefreshTile(Vector3Int position)
+    {
+        tilemap.RefreshTile(position);
+    }
+
+    public PlayerKingdom GetPlayerKingdom()
+    {
+        return playerKingdom;
     }
 }
 

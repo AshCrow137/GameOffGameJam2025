@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a04aaaa8a1011458899b8b96f5c282, type: 3}
   m_Name: BlockedTile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: a0c0d05c4aa79fb46a592bc5ae4be3c5, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.012804031, a: 1}
+  m_Sprite: {fileID: 54086242, guid: a5446fda9bf1ead4ea0b3adc248833fb, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

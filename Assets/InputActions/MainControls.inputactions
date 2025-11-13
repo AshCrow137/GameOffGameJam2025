@@ -86,6 +86,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Liftleft click",
+                    "type": "Button",
+                    "id": "24ee7c2b-6b74-44b5-8207-1ca427676ae7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TestMadness",
+                    "type": "Button",
+                    "id": "b5cdf80e-334b-4bb8-922a-188eeec83b99",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -319,6 +337,28 @@
                     "action": "RotateCamera",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "c23ee7a5-3c07-436f-a4e6-649ac92fc45f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Liftleft click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b627e97-d381-438c-8c39-c4f8296dd534",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestMadness",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
