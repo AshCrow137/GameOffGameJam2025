@@ -88,6 +88,9 @@ public class BaseGridUnitScript : BaseGridEntity
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
+        //Test UI Call
+        UIManager.Instance.SelectedUnit(this);
+        //
         if(selector!= Owner)
         {
             GlobalEventManager.InvokeShowUIMessageEvent($"This is not your unit!");
