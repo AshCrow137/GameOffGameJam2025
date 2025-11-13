@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// attached to a BaseKingdom gameobject.
-/// CanSee method: do baseKingdom.GetComponent<VisionManager>().CanSee(otherEntityVision);
+/// CanSee method: Check if a kingdom can see a unit. do baseKingdom.GetComponent<VisionManager>().CanSee(otherEntityVision);
 /// </summary>
 public class VisionManager : MonoBehaviour
 {
