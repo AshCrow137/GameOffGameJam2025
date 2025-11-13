@@ -13,7 +13,7 @@ public class City
     public float maxHP = 100f;
     public float currentHP;
 
-    public int visionRadius;
+    // public int visionRadius;
     public int unitSpawnRadius;
 
     public GameObject owner;
@@ -28,7 +28,7 @@ public class City
         this.position = position;
         this.maxHP = cityData.maxHP;
         this.currentHP = cityData.maxHP;
-        this.visionRadius = cityData.visionRadius;
+        // this.visionRadius = cityData.visionRadius;
         this.unitSpawnRadius = 1;
         this.owner = null;
         this.buildings = new Dictionary<Vector3Int, Building>();

@@ -142,15 +142,16 @@ public class BuildingManager : MonoBehaviour
         }
 
         HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+
     }
-    
+
     private bool CanBuildingBePlaced(GridCity city, Building building, Vector3Int position)
     {
         // Check if within city boundaries
         int distanceToCity = HexTilemapManager.Instance.GetDistanceInCells(city.position, position);
-        if (distanceToCity > city.visionRadius)
+        if (distanceToCity > city.unitSpawnRadius)
         {
-            Debug.LogWarning($"Cannot place building outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.visionRadius}");
+            Debug.LogWarning($"Cannot place building outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
             return false;
         }
 
@@ -160,7 +161,8 @@ public class BuildingManager : MonoBehaviour
 
     private bool CanBuildingBePlaced(Building building, Vector3Int position){
 
-        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land){
+        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land && HexTilemapManager.Instance.GetTileState(position) != TileState.Water)
+        {
             return false;
         }
 

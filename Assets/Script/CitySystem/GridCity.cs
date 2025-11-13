@@ -14,7 +14,7 @@ public class GridCity : BaseGridEntity
     public float maxHP = 100f;
     public float currentHP;
 
-    public int visionRadius = 1;
+    // public int visionRadius = 1;
     public int unitSpawnRadius = 1;
 
     public Dictionary<Vector3Int, GridBuilding> buildings = new Dictionary<Vector3Int, GridBuilding>();
@@ -25,6 +25,8 @@ public class GridCity : BaseGridEntity
     public override void Initialize(BaseKingdom owner)
     {
         base.Initialize(owner);
+        position = HexTilemapManager.Instance.WorldToCellPos(transform.position);
+        Debug.Log("position :" + position);
         CityManager.Instance.AddCity(HexTilemapManager.Instance.WorldToCellPos(transform.position), this);
         
     }
@@ -42,7 +44,7 @@ public class GridCity : BaseGridEntity
         this.position = position;
         this.maxHP = cityData.maxHP;
         this.currentHP = cityData.maxHP;
-        this.visionRadius = cityData.visionRadius;
+        // this.visionRadius = cityData.visionRadius;
         this.unitSpawnRadius = 1;
         this.Owner = owner;
 
