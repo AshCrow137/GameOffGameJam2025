@@ -51,3 +51,10 @@ public enum UnitType
     Cavalry,
     Special
 }
+
+public enum Fog
+{
+    None,   // No fog - entity fully visible
+    Grey,   // Grey fog - visibility depends on entity settings
+    Black   // Black fog - entity hidden
+}

@@ -42,6 +42,14 @@ public class BaseGridEntity : MonoBehaviour
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
         HPImage.color = Owner.GetKingdomColor();
         gridPosition = HexTilemapManager.Instance.WorldToCellPos(transform.position);
+
+        // Initialize EntityVision component
+        EntityVision entityVision = GetComponent<EntityVision>();
+        if (entityVision == null)
+        {
+            entityVision = gameObject.AddComponent<EntityVision>();
+        }
+        entityVision.Initialize(this);
     }
     /// <summary>
     /// Invokes whis EndTurnEvent in GlobalEventManager
@@ -59,6 +67,7 @@ public class BaseGridEntity : MonoBehaviour
     {
         if (entity != Owner) { return; }
     }
+
     protected virtual void LateUpdate()
     {
         //rotating entity body sprite and canvas facing camera 
@@ -97,4 +106,9 @@ public class BaseGridEntity : MonoBehaviour
     /// </summary>
     /// <returns>Kingdom that own this entity</returns>
     public BaseKingdom GetOwner() { return Owner; }
+
+    /// <summary>
+    /// Gets the canvas component
+    /// </summary>
+    public Canvas GetRotatableCanvas() { return rotatebleCanvas; }
 }

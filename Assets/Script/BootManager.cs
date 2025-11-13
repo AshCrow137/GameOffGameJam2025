@@ -32,10 +32,9 @@ public class BootManager : MonoBehaviour
     [SerializeField]
     private AddVisibleTiles addVisibleTiles;
 
-
     void Start()
     {
-            // testScript.Initialize();
+        // testScript.Initialize();
         hexTilemapManager?.Initialize();
 
         turnManager?.Initialize();
