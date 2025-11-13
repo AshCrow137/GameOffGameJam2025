@@ -66,7 +66,6 @@ public class BaseGridEntity : MonoBehaviour
     protected virtual void OnStartTurn(BaseKingdom entity)
     {
         if (entity != Owner) { return; }
-        // UpdateFog();
     }
 
     protected virtual void LateUpdate()

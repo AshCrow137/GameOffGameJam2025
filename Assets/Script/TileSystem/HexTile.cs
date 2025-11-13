@@ -24,7 +24,6 @@ public class HexTile : Tile
 
         tileData.color = manager.GetTileColorAtPosition(position);
 
-
         // Set Tile sprite based on city at position (cities have priority over buildings)
         CityManager cityManager = CityManager.Instance;
         if(cityManager != null)
@@ -46,12 +45,6 @@ public class HexTile : Tile
         if(sprite != null){
             tileData.sprite = sprite;
         }
-
-        if (true)
-        {
-            
-        }
-
 
     }
     
