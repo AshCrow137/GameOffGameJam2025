@@ -6,13 +6,12 @@ public class KnightUnit : BaseGridUnitScript
 	[SerializeField]
 	protected bool chargeActive = true;
 	[SerializeField]
-	protected int chargeDamage = 5; 
+	protected int chargeDamage = 5;
 
     protected override void Attack(BaseGridUnitScript targetUnit)
 	{
-		// Adding +2 damage if moved >= 3 tiles
-		// TODO: update system
-		if (chargeActive && tilesRemain <= 2)
+		// Adding +2 damage if distance travelled >= 3 tiles
+		if (chargeActive && (int)Mathf.Round(distanceTravelled) >= 3)
 		{
 			MeleeAttackDamage += chargeDamage;
 		}
@@ -20,4 +19,5 @@ public class KnightUnit : BaseGridUnitScript
 		base.Attack(targetUnit);
 		MeleeAttackDamage = 15;
 	}
+
 }

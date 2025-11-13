@@ -43,6 +43,8 @@ public class BaseGridUnitScript : BaseGridEntity
     private bool bReachedEndOfPath;
     private Vector3 previousTargetPosition;
     private int attacksRemain = 1;
+    protected Vector3Int startingPosition;
+    protected float distanceTravelled = 0;
 
     //TODO Replace with normal UI
     [SerializeField]
@@ -362,6 +364,7 @@ public class BaseGridUnitScript : BaseGridEntity
         {
 
 
+            startingPosition = GetCellPosition();
             hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
             hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
             CreatePath(hTM.CellToWorldPos(cellPos));
@@ -495,11 +498,15 @@ public class BaseGridUnitScript : BaseGridEntity
         {
             TryToAttack(attackTarget, attackTarget.GetCellPosition());
         }
-        
+
+        // Calculating distance travelled
+        distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
+        Debug.Log("Distance travelled: " + distanceTravelled);
+        startingPosition = GetCellPosition();
     }
     protected virtual void Update()
     {
-       MovementCycle();
+        MovementCycle();
     }
   
 
