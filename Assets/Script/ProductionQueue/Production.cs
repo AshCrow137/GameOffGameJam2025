@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Production
 {
     public Vector3Int position;
@@ -13,18 +15,37 @@ public class Production
         this.position = position;
         this.turnsRemaining = duration;
         this.productionType = productionType;
+        this.isStarted = false;
     }
 
-    public void stratProduction(){
-        isStarted = true;
+    public bool StartProduction(GridCity city){
+        if(isStarted)
+        {
+            Debug.Log("Continuing production of " + productionType + " at " + position);
+        }
+        if(productionType == ProductionType.Building && BuildingManager.Instance.CheckAndStartConstruction(city, building, position))
+        {
+            isStarted = true;
+        }
+        return isStarted;
     }
 
-    // public void endProduction(){
-    //     isStarted = false;
-    //     turnsRemaining = 0;
-    // }
-
-    public void updateProduction(){
-        turnsRemaining--;
+    public void EndProduction(){
+        if(productionType == ProductionType.Building){
+            BuildingManager.Instance.PlaceBuilding(building, position);
+        }
     }
+
+    public void UpdateProduction(){
+        if (isStarted)
+        {
+            turnsRemaining--;
+        }
+    }
+
+    public bool IsComplete()
+    {
+        return isStarted && turnsRemaining <= 0;
+    }
+
 }

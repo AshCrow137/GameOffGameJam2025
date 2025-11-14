@@ -95,53 +95,74 @@ public class BuildingManager : MonoBehaviour
     /// Test function for building system.
     /// Places the assigned building at the mouse position
     /// </summary>
-    public void TestPlaceBuilding()
+    // public void TestPlaceBuilding()
+    // {
+    //     if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.BuildingPlacement)) return;
+    //     Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+    //     if (mousePosition.x == int.MaxValue) return;
+
+    //     if (!CanBuildingBePlaced(building, mousePosition)) return;
+
+    //     if (building.duration > 0)
+    //     {
+    //         Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
+    //         StartBuildingConstruction(building, mousePosition);
+    //     }
+    //     else
+    //     {
+    //         Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
+    //         PlaceBuilding(building, mousePosition);
+    //     }
+
+    //     HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+
+
+    // }
+
+    public bool CheckAndStartConstruction(GridCity city, Building building, Vector3Int position)
     {
-        if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.BuildingPlacement)) return;
-        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
-        if (mousePosition.x == int.MaxValue) return;
+        if (!CanBuildingBePlaced(city, building, position)) return false;
+        resourceManager.SpendResource(building.resource);
 
-        if (!CanBuildingBePlaced(building, mousePosition)) return;
-
-        if (building.duration > 0)
-        {
-            Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
-            StartBuildingConstruction(building, mousePosition);
-        }
-        else
-        {
-            Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
-            PlaceBuilding(building, mousePosition);
-        }
-
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
-
-
+        HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
+        return true;
+        // if (building.duration > 0)
+        // {
+        //     Debug.Log($"Starting construction of {building.buildingName} at {position}. Will complete in {building.duration} turns.");
+        //     Production production = new Production(position, ProductionType.Building, building.duration, building);
+        //     city.GetComponent<CityProductionQueue>().AddToQueue(production);
+        // }
     }
 
-    public void PlaceBuildingAtMousePosition(GridCity city)
+    private void PlaceBuildingAtPosition(GridCity city, Vector3Int position)
     {
-        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
-        if (mousePosition.x == int.MaxValue) return;
-
-        if (!CanBuildingBePlaced(city, building, mousePosition)) return;
+        if (!CanBuildingBePlaced(city, building, position)) return;
 
         if (building.duration > 0)
         {
-            Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
-            StartBuildingConstruction(building, mousePosition);
+            Debug.Log($"Starting construction of {building.buildingName} at {position}. Will complete in {building.duration} turns.");
+            StartBuildingConstruction(building, position);
         }
         else
         {
-            Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
-            GameObject gridBuilding = PlaceBuilding(building, mousePosition);
-            if( gridBuilding != null)
+            Debug.Log($"Placing {building.buildingName} at {position}.");
+            GameObject gridBuilding = PlaceBuilding(building, position);
+            if (gridBuilding != null)
             {
-                city.buildings[mousePosition] = gridBuilding.GetComponent<GridBuilding>();
+                city.buildings[position] = gridBuilding.GetComponent<GridBuilding>();
             }
         }
 
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+        HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
+
+    }
+
+    private void PlaceBuildingAtMousePosition(GridCity city)
+    {
+        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+        if (mousePosition.x == int.MaxValue) return;
+        PlaceBuildingAtPosition(city, mousePosition);
+
 
     }
 
@@ -188,6 +209,44 @@ public class BuildingManager : MonoBehaviour
         ongoingConstructions.Add(construction);
 
     }
+
+    /// <summary>
+    /// Queues a building for production at mouse position
+    /// </summary>
+    public void QueueBuildingAtMousePosition(GridCity city)
+    {
+        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+        if (mousePosition.x == int.MaxValue)
+        {
+            Debug.LogError("Invalid mouse position");
+            return;
+        }
+
+        if (!CanBuildingBePlaced(city, building, mousePosition))
+        {
+            Debug.LogError("Building cannot be placed at this position");
+            return;
+        }
+
+        Production production = new Production(mousePosition, ProductionType.Building, building.duration, building);
+
+        if (city.GetComponent<CityProductionQueue>() == null)
+        {
+            Debug.LogError("CityProductionQueue.Instance is null");
+            return;
+        }
+
+        city.GetComponent<CityProductionQueue>().AddToQueue(production);
+
+        if (ProductionQueueUI.Instance == null)
+        {
+            Debug.LogError("ProductionQueueUI.Instance is null");
+            return;
+        }
+
+    }
+
+
 
     /// <summary>
     /// Called at the start of each turn to progress building construction
