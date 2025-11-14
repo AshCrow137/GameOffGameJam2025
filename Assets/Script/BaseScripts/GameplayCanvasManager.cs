@@ -7,9 +7,9 @@ public class GameplayCanvasManager : MonoBehaviour
 {
     public static GameplayCanvasManager instance { get; private set; }
     [SerializeField]
-    private GameObject unitProductionPanel;
-    [SerializeField]
-    private GameObject buildingProductionPanel;
+    private GameObject productionPanel;
+    //[SerializeField]
+    //private GameObject buildingProductionPanel;
     [SerializeField]
     private TMP_Text messageText;
     [SerializeField]
@@ -42,14 +42,12 @@ public class GameplayCanvasManager : MonoBehaviour
     }
     public void ActivateUnitProductionPanel(GridCity city)
     {
-        unitProductionPanel.SetActive(true);
-        buildingProductionPanel.SetActive(true);
+        productionPanel.SetActive(true);
         selectedCity = city;
     }
     public void DeactivateUnitProductionPanel()
     {
-        unitProductionPanel.SetActive(false);
-        buildingProductionPanel.SetActive(false);
+        productionPanel.SetActive(false);
         selectedCity = null;
     }
     public void ShowMessageText(string message)

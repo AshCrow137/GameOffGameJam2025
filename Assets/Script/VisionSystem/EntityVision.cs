@@ -33,7 +33,14 @@ public class EntityVision : MonoBehaviour
         UpdateFog();
         CoverByFog();
     }
-
+    
+    /// <summary>
+    /// Called when entity dies
+    /// </summary>
+    public void OnDeath()
+    {
+        RemoveVisibility(entity.GetCellPosition());
+    }
 
     /// <summary>
     /// Updates fog for all tiles within vision radius (includes entity's own position)
@@ -98,6 +105,20 @@ public class EntityVision : MonoBehaviour
         return updatedTiles;
     }
 
+    public void RemoveVisibility(Vector3Int oldPosition)
+    {
+        // Remove fog from old position
+        List<Vector3Int> removedTiles = RemoveFog(oldPosition);
+        VisionManager playerVisionManager = GlobalVisionManager.Instance.GetPlayerVisionManager();
+
+        // Update visibility for removed tiles
+        foreach (Vector3Int tilePosition in removedTiles)
+        {
+            Fog fogState = playerVisionManager.GetFogAtPosition(tilePosition);
+            playerVisionManager.UpdateEntitiesAtPosition(tilePosition, fogState);
+        }
+    }
+
     /// <summary>
     /// Updates fog and then updates visibility of all entities at the affected positions
     /// </summary>
@@ -120,17 +141,8 @@ public class EntityVision : MonoBehaviour
     /// <param name="oldPosition">The previous position of the entity</param>
     public void UpdateVisibilityOnMovement(Vector3Int oldPosition)
     {
-        // Remove fog from old position
-        List<Vector3Int> removedTiles = RemoveFog(oldPosition);
-        VisionManager playerVisionManager = GlobalVisionManager.Instance.GetPlayerVisionManager();
-
-        // Update visibility for removed tiles
-        foreach (Vector3Int tilePosition in removedTiles)
-        {
-            Fog fogState = playerVisionManager.GetFogAtPosition(tilePosition);
-            playerVisionManager.UpdateEntitiesAtPosition(tilePosition, fogState);
-        }
-
+        // Remove visibility from old position
+        RemoveVisibility(oldPosition);
         // Update visibility at new position
         UpdateVisibility();
         CoverByFog();

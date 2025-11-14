@@ -58,3 +58,10 @@ public enum Fog
     Grey,   // Grey fog - visibility depends on entity settings
     Black   // Black fog - entity hidden
 }
+
+public enum ProductionType
+{
+    None,
+    Unit,
+    Building
+}
