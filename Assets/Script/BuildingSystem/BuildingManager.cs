@@ -35,12 +35,14 @@ public class BuildingManager : MonoBehaviour
         public Building building;
         public Vector3Int position;
         public int turnsRemaining;
+        public BaseKingdom constructionOwner;
 
-        public BuildingConstruction(Building building, Vector3Int position, int duration)
+        public BuildingConstruction(Building building, Vector3Int position, int duration,BaseKingdom owner)
         {
             this.building = building;
             this.position = position;
             this.turnsRemaining = duration;
+            this.constructionOwner = owner;
         }
     }
 
@@ -57,6 +59,7 @@ public class BuildingManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
     }
 
     /// <summary>
@@ -184,7 +187,7 @@ public class BuildingManager : MonoBehaviour
         resourceManager.SpendResource(building.resource);
 
         // Add to construction queue
-        BuildingConstruction construction = new BuildingConstruction(building, position, building.duration);
+        BuildingConstruction construction = new BuildingConstruction(building, position, building.duration,playerKngdom);
         ongoingConstructions.Add(construction);
 
     }
@@ -192,7 +195,7 @@ public class BuildingManager : MonoBehaviour
     /// <summary>
     /// Called at the start of each turn to progress building construction
     /// </summary>
-    public void StartTurn()
+    public void OnStartTurn(BaseKingdom kingdom)
     {
         // Collect completed constructions to remove after iteration
         List<BuildingConstruction> completedConstructions = new List<BuildingConstruction>();
@@ -200,6 +203,7 @@ public class BuildingManager : MonoBehaviour
         // Process each ongoing construction
         foreach (BuildingConstruction construction in ongoingConstructions)
         {
+            if (kingdom != construction.constructionOwner) continue;
             construction.turnsRemaining--;
             
             if (construction.turnsRemaining <= 0)
