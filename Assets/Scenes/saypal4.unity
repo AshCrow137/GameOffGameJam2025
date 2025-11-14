@@ -8157,7 +8157,7 @@ MonoBehaviour:
   CameraRotationSpeed: 1
   CustomInput: {fileID: -944628639613478452, guid: 9e920cdde5fdd2448831077a6fe5c55c, type: 3}
   EDGE_THRESHOLD: 0.48
-  moveSpeed: 3
+  moveSpeed: 0
   CameraArm: {fileID: 1212674899}
 --- !u!114 &1245496650 stripped
 MonoBehaviour:
@@ -9449,7 +9449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1788453740
 RectTransform:
   m_ObjectHideFlags: 0
