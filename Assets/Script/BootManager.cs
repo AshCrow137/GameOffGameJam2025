@@ -35,6 +35,9 @@ public class BootManager : MonoBehaviour
     private GlobalVisionManager globalVisionManager;
     [SerializeField]
     private ProductionQueueUI productionQueueUI;
+    [SerializeField]
+    private UIManager UIManager;
+
 
     void Start()
     {
@@ -59,6 +62,5 @@ public class BootManager : MonoBehaviour
         cityUI?.Instantiate();
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
-        productionQueueUI?.Instantiate();
     }
 }
