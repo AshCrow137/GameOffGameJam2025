@@ -21,6 +21,7 @@ public class HexTilemapManager : MonoBehaviour
 
     [SerializeField] private Camera mainCamera;
 
+    [SerializeField] private PlayerKingdom playerKingdom;
 
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
@@ -149,31 +150,7 @@ public class HexTilemapManager : MonoBehaviour
         return tilemap.WorldToCell(pos);
         
     }
-    public Color GetTileColor(TileState state)
-    {
-        if (state == TileState.Land)
-        {
-            return Color.green;
-        }
-        else if (state == TileState.OccuppiedByBuilding)
-        {
-            return Color.blue;
-        }
-        else if (state == TileState.OccupiedByUnit)
-        {
-            return Color.cyan;
-        } 
-        else if (state == TileState.Water)
-        {
-            return Color.white;
-        }
-        else if (state == TileState.Unavailable)
-        {
-            return Color.red;
-        }
 
-        return Color.green;
-    }
 
     public int GetDistanceInCells(Vector3Int startPoint, Vector3Int endPoint)
     {
@@ -347,5 +324,62 @@ public class HexTilemapManager : MonoBehaviour
     {
         return tilemap.CellToWorld(cellPos);
     }
+
+
+    public Color GetTileColorAtPosition(Vector3Int position)
+    {
+        // color derived from fog
+        Fog fog = GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(position);
+        if (fog == Fog.Grey)
+        {
+            return Color.gray;
+        }
+        else if (fog == Fog.Black)
+        {
+            return Color.black;
+        }
+
+        // color derived from tilestate
+        TileState state = GetTileState(position);
+        if (state == TileState.OccuppiedByBuilding)
+        {
+            return Color.blue;
+        }
+
+        return Color.white;
+
+    }
+
+    public void RefreshTile(Vector3Int position)
+    {
+        tilemap.RefreshTile(position);
+    }
+
+    public PlayerKingdom GetPlayerKingdom()
+    {
+        return playerKingdom;
+    }
+
+    /// <summary>
+    /// Gets a list of all tile positions in the tilemap
+    /// </summary>
+    /// <returns>List of all tile positions that have tiles</returns>
+    public List<Vector3Int> GetAllTilePositions()
+    {
+        List<Vector3Int> tilePositions = new List<Vector3Int>();
+        BoundsInt bounds = tilemap.cellBounds;
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            TileBase tile = tilemap.GetTile(pos);
+            if (tile != null)
+            {
+                tilePositions.Add(pos);
+            }
+        }
+
+        return tilePositions;
+    }
+
 }
 
