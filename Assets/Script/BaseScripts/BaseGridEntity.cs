@@ -73,7 +73,7 @@ public class BaseGridEntity : MonoBehaviour
         //rotating entity body sprite and canvas facing camera 
 
         bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
-        rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
+        rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(rotatebleCanvas.transform.rotation.eulerAngles.x, rotatebleCanvas.transform.rotation.eulerAngles.y, CameraArm.transform.rotation.eulerAngles.z));
     }
     /// <summary>
     /// invokes when kingdom select grid entity
