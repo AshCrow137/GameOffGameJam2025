@@ -361,8 +361,16 @@ PrefabInstance:
       value: GridCityVariant
       objectReference: {fileID: 0}
     - target: {fileID: 1922668860728381344, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1922668860728381344, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1922668860728381344, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_FillAmount

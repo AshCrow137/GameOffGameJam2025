@@ -59,7 +59,7 @@ public class BuildingManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
+        //GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
     }
 
     /// <summary>
