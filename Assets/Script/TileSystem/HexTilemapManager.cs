@@ -339,12 +339,12 @@ public class HexTilemapManager : MonoBehaviour
             return Color.black;
         }
 
-        // color derived from tilestate
-        TileState state = GetTileState(position);
-        if (state == TileState.OccuppiedByBuilding)
-        {
-            return Color.blue;
-        }
+        //// color derived from tilestate
+        //TileState state = GetTileState(position);
+        //if (state == TileState.OccuppiedByBuilding)
+        //{
+        //    return Color.blue;
+        //}
 
         return Color.white;
 
