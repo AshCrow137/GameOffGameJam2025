@@ -5764,7 +5764,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -9.099976, y: 23.723022}
+  m_AnchoredPosition: {x: -9.100098, y: 23.723022}
   m_SizeDelta: {x: 180, y: 150}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &651281755
@@ -6498,7 +6498,7 @@ MonoBehaviour:
   cityUI: {fileID: 0}
   kingdomUI: {fileID: 0}
   addVisibleTiles: {fileID: 0}
-  UIManager: {fileID: 0}
+  UIManager: {fileID: 1509147092}
 --- !u!4 &1011269897
 Transform:
   m_ObjectHideFlags: 0

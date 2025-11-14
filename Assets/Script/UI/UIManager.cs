@@ -29,7 +29,9 @@ public class UIManager : MonoBehaviour
 
         if(unit.GetOwner() == null) return;
 
-        if ((PlayerKingdom)unit.GetOwner())
+        PlayerKingdom try (PlayerKingdom)unit.GetOwner();
+
+        if (pk != null)
         {
             panelStats.sprite = UIElements.AllyPannel;
         }
