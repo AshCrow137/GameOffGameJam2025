@@ -23,7 +23,6 @@ public class HexTilemapManager : MonoBehaviour
 
     [SerializeField] private PlayerKingdom playerKingdom;
 
-
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
@@ -330,7 +329,7 @@ public class HexTilemapManager : MonoBehaviour
     public Color GetTileColorAtPosition(Vector3Int position)
     {
         // color derived from fog
-        Fog fog = playerKingdom.GetComponent<VisionManager>().GetFogAtPosition(position);
+        Fog fog = GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(position);
         if (fog == Fog.Grey)
         {
             return Color.gray;
@@ -360,5 +359,27 @@ public class HexTilemapManager : MonoBehaviour
     {
         return playerKingdom;
     }
+
+    /// <summary>
+    /// Gets a list of all tile positions in the tilemap
+    /// </summary>
+    /// <returns>List of all tile positions that have tiles</returns>
+    public List<Vector3Int> GetAllTilePositions()
+    {
+        List<Vector3Int> tilePositions = new List<Vector3Int>();
+        BoundsInt bounds = tilemap.cellBounds;
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            TileBase tile = tilemap.GetTile(pos);
+            if (tile != null)
+            {
+                tilePositions.Add(pos);
+            }
+        }
+
+        return tilePositions;
+    }
+
 }
 

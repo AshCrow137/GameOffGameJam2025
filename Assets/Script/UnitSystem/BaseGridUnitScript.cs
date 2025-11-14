@@ -337,6 +337,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     protected virtual void Death()
     {
+        GetComponent<EntityVision>().OnDeath();
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
         Owner.RemoveUnitFromKingdom(this);
