@@ -1,31 +1,33 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections;
+using Unity.VisualScripting;
+
 public class OpenNewUnit : GridBuilding
 {
-    [Header("UnitToUbdate")]
+    [Header("UnitToUpdate")]
     [SerializeField]
     private string unitName;
     private GameObject btn;
-    public override void Initialize(BaseKingdom owner)
+
+    public void OnEnable()
     {
-        base.Initialize(owner);
-        Debug.Log($"Open new unit {unitName}");
-        var all = Resources.FindObjectsOfTypeAll<GameObject>();
-        btn = all.FirstOrDefault(obj =>
-            obj.CompareTag("UI") &&
-            obj.name == "Eldritch" &&
-            obj.scene.isLoaded
-        );
+        var allUI = Resources.FindObjectsOfTypeAll<GameObject>()
+        .Where(go => go.CompareTag("UI") 
+                && go.name == unitName 
+                && go.scene.isLoaded);
+
+        btn = allUI.FirstOrDefault();
 
         if (btn != null)
+        {
             btn.SetActive(true);
-
+            Debug.Log($"UI объект '{unitName}' найден и активирован!");
+        }
+        else
+        {
+            Debug.LogWarning($"UI объект '{unitName}' на сцене не найден!");
+        }
     }
-    // public void OnDisable()
-    // {
-    //     if (btn != null)
-    //     {
-    //         btn.SetActive(false);
-    //     }
-    // }
+
 }
