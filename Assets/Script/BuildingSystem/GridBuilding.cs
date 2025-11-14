@@ -7,6 +7,7 @@ public class GridBuilding : BaseGridEntity
     public string buildingName;
     public int duration;
     public Dictionary<ResourceType, int> resources;
+    public float HpForCity;
     
 
     /// <summary>

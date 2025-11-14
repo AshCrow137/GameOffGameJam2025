@@ -6,6 +6,8 @@ using UnityEngine.Tilemaps;
 /// Manages building placement and operations on the grid
 /// Usage: see testPlaceBuilding function for usage
 /// </summary>
+/// 
+
 public class BuildingManager : MonoBehaviour
 {
     // Dictionary to store building data per position
@@ -17,6 +19,12 @@ public class BuildingManager : MonoBehaviour
 
     [SerializeField]
     private GameObject buildingPrefab;
+    [SerializeField]
+    private List<Building> BuildingsDatas;
+
+    [SerializeField]
+    private List<GameObject> PrefabsBuilding;
+
     [SerializeField]
     private Tilemap tilemap;
     
@@ -35,16 +43,16 @@ public class BuildingManager : MonoBehaviour
         public Building building;
         public Vector3Int position;
         public int turnsRemaining;
+        public int buildingtype;
 
-        public BuildingConstruction(Building building, Vector3Int position, int duration)
+        public BuildingConstruction(Building building, Vector3Int position, int duration, int buildingsType)
         {
             this.building = building;
             this.position = position;
             this.turnsRemaining = duration;
+            this.buildingtype = buildingsType;
         }
     }
-
-
 
     public void Instantiate()
     {
@@ -64,13 +72,13 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     /// <param name="building">The building object to place</param>
     /// <param name="gridPosition">The position on the grid (Vector3Int)</param>
-    public GameObject PlaceBuilding(Building building, Vector3Int gridPosition)
+    public GameObject PlaceBuilding(Building building, Vector3Int gridPosition,int buildingType)
     {
         if (building == null)
         {
             return null;
         }
-        GameObject buildingPreview = Instantiate(buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
+        GameObject buildingPreview = Instantiate(PrefabsBuilding[buildingType], HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
         buildingPreview.GetComponent<GridBuilding>().Initialize(building, playerKngdom);
         return buildingPreview;
     }
@@ -106,12 +114,12 @@ public class BuildingManager : MonoBehaviour
         if (building.duration > 0)
         {
             Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
-            StartBuildingConstruction(building, mousePosition);
+            StartBuildingConstruction(building, mousePosition,0);
         }
         else
         {
             Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
-            PlaceBuilding(building, mousePosition);
+            PlaceBuilding(building, mousePosition,0);
         }
 
         HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
@@ -119,7 +127,7 @@ public class BuildingManager : MonoBehaviour
 
     }
 
-    public void PlaceBuildingAtMousePosition(GridCity city)
+    public void PlaceBuildingAtMousePosition(GridCity city, int buildingType)
     {
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue) return;
@@ -129,15 +137,18 @@ public class BuildingManager : MonoBehaviour
         if (building.duration > 0)
         {
             Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
-            StartBuildingConstruction(building, mousePosition);
+            StartBuildingConstruction(BuildingsDatas[buildingType], mousePosition,buildingType);
         }
         else
         {
             Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
-            GameObject gridBuilding = PlaceBuilding(building, mousePosition);
+            GameObject gridBuilding = PlaceBuilding(BuildingsDatas[buildingType], mousePosition,buildingType);
             if( gridBuilding != null)
             {
                 city.buildings[mousePosition] = gridBuilding.GetComponent<GridBuilding>();
+                Debug.Log(city.buildings);
+                //city.maxHP += gridBuilding.GetComponent<GridBuilding>().HpForCity;
+                //Debug.Log($"!!!!!!!!!!!!CityHp how: {city.maxHP}");
             }
         }
 
@@ -169,7 +180,7 @@ public class BuildingManager : MonoBehaviour
         // Get building's resource requirements
         Dictionary<ResourceType, int> resourceRequirements = building.resource;
         // return true;
-        return resourceManager.HasEnough(resourceRequirements);
+        return resourceManager.HasEnough(resourceRequirements) == null;
     }
 
     /// <summary>
@@ -177,14 +188,14 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     /// <param name="building">The building to construct</param>
     /// <param name="position">The grid position where the building will be placed</param>
-    private void StartBuildingConstruction(Building building, Vector3Int position)
+    private void StartBuildingConstruction(Building building, Vector3Int position,int buildingType)
     {
 
         // Consume resources
         resourceManager.SpendResource(building.resource);
 
         // Add to construction queue
-        BuildingConstruction construction = new BuildingConstruction(building, position, building.duration);
+        BuildingConstruction construction = new BuildingConstruction(building, position, building.duration, buildingType);
         ongoingConstructions.Add(construction);
 
     }
@@ -205,7 +216,7 @@ public class BuildingManager : MonoBehaviour
             if (construction.turnsRemaining <= 0)
             {
                 // Construction complete - place the building
-                PlaceBuilding(construction.building, construction.position);
+                PlaceBuilding(construction.building, construction.position, construction.buildingtype);
                 completedConstructions.Add(construction);
                 Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
             }
