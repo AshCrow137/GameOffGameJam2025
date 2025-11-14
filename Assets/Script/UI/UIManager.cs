@@ -29,11 +29,11 @@ public class UIManager : MonoBehaviour
 
         if(unit.GetOwner() == null) return;
 
-        PlayerKingdom try (PlayerKingdom)unit.GetOwner();
+        PlayerKingdom pk = (PlayerKingdom)unit.GetOwner();
 
         if (pk != null)
         {
-            panelStats.sprite = UIElements.AllyPannel;
+            panelStats.sprite = UIElements.EnemyPannel;
         }
         else
         {
