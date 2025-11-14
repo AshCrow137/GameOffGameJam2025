@@ -8,17 +8,6 @@ public class CityProductionQueue : MonoBehaviour
     public Production currentProduction { get; private set; } = null;
     public List<Production> productionQueue { get; private set; } = new List<Production>();
 
-    //private void Awake()
-    //{
-    //    if (Instance == null)
-    //    {
-    //        Instance = this;
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
 
     public void OnTurnEnd()
     {
@@ -106,73 +95,90 @@ public class CityProductionQueue : MonoBehaviour
     /// <summary>
     /// Inserts a Production object at a particular position in the queue
     /// </summary>
-    public void InsertAtPosition(Production production, int position)
-    {
-        if (production == null)
-        {
-            Debug.LogError("Cannot insert null Production to queue");
-            return;
-        }
+    //public void InsertAtPosition(Production production, int position)
+    //{
+    //    if (production == null)
+    //    {
+    //        Debug.LogError("Cannot insert null Production to queue");
+    //        return;
+    //    }
 
-        if (position < 0)
-        {
-            Debug.LogError($"Cannot insert at negative position: {position}");
-            return;
-        }
+    //    if (position < 0)
+    //    {
+    //        Debug.LogError($"Cannot insert at negative position: {position}");
+    //        return;
+    //    }
 
-        if (position > productionQueue.Count)
-        {
-            Debug.LogError($"Position {position} is out of range. Queue size is {productionQueue.Count}");
-            return;
-        }
+    //    if (position > productionQueue.Count)
+    //    {
+    //        Debug.LogError($"Position {position} is out of range. Queue size is {productionQueue.Count}");
+    //        return;
+    //    }
 
-        productionQueue.Insert(position, production);
+    //    productionQueue.Insert(position, production);
 
-    }
+    //}
 
     /// <summary>
     /// Moves current production to a particular position in the queue.
     /// The first Production in the queue will become the current production.
     /// </summary>
-    public void MoveCurrentProductionToPosition(int position)
-    {
-        if (currentProduction == null)
-        {
-            Debug.LogError("No current production to move");
-            return;
-        }
+    //public void MoveCurrentProductionToPosition(int position)
+    //{
+    //    if (currentProduction == null)
+    //    {
+    //        Debug.LogError("No current production to move");
+    //        return;
+    //    }
 
-        if (productionQueue.Count == 0)
-        {
-            Debug.LogWarning("Cannot move current production to queue: queue is empty");
-            return;
-        }
+    //    if (productionQueue.Count == 0)
+    //    {
+    //        Debug.LogWarning("Cannot move current production to queue: queue is empty");
+    //        return;
+    //    }
 
-        InsertAtPosition(currentProduction, position);
+    //    InsertAtPosition(currentProduction, position);
 
-        // Make the first production in the queue the current production
-        SetCurrentProduction(productionQueue[0]);
-        RemoveFromQueue(0);
-    }
+    //    // Make the first production in the queue the current production
+    //    SetCurrentProduction(productionQueue[0]);
+    //    RemoveFromQueue(0);
+    //}
 
     /// <summary>
     /// Removes a production from the queue at the specified index
     /// </summary>
-    public void RemoveFromQueue(int index)
+    //public void RemoveFromQueue(int index)
+    //{
+    //    if (index < 0)
+    //    {
+    //        Debug.LogError($"Cannot remove at negative index: {index}");
+    //        return;
+    //    }
+
+    //    if (index >= productionQueue.Count)
+    //    {
+    //        Debug.LogError($"Index {index} is out of range. Queue size is {productionQueue.Count}");
+    //        return;
+    //    }
+
+    //    productionQueue.RemoveAt(index);
+    //}
+
+    public void RemoveProduction(Production production)
     {
-        if (index < 0)
+        if (production == null)
         {
-            Debug.LogError($"Cannot remove at negative index: {index}");
+            Debug.LogError("Cannot remove null Production");
             return;
         }
-
-        if (index >= productionQueue.Count)
+        production.Cancel(GetComponent<GridCity>());
+        productionQueue.Remove(production);
+        if (currentProduction == production)
         {
-            Debug.LogError($"Index {index} is out of range. Queue size is {productionQueue.Count}");
-            return;
+            RemoveCurrentProduction();
         }
+        ProductionQueueUI.Instance.UpdateUI(this);
 
-        productionQueue.RemoveAt(index);
     }
 
     /// <summary>
@@ -194,42 +200,42 @@ public class CityProductionQueue : MonoBehaviour
     /// <summary>
     /// Rearranges the production queue by moving an item from initial position to final position
     /// </summary>
-    public void RearrangeQueue(int initialPosition, int finalPosition)
-    {
-        if (initialPosition < 0)
-        {
-            Debug.LogError($"Cannot move from negative initial position: {initialPosition}");
-            return;
-        }
+    //public void RearrangeQueue(int initialPosition, int finalPosition)
+    //{
+    //    if (initialPosition < 0)
+    //    {
+    //        Debug.LogError($"Cannot move from negative initial position: {initialPosition}");
+    //        return;
+    //    }
 
-        if (initialPosition >= productionQueue.Count)
-        {
-            Debug.LogError($"Initial position {initialPosition} is out of range. Queue size is {productionQueue.Count}");
-            return;
-        }
+    //    if (initialPosition >= productionQueue.Count)
+    //    {
+    //        Debug.LogError($"Initial position {initialPosition} is out of range. Queue size is {productionQueue.Count}");
+    //        return;
+    //    }
 
-        if (finalPosition < 0)
-        {
-            Debug.LogError($"Cannot move to negative final position: {finalPosition}");
-            return;
-        }
+    //    if (finalPosition < 0)
+    //    {
+    //        Debug.LogError($"Cannot move to negative final position: {finalPosition}");
+    //        return;
+    //    }
 
-        if (finalPosition >= productionQueue.Count)
-        {
-            Debug.LogError($"Final position {finalPosition} is out of range. Queue size is {productionQueue.Count}");
-            return;
-        }
+    //    if (finalPosition >= productionQueue.Count)
+    //    {
+    //        Debug.LogError($"Final position {finalPosition} is out of range. Queue size is {productionQueue.Count}");
+    //        return;
+    //    }
 
-        if (initialPosition == finalPosition)
-        {
-            Debug.LogWarning($"Initial and final positions are the same ({initialPosition}). No action taken.");
-            return;
-        }
+    //    if (initialPosition == finalPosition)
+    //    {
+    //        Debug.LogWarning($"Initial and final positions are the same ({initialPosition}). No action taken.");
+    //        return;
+    //    }
 
-        Production productionToMove = productionQueue[initialPosition];
-        RemoveFromQueue(initialPosition);
-        InsertAtPosition(productionToMove, finalPosition);
-    }
+    //    Production productionToMove = productionQueue[initialPosition];
+    //    RemoveFromQueue(initialPosition);
+    //    InsertAtPosition(productionToMove, finalPosition);
+    //}
 
 
 }

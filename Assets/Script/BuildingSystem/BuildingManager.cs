@@ -134,37 +134,37 @@ public class BuildingManager : MonoBehaviour
         // }
     }
 
-    private void PlaceBuildingAtPosition(GridCity city, Vector3Int position)
-    {
-        if (!CanBuildingBePlaced(city, building, position)) return;
+    //private void PlaceBuildingAtPosition(GridCity city, Vector3Int position)
+    //{
+    //    if (!CanBuildingBePlaced(city, building, position)) return;
 
-        if (building.duration > 0)
-        {
-            Debug.Log($"Starting construction of {building.buildingName} at {position}. Will complete in {building.duration} turns.");
-            StartBuildingConstruction(building, position);
-        }
-        else
-        {
-            Debug.Log($"Placing {building.buildingName} at {position}.");
-            GameObject gridBuilding = PlaceBuilding(building, position);
-            if (gridBuilding != null)
-            {
-                city.buildings[position] = gridBuilding.GetComponent<GridBuilding>();
-            }
-        }
+    //    if (building.duration > 0)
+    //    {
+    //        Debug.Log($"Starting construction of {building.buildingName} at {position}. Will complete in {building.duration} turns.");
+    //        StartBuildingConstruction(building, position);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log($"Placing {building.buildingName} at {position}.");
+    //        GameObject gridBuilding = PlaceBuilding(building, position);
+    //        if (gridBuilding != null)
+    //        {
+    //            city.buildings[position] = gridBuilding.GetComponent<GridBuilding>();
+    //        }
+    //    }
 
-        HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
+    //    HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
 
-    }
+    //}
 
-    private void PlaceBuildingAtMousePosition(GridCity city)
-    {
-        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
-        if (mousePosition.x == int.MaxValue) return;
-        PlaceBuildingAtPosition(city, mousePosition);
+    //private void PlaceBuildingAtMousePosition(GridCity city)
+    //{
+    //    Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+    //    if (mousePosition.x == int.MaxValue) return;
+    //    PlaceBuildingAtPosition(city, mousePosition);
 
 
-    }
+    //}
 
     private bool CanBuildingBePlaced(GridCity city, Building building, Vector3Int position)
     {
@@ -198,17 +198,17 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     /// <param name="building">The building to construct</param>
     /// <param name="position">The grid position where the building will be placed</param>
-    private void StartBuildingConstruction(Building building, Vector3Int position)
-    {
+    //private void StartBuildingConstruction(Building building, Vector3Int position)
+    //{
 
-        // Consume resources
-        resourceManager.SpendResource(building.resource);
+    //    // Consume resources
+    //    resourceManager.SpendResource(building.resource);
 
-        // Add to construction queue
-        BuildingConstruction construction = new BuildingConstruction(building, position, building.duration);
-        ongoingConstructions.Add(construction);
+    //    // Add to construction queue
+    //    BuildingConstruction construction = new BuildingConstruction(building, position, building.duration);
+    //    ongoingConstructions.Add(construction);
 
-    }
+    //}
 
     /// <summary>
     /// Queues a building for production at mouse position
@@ -238,48 +238,59 @@ public class BuildingManager : MonoBehaviour
 
         city.GetComponent<CityProductionQueue>().AddToQueue(production);
 
-        if (ProductionQueueUI.Instance == null)
+    }
+
+    // set tile to available, and refund resources
+    public void CancelConstruction(GridCity city, Building building, Vector3Int position)
+    {
+        if(city == null || building == null || position == null)
         {
-            Debug.LogError("ProductionQueueUI.Instance is null");
+            Debug.LogError("Invalid parameters");
             return;
         }
+        if(HexTilemapManager.Instance.GetTileState(position) != TileState.OccuppiedByBuilding)
+        {
+            Debug.LogError("Tile was not occupied by building when cancelling construction");
+            return;
+        }
+        HexTilemapManager.Instance.SetTileState(position, TileState.Water);
+        resourceManager.AddResource(building.resource);
 
     }
 
 
+    ///// <summary>
+    ///// Called at the start of each turn to progress building construction
+    ///// </summary>
+    //public void StartTurn()
+    //{
+    //    // Collect completed constructions to remove after iteration
+    //    List<BuildingConstruction> completedConstructions = new List<BuildingConstruction>();
 
-    /// <summary>
-    /// Called at the start of each turn to progress building construction
-    /// </summary>
-    public void StartTurn()
-    {
-        // Collect completed constructions to remove after iteration
-        List<BuildingConstruction> completedConstructions = new List<BuildingConstruction>();
+    //    // Process each ongoing construction
+    //    foreach (BuildingConstruction construction in ongoingConstructions)
+    //    {
+    //        construction.turnsRemaining--;
 
-        // Process each ongoing construction
-        foreach (BuildingConstruction construction in ongoingConstructions)
-        {
-            construction.turnsRemaining--;
-            
-            if (construction.turnsRemaining <= 0)
-            {
-                // Construction complete - place the building
-                PlaceBuilding(construction.building, construction.position);
-                completedConstructions.Add(construction);
-                Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
-            }
-            else
-            {
-                Debug.Log($"{construction.building.buildingName} at {construction.position}: {construction.turnsRemaining} turns remaining");
-            }
-        }
+    //        if (construction.turnsRemaining <= 0)
+    //        {
+    //            // Construction complete - place the building
+    //            PlaceBuilding(construction.building, construction.position);
+    //            completedConstructions.Add(construction);
+    //            Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
+    //        }
+    //        else
+    //        {
+    //            Debug.Log($"{construction.building.buildingName} at {construction.position}: {construction.turnsRemaining} turns remaining");
+    //        }
+    //    }
 
-        // Remove completed constructions from the list
-        foreach (BuildingConstruction construction in completedConstructions)
-        {
-            ongoingConstructions.Remove(construction);
-        }
+    //    // Remove completed constructions from the list
+    //    foreach (BuildingConstruction construction in completedConstructions)
+    //    {
+    //        ongoingConstructions.Remove(construction);
+    //    }
 
-    }
+    //}
 }
 

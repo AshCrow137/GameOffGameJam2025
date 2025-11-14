@@ -48,4 +48,14 @@ public class Production
         return isStarted && turnsRemaining <= 0;
     }
 
+    public bool Cancel(GridCity city)
+    {
+        if (!isStarted) return true;
+        if(productionType == ProductionType.Building)
+        {
+            BuildingManager.Instance.CancelConstruction(city, building, position);
+            return true;
+        }
+        return false;
+    }
 }
