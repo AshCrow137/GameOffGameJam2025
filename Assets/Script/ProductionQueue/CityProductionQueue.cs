@@ -21,11 +21,7 @@ public class CityProductionQueue : MonoBehaviour
             return;
         }
         currentProduction.UpdateProduction();
-        if (currentProduction.turnsRemaining <= 0)
-        {
-            currentProduction.EndProduction();
-            RemoveCurrentProduction();
-        }
+        CheckIfProductionComplete();
         ProductionQueueUI.Instance.UpdateUI(this);
 
     }
@@ -36,18 +32,13 @@ public class CityProductionQueue : MonoBehaviour
         {
             currentProduction.EndProduction();
             RemoveCurrentProduction();
-            ProceedProductionQueue();
+            //ProceedProductionQueue();
         }
     }
 
 
     public void SetCurrentProduction(Production production)
     {
-        if(production == null)
-        {
-            Debug.LogError("Cannot set current production to null");
-            return;
-        }
         currentProduction = production;
         currentProduction.StartProduction(GetComponent<GridCity>());
         CheckIfProductionComplete();
@@ -74,11 +65,6 @@ public class CityProductionQueue : MonoBehaviour
     /// </summary>
     public void AddToQueue(Production production)
     {
-        if (production == null)
-        {
-            Debug.LogError("Cannot add null Production to queue");
-            return;
-        }
         if (productionQueue == null)
         {
             productionQueue = new List<Production>();
@@ -90,6 +76,42 @@ public class CityProductionQueue : MonoBehaviour
         }
         ProductionQueueUI.Instance.UpdateUI(this);
 
+    }
+
+    ///<summary>
+    /// Removes a production from the queue. This is called from production Item UI.
+    /// </summary>
+    /// <param name="production">The production to remove</param>
+    public void RemoveProduction(Production production)
+    {
+        if (production == null)
+        {
+            Debug.LogError("Cannot remove null Production");
+            return;
+        }
+        production.Cancel(GetComponent<GridCity>());
+        productionQueue.Remove(production);
+        if (currentProduction == production)
+        {
+            RemoveCurrentProduction();
+        }
+        ProductionQueueUI.Instance.UpdateUI(this);
+
+    }
+
+    /// <summary>
+    /// Removes the current production
+    /// </summary>
+    public void RemoveCurrentProduction()
+    {
+        if (currentProduction == null)
+        {
+            Debug.LogWarning("No current production to remove");
+            return;
+        }
+        currentProduction = null;
+
+        ProceedProductionQueue();
     }
 
     /// <summary>
@@ -163,38 +185,6 @@ public class CityProductionQueue : MonoBehaviour
 
     //    productionQueue.RemoveAt(index);
     //}
-
-    public void RemoveProduction(Production production)
-    {
-        if (production == null)
-        {
-            Debug.LogError("Cannot remove null Production");
-            return;
-        }
-        production.Cancel(GetComponent<GridCity>());
-        productionQueue.Remove(production);
-        if (currentProduction == production)
-        {
-            RemoveCurrentProduction();
-        }
-        ProductionQueueUI.Instance.UpdateUI(this);
-
-    }
-
-    /// <summary>
-    /// Removes the current production
-    /// </summary>
-    public void RemoveCurrentProduction()
-    {
-        if (currentProduction == null)
-        {
-            Debug.LogWarning("No current production to remove");
-            return;
-        }
-        currentProduction = null;
-
-        ProceedProductionQueue();
-    }
 
 
     /// <summary>

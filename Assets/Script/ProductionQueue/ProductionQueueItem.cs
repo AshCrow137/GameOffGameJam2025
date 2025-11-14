@@ -16,41 +16,18 @@ public class ProductionQueueItem : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void SetupItem(Production production)
     {
-        if (production == null)
-        {
-            Debug.LogError("Cannot setup ProductionQueueItem with null Production");
-            return;
-        }
-
         // Set the production icon if production type is building
         if (production.productionType == ProductionType.Building)
         {
-            if (production.building != null)
-            {
-                if (productionIcon != null)
-                {
-                    productionIcon.sprite = production.building.sprite;
-                }
-                else
-                {
-                    Debug.LogError("ProductionIcon Image is not assigned");
-                }
-            }
-            else
-            {
-                Debug.LogError("Production has Building type but building reference is null");
-            }
-        }
-
-        // Set the turns left text
-        if (turnsLeftText != null)
-        {
-            turnsLeftText.text = production.turnsRemaining.ToString();
+            productionIcon.sprite = production.building.sprite;
         }
         else
         {
-            Debug.LogError("TurnsLeftText is not assigned");
+            Debug.LogError("Please handle unit production in production queue");
         }
+
+        // Set the turns left text
+        turnsLeftText.text = production.turnsRemaining.ToString();
         this.production = production;
     }
 

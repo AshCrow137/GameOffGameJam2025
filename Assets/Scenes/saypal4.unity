@@ -7295,6 +7295,7 @@ MonoBehaviour:
   kingdomUI: {fileID: 0}
   addVisibleTiles: {fileID: 0}
   globalVisionManager: {fileID: 165527153}
+  productionQueueUI: {fileID: 28648850}
 --- !u!4 &1011269897
 Transform:
   m_ObjectHideFlags: 0

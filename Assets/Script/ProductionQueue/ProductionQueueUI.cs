@@ -6,7 +6,7 @@ public class ProductionQueueUI : MonoBehaviour
     public static ProductionQueueUI Instance { get; private set; }
 
 
-    private void Awake()
+    public void Instantiate()
     {
         if (Instance == null)
         {
