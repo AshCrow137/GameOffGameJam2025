@@ -29,9 +29,13 @@ public class UIManager : MonoBehaviour
 
         if(unit.GetOwner() == null) return;
 
+<<<<<<< HEAD
         PlayerKingdom pk = (PlayerKingdom)unit.GetOwner();
 
         if (pk != null)
+=======
+        if ((PlayerKingdom)unit.GetOwner())
+>>>>>>> parent of d6302b2 (.)
         {
             panelStats.sprite = UIElements.EnemyPannel;
         }
