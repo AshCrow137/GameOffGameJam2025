@@ -25,7 +25,7 @@ public class BuildingTurnHandler : EntityTurnHandler
     public override void OnTurnStart()
     {
         base.OnTurnStart(); // Call base implementation for logging
-        GetComponent<BuildingManager>().StartTurn();
+        //GetComponent<BuildingManager>().StartTurn();
         
     }
 }

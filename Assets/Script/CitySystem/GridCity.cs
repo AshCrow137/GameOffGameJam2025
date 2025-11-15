@@ -26,16 +26,18 @@ public class GridCity : BaseGridEntity
     {
         base.Initialize(owner);
         position = HexTilemapManager.Instance.WorldToCellPos(transform.position);
-        Debug.Log("position :" + position);
         CityManager.Instance.AddCity(HexTilemapManager.Instance.WorldToCellPos(transform.position), this);
-        
+        if (GetComponent<CityProductionQueue>() == null)
+        {
+           gameObject.AddComponent<CityProductionQueue>();
+        }
     }
 
     protected override void OnEndTurn(BaseKingdom entity)
     {
-            base.OnEndTurn(entity);
-            bCanSpawnUnits = true;
-        
+        base.OnEndTurn(entity);
+        bCanSpawnUnits = true;
+        GetComponent<CityProductionQueue>().OnTurnEnd();
     }
     protected override void OnStartTurn(BaseKingdom entity)
     {
@@ -63,7 +65,6 @@ public class GridCity : BaseGridEntity
         // Initialize empty resource dictionary - will be populated by other means
         this.resourceGainPerTurn = new Dictionary<ResourceType, int>();
         Owner.AddCityToKingdom(this);
-        
         Initialize(Owner);
     }
     public override void OnEntitySelect(BaseKingdom selector)

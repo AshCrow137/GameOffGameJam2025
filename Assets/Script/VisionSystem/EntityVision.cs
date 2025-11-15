@@ -17,13 +17,29 @@ public class EntityVision : MonoBehaviour
 
     private BaseGridEntity entity;
     private HexTilemapManager hTM;
+    private VisionManager selfVisionManager;
+    private VisionManager playerVisionManager;
 
     public void Initialize(BaseGridEntity gridEntity)
     {
         entity = gridEntity;
         hTM = HexTilemapManager.Instance;
+        selfVisionManager = entity.GetOwner().GetComponent<VisionManager>();
+        //VisionManager playerVisionManager = GlobalVisionManager.Instance.GetPlayerVisionManager();
+        //if (playerVisionManager == null)
+        //{
+        //    Debug.LogError("Player Vision Manager not found in GlobalVisionManager!");
+        //}
         UpdateFog();
         CoverByFog();
+    }
+    
+    /// <summary>
+    /// Called when entity dies
+    /// </summary>
+    public void OnDeath()
+    {
+        RemoveVisibility(entity.GetCellPosition());
     }
 
     /// <summary>
@@ -32,12 +48,6 @@ public class EntityVision : MonoBehaviour
     /// <returns>List of tile positions that were updated</returns>
     public List<Vector3Int> UpdateFog()
     {
-        VisionManager visionManager = entity.GetOwner().GetComponent<VisionManager>();
-        if(visionManager == null)
-        {
-            Debug.LogError("VisionManager not found on owner of entity: " + entity.name);
-            return new List<Vector3Int>();
-        }
         Vector3Int entityPosition = entity.GetCellPosition();
 
         // Get all tiles in vision radius (includes all tile states)
@@ -56,8 +66,8 @@ public class EntityVision : MonoBehaviour
         // Update fog for each tile
         foreach (Vector3Int tilePosition in updatedTiles)
         {
-            visionManager.UpdateGreyFog(tilePosition);
-            visionManager.UpdateBlackFog(tilePosition);
+            selfVisionManager.UpdateGreyFog(tilePosition);
+            selfVisionManager.UpdateBlackFog(tilePosition);
             HexTilemapManager.Instance.RefreshTile(tilePosition);
         }
 
@@ -71,8 +81,6 @@ public class EntityVision : MonoBehaviour
     /// <returns>List of tile positions that were updated</returns>
     public List<Vector3Int> RemoveFog(Vector3Int oldPosition)
     {
-        VisionManager visionManager = entity.GetOwner().GetComponent<VisionManager>();
-
         // Get all tiles in vision radius from old position (includes all tile states)
         List<TileState> allStates = new List<TileState> 
         { 
@@ -89,12 +97,26 @@ public class EntityVision : MonoBehaviour
         // Remove fog for each tile
         foreach (Vector3Int tilePosition in updatedTiles)
         {
-            visionManager.RemoveGreyFog(tilePosition);
+            selfVisionManager.RemoveGreyFog(tilePosition);
             HexTilemapManager.Instance.RefreshTile(tilePosition);
 
         }
 
         return updatedTiles;
+    }
+
+    public void RemoveVisibility(Vector3Int oldPosition)
+    {
+        // Remove fog from old position
+        List<Vector3Int> removedTiles = RemoveFog(oldPosition);
+        VisionManager playerVisionManager = GlobalVisionManager.Instance.GetPlayerVisionManager();
+
+        // Update visibility for removed tiles
+        foreach (Vector3Int tilePosition in removedTiles)
+        {
+            Fog fogState = playerVisionManager.GetFogAtPosition(tilePosition);
+            playerVisionManager.UpdateEntitiesAtPosition(tilePosition, fogState);
+        }
     }
 
     /// <summary>
@@ -104,14 +126,12 @@ public class EntityVision : MonoBehaviour
     {
         // Update fog and get list of affected tiles
         List<Vector3Int> updatedTiles = UpdateFog();
-
-        VisionManager visionManager = entity.GetOwner().GetComponent<VisionManager>();
-
+        VisionManager playerVisionManager = GlobalVisionManager.Instance.GetPlayerVisionManager();
         // For each updated tile, get the fog state and update entities at that position
         foreach (Vector3Int tilePosition in updatedTiles)
         {
-            Fog fogState = visionManager.GetFogAtPosition(tilePosition);
-            visionManager.UpdateEntitiesAtPosition(tilePosition, fogState);
+            Fog fogState = playerVisionManager.GetFogAtPosition(tilePosition);
+            playerVisionManager.UpdateEntitiesAtPosition(tilePosition, fogState);
         }
     }
 
@@ -121,20 +141,11 @@ public class EntityVision : MonoBehaviour
     /// <param name="oldPosition">The previous position of the entity</param>
     public void UpdateVisibilityOnMovement(Vector3Int oldPosition)
     {
-        VisionManager visionManager = entity.GetOwner().GetComponent<VisionManager>();
-
-        // Remove fog from old position
-        List<Vector3Int> removedTiles = RemoveFog(oldPosition);
-
-        // Update visibility for removed tiles
-        foreach (Vector3Int tilePosition in removedTiles)
-        {
-            Fog fogState = visionManager.GetFogAtPosition(tilePosition);
-            visionManager.UpdateEntitiesAtPosition(tilePosition, fogState);
-        }
-
+        // Remove visibility from old position
+        RemoveVisibility(oldPosition);
         // Update visibility at new position
         UpdateVisibility();
+        CoverByFog();
     }
 
     /// <summary>
@@ -175,7 +186,7 @@ public class EntityVision : MonoBehaviour
 
     public void CoverByFog()
     {
-        CoverByFog(HexTilemapManager.Instance.GetPlayerKingdom().GetComponent<VisionManager>().GetFogAtPosition(entity.GetCellPosition()));
+        CoverByFog(GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(entity.GetCellPosition()));
     }
 
     /// <summary>
@@ -184,8 +195,9 @@ public class EntityVision : MonoBehaviour
     public void CoverByFog(Fog fog)
     {
         // Player kingdom entities are never covered by fog
-        if (entity.GetOwner() is PlayerKingdom)
+        if (entity.GetOwner() == GlobalVisionManager.Instance.GetPlayerVisionManager().GetComponent<BaseKingdom>())
         {
+            SetEntityVisibility(true);
             return;
         }
 
@@ -222,5 +234,6 @@ public class EntityVision : MonoBehaviour
     {
         visibleUnderGreyFog = visible;
     }
+
 }
 

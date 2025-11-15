@@ -32,21 +32,23 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     private int AttacksPerTurn = 1;
     [SerializeField]
-    private bool CanMoveAfterattack = false;
+    protected bool CanMoveAfterattack = false;
 
 
     private Seeker seeker;
     private Path path;
-    private int tilesRemain;
+    protected int tilesRemain;
     private int CurrentWaypoint = 0;
     private float nextWaypointDistance = 0.01f;
     private bool bReachedEndOfPath;
     private Vector3 previousTargetPosition;
     private int attacksRemain = 1;
+    protected Vector3Int startingPosition;
+    protected float distanceTravelled = 0;
 
     //TODO Replace with normal UI
     [SerializeField]
-    private TMP_Text remainMovementText;
+    protected TMP_Text remainMovementText;
 
     private bool bIsMoving = false;
     private Vector3 PathTarget;
@@ -74,6 +76,8 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         return possibleSpawnTiles;
     }
+
+    public UnitType GetUnitType() => unitType;
 
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
@@ -333,6 +337,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     protected virtual void Death()
     {
+        GetComponent<EntityVision>().OnDeath();
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
         Owner.RemoveUnitFromKingdom(this);
@@ -360,6 +365,7 @@ public class BaseGridUnitScript : BaseGridEntity
         {
 
 
+            startingPosition = GetCellPosition();
             hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
             hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
             CreatePath(hTM.CellToWorldPos(cellPos));
@@ -493,11 +499,15 @@ public class BaseGridUnitScript : BaseGridEntity
         {
             TryToAttack(attackTarget, attackTarget.GetCellPosition());
         }
-        
+
+        // Calculating distance travelled
+        distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
+        Debug.Log("Distance travelled: " + distanceTravelled);
+        startingPosition = GetCellPosition();
     }
     protected virtual void Update()
     {
-       MovementCycle();
+        MovementCycle();
     }
   
 

@@ -114,6 +114,8 @@ public class BaseKingdom : Entity, IMadnessable
     [SerializeField]
     public int maxMadnessLevel { get; private set; } = 100;
 
+    public int GetMadnessLevel() { return madnessLevel; }
+
     public void IncreaseMadness(int amount)
     {
         madnessLevel += amount;
@@ -175,5 +177,6 @@ public class BaseKingdom : Entity, IMadnessable
         Debug.Log("Units in range " + range + ": " + result);
         return result;
     }
+
 
 }
