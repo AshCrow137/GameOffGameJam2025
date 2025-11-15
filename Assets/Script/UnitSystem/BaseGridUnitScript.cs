@@ -91,9 +91,6 @@ public class BaseGridUnitScript : BaseGridEntity
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
-        //Test UI Call
-        UIManager.Instance.SelectedUnit(this);
-        //
         if(selector!= Owner)
         {
             GlobalEventManager.InvokeShowUIMessageEvent($"This is not your unit!");
@@ -281,6 +278,8 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         bTryToAttack = false;
         attackTarget = null;
+
+        UIManager.Instance.UpdateLife(this);
     }
 
     /// <summary>
@@ -503,6 +502,34 @@ public class BaseGridUnitScript : BaseGridEntity
     {
        MovementCycle();
     }
-  
 
+    public int GetCurrentHealth()
+    {
+        return this.CurrentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return this.Health;
+    }
+  
+    public int GetMeleeDamage()
+    {
+        return this.MeleeAttackDamage;
+    }
+
+    public int GetRangeAttackDamage()
+    {
+        return this.RangeAttackDamage;
+    }
+
+    public int GetRetaliationDamage()
+    {
+        return this.RetallitionAttackDamage;
+    }
+
+    public int GetAtackDistance()
+    {
+        return this.AttackRange;
+    }
 }

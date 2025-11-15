@@ -45,6 +45,7 @@ public class BootManager : MonoBehaviour
         globalVisionManager?.Initialize();
         hexTilemapManager?.Initialize();
 
+        UIManager?.Initialize();
         turnManager?.Initialize();
         buildingManager?.Instantiate();
 
@@ -62,6 +63,5 @@ public class BootManager : MonoBehaviour
         cityUI?.Instantiate();
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
-        UIManager?.Initialize();
     }
 }

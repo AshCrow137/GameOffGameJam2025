@@ -31,7 +31,7 @@ public class TurnManager : MonoBehaviour
         //camera focus on the current Player/Unit
         //Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
         turnText.text = $"Current turn: {entity.name} N {currentTurnCount}";
-
+        UIManager.Instance.ChangeTurn(currentOrderIndex, turnOrder.Count);
         //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
         entity.GetComponent<EntityTurnHandler>()?.OnTurnStart();
         GlobalEventManager.InvokeStartTurnEvent(entity);
