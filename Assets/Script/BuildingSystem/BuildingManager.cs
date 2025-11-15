@@ -263,7 +263,7 @@ public class BuildingManager : MonoBehaviour
             return;
         }
         HexTilemapManager.Instance.SetTileState(position, TileState.Water);
-        resourceManager.AddResource(building.resource);
+        resourceManager.AddAll(building.resource);
 
     }
 

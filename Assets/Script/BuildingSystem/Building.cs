@@ -14,6 +14,7 @@ public class Building : ScriptableObject
     [Header("Construction")]
     public int duration;
     public GameObject owner;
+    public GameObject buildingPrefab;
     public GridCity ownerCity { get; private set; }
     // Property to access resources as Dictionary
     public Dictionary<ResourceType, int> resource
