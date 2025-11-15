@@ -103,6 +103,11 @@ public class BaseGridUnitScript : BaseGridEntity
         Debug.Log($"Select {this.name} unit");
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
         HPImage.color = Color.gray;
+        if(AttackRange>1)
+        {
+            hTM.ShowMarkersForRangeAttack(this, AttackRange);
+        }
+        
     }
     public override void OnEntityDeselect()
     {
@@ -282,6 +287,7 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         bTryToAttack = false;
         attackTarget = null;
+        hTM.RemoveAllMarkers();
     }
 
     /// <summary>
@@ -504,6 +510,10 @@ public class BaseGridUnitScript : BaseGridEntity
         distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
         Debug.Log("Distance travelled: " + distanceTravelled);
         startingPosition = GetCellPosition();
+        if (AttackRange > 1)
+        {
+            hTM.ShowMarkersForRangeAttack(this, AttackRange);
+        }
     }
     protected virtual void Update()
     {

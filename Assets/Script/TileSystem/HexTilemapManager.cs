@@ -26,6 +26,16 @@ public class HexTilemapManager : MonoBehaviour
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
+
+    public readonly List<TileState> allStates = new List<TileState>
+        {
+            TileState.Land,
+            TileState.Water,
+            TileState.OccuppiedByBuilding,
+            TileState.OccupiedByUnit,
+            TileState.Unavailable,
+            TileState.Default
+        };
     // Singleton instance for easy access
     public static HexTilemapManager Instance { get; private set; }
 
@@ -91,6 +101,32 @@ public class HexTilemapManager : MonoBehaviour
     public void RemoveAllMarkers()
     {
         markerTilemap?.ClearAllTiles();
+    }
+    public void PlaceColoredMarkerOnPosition(Vector3Int cellPos, Color markerColor)
+    {
+ 
+        markerTilemap?.SetTile(cellPos, markerTile);
+        markerTilemap?.RefreshTile(cellPos);
+    }
+    public void ShowMarkersForRangeAttack(BaseGridUnitScript unit,int attackRange)
+    {
+       List<Vector3Int> cells =  GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, allStates);
+        foreach (var cell in cells)
+        {
+            BaseGridUnitScript unitOnCell = GetUnitOnTile(cell);
+            if(unitOnCell)
+            {
+                if (unitOnCell == unit) continue;
+                else if(unitOnCell.GetOwner() == unit.GetOwner())
+                {
+                    PlaceColoredMarkerOnPosition(cell, Color.green);
+                }
+                else if(unitOnCell.GetOwner()!= unit.GetOwner())
+                {
+                    PlaceColoredMarkerOnPosition(cell, Color.red);
+                }
+            }
+        }
     }
 
     /// <summary>
