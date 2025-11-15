@@ -24,6 +24,7 @@ public class CityUI : MonoBehaviour
 
     //singleton
     public static CityUI Instance { get; private set; }
+    private int buildingType;
     public void Instantiate()
     {
         if (Instance == null)
@@ -57,10 +58,11 @@ public class CityUI : MonoBehaviour
         isUsingCityMenu = true;
     }
 
-    public void SetSpawnBuildingMode()
+    public void SetSpawnBuildingMode(int BuildingType)
     {
         cityMenuMode = CityMenuMode.SpawnBuilding;
         isUsingCityMenu = true;
+        buildingType=BuildingType;
     }
 
     private void ClearCityMenuMode()
@@ -96,7 +98,7 @@ public class CityUI : MonoBehaviour
         }
         else if (cityMenuMode == CityMenuMode.SpawnBuilding)
         {
-            BuildingManager.Instance.QueueBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity);
+            BuildingManager.Instance.QueueBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity,buildingType);
             // BuildingManager.Instance.PlaceBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity);
         }
         ClearCityMenuMode();

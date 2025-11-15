@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using System;
-using System.Linq;
 public class MainMenuController : MonoBehaviour
 {
     private bool PanelOpenSounds = false;

@@ -10,15 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f24917011541eac418e87a7b2c880594, type: 3}
-  m_Name: Cheap Building
+  m_Name: Abyssal Spawning Pool
   m_EditorClassIdentifier: 
-  buildingName: Cheap Building
-  sprite: {fileID: 21300000, guid: 2ee8a09767982764993dae12362db846, type: 3}
+  buildingName: Abyssal Spawning Pool
+  sprite: {fileID: 21300000, guid: d2894da8f47ade644b065d1578057ffa, type: 3}
   resourceRequirements:
   - resourceType: 0
-    amount: 1
-  - resourceType: 1
-    amount: 2
-  duration: 1
+    amount: 120
+  duration: 2
   owner: {fileID: 0}
-  buildingPrefab: {fileID: 0}

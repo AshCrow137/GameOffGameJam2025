@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Unit
   - City
+  - UI
   layers:
   - Default
   - TransparentFX

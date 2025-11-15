@@ -15,6 +15,8 @@ public class BaseGridEntity : MonoBehaviour
     [SerializeField]
     protected GameObject bodySprite;
     [SerializeField]
+    protected GameObject[] rotatebleObjects;
+    [SerializeField]
     protected Canvas rotatebleCanvas;
     protected Transform CameraArm;
 
@@ -73,6 +75,11 @@ public class BaseGridEntity : MonoBehaviour
         //rotating entity body sprite and canvas facing camera 
 
         bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
+        foreach(GameObject obj in rotatebleObjects)
+        {
+            var objeu = obj.transform.localRotation.eulerAngles;
+            obj.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
+        }
         rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
     }
     /// <summary>
