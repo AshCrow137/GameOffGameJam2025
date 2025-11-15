@@ -80,6 +80,7 @@ public class BuildingManager : MonoBehaviour
         }
         GameObject buildingPreview = Instantiate(PrefabsBuilding[buildingType], HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
         buildingPreview.GetComponent<GridBuilding>().Initialize(building, playerKngdom);
+        building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         return buildingPreview;
     }
 
@@ -137,6 +138,7 @@ public class BuildingManager : MonoBehaviour
         if (building.duration > 0)
         {
             Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
+            BuildingsDatas[buildingType].SetOwnerCity(city);
             StartBuildingConstruction(BuildingsDatas[buildingType], mousePosition,buildingType);
         }
         else
@@ -217,6 +219,7 @@ public class BuildingManager : MonoBehaviour
             {
                 // Construction complete - place the building
                 PlaceBuilding(construction.building, construction.position, construction.buildingtype);
+
                 completedConstructions.Add(construction);
                 Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
             }

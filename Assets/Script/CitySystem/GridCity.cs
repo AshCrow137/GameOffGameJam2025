@@ -40,7 +40,7 @@ public class GridCity : BaseGridEntity
     protected override void OnStartTurn(BaseKingdom entity)
     {
         base.OnStartTurn(entity);
-        maxHP = 100f;
+
         Debug.Log(buildings.Values);
         foreach (GridBuilding building in buildings.Values)
         {

@@ -10,11 +10,12 @@ public class OpenNewUnit : GridBuilding
     private string unitName;
     private GameObject btn;
 
-    public void OnEnable()
+    public override void Initialize(BaseKingdom owner)
     {
+        base.Initialize(owner);
         var allUI = Resources.FindObjectsOfTypeAll<GameObject>()
-        .Where(go => go.CompareTag("UI") 
-                && go.name == unitName 
+        .Where(go => go.CompareTag("UI")
+                && go.name == unitName
                 && go.scene.isLoaded);
 
         btn = allUI.FirstOrDefault();
@@ -29,5 +30,6 @@ public class OpenNewUnit : GridBuilding
             Debug.LogWarning($"UI объект '{unitName}' на сцене не найден!");
         }
     }
+
 
 }

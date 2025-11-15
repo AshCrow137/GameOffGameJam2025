@@ -14,6 +14,7 @@ public class Building : ScriptableObject
     [Header("Construction")]
     public int duration;
     public GameObject owner;
+    public GridCity ownerCity { get; private set; }
     // Property to access resources as Dictionary
     public Dictionary<ResourceType, int> resource
     {
@@ -51,6 +52,10 @@ public class Building : ScriptableObject
         }
         
         return clone;
+    }
+    public void SetOwnerCity(GridCity newOwner)
+    {
+        ownerCity = newOwner;
     }
 }
 
