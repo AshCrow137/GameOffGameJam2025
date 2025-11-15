@@ -165,12 +165,12 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        ChangeEssence((int)timer);
-        if(timer >= 120)
-        {
-            timer = 0;
-        }
+        //timer += Time.deltaTime;
+        //ChangeEssence((int)timer);
+        //if(timer >= 120)
+        //{
+        //    timer = 0;
+        //}
 
     }
 }
