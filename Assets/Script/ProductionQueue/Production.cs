@@ -32,7 +32,7 @@ public class Production
 
     public void EndProduction(){
         if(productionType == ProductionType.Building){
-            BuildingManager.Instance.PlaceBuilding(building, position,1);
+            BuildingManager.Instance.PlaceBuilding(building, position);
         }
     }
 

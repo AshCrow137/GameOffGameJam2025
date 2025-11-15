@@ -72,13 +72,13 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     /// <param name="building">The building object to place</param>
     /// <param name="gridPosition">The position on the grid (Vector3Int)</param>
-    public GameObject PlaceBuilding(Building building, Vector3Int gridPosition,int buildingType)
+    public GameObject PlaceBuilding(Building building, Vector3Int gridPosition)
     {
         if (building == null)
         {
             return null;
         }
-        GameObject buildingPreview = Instantiate(PrefabsBuilding[buildingType], HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
+        GameObject buildingPreview = Instantiate(building.buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
         buildingPreview.GetComponent<GridBuilding>().Initialize(building, playerKngdom);
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         return buildingPreview;
@@ -132,7 +132,7 @@ public class BuildingManager : MonoBehaviour
     {
         if (!CanBuildingBePlaced(city, building, position)) return false;
         resourceManager.SpendResource(building.resource);
-
+        building.SetOwnerCity(city);
         HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
         return true;
         // if (building.duration > 0)
@@ -199,7 +199,15 @@ public class BuildingManager : MonoBehaviour
         // Get building's resource requirements
         Dictionary<ResourceType, int> resourceRequirements = building.resource;
         // return true;
-        return resourceManager.HasEnough(resourceRequirements) == null;
+        Dictionary<ResourceType, int> resultReqs = resourceManager.HasEnough(resourceRequirements);
+        if(resultReqs!=null)
+        {
+            foreach (var a in resultReqs)
+            {
+                Debug.Log($"not enough {a.Key} - {a.Value}");
+            }
+        }
+        return resultReqs == null;
     }
 
     /// <summary>
@@ -222,7 +230,7 @@ public class BuildingManager : MonoBehaviour
     /// <summary>
     /// Queues a building for production at mouse position
     /// </summary>
-    public void QueueBuildingAtMousePosition(GridCity city)
+    public void QueueBuildingAtMousePosition(GridCity city,int buildingType)
     {
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue)
@@ -230,7 +238,7 @@ public class BuildingManager : MonoBehaviour
             Debug.LogError("Invalid mouse position");
             return;
         }
-
+        Building building = BuildingsDatas[buildingType];
         if (!CanBuildingBePlaced(city, building, mousePosition))
         {
             Debug.LogError("Building cannot be placed at this position");
