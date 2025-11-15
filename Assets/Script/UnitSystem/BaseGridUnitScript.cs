@@ -282,6 +282,8 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         bTryToAttack = false;
         attackTarget = null;
+
+        UIManager.Instance.UpdateLife(this);
     }
 
     /// <summary>
@@ -509,6 +511,34 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         MovementCycle();
     }
-  
 
+    public int GetCurrentHealth()
+    {
+        return this.CurrentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return this.Health;
+    }
+  
+    public int GetMeleeDamage()
+    {
+        return this.MeleeAttackDamage;
+    }
+
+    public int GetRangeAttackDamage()
+    {
+        return this.RangeAttackDamage;
+    }
+
+    public int GetRetaliationDamage()
+    {
+        return this.RetallitionAttackDamage;
+    }
+
+    public int GetAtackDistance()
+    {
+        return this.AttackRange;
+    }
 }
