@@ -6,6 +6,8 @@ using UnityEngine.Tilemaps;
 /// Manages building placement and operations on the grid
 /// Usage: see testPlaceBuilding function for usage
 /// </summary>
+/// 
+
 public class BuildingManager : MonoBehaviour
 {
     // Dictionary to store building data per position
@@ -17,6 +19,12 @@ public class BuildingManager : MonoBehaviour
 
     [SerializeField]
     private GameObject buildingPrefab;
+    [SerializeField]
+    private List<Building> BuildingsDatas;
+
+    [SerializeField]
+    private List<GameObject> PrefabsBuilding;
+
     [SerializeField]
     private Tilemap tilemap;
     
@@ -35,18 +43,16 @@ public class BuildingManager : MonoBehaviour
         public Building building;
         public Vector3Int position;
         public int turnsRemaining;
-        public BaseKingdom constructionOwner;
+        public int buildingtype;
 
-        public BuildingConstruction(Building building, Vector3Int position, int duration,BaseKingdom owner)
+        public BuildingConstruction(Building building, Vector3Int position, int duration, int buildingsType)
         {
             this.building = building;
             this.position = position;
             this.turnsRemaining = duration;
-            this.constructionOwner = owner;
+            this.buildingtype = buildingsType;
         }
     }
-
-
 
     public void Instantiate()
     {
@@ -73,8 +79,9 @@ public class BuildingManager : MonoBehaviour
         {
             return null;
         }
-        GameObject buildingPreview = Instantiate(buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
+        GameObject buildingPreview = Instantiate(building.buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
         buildingPreview.GetComponent<GridBuilding>().Initialize(building, playerKngdom);
+        building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         return buildingPreview;
     }
 
@@ -126,7 +133,7 @@ public class BuildingManager : MonoBehaviour
     {
         if (!CanBuildingBePlaced(city, building, position)) return false;
         resourceManager.SpendResource(building.resource);
-
+        building.SetOwnerCity(city);
         HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
         return true;
         // if (building.duration > 0)
@@ -193,7 +200,15 @@ public class BuildingManager : MonoBehaviour
         // Get building's resource requirements
         Dictionary<ResourceType, int> resourceRequirements = building.resource;
         // return true;
-        return resourceManager.HasEnough(resourceRequirements);
+        Dictionary<ResourceType, int> resultReqs = resourceManager.HasEnough(resourceRequirements);
+        if(resultReqs!=null)
+        {
+            foreach (var a in resultReqs)
+            {
+                Debug.Log($"not enough {a.Key} - {a.Value}");
+            }
+        }
+        return resultReqs == null;
     }
 
     /// <summary>
@@ -216,7 +231,7 @@ public class BuildingManager : MonoBehaviour
     /// <summary>
     /// Queues a building for production at mouse position
     /// </summary>
-    public void QueueBuildingAtMousePosition(GridCity city)
+    public void QueueBuildingAtMousePosition(GridCity city,int buildingType)
     {
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue)
@@ -224,7 +239,7 @@ public class BuildingManager : MonoBehaviour
             Debug.LogError("Invalid mouse position");
             return;
         }
-
+        Building building = BuildingsDatas[buildingType];
         if (!CanBuildingBePlaced(city, building, mousePosition))
         {
             Debug.LogError("Building cannot be placed at this position");
@@ -257,7 +272,7 @@ public class BuildingManager : MonoBehaviour
             return;
         }
         HexTilemapManager.Instance.SetTileState(position, TileState.Water);
-        resourceManager.AddResource(building.resource);
+        resourceManager.AddAll(building.resource);
 
     }
 
