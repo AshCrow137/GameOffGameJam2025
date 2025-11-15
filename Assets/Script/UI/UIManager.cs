@@ -110,17 +110,18 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void ProductionRealized()
+    public void UnitsInteractable(bool value)
     {
-        foreach (Image img in UIElements.UnitsProduction)
+        foreach (Button button in UIElements.UnitsProduction)
         {
-            img.color = new Color(1f, 1f, 1f, 0.6f);
+            button.interactable = value;
         }
     }
 
     public void ChangeTurn(int currentTurn, int totalTurns)
     {
         TurnCount.text = (currentTurn + 1).ToString() + " / " + totalTurns.ToString();
+        UnitsInteractable(true);
     }
 
     public void UpdateLife(BaseGridUnitScript unit)

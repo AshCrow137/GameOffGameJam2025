@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
 
 public class UIElements : MonoBehaviour
@@ -22,7 +23,7 @@ public class UIElements : MonoBehaviour
     [SerializeField]
     public Sprite CityPanel;
     [SerializeField]
-    public Image[] UnitsProduction;
+    public Button[] UnitsProduction;
 
     [Header("Essence System")]
     [Header("Essence Images")]

@@ -4160,7 +4160,9 @@ MonoBehaviour:
   EnemyType: {fileID: 1768213469, guid: ef78c797c8b09354483f822a43370524, type: 3}
   PlayerType: {fileID: -1121857622, guid: ef78c797c8b09354483f822a43370524, type: 3}
   CityPanel: {fileID: -246493143, guid: ef78c797c8b09354483f822a43370524, type: 3}
-  UnitsProduction: []
+  UnitsProduction:
+  - {fileID: 1143475652}
+  - {fileID: 424002008}
   EssenceImgs:
   - {fileID: 1238184722, guid: ef78c797c8b09354483f822a43370524, type: 3}
   - {fileID: 1631564902, guid: ef78c797c8b09354483f822a43370524, type: 3}
@@ -8165,6 +8167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 11400000, guid: da0836b485bfeb74284aa57b713bacee, type: 2}
   buildingPrefab: {fileID: 1759148930670143516, guid: 33a81bf3a3bf3494a9407103e40a30c0, type: 3}
+  BuildingsDatas: []
+  PrefabsBuilding: []
   tilemap: {fileID: 4958529}
   resourceManager: {fileID: 1583622226}
   playerKngdom: {fileID: 1507932131}
@@ -9121,7 +9125,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1143475653}
   m_OnClick:
     m_PersistentCalls:
