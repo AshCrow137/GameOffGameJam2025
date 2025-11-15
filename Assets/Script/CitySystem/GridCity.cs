@@ -88,6 +88,7 @@ public class GridCity : BaseGridEntity
             unitScript.Initialize(Owner);
             Owner.AddUnitToKingdom(unitScript);
             bCanSpawnUnits = false;
+            //lets the others UI production unavaliable
             UIManager.Instance.ProductionRealized();
         }
         else
