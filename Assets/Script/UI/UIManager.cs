@@ -9,6 +9,11 @@ public class UIManager : MonoBehaviour
     float timer = 0;
 
     [SerializeField]
+    private Image CityPanel;
+    [SerializeField] 
+    private TextMeshProUGUI MadnessLavel;
+
+    [SerializeField]
     private Image panelStats;
 
     [SerializeField]
@@ -88,6 +93,29 @@ public class UIManager : MonoBehaviour
         habiliyInfo.text = "nothing yet";
 
         UpdateLife(unit);
+    }
+
+    public void HasCitySelected(bool value)
+    {
+        CityPanel.gameObject.SetActive(value);
+    }
+
+    public void SelectedCity(GridCity city)
+    {
+        if(city == null) return;
+        HasCitySelected(true);
+
+        CityPanel.sprite = UIElements.CityPanel;
+        MadnessLavel.text = city.GetOwner().madnessLevel.ToString();
+
+    }
+
+    public void ProductionRealized()
+    {
+        foreach (Image img in UIElements.UnitsProduction)
+        {
+            img.color = new Color(1f, 1f, 1f, 0.6f);
+        }
     }
 
     public void ChangeTurn(int currentTurn, int totalTurns)
