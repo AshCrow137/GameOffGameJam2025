@@ -39,6 +39,18 @@ public class GridCity : BaseGridEntity
         bCanSpawnUnits = true;
         GetComponent<CityProductionQueue>().OnTurnEnd();
     }
+    protected override void OnStartTurn(BaseKingdom entity)
+    {
+        base.OnStartTurn(entity);
+
+        Debug.Log(buildings.Values);
+        foreach (GridBuilding building in buildings.Values)
+        {
+            
+            maxHP += building.HpForCity;
+        }
+        Debug.Log($"Hp city: {maxHP}");
+    }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
     {
