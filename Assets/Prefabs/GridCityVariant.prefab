@@ -374,7 +374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_FillAmount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4984026669913730949, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_SortingLayerID
@@ -382,11 +382,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.77
+      value: 4.499
       objectReference: {fileID: 0}
     - target: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.16
+      value: 4.297
       objectReference: {fileID: 0}
     - target: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -494,11 +494,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e78b0bb7d9b09d847bcd9734d33af99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 2
-  CurrentHealth: 2
+  Health: 100
+  CurrentHealth: 100
   Vision: 5
   HPImage: {fileID: 4030827277235843714}
   bodySprite: {fileID: 4626197104436376359}
+  rotatebleObjects: []
   rotatebleCanvas: {fileID: 6626023798899789146}
   sprite: {fileID: 0}
   position: {x: 0, y: 0, z: 0}

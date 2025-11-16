@@ -57,7 +57,7 @@ public class BaseGridUnitScript : BaseGridEntity
     private List<TileState> possibleSpawnTiles = new List<TileState>();
 
     private bool bTryToAttack = false;
-    private BaseGridUnitScript attackTarget;
+    private BaseGridEntity attackTarget;
 
     // Vision system - track previous position for fog updates during movement
     private Vector3Int previousCellPosition;
@@ -142,10 +142,15 @@ public class BaseGridUnitScript : BaseGridEntity
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
+        GridCity city = hTM.GetCityOnTile(cellPos);
         if(targetedUnit != null)
         {
             TryToAttack(targetedUnit, cellPos);
             
+        }
+        else if(city!=null)
+        {
+            TryToAttack(city, cellPos);
         }
         else
         {
@@ -162,7 +167,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="targetUnit">attacked unit</param>
     /// <param name="targetUnitPosition">attacked unit position</param>
-   private void TryToAttack(BaseGridUnitScript targetUnit, Vector3Int targetUnitPosition)
+   private void TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
     {
         if (targetUnit.GetOwner() == Owner)
         {
@@ -268,16 +273,16 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <summary>
     /// Base attack function, controls what kind of attack is used, ranged or melee
     /// </summary>
-    /// <param name="targetUnit"></param>
-    protected virtual void Attack(BaseGridUnitScript targetUnit)
+    /// <param name="targetEntity"></param>
+    protected virtual void Attack(BaseGridEntity targetEntity)
     {
-        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetUnit.transform.position)) == 1)
+        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position)) == 1)
         {
-            targetUnit.TakeDamage(MeleeAttackDamage, this, false);
+            targetEntity.TakeDamage(MeleeAttackDamage, this, false);
         }
         else
         {
-            targetUnit.TakeDamage(RangeAttackDamage, this, false);
+            targetEntity.TakeDamage(RangeAttackDamage, this, false);
         }
        //if property true, unit can move after attack
         if(!CanMoveAfterattack)
@@ -298,9 +303,8 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <param name="amount">amount of taken damage before calculation</param>
     /// <param name="attacker">unit that attack this unit</param>
     /// <param name="retallitionAttack">bool if this damage was retallition damage or not</param>
-    public virtual void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
+    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
     {
-        //TODO Calculate result damage
         int resultDamage = amount;
         if(!retallitionAttack)
         {
@@ -312,11 +316,7 @@ public class BaseGridUnitScript : BaseGridEntity
         HPImage.fillAmount = (float)CurrentHealth / Health;
         if (CurrentHealth <= 0 ) 
         {
-            //calculate the distance to main City if equal or less of 5 increase Madness in 5 points
-            if(GetDistanceToMainCity() <= 5)
-            {
-                TurnManager.instance.GetCurrentActingKingdom().IncreaseMadness(MadnessValue.EnemyUnitDead);
-            }
+           
             
             Death();
             return;
@@ -343,8 +343,13 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <summary>
     /// invokes when unit dies
     /// </summary>
-    protected virtual void Death()
+    protected override void Death()
     {
+        //calculate the distance to main City if equal or less of 5 increase Madness in 5 points
+        if (GetDistanceToMainCity() <= 5)
+        {
+            Owner.IncreaseMadness(MadnessValue.EnemyUnitDead);
+        }
         GetComponent<EntityVision>().OnDeath();
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);

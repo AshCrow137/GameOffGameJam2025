@@ -642,7 +642,7 @@ MonoBehaviour:
   duration: 0
   HpForCity: 10
   productGold: 0
-  productMagic: 20
+  productMagic: 10
   productMaterial: 0
 --- !u!4 &7298259681629756016 stripped
 Transform:

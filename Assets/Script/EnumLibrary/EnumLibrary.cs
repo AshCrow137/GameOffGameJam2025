@@ -65,3 +65,10 @@ public enum ProductionType
     Unit,
     Building
 }
+public enum MarkerColor
+{
+    Red,
+    Blue,
+    Green,
+    White
+}

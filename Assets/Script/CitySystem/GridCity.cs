@@ -11,8 +11,6 @@ public class GridCity : BaseGridEntity
     // we can add building's relation to city later
     // public List<Building> buildings;
 
-    public float maxHP = 100f;
-    public float currentHP;
 
     // public int visionRadius = 1;
     public int unitSpawnRadius = 1;
@@ -31,6 +29,8 @@ public class GridCity : BaseGridEntity
         {
            gameObject.AddComponent<CityProductionQueue>();
         }
+        hTM.PlaceCityOnTheTile(GetCellPosition(),this);
+        owner.AddCityToKingdom(this);
     }
 
     protected override void OnEndTurn(BaseKingdom entity)
@@ -44,20 +44,12 @@ public class GridCity : BaseGridEntity
         base.OnStartTurn(entity);
 
         Debug.Log(buildings.Values);
-        foreach (GridBuilding building in buildings.Values)
-        {
-            
-            maxHP += building.HpForCity;
-        }
-        Debug.Log($"Hp city: {maxHP}");
     }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
     {
         this.sprite = cityData.sprite;
         this.position = position;
-        this.maxHP = cityData.maxHP;
-        this.currentHP = cityData.maxHP;
         // this.visionRadius = cityData.visionRadius;
         this.unitSpawnRadius = 1;
         this.Owner = owner;
@@ -109,5 +101,27 @@ public class GridCity : BaseGridEntity
         }
        
     }
-    
+    public override void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack)
+    {
+        base.TakeDamage(amount, attacker, retallitionAttack);
+        CurrentHealth -= amount;
+        Debug.Log($"{this.gameObject.name} take {amount} damage");
+        HPImage.fillAmount = (float)CurrentHealth / Health;
+        if (CurrentHealth <= 0)
+        {
+
+
+            Death();
+            return;
+        }
+    }
+    protected override void Death()
+    {
+        base.Death();
+        hTM.RemoveCityOnTile(GetCellPosition());
+        GetComponent<EntityVision>().OnDeath();
+        Owner.RemoveCityFromKingdom(this);
+        gameObject.SetActive(false);
+    }
+
 }

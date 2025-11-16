@@ -17,7 +17,9 @@ public class HexTilemapManager : MonoBehaviour
 {
     [SerializeField] private Tilemap tilemap; 
     [SerializeField] private Tilemap markerTilemap;
-    [SerializeField] private TileBase markerTile;
+    [SerializeField] private TileBase redMarkerTile;
+    [SerializeField] private TileBase greenMarkerTile;
+    [SerializeField] private TileBase blueMarkerTile;
 
     [SerializeField] private Camera mainCamera;
 
@@ -26,6 +28,7 @@ public class HexTilemapManager : MonoBehaviour
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
+    private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
 
     public readonly List<TileState> allStates = new List<TileState>
         {
@@ -90,7 +93,7 @@ public class HexTilemapManager : MonoBehaviour
     }
     public void PlaceMarkerOnTilePosition(Vector3Int cellPosition)
     {
-        markerTilemap?.SetTile(cellPosition, markerTile);
+        markerTilemap?.SetTile(cellPosition, redMarkerTile);
         markerTilemap?.RefreshTile(cellPosition);
     }
     public void RemoveMarkerOnTilePosition(Vector3Int cellPosition)
@@ -102,10 +105,16 @@ public class HexTilemapManager : MonoBehaviour
     {
         markerTilemap?.ClearAllTiles();
     }
-    public void PlaceColoredMarkerOnPosition(Vector3Int cellPos, Color markerColor)
+    public void PlaceColoredMarkerOnPosition(Vector3Int cellPos, MarkerColor markerColor)
     {
- 
-        markerTilemap?.SetTile(cellPos, markerTile);
+        TileBase marker = null;
+        switch(markerColor)
+        {
+            case MarkerColor.Green:marker = greenMarkerTile; break;
+            case MarkerColor.Blue:marker = blueMarkerTile; break;
+            case MarkerColor.Red:marker = redMarkerTile; break;
+        }
+        markerTilemap?.SetTile(cellPos, marker);
         markerTilemap?.RefreshTile(cellPos);
     }
     public void ShowMarkersForRangeAttack(BaseGridUnitScript unit,int attackRange)
@@ -119,11 +128,11 @@ public class HexTilemapManager : MonoBehaviour
                 if (unitOnCell == unit) continue;
                 else if(unitOnCell.GetOwner() == unit.GetOwner())
                 {
-                    PlaceColoredMarkerOnPosition(cell, Color.green);
+                    PlaceColoredMarkerOnPosition(cell, MarkerColor.Green);
                 }
                 else if(unitOnCell.GetOwner()!= unit.GetOwner())
                 {
-                    PlaceColoredMarkerOnPosition(cell, Color.red);
+                    PlaceColoredMarkerOnPosition(cell, MarkerColor.Red);
                 }
             }
         }
@@ -297,9 +306,37 @@ public class HexTilemapManager : MonoBehaviour
     }
     public BaseGridUnitScript GetUnitOnTile(Vector3Int cellPosition)
     {
-        if(gridUnits.TryGetValue(cellPosition,out BaseGridUnitScript unitScript))
+        if (gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
         {
             return unitScript;
+        }
+        return null;
+    }
+    public void PlaceCityOnTheTile(Vector3Int cellPosition, GridCity city)
+    {
+        TileBase tile = tilemap.GetTile(cellPosition);
+        if (tile is HexTile)
+        {
+            if (!gridCities.TryGetValue(cellPosition, out GridCity cityScript))
+            {
+                gridCities.Add(cellPosition, city);
+            }
+
+        }
+    }
+    public void RemoveCityOnTile(Vector3Int cellPosition)
+    {
+        if (gridCities.TryGetValue(cellPosition, out GridCity cityScript))
+        {
+            gridCities.Remove(cellPosition);
+        }
+    }
+
+    public GridCity GetCityOnTile(Vector3Int cellPosition)
+    {
+        if (gridCities.TryGetValue(cellPosition, out GridCity cityScript))
+        {
+            return cityScript;
         }
         return null;
     }

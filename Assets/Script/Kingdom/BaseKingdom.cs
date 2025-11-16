@@ -116,7 +116,7 @@ public class BaseKingdom : Entity, IMadnessable
 
     public int GetMadnessLevel() { return madnessLevel; }
 
-    public void IncreaseMadness(int amount)
+    public virtual void IncreaseMadness(int amount)
     {
         madnessLevel += amount;
         if(madnessLevel > maxMadnessLevel)

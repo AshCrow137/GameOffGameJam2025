@@ -23,9 +23,17 @@ public class UIManager : MonoBehaviour
     private Image infantaryImg;
 
     [SerializeField]
-    private Image essenceImg;
+    private Image magicResourceImg;
     [SerializeField]
-    private TextMeshProUGUI essenceValue;
+    private Image goldResourceImg;
+    [SerializeField]
+    private Image materialsResourceImg;
+    [SerializeField]
+    private TextMeshProUGUI magicResourceText;
+    [SerializeField]
+    private TextMeshProUGUI goldResourceText;
+    [SerializeField]
+    private TextMeshProUGUI materialsResourceText;
 
     [SerializeField]
     private TextMeshProUGUI TurnCount;
@@ -118,9 +126,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ChangeTurn(int currentTurn, int totalTurns)
+    public void ChangeTurn(int currentTurn)
     {
-        TurnCount.text = (currentTurn + 1).ToString() + " / " + totalTurns.ToString();
+        TurnCount.text = (currentTurn).ToString() ;
         UnitsInteractable(true);
     }
 
@@ -129,11 +137,28 @@ public class UIManager : MonoBehaviour
         LifeBar.fillAmount = (float)unit.GetCurrentHealth() / (float)unit.GetMaxHealth();
     }
 
-    public void ChangeEssence(int essence)
+    public void UpdateResourceImages(int resourceValue,ResourceType resourceType)
     {
+        Image resource = null;
+        TextMeshProUGUI text = null;
+        switch (resourceType)
+        {
+            case ResourceType.Magic:
+                resource = magicResourceImg;
+                text = magicResourceText;
+                break;
+            case ResourceType.Gold: 
+                resource = goldResourceImg;
+                text = goldResourceText;
+                break;
+            case ResourceType.Materials: 
+                resource = materialsResourceImg; 
+                text = materialsResourceText;
+                break;
+        }
         int index = 0;
-        essenceValue.text = essence.ToString();
-        switch (essence)
+        text.text = resourceValue.ToString();
+        switch (resourceValue)
         {
             case < 12:
                 index = 0;
@@ -160,13 +185,17 @@ public class UIManager : MonoBehaviour
                 index = 7;
                 break;
         }
-        essenceImg.sprite = UIElements.EssenceImgs[index];
+        resource.sprite = UIElements.EssenceImgs[index];
+    }
+    public void SwapUIElementState(GameObject UIElement)
+    {
+        UIElement.SetActive(!UIElement.activeSelf);
     }
 
     private void Update()
     {
         //timer += Time.deltaTime;
-        //ChangeEssence((int)timer);
+        //UpdateResourceImages((int)timer);
         //if(timer >= 120)
         //{
         //    timer = 0;
