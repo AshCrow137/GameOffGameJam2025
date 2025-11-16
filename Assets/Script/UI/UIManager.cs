@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     private Image CityPanel;
     [SerializeField] 
     private TextMeshProUGUI MadnessLavel;
+    [SerializeField]
+    private Image madnessFillImage;
 
     [SerializeField]
     private Image panelStats;
@@ -114,8 +116,8 @@ public class UIManager : MonoBehaviour
         HasCitySelected(true);
 
         CityPanel.sprite = UIElements.CityPanel;
-        MadnessLavel.text = city.GetOwner().madnessLevel.ToString();
-
+        MadnessLavel.text = $"Madness: {city.GetOwner().madnessLevel}";
+        madnessFillImage.fillAmount = (float)city.GetOwner().madnessLevel / city.GetOwner().maxMadnessLevel;
     }
 
     public void UnitsInteractable(bool value)
@@ -191,7 +193,11 @@ public class UIManager : MonoBehaviour
     {
         UIElement.SetActive(!UIElement.activeSelf);
     }
+  
+    public void ShowEntityDescription(BaseGridEntity entity)
+    {
 
+    }
     private void Update()
     {
         //timer += Time.deltaTime;

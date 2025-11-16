@@ -56,6 +56,7 @@ public class BaseKingdom : Entity, IMadnessable
 
     private void OnEndTurn(BaseKingdom kingdom)
     {
+        if (kingdom != this) return;
         int unitsCount = GetUnitsCountInRange(5);
         if (unitsCount != 0)
         {
@@ -66,7 +67,7 @@ public class BaseKingdom : Entity, IMadnessable
             DecreaseMadness(3);
         }
 
-        if (kingdom != this) return;
+        
     }
 
     public void AddUnitToKingdom(BaseGridUnitScript unit)
