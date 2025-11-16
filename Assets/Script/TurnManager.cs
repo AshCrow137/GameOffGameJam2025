@@ -70,7 +70,7 @@ public class TurnManager : MonoBehaviour
         
 
         //call OnTurnStart to start the next turn
-        OnTurnStart(turnOrder[currentOrderIndex]);
+        //OnTurnStart(turnOrder[currentOrderIndex]);
     }
 
 }

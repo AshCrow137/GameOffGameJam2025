@@ -53,6 +53,11 @@ public class BaseGridEntity : MonoBehaviour
         }
         entityVision.Initialize(this);
     }
+    protected virtual void OnDisable()
+    {
+        GlobalEventManager.EndTurnEvent.RemoveListener(OnEndTurn);
+        GlobalEventManager.StartTurnEvent.RemoveListener(OnStartTurn);
+    }
     /// <summary>
     /// Invokes whis EndTurnEvent in GlobalEventManager
     /// </summary>

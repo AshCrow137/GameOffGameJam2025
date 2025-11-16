@@ -63,11 +63,19 @@ public class CityUI : MonoBehaviour
         cityMenuMode = CityMenuMode.SpawnBuilding;
         isUsingCityMenu = true;
         buildingType=BuildingType;
+        GridCity selectedCity = GameplayCanvasManager.instance.selectedCity;
+        List<Vector3Int> positions = HexTilemapManager.Instance.GetCellsInRange(selectedCity.GetCellPosition(),1,new List<TileState> { TileState.Land, TileState.Water });
+        foreach(Vector3Int pos in positions)
+        {
+            HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(pos, MarkerColor.Green);
+        }
+        //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition
     }
 
     private void ClearCityMenuMode()
     {
         cityMenuMode = CityMenuMode.None;
+        HexTilemapManager.Instance.RemoveAllMarkers();
         // StartCoroutine(ClearCityMenuModeDelayed());
     }
 

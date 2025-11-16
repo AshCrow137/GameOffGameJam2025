@@ -32,6 +32,12 @@ public class GridCity : BaseGridEntity
         hTM.PlaceCityOnTheTile(GetCellPosition(),this);
         owner.AddCityToKingdom(this);
     }
+    public void OnBuildingConstructed(GridBuilding building)
+    {
+        Health +=(int) building.HpForCity;
+        CurrentHealth += (int)building.HpForCity;
+        HPImage.fillAmount = (float)CurrentHealth / Health;
+    }
 
     protected override void OnEndTurn(BaseKingdom entity)
     {
