@@ -16,6 +16,9 @@ public class GameplayCanvasManager : MonoBehaviour
     private float showMessageTime = 3;
     [SerializeField]
     private GameObject victoryPanel;
+    [SerializeField]
+    private GameObject wavecallerButton;
+    public BaseGridUnitScript selectedUnit;
 
     [HideInInspector]
     public GridCity selectedCity { get; private set; } = null;
@@ -84,5 +87,22 @@ public class GameplayCanvasManager : MonoBehaviour
     public void OnMouseExitCanvasElement()
     {
         InputManager.instance.SetOnUiElement(false);
+    }
+    public void ActivateWavecallerButton(BaseGridUnitScript unit)
+    {
+        wavecallerButton.SetActive(true);
+        selectedUnit = unit;
+    }
+    public void DeactivateWavecallerButton()
+    {
+        wavecallerButton.SetActive(false);
+        selectedUnit = null;
+    }
+    public void CallSpecialAbility()
+    {
+        if (selectedUnit != null)
+        {
+            selectedUnit.SpecialAbility();
+        }
     }
 }

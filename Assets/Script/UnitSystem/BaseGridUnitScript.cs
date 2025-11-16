@@ -33,6 +33,8 @@ public class BaseGridUnitScript : BaseGridEntity
     private int AttacksPerTurn = 1;
     [SerializeField]
     protected bool CanMoveAfterattack = false;
+    [SerializeField]
+    protected int specialAbilityRange = 1;
 
 
     private Seeker seeker;
@@ -151,7 +153,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="tile">clicked tile</param>
     /// <param name="cellPos">position of clicked tile</param>
-    private void OnTileClicked(HexTile tile,Vector3Int cellPos)
+    protected void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
         if(targetedUnit != null)
@@ -524,6 +526,8 @@ public class BaseGridUnitScript : BaseGridEntity
         Debug.Log("Distance travelled: " + distanceTravelled);
         startingPosition = GetCellPosition();
     }
+    public virtual void SpecialAbility() { }
+
     protected virtual void Update()
     {
         MovementCycle();
