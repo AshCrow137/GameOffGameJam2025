@@ -5,17 +5,21 @@ public class Resource : MonoBehaviour
 {
     public static Resource Instance { get; private set; }
     private Dictionary<ResourceType, int> resources = new();
+    [SerializeField]
+    private int StartingMagic = 50;
+    [SerializeField]
+    private int StartingGold = 20;
+    [SerializeField]
+    private int StartingMaterials = 30;
 
-    void Start()
-    {
-        Initialize();
-    }
+
     public void Initialize()
     {
         Instance = this;
-        resources[ResourceType.Magic] = 10;
-        resources[ResourceType.Gold] = 10;
-        resources[ResourceType.Materials] = 10;
+        resources[ResourceType.Magic] = StartingMagic;
+        resources[ResourceType.Gold] = StartingGold;
+        resources[ResourceType.Materials] = StartingMaterials;
+        UpdateUI();
     }
 
     public void AddAll(Dictionary<ResourceType,int> required)
@@ -25,6 +29,7 @@ public class Resource : MonoBehaviour
             resources[req.Key] += req.Value;
             Debug.Log($"Add {req.Key} - {req.Value}");
         }
+        UpdateUI();
     }
 
     public void SpendResource(Dictionary<ResourceType, int> required)
@@ -33,6 +38,7 @@ public class Resource : MonoBehaviour
         {
             resources[req.Key] = Mathf.Max(0, resources[req.Key] - req.Value);
         }
+        UpdateUI();
     }
 
     public void Remove( Dictionary<ResourceType,int> required)
@@ -41,8 +47,8 @@ public class Resource : MonoBehaviour
         foreach (var req in required)
         {
             resources[req.Key] = Mathf.Max(0, resources[req.Key] - req.Value);
-            
         }
+        UpdateUI();
     }
 
     public int Get(ResourceType type) => resources[type];
@@ -63,6 +69,13 @@ public class Resource : MonoBehaviour
         else
             return _temp;
 
+    }
+    private void UpdateUI()
+    {
+        foreach (KeyValuePair<ResourceType, int> kvp in resources)
+        {
+            UIManager.Instance.UpdateResourceImages(kvp.Value, kvp.Key);
+        }
     }
 
     public void TESTADDFORBUTTON()

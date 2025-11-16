@@ -1,7 +1,7 @@
 ﻿//This file is Enum holder
-    public enum TimerDirection
-    {
-        INCREASE,
+public enum TimerDirection
+{
+    INCREASE,
         DECREASE
     }
 
@@ -64,4 +64,11 @@ public enum ProductionType
     None,
     Unit,
     Building
+}
+public enum MarkerColor
+{
+    Red,
+    Blue,
+    Green,
+    White
 }

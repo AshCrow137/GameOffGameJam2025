@@ -8,5 +8,9 @@ public class PlayerKingdom : BaseKingdom
     {
         KingdomUI.Instance?.StartTurn();
     }
-   
+    public override void IncreaseMadness(int amount)
+    {
+        
+    }
+
 }
