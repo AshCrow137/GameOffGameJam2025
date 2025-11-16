@@ -145,8 +145,8 @@ public class InputManager : MonoBehaviour
         if (bIsOnUIElement) { return; }
         if (CityUI.Instance && CityUI.Instance.cityMenuMode != CityMenuMode.None) return; // if we are trying to place a building on the tile then don't do tile interaction from here.
         if (!value.performed || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
-        UIManager.Instance.HasUnitSelected(false);
-        UIManager.Instance.HasCitySelected(false);
+        UIManager.Instance?.HasUnitSelected(false);
+        UIManager.Instance?.HasCitySelected(false);
         if (ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement))
         {
             CityManager.Instance.TestPlaceCity();
@@ -185,7 +185,7 @@ public class InputManager : MonoBehaviour
                 selectedCity = city;
                 selectedCity.OnEntitySelect(playerKngdom);
                 bHasSelectedEntity= true;
-                UIManager.Instance.SelectedCity(city);
+                UIManager.Instance?.SelectedCity(city);
             }
         }
        
