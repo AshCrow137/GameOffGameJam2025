@@ -21,9 +21,9 @@ public class ProductionQueueItem : MonoBehaviour, IPointerClickHandler
         {
             productionIcon.sprite = production.building.sprite;
         }
-        else
+        else if (production.productionType == ProductionType.Unit)
         {
-            Debug.LogError("Please handle unit production in production queue");
+            productionIcon.sprite = production.prefab.GetComponent<BaseGridUnitScript>().GetSprite();
         }
 
         // Set the turns left text

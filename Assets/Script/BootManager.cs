@@ -39,11 +39,14 @@ public class BootManager : MonoBehaviour
     private ProductionQueueUI productionQueueUI;
     [SerializeField]
     private UIManager UIManager;
+    [SerializeField]
+    private UnitSpawner unitSpawner;
 
 
     void Start()
     {
         // testScript.Initialize();
+        productionQueueUI?.Instantiate();
         globalVisionManager?.Initialize();
         hexTilemapManager?.Initialize();
 
@@ -65,6 +68,7 @@ public class BootManager : MonoBehaviour
         cityUI?.Instantiate();
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
+        unitSpawner?.Instantiate();
         productionQueueUI?.Instantiate();
     }
 }

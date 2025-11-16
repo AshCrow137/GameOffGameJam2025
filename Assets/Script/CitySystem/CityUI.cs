@@ -25,6 +25,7 @@ public class CityUI : MonoBehaviour
     //singleton
     public static CityUI Instance { get; private set; }
     private int buildingType;
+    private GameObject unitPrefab;
     public void Instantiate()
     {
         if (Instance == null)
@@ -52,10 +53,11 @@ public class CityUI : MonoBehaviour
         // Placeholder for UI logic
     }
 
-    public void SetSpawnUnitMode()
+    public void SetSpawnUnitMode(GameObject unitPrefab)
     {
         cityMenuMode = CityMenuMode.SpawnUnit;
         isUsingCityMenu = true;
+        this.unitPrefab=unitPrefab;
     }
 
     public void SetSpawnBuildingMode(int BuildingType)
@@ -102,7 +104,7 @@ public class CityUI : MonoBehaviour
         if(!context.performed) return;
         if (cityMenuMode == CityMenuMode.SpawnUnit)
         {
-            CityManager.Instance.SpawnUnitAtMousePosition(SelectionManager.Instance.selectedCity);
+            UnitSpawner.Instance.QueueUnitAtMousePosition(GameplayCanvasManager.instance.selectedCity, unitPrefab);
         }
         else if (cityMenuMode == CityMenuMode.SpawnBuilding)
         {

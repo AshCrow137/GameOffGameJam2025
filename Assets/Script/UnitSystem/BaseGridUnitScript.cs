@@ -62,6 +62,23 @@ public class BaseGridUnitScript : BaseGridEntity
     // Vision system - track previous position for fog updates during movement
     private Vector3Int previousCellPosition;
 
+
+    [SerializeField] private List<ResourceRequirement> resourceRequirements = new List<ResourceRequirement>();
+
+    public int duration;
+    public Dictionary<ResourceType, int> resource
+    {
+        get
+        {
+            Dictionary<ResourceType, int> dict = new Dictionary<ResourceType, int>();
+            foreach (var req in resourceRequirements)
+            {
+                dict[req.resourceType] = req.amount;
+            }
+            return dict;
+        }
+    }
+
     private static readonly float[,] AttackModifiers = {
     /*Cavalry*/ {1.0f,1.0f,1.5f,1f },
     /*Infantry*/{1.5f,1.0f,1.0f,1f },
