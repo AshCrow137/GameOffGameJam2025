@@ -65,3 +65,13 @@ public enum ProductionType
     Unit,
     Building
 }
+
+public enum AIAction
+{
+    None,
+    Attack,
+    PreferredAttack,
+    BuildCity,
+    BuildUnit
+    
+}
