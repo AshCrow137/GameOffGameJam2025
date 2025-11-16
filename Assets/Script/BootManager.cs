@@ -69,6 +69,6 @@ public class BootManager : MonoBehaviour
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
         unitSpawner?.Instantiate();
-        productionQueueUI?.Instantiate();
+
     }
 }

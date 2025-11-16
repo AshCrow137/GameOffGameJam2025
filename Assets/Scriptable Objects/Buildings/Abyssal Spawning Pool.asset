@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abyssal Spawning Pool
   m_EditorClassIdentifier: 
   buildingName: Abyssal Spawning Pool
-  sprite: {fileID: 21300000, guid: d2894da8f47ade644b065d1578057ffa, type: 3}
+  sprite: {fileID: 932184325, guid: f09834d4c45767044b70237fae6ee10f, type: 3}
   resourceRequirements:
   - resourceType: 0
     amount: 20

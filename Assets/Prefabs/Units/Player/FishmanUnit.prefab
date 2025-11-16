@@ -83,6 +83,7 @@ MonoBehaviour:
   Vision: 5
   HPImage: {fileID: 3711177520239316543}
   bodySprite: {fileID: 4918825275124453274}
+  rotatebleObjects: []
   rotatebleCanvas: {fileID: 6882905193284612583}
   unitType: 0
   MeleeAttackDamage: 8
@@ -96,6 +97,8 @@ MonoBehaviour:
   CanMoveAfterattack: 0
   remainMovementText: {fileID: 6747325932697013235}
   possibleSpawnTiles: 0000000003000000
+  resourceRequirements: []
+  duration: 2
 --- !u!114 &3711177520239316543 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}

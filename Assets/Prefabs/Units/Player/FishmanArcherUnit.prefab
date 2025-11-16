@@ -154,6 +154,8 @@ MonoBehaviour:
   CanMoveAfterattack: 0
   remainMovementText: {fileID: 448980740877416662}
   possibleSpawnTiles: 0000000003000000
+  resourceRequirements: []
+  duration: 3
 --- !u!114 &7500895812354129178 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}

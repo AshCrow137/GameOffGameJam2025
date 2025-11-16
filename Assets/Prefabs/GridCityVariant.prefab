@@ -356,6 +356,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 263502168477694567, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263502168477694567, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 263502168477694567, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 263502168477694567, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 263502168477694567, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263502168477694567, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 483940085929675459, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Name
       value: GridCityVariant
@@ -503,8 +527,6 @@ MonoBehaviour:
   rotatebleCanvas: {fileID: 6626023798899789146}
   sprite: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
-  maxHP: 100
-  currentHP: 0
   unitSpawnRadius: 1
 --- !u!114 &4030827277235843714 stripped
 MonoBehaviour:

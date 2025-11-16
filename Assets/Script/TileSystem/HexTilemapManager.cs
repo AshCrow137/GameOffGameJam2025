@@ -122,15 +122,23 @@ public class HexTilemapManager : MonoBehaviour
        List<Vector3Int> cells =  GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, allStates);
         foreach (var cell in cells)
         {
-            BaseGridUnitScript unitOnCell = GetUnitOnTile(cell);
-            if(unitOnCell)
+            BaseGridEntity entityOnCell;
+            if (GetUnitOnTile(cell))
             {
-                if (unitOnCell == unit) continue;
-                else if(unitOnCell.GetOwner() == unit.GetOwner())
+                entityOnCell = GetUnitOnTile(cell);
+            }
+            else
+            {
+                entityOnCell =GetCityOnTile(cell);
+            }
+
+            if (entityOnCell&&entityOnCell!= unit)
+            {
+                if(entityOnCell.GetOwner() == unit.GetOwner())
                 {
                     PlaceColoredMarkerOnPosition(cell, MarkerColor.Green);
                 }
-                else if(unitOnCell.GetOwner()!= unit.GetOwner())
+                else if(entityOnCell.GetOwner()!= unit.GetOwner())
                 {
                     PlaceColoredMarkerOnPosition(cell, MarkerColor.Red);
                 }
