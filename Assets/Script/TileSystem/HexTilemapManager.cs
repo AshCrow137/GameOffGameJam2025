@@ -345,6 +345,10 @@ public class HexTilemapManager : MonoBehaviour
         {
             return Color.blue;
         }
+        else if(state == TileState.OccupiedByUnit)
+        {
+            return new Color(0.3f, 0.3f, 1f);
+        }
 
         return Color.white;
 

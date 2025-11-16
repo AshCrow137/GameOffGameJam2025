@@ -9008,6 +9008,7 @@ MonoBehaviour:
   addVisibleTiles: {fileID: 0}
   globalVisionManager: {fileID: 1225955601}
   productionQueueUI: {fileID: 28648850}
+  UIManager: {fileID: 0}
 --- !u!4 &1011269897
 Transform:
   m_ObjectHideFlags: 0
