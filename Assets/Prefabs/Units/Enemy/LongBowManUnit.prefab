@@ -60,6 +60,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: LongBowManUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
     m_RemovedGameObjects: []
@@ -69,6 +93,33 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6177816509522111356}
   m_SourcePrefab: {fileID: 100100000, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+--- !u!114 &156892401795903999 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3006300019162823749, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3140663974240161210}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1479423447086613288 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4544720228185591442, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3140663974240161210}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2593644204236982474 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 606746352947840368, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3140663974240161210}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3191821091930545751 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -90,17 +141,6 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 2024809114169191824, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 3140663974240161210}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6595606949505048562 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 3140663974240161210}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8363726841908446572 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -121,8 +161,9 @@ MonoBehaviour:
   Health: 12
   CurrentHealth: 12
   Vision: 8
-  HPImage: {fileID: 6595606949505048562}
+  HPImage: {fileID: 1479423447086613288}
   bodySprite: {fileID: 3191821091930545751}
+  rotatebleObjects: []
   rotatebleCanvas: {fileID: 4002697416325505066}
   unitType: 1
   MeleeAttackDamage: 1
@@ -134,5 +175,9 @@ MonoBehaviour:
   MovementSpeed: 3
   AttacksPerTurn: 1
   CanMoveAfterattack: 0
+  movementPointsPanel: {fileID: 2593644204236982474}
+  movementPointsImage: {fileID: 156892401795903999}
   remainMovementText: {fileID: 3867427655442815550}
   possibleSpawnTiles: 00000000
+  resourceRequirements: []
+  duration: 0

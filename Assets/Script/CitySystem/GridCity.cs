@@ -69,13 +69,12 @@ public class GridCity : BaseGridEntity
     {
         base.OnEntitySelect(selector);
         Debug.Log($"Select {this.name} city");
-        HPImage.color = Color.gray;
         GameplayCanvasManager.instance.ActivateUnitProductionPanel(this);
     }
     public override void OnEntityDeselect()
     {
+        base.OnEntityDeselect();
         Debug.Log($"Deselect {this.name} city");
-        HPImage.color = Owner.GetKingdomColor();
         GameplayCanvasManager.instance.DeactivateUnitProductionPanel();
     }
 

@@ -42,7 +42,9 @@ public class BaseGridEntity : MonoBehaviour
         }
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
-        HPImage.color = Owner.GetKingdomColor();
+        if(!baseSprite) baseSprite = GetComponent<SpriteRenderer>();
+        Color ownerColor = Owner.GetKingdomColor();
+        baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
         gridPosition = HexTilemapManager.Instance.WorldToCellPos(transform.position);
 
         // Initialize EntityVision component
@@ -85,7 +87,7 @@ public class BaseGridEntity : MonoBehaviour
             var objeu = obj.transform.localRotation.eulerAngles;
             obj.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
         }
-        rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
+        rotatebleCanvas.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z+90, -90, -90));
     }
     /// <summary>
     /// invokes when kingdom select grid entity
@@ -97,13 +99,15 @@ public class BaseGridEntity : MonoBehaviour
         {
             return;
         }
+        baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
     }
     /// <summary>
     /// invokes when kingdom deselect unit
     /// </summary>
     public virtual void OnEntityDeselect()
     {
-
+        Color ownerColor = Owner.GetKingdomColor();
+        baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
     }
     protected virtual void Death()
     {

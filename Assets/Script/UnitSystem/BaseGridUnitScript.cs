@@ -33,6 +33,12 @@ public class BaseGridUnitScript : BaseGridEntity
     private int AttacksPerTurn = 1;
     [SerializeField]
     protected bool CanMoveAfterattack = false;
+    [SerializeField]
+    protected GameObject movementPointsPanel;
+    [SerializeField]
+    protected Image movementPointsImage;
+    protected List<Image> movementPointsImages = new List<Image>();
+    
 
 
     private Seeker seeker;
@@ -105,9 +111,19 @@ public class BaseGridUnitScript : BaseGridEntity
         seeker = GetComponent<Seeker>();
         tilesRemain = MovementDistance;
         remainMovementText.text = tilesRemain.ToString();
-
+        UpdateMovementPointsUI();
         hTM.PlaceUnitOnTile(hTM.WorldToCellPos(transform.position),this);
-
+        movementPointsImages = new List<Image>(MovementDistance)
+        {
+            movementPointsImage
+        };
+        for (int i=0;i<MovementDistance-1;i++)
+        {
+            
+                Image newImage = Instantiate(movementPointsImage, movementPointsPanel.transform);
+                movementPointsImages.Add(newImage);
+           
+        }
     }
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
@@ -119,7 +135,8 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         Debug.Log($"Select {this.name} unit");
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
-        HPImage.color = Color.gray;
+       
+        baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
         if(AttackRange>1)
         {
             hTM.ShowMarkersForRangeAttack(this, AttackRange);
@@ -131,7 +148,8 @@ public class BaseGridUnitScript : BaseGridEntity
         base.OnEntityDeselect();
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
-        HPImage.color = Owner.GetKingdomColor();
+        Color ownerColor = Owner.GetKingdomColor();
+        baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
         hTM.RemoveAllMarkers();
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
@@ -141,6 +159,7 @@ public class BaseGridUnitScript : BaseGridEntity
             tilesRemain = MovementDistance;
             attacksRemain = AttacksPerTurn;
             remainMovementText.text = tilesRemain.ToString();
+        UpdateMovementPointsUI();
         
     }
     protected virtual void MoveTo(Vector3 target)
@@ -306,6 +325,7 @@ public class BaseGridUnitScript : BaseGridEntity
         {
             tilesRemain=0;
             remainMovementText.text = tilesRemain.ToString();
+            UpdateMovementPointsUI();
         }
         bTryToAttack = false;
         attackTarget = null;
@@ -470,7 +490,7 @@ public class BaseGridUnitScript : BaseGridEntity
                         CurrentWaypoint++;
                         tilesRemain--;
                         remainMovementText.text = tilesRemain.ToString();
-                        
+                        UpdateMovementPointsUI();
                         // Update vision when entering a new cell
                         Vector3Int currentCellPosition = GetCellPosition();
                         if (currentCellPosition != previousCellPosition)
@@ -538,6 +558,30 @@ public class BaseGridUnitScript : BaseGridEntity
         {
             hTM.ShowMarkersForRangeAttack(this, AttackRange);
         }
+    }
+    private void UpdateMovementPointsUI()
+    {
+        if(tilesRemain<MovementDistance)
+        {
+            int i = tilesRemain;
+            if (i < 0)
+            {
+                i = 0;
+            }
+            for(int index = movementPointsImages.Count - 1; index >= i;index--)
+            {
+                movementPointsImages[index].color = Color.gray;
+            }
+            
+        }
+        else
+        {
+            foreach (var image in movementPointsImages) 
+            {
+                image.color = Color.white;  
+            }
+        }
+        
     }
     protected virtual void Update()
     {
