@@ -56,6 +56,34 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1418406617, guid: 0443c2d90a44ec8419564e04cc608757, type: 3}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: Health
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: duration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: CurrentHealth
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: ProductionTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: MovementDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: MeleeAttackDamage
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Name
       value: WavecallerUnit
@@ -135,7 +163,9 @@ MonoBehaviour:
   MovementSpeed: 3
   AttacksPerTurn: 1
   CanMoveAfterattack: 0
+  specialAbilityRange: 1
   remainMovementText: {fileID: 3861786582074820448}
   possibleSpawnTiles: 03000000
   resourceRequirements: []
-  duration: 0
+  duration: 1
+  transformProgress: 0

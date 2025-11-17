@@ -534,7 +534,6 @@ public class BaseGridUnitScript : BaseGridEntity
 
         // Calculating distance travelled
         distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
-        Debug.Log("Distance travelled: " + distanceTravelled);
         startingPosition = GetCellPosition();
         if (AttackRange > 1)
         {
