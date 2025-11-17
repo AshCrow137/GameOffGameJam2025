@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "3166214775",
+    "Type": "Event",
+    "GUID": "{C1C0058E-41FB-4EA0-97E2-F728847A38FD}",
+    "Language": "SFX",
+    "Hash": "{6D4C706C-04EF-602F-3C89-E68D0A860506}",
+    "ObjectPath": "ui_moveunit_water",
+    "ShortName": "ui_moveunit_water",
+    "Path": "Event/ui_moveunit_water.bnk",
+    "Events": [
+     {
+      "Id": "3166214775",
+      "Name": "ui_moveunit_water",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_moveunit_water",
+      "GUID": "{C1C0058E-41FB-4EA0-97E2-F728847A38FD}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{7744B695-2221-69C5-75C3-C559DF1495BA}"
+ }
+}
