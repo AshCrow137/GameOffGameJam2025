@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "308642385",
+    "Type": "Event",
+    "GUID": "{EDB3DFCA-E21C-4657-8CD9-50A24FC653D5}",
+    "Language": "SFX",
+    "Hash": "{ED55BAA0-3C55-5FDA-AABE-EDD63237ECA7}",
+    "ObjectPath": "ui_menumain_start",
+    "ShortName": "ui_menumain_start",
+    "Path": "Event/ui_menumain_start.bnk",
+    "Events": [
+     {
+      "Id": "308642385",
+      "Name": "ui_menumain_start",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\MainMenu\\ui_menumain_start",
+      "GUID": "{EDB3DFCA-E21C-4657-8CD9-50A24FC653D5}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{9E74495B-7F35-A2EE-C7D1-9193B574C877}"
+ }
+}

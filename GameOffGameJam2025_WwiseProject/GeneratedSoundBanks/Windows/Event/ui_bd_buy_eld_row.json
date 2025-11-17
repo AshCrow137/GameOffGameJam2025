@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1892329880",
+    "Type": "Event",
+    "GUID": "{29238D2A-A1E6-4E7F-90F9-E86C40DF47DE}",
+    "Language": "SFX",
+    "Hash": "{8155B13E-CD4D-0A2E-8782-3279ADB3EDF9}",
+    "ObjectPath": "ui_bd_buy_eld_row",
+    "ShortName": "ui_bd_buy_eld_row",
+    "Path": "Event/ui_bd_buy_eld_row.bnk",
+    "Events": [
+     {
+      "Id": "1892329880",
+      "Name": "ui_bd_buy_eld_row",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_bd_buy_eld_row",
+      "GUID": "{29238D2A-A1E6-4E7F-90F9-E86C40DF47DE}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{1436E1C7-83A9-9183-BA3A-DAB6E7399A2C}"
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "2255984945",
+    "Type": "Event",
+    "GUID": "{BE8F6A67-D217-4A26-9CAF-DFC91718B177}",
+    "Language": "SFX",
+    "Hash": "{FD4C9F4E-A3C9-647F-BBCA-CEDAE4569D9E}",
+    "ObjectPath": "cbt_en_mage",
+    "ShortName": "cbt_en_mage",
+    "Path": "Event/cbt_en_mage.bnk",
+    "Events": [
+     {
+      "Id": "2255984945",
+      "Name": "cbt_en_mage",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_mage",
+      "GUID": "{BE8F6A67-D217-4A26-9CAF-DFC91718B177}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{1A3BD1C2-F7D6-1FEF-EFA8-8E1057CFF551}"
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "504897617",
+    "Type": "Event",
+    "GUID": "{95D8F52A-A825-4FCC-AF1E-3F0A6BE0AB8F}",
+    "Language": "SFX",
+    "Hash": "{2AA0117B-DFCE-D11B-FFEB-65C087F4CAE6}",
+    "ObjectPath": "ui_moveunit_land",
+    "ShortName": "ui_moveunit_land",
+    "Path": "Event/ui_moveunit_land.bnk",
+    "Events": [
+     {
+      "Id": "504897617",
+      "Name": "ui_moveunit_land",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_moveunit_land",
+      "GUID": "{95D8F52A-A825-4FCC-AF1E-3F0A6BE0AB8F}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{8DEC50A6-F225-4772-A299-1DB343712324}"
+ }
+}

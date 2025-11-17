@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1923404889",
+    "Type": "Event",
+    "GUID": "{5E8DE55C-E82D-4FB0-A730-C1AEB306ED84}",
+    "Language": "SFX",
+    "Hash": "{7F3E0700-A23A-DDB7-3862-660FB9A4BC3D}",
+    "ObjectPath": "ui_menumain_volume",
+    "ShortName": "ui_menumain_volume",
+    "Path": "Event/ui_menumain_volume.bnk",
+    "Media": [
+     {
+      "Id": "1039619875",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "UI\\ui_menumain_volume_t01.wav",
+      "Path": "Media/1039619875.wem",
+      "CachePath": "AF/{AF28B76D-B275-5863-BB99-7BD35892EB02}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1923404889",
+      "Name": "ui_menumain_volume",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\MainMenu\\ui_menumain_volume",
+      "GUID": "{5E8DE55C-E82D-4FB0-A730-C1AEB306ED84}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.28125",
+      "DurationMax": "0.28125",
+      "MediaRefs": [
+       {
+        "Id": "1039619875"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{6A905729-3EAC-0BF1-2DAC-A0DACABA5C36}"
+ }
+}
