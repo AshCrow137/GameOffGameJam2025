@@ -22,13 +22,6 @@ public class AudioManager : MonoBehaviour
 
     private WwiseGameState currentGameState;
 
-    //[Header("MainMenu")]
-    [SerializeField] private AK.Wwise.State Music_MusicMainMenu;
-    [SerializeField] private AK.Wwise.State Music_MusicIntro;
-    [SerializeField] private AK.Wwise.State Music_MusicPathHigher;
-    [SerializeField] private AK.Wwise.State Music_MusicPathLower;
-    [SerializeField] private AK.Wwise.State Music_MusicChase;
-    [SerializeField] private AK.Wwise.State Music_None;
 
     //[Header("Music State Variables")]
     [SerializeField] private AK.Wwise.State Music_MusicMainMenu;
