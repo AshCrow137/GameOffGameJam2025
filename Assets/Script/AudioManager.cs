@@ -22,6 +22,14 @@ public class AudioManager : MonoBehaviour
 
     private WwiseGameState currentGameState;
 
+    [Header("MainMenu")]
+    [SerializeField] private AK.Wwise.State Music_MusicMainMenu;
+    [SerializeField] private AK.Wwise.State Music_MusicIntro;
+    [SerializeField] private AK.Wwise.State Music_MusicPathHigher;
+    [SerializeField] private AK.Wwise.State Music_MusicPathLower;
+    [SerializeField] private AK.Wwise.State Music_MusicChase;
+    [SerializeField] private AK.Wwise.State Music_None;
+
     [Header("Music State Variables")]
     [SerializeField] private AK.Wwise.State Music_MusicMainMenu;
     [SerializeField] private AK.Wwise.State Music_MusicIntro;
@@ -38,13 +46,14 @@ public class AudioManager : MonoBehaviour
 
     [Header("Wwise SFX Events")]
 
-    [Header("SFX Actions")]
-    [SerializeField] public AK.Wwise.Event E_play_flamethrower;
-    [SerializeField] public AK.Wwise.Event E_play_grapplehook_retract;
-    [SerializeField] public AK.Wwise.Event E_play_grapplehook_spool;
-    [SerializeField] public AK.Wwise.Event E_play_grapplehook_start;
-    [SerializeField] public AK.Wwise.Event E_play_hookconnect;
-    [SerializeField] public AK.Wwise.Event E_stop_grapplehook_spool;
+    [Header("MainMenu")]
+    [SerializeField] public AK.Wwise.Event ui_menumain_creditsr;
+    [SerializeField] public AK.Wwise.Event ui_menumain_continue;
+    [SerializeField] public AK.Wwise.Event ui_menumain_exit;
+    [SerializeField] public AK.Wwise.Event ui_menumain_mainmenu;
+    [SerializeField] public AK.Wwise.Event ui_menumain_settings;
+    [SerializeField] public AK.Wwise.Event ui_menumain_start;
+    [SerializeField] public AK.Wwise.Event ui_menumain_volume;
 
     [Header("SFX Dialogue")]
     [SerializeField] public AK.Wwise.Event E_vox_empathy;
