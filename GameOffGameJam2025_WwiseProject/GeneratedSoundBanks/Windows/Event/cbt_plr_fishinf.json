@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1194956263",
+    "Type": "Event",
+    "GUID": "{262FE0D6-E3D9-46B5-9362-87F946B6C42C}",
+    "Language": "SFX",
+    "Hash": "{227934D0-00CF-9AAA-3CF1-65B3AD1D6AEF}",
+    "ObjectPath": "cbt_plr_fishinf",
+    "ShortName": "cbt_plr_fishinf",
+    "Path": "Event/cbt_plr_fishinf.bnk",
+    "Events": [
+     {
+      "Id": "1194956263",
+      "Name": "cbt_plr_fishinf",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_plr_fishinf",
+      "GUID": "{262FE0D6-E3D9-46B5-9362-87F946B6C42C}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{66714565-DE06-4C7F-8B0F-B2EBE40E0B23}"
+ }
+}

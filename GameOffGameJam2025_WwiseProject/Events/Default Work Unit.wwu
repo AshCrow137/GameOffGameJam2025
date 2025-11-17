@@ -20,10 +20,83 @@
 						</Folder>
 						<Folder Name="MainMenu" ID="{4B3E6B6C-E24A-4F90-BF10-5CAD7B505C7F}" ShortID="1026104801">
 							<ChildrenList>
-								<Event Name="ui_menumain_start" ID="{EDB3DFCA-E21C-4657-8CD9-50A24FC653D5}"/>
-								<Event Name="ui_menumain_credits" ID="{8D361FF3-4237-4596-B205-22B74C2F5D1D}"/>
-								<Event Name="ui_menumain_settings" ID="{D6950E4C-07E8-4927-A7FE-3939AFC11D9B}"/>
-								<Event Name="ui_menumain_exit" ID="{BC03C568-B483-412A-B9F7-A3D4CD3DE8A3}"/>
+								<Event Name="ui_menumain_start" ID="{EDB3DFCA-E21C-4657-8CD9-50A24FC653D5}">
+									<ChildrenList>
+										<Action Name="" ID="{E1677905-FC47-42B1-8932-5FB52ABEE7AD}" ShortID="546901886">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="UI_MainMenu_Start" ID="{3912146E-AA45-4EFA-92CE-50DB6E00BDE1}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="ui_menumain_credits" ID="{8D361FF3-4237-4596-B205-22B74C2F5D1D}">
+									<ChildrenList>
+										<Action Name="" ID="{4A69E2B3-8EC7-4164-9F6A-868FF395D365}" ShortID="100449033">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="UI_MainMenu_Settings" ID="{5DC77497-93E5-4756-9BB8-165536F4718F}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="ui_menumain_settings" ID="{D6950E4C-07E8-4927-A7FE-3939AFC11D9B}">
+									<ChildrenList>
+										<Action Name="" ID="{C0B5A8B2-7792-4D32-B73F-C9FDA8CD3471}" ShortID="290553991">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="UI_MainMenu_Settings" ID="{5DC77497-93E5-4756-9BB8-165536F4718F}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="ui_menumain_exit" ID="{BC03C568-B483-412A-B9F7-A3D4CD3DE8A3}">
+									<ChildrenList>
+										<Action Name="" ID="{7FC7E7AB-B9BE-4720-9BFE-556D8A6E762E}" ShortID="703483544">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="UI_MainMenu_Exit" ID="{7F31221B-E5AA-4951-A310-32E054CEF34A}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="ui_menumain_volume" ID="{5E8DE55C-E82D-4FB0-A730-C1AEB306ED84}">
+									<ChildrenList>
+										<Action Name="" ID="{69E22710-C1B9-4BD5-B33B-9393A1050232}" ShortID="598802630">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="UI_MainMenu_Volume" ID="{E91BDA39-962E-4C81-A7FD-7D3F5A43D5AE}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="ui_menumain_mainmenu" ID="{4282F719-8730-4EF2-BB8D-9367D2153EA6}">
+									<ChildrenList>
+										<Action Name="" ID="{4256206A-4F4D-4F4D-85F7-613DEF0C9430}" ShortID="568012115">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="UI_MainMenu_MainMenu" ID="{88F31E3E-93EB-4B03-831C-FD3FBEC8323E}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+								<Event Name="ui_menumain_continue" ID="{AD3FE899-CED7-4D1B-B099-7A59D928E58C}">
+									<ChildrenList>
+										<Action Name="" ID="{E69D7A24-B708-4F8B-80A4-0B3216CCDE1E}" ShortID="719457498">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="UI_MainMenu_Continue" ID="{77EBF0E0-34F2-4BB9-AF12-B8657FB6383C}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
 							</ChildrenList>
 						</Folder>
 					</ChildrenList>
