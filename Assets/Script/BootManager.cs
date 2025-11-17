@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mono.Cecil;
+using UnityEngine;
 
 
 public class BootManager : MonoBehaviour
@@ -24,7 +25,8 @@ public class BootManager : MonoBehaviour
     private SelectionManager selectionManager;
     [SerializeField]
     private GameplayCanvasManager gameplayCanvasManager;
-
+    [SerializeField]
+    private Resource resource;
     [SerializeField]
     private CityUI cityUI;
     [SerializeField]
@@ -51,7 +53,7 @@ public class BootManager : MonoBehaviour
         UIManager?.Initialize();
         turnManager?.Initialize();
         buildingManager?.Instantiate();
-
+        resource?.Initialize();
         cityManager?.Instantiate();
         toggleManager?.Initialize();
         inputManager?.Initialize();
@@ -67,5 +69,6 @@ public class BootManager : MonoBehaviour
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
         unitSpawner?.Instantiate();
+
     }
 }

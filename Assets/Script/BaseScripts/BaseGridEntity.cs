@@ -53,13 +53,18 @@ public class BaseGridEntity : MonoBehaviour
         }
         entityVision.Initialize(this);
     }
+    protected virtual void OnDisable()
+    {
+        GlobalEventManager.EndTurnEvent.RemoveListener(OnEndTurn);
+        GlobalEventManager.StartTurnEvent.RemoveListener(OnStartTurn);
+    }
     /// <summary>
     /// Invokes whis EndTurnEvent in GlobalEventManager
     /// </summary>
     /// <param name="entity">Kingdom that end his turn</param>
     protected virtual void OnEndTurn(BaseKingdom entity)
     {
-        if (entity != Owner) { return; }
+        
     }
     /// <summary>
     /// Invokes whis StartTurnEvent in GlobalEventManager
@@ -67,7 +72,7 @@ public class BaseGridEntity : MonoBehaviour
     /// <param name="entity">current kingdom's turn</param>
     protected virtual void OnStartTurn(BaseKingdom entity)
     {
-        if (entity != Owner) { return; }
+        
     }
 
     protected virtual void LateUpdate()
@@ -97,6 +102,14 @@ public class BaseGridEntity : MonoBehaviour
     /// invokes when kingdom deselect unit
     /// </summary>
     public virtual void OnEntityDeselect()
+    {
+
+    }
+    protected virtual void Death()
+    {
+
+    }
+    public virtual void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack)
     {
 
     }
