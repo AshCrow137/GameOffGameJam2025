@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "744580895",
+    "Type": "Event",
+    "GUID": "{85329C8F-D36A-4DCE-B482-FC414DD25128}",
+    "Language": "SFX",
+    "Hash": "{4C6033E7-45B3-E193-F0C2-31B098D54EFB}",
+    "ObjectPath": "ui_bd_buy_kin_mkt",
+    "ShortName": "ui_bd_buy_kin_mkt",
+    "Path": "Event/ui_bd_buy_kin_mkt.bnk",
+    "Events": [
+     {
+      "Id": "744580895",
+      "Name": "ui_bd_buy_kin_mkt",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_bd_buy_kin_mkt",
+      "GUID": "{85329C8F-D36A-4DCE-B482-FC414DD25128}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{027C6C39-CD0D-4321-470E-F4484AA07474}"
+ }
+}

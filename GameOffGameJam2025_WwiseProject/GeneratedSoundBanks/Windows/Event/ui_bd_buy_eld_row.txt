@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1892329880	ui_bd_buy_eld_row			\Default Work Unit\UI\InGame\ui_bd_buy_eld_row	
+
