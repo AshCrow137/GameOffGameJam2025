@@ -3,10 +3,6 @@ using Pathfinding;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using System.Collections;
-using System.Linq;
-using System.Data;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : BaseGridEntity

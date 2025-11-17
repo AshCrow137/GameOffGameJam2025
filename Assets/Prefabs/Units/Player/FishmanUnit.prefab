@@ -105,7 +105,7 @@ MonoBehaviour:
   Health: 25
   CurrentHealth: 25
   Vision: 5
-  HPImage: {fileID: 3711177520239316543}
+  HPImage: {fileID: 8975526795753575141}
   bodySprite: {fileID: 4918825275124453274}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 6882905193284612583}
@@ -125,17 +125,6 @@ MonoBehaviour:
   possibleSpawnTiles: 0000000003000000
   resourceRequirements: []
   duration: 2
---- !u!114 &3711177520239316543 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 4872170111419325559}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4918825275124453274 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -165,6 +154,17 @@ Canvas:
 --- !u!114 &7648775829066850354 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3006300019162823749, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 4872170111419325559}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8975526795753575141 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4544720228185591442, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 4872170111419325559}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

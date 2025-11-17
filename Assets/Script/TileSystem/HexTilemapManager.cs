@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using Pathfinding;
-using static UnityEditor.PlayerSettings;
 
 
 /// <summary>

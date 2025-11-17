@@ -192,6 +192,7 @@ public class UIManager : MonoBehaviour
     public void SwapUIElementState(GameObject UIElement)
     {
         UIElement.SetActive(!UIElement.activeSelf);
+        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
     }
   
     public void ShowEntityDescription(BaseGridEntity entity)

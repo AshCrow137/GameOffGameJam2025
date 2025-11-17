@@ -100,6 +100,7 @@ public class BaseGridEntity : MonoBehaviour
             return;
         }
         baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
+        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
     }
     /// <summary>
     /// invokes when kingdom deselect unit

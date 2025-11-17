@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.386
       objectReference: {fileID: 0}
+    - target: {fileID: 4544720228185591442, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Name
       value: FishmanArcherUnit
@@ -147,6 +151,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 1730829567217512274}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2816775779486458304 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4544720228185591442, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 1730829567217512274}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3584198596868510487 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3006300019162823749, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -178,7 +193,7 @@ MonoBehaviour:
   Health: 15
   CurrentHealth: 15
   Vision: 7
-  HPImage: {fileID: 7500895812354129178}
+  HPImage: {fileID: 2816775779486458304}
   bodySprite: {fileID: 2295539708766403775}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 296311217075061442}
@@ -198,14 +213,3 @@ MonoBehaviour:
   possibleSpawnTiles: 0000000003000000
   resourceRequirements: []
   duration: 3
---- !u!114 &7500895812354129178 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 1730829567217512274}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

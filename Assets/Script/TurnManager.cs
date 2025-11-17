@@ -49,6 +49,10 @@ public class TurnManager : MonoBehaviour
     public void OnTurnEnd()
     {
         //do something at the end of the turn
+        if (turnOrder[currentOrderIndex].GetType() == typeof(PlayerKingdom))
+        {
+            AudioManager.Instance.ui_menumain_start.Post(gameObject);
+        }
         currentOrderIndex++;
         if (currentOrderIndex >= turnOrder.Count)
         {
@@ -60,6 +64,8 @@ public class TurnManager : MonoBehaviour
 
         //when finish the turn, call NextRound
         StartTurn(turnOrder[currentOrderIndex]);
+
+       
     }
 
     private void NextRound()

@@ -70,6 +70,7 @@ public class GridCity : BaseGridEntity
         base.OnEntitySelect(selector);
         Debug.Log($"Select {this.name} city");
         GameplayCanvasManager.instance.ActivateUnitProductionPanel(this);
+        
     }
     public override void OnEntityDeselect()
     {
