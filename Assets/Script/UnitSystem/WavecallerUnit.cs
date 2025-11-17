@@ -22,8 +22,7 @@ public class WavecallerUnit : BaseGridUnitScript
 
     public override void SpecialAbility()
     {
-        //List<Vector3Int>  possibleCellsInRage = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
-        //Debug.Log(possibleCellsInRage);
-        GlobalEventManager.InvokeShowUIMessageEvent($"test test test test test test");
+        List<Vector3Int>  possibleCellsInRage = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
+        Debug.Log(possibleCellsInRage);
     }
 }
