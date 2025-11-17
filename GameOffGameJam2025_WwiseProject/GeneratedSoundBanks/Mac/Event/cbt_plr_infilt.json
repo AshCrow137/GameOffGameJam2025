@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1095353422",
+    "Type": "Event",
+    "GUID": "{2675998C-7AEB-45ED-897F-84C85886EE17}",
+    "Language": "SFX",
+    "Hash": "{81B0A2C6-4057-42E3-9767-970DCF4C4E20}",
+    "ObjectPath": "cbt_plr_infilt",
+    "ShortName": "cbt_plr_infilt",
+    "Path": "Event/cbt_plr_infilt.bnk",
+    "Events": [
+     {
+      "Id": "1095353422",
+      "Name": "cbt_plr_infilt",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_plr_infilt",
+      "GUID": "{2675998C-7AEB-45ED-897F-84C85886EE17}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{A92ACE4F-5E20-7C7C-41FA-A9FFC90601BE}"
+ }
+}

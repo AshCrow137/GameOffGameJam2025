@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "39069146",
+    "Type": "Event",
+    "GUID": "{D907E48A-2451-4C81-B094-0E371F867B39}",
+    "Language": "SFX",
+    "Hash": "{F0608718-128C-8655-8BA9-0AFB0D6417AF}",
+    "ObjectPath": "cbt_en_maa",
+    "ShortName": "cbt_en_maa",
+    "Path": "Event/cbt_en_maa.bnk",
+    "Events": [
+     {
+      "Id": "39069146",
+      "Name": "cbt_en_maa",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_maa",
+      "GUID": "{D907E48A-2451-4C81-B094-0E371F867B39}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{75E423D9-9F6E-EC83-2D28-7E286FAE4BDE}"
+ }
+}

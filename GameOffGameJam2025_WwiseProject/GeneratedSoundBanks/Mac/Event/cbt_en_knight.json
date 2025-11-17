@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "522465652",
+    "Type": "Event",
+    "GUID": "{F45A713A-3287-4CD2-A473-4E0DDC5307F5}",
+    "Language": "SFX",
+    "Hash": "{D5792CA5-4F41-C1B8-CE99-4AF56B384B03}",
+    "ObjectPath": "cbt_en_knight",
+    "ShortName": "cbt_en_knight",
+    "Path": "Event/cbt_en_knight.bnk",
+    "Events": [
+     {
+      "Id": "522465652",
+      "Name": "cbt_en_knight",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_knight",
+      "GUID": "{F45A713A-3287-4CD2-A473-4E0DDC5307F5}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{9A3E5508-6CB9-54CF-3834-2B15431AF9DC}"
+ }
+}

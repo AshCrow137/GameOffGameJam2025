@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "2855531006",
+    "Type": "Event",
+    "GUID": "{0816263F-1AC6-4FB2-AD3A-5827A6711C49}",
+    "Language": "SFX",
+    "Hash": "{ED096FEC-35D9-45C8-FC3D-58CFE8BD1391}",
+    "ObjectPath": "cbt_plr_madman",
+    "ShortName": "cbt_plr_madman",
+    "Path": "Event/cbt_plr_madman.bnk",
+    "Events": [
+     {
+      "Id": "2855531006",
+      "Name": "cbt_plr_madman",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_plr_madman",
+      "GUID": "{0816263F-1AC6-4FB2-AD3A-5827A6711C49}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{CA4E18FF-7A88-FDC9-9296-CABC37FD990E}"
+ }
+}
