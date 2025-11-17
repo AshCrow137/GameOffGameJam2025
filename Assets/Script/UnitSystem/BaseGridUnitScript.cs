@@ -3,6 +3,10 @@ using Pathfinding;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using System.Collections;
+using System.Linq;
+using System.Data;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : BaseGridEntity
@@ -11,7 +15,9 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     protected UnitType unitType;
     [SerializeField]
-    protected int AttackDamage = 1;    
+    protected int MeleeAttackDamage = 1;
+    [SerializeField]
+    protected int RangeAttackDamage = 1;
     [SerializeField]
     protected int RetallitionAttackDamage = 1;
     [SerializeField]
@@ -26,21 +32,23 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     private int AttacksPerTurn = 1;
     [SerializeField]
-    private bool CanMoveAfterattack = false;
+    protected bool CanMoveAfterattack = false;
 
 
     private Seeker seeker;
     private Path path;
-    private int tilesRemain;
+    protected int tilesRemain;
     private int CurrentWaypoint = 0;
     private float nextWaypointDistance = 0.01f;
     private bool bReachedEndOfPath;
     private Vector3 previousTargetPosition;
     private int attacksRemain = 1;
+    protected Vector3Int startingPosition;
+    protected float distanceTravelled = 0;
 
     //TODO Replace with normal UI
     [SerializeField]
-    private TMP_Text remainMovementText;
+    protected TMP_Text remainMovementText;
 
     private bool bIsMoving = false;
     private Vector3 PathTarget;
@@ -48,10 +56,45 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     private List<TileState> possibleSpawnTiles = new List<TileState>();
 
+    private bool bTryToAttack = false;
+    private BaseGridEntity attackTarget;
+
+    // Vision system - track previous position for fog updates during movement
+    private Vector3Int previousCellPosition;
+
+
+    [SerializeField] private List<ResourceRequirement> resourceRequirements = new List<ResourceRequirement>();
+
+    public int duration;
+    public Dictionary<ResourceType, int> resource
+    {
+        get
+        {
+            Dictionary<ResourceType, int> dict = new Dictionary<ResourceType, int>();
+            foreach (var req in resourceRequirements)
+            {
+                dict[req.resourceType] = req.amount;
+            }
+            return dict;
+        }
+    }
+
+    private static readonly float[,] AttackModifiers = {
+    /*Cavalry*/ {1.0f,1.0f,1.5f,1f },
+    /*Infantry*/{1.5f,1.0f,1.0f,1f },
+    /*Archers*/ {1.0f,1.5f,1.0f,1f },
+    /*Special*/ {1.0f,1.0f,1.0f,1f },
+    };
+    private float GetDamageModifier(UnitType attacker,UnitType defender)
+    {
+        return AttackModifiers[(int)attacker, (int)defender];
+    }
     public List<TileState> GetPossibleSpawnTiles()
     {
         return possibleSpawnTiles;
     }
+
+    public UnitType GetUnitType() => unitType;
 
     ///<summary>
     ///grid units depends on HexTilemapManager, so they should initialize after them
@@ -64,10 +107,9 @@ public class BaseGridUnitScript : BaseGridEntity
         remainMovementText.text = tilesRemain.ToString();
 
         hTM.PlaceUnitOnTile(hTM.WorldToCellPos(transform.position),this);
-        
+
     }
-   
-    
+    //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
         if(selector!= Owner)
@@ -78,6 +120,11 @@ public class BaseGridUnitScript : BaseGridEntity
         Debug.Log($"Select {this.name} unit");
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
         HPImage.color = Color.gray;
+        if(AttackRange>1)
+        {
+            hTM.ShowMarkersForRangeAttack(this, AttackRange);
+        }
+        
     }
     public override void OnEntityDeselect()
     {
@@ -85,6 +132,7 @@ public class BaseGridUnitScript : BaseGridEntity
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
         HPImage.color = Owner.GetKingdomColor();
+        hTM.RemoveAllMarkers();
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
     protected override void OnEndTurn(BaseKingdom entity)
@@ -103,16 +151,27 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         return hTM.WorldToCellPos(transform.position);
     }
+    /// <summary>
+    /// Invokes when player press alternative tile interaction button (default RightMouseButton)
+    /// </summary>
+    /// <param name="tile">clicked tile</param>
+    /// <param name="cellPos">position of clicked tile</param>
     private void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
+        GridCity city = hTM.GetCityOnTile(cellPos);
         if(targetedUnit != null)
         {
             TryToAttack(targetedUnit, cellPos);
+            
+        }
+        else if(city!=null)
+        {
+            TryToAttack(city, cellPos);
         }
         else
         {
-            TryToMoveUnitToTile(tile, cellPos);
+            TryToMoveUnitToTile( cellPos);
         }
         
 
@@ -120,13 +179,20 @@ public class BaseGridUnitScript : BaseGridEntity
 
         
     }
-   private void TryToAttack(BaseGridUnitScript targetUnit, Vector3Int targetUnitPosition)
+    /// <summary>
+    /// determinate can we attack unit or not
+    /// </summary>
+    /// <param name="targetUnit">attacked unit</param>
+    /// <param name="targetUnitPosition">attacked unit position</param>
+   private void TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
     {
         if (targetUnit.GetOwner() == Owner)
         {
             GlobalEventManager.InvokeShowUIMessageEvent($"You try to attack your kingdom unit!");
             return;
         }
+        bTryToAttack = true;
+        attackTarget = targetUnit;
         int intDistance = hTM.GetDistanceInCells(UnitPositionOnCell(), targetUnitPosition);
         Debug.Log($"Distance between {this.name} and target cell: {intDistance}");
         if(intDistance <=AttackRange) 
@@ -140,43 +206,168 @@ public class BaseGridUnitScript : BaseGridEntity
             else
             {
                 GlobalEventManager.InvokeShowUIMessageEvent($"This unit has not enough attacks!");
+                bTryToAttack = false;
             }
             
         }
+        //Calculate direction of attack (depends on mouse position on target unit's cell) and move unit to calculated cell
         else
         {
+            if(AttackRange==1)
+            {
+                var tilePos = hTM.CellToWorldPos(targetUnitPosition);
+                Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
+                float angle = Mathf.Atan2(mousePos.y - tilePos.y, mousePos.x - tilePos.x) * Mathf.Rad2Deg;
+
+                int i = 0;
+                if (angle >= 0 && angle <= 60) i=1;
+                else if (angle < 0 && angle >= -60) i=0;
+                else if (angle < -60 && angle >= -120) i=7;
+                else if (angle < -120 && angle >= -180) i = 3;
+                else if (angle <= 120 && angle > 60) i = 5;
+                else if (angle < 180 && angle > 120) i = 2;
+                var node = AstarPath.active.data.gridGraph.GetNearest(tilePos).node as GridNode;
+                var nodeConnections = AstarPath.active.data.gridGraph.GetNodeConnection(node, i);
+                var nodePos = (Vector3)nodeConnections.position;
+                Vector3Int resPos = hTM.WorldToCellPos(nodePos);
+                //Debug.Log($"selected angle: {angle}");
+                int distance = hTM.GetDistanceInCells(GetCellPosition(), resPos);
+                if (distance <= tilesRemain)
+                {
+                    TryToMoveUnitToTile(resPos);
+                }
+
+            }
             GlobalEventManager.InvokeShowUIMessageEvent($"Target unit too far!");
         }
         
     }
-
-    protected virtual void Attack(BaseGridUnitScript targetUnit)
+    private Vector3Int previousMarkerPos;
+    private void OnMouseEnter()
     {
-        targetUnit.TakeDamage(AttackDamage);
+        // added InputManager.instance.selectedUnit != null cause could be city selection
+        if (InputManager.instance.bHasSelectedEntity && InputManager.instance.selectedUnit != null && InputManager.instance.selectedUnit != this && InputManager.instance.selectedUnit.GetOwner() != Owner && InputManager.instance.selectedUnit.AttackRange == 1)
+        {
+            InputManager.instance.SetAttackCursor();
+        }
+    }
+    //show marker tile if we try to attack this unit
+    void OnMouseOver()
+    {
+        
+        if (InputManager.instance.bHasSelectedEntity&& InputManager.instance.selectedUnit != null&&InputManager.instance.selectedUnit!=this&& InputManager.instance.selectedUnit.GetOwner()!=Owner&& InputManager.instance.selectedUnit.AttackRange==1)
+        {
+
+            Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
+            float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg;
+            int i = 0;
+            if (angle >= 0 && angle <= 60) i = 1;
+            else if (angle < 0 && angle >= -60) i = 0;
+            else if (angle < -60 && angle >= -120) i = 7;
+            else if (angle < -120 && angle >= -180) i = 3;
+            else if (angle <= 120 && angle > 60) i = 5;
+            else if (angle < 180 && angle > 120) i = 2;
+            var node = AstarPath.active.data.gridGraph.GetNearest(transform.position).node as GridNode;
+            var nodeConnections = AstarPath.active.data.gridGraph.GetNodeConnection(node, i);
+            var nodePos = (Vector3)nodeConnections.position;
+            Vector3Int resPos = hTM.WorldToCellPos(nodePos);
+            if(resPos != previousMarkerPos)
+            {
+                hTM.RemoveMarkerOnTilePosition(previousMarkerPos);
+                previousMarkerPos = resPos;
+                hTM.PlaceMarkerOnTilePosition(resPos);
+            }
+        }
+    }
+    //resets cursor and remove markers 
+    void OnMouseExit()
+    {
+        hTM.RemoveMarkerOnTilePosition(previousMarkerPos);
+        previousMarkerPos = Vector3Int.zero;
+        InputManager.instance.SetDefaultCursor();
+    }
+
+    /// <summary>
+    /// Base attack function, controls what kind of attack is used, ranged or melee
+    /// </summary>
+    /// <param name="targetEntity"></param>
+    protected virtual void Attack(BaseGridEntity targetEntity)
+    {
+        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position)) == 1)
+        {
+            targetEntity.TakeDamage(MeleeAttackDamage, this, false);
+        }
+        else
+        {
+            targetEntity.TakeDamage(RangeAttackDamage, this, false);
+        }
+       //if property true, unit can move after attack
         if(!CanMoveAfterattack)
         {
             tilesRemain=0;
             remainMovementText.text = tilesRemain.ToString();
         }
+        bTryToAttack = false;
+        attackTarget = null;
+
+        UIManager.Instance.UpdateLife(this);
+        hTM.RemoveAllMarkers();
     }
-    public virtual void TakeDamage(int amount)
+
+    /// <summary>
+    /// calculate and apply final damage to unit
+    /// </summary>
+    /// <param name="amount">amount of taken damage before calculation</param>
+    /// <param name="attacker">unit that attack this unit</param>
+    /// <param name="retallitionAttack">bool if this damage was retallition damage or not</param>
+    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
     {
-        //TODO Calculate result damage
-        CurrentHealth -= amount;
+        int resultDamage = amount;
+        if(!retallitionAttack)
+        {
+            //if not retallition  damage calculate result damage using matrix of units
+            resultDamage = (int)Mathf.Round( resultDamage * GetDamageModifier(attacker.unitType, unitType));
+        }
+        CurrentHealth -= resultDamage;
+        Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
         HPImage.fillAmount = (float)CurrentHealth / Health;
         if (CurrentHealth <= 0 ) 
         {
-            //calculate the distance to main City if equal or less of 5 increase Madness in 5 points
-            if(GetDistanceToMainCity() <= 5)
-            {
-                TurnManager.instance.GetCurrentActingKingdom().IncreaseMadness(MadnessValue.EnemyUnitDead);
-            }
+           
             
             Death();
+            return;
+        }
+        //if attack is not retallition attack and this unit survives, this unit try to do retallition attack to it's attacker
+        if(!retallitionAttack)
+        {
+            RetallitionAttack(attacker);
         }
     }
-    protected virtual void Death()
+    /// <summary>
+    /// base retallition attack
+    /// </summary>
+    /// <param name="attacker"></param>
+    public virtual void RetallitionAttack(BaseGridUnitScript attacker)
     {
+        if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
+        {
+            attacker.TakeDamage(RetallitionAttackDamage, this, true);
+        }
+        
+    }
+
+    /// <summary>
+    /// invokes when unit dies
+    /// </summary>
+    protected override void Death()
+    {
+        //calculate the distance to main City if equal or less of 5 increase Madness in 5 points
+        if (GetDistanceToMainCity() <= 5)
+        {
+            Owner.IncreaseMadness(MadnessValue.EnemyUnitDead);
+        }
+        GetComponent<EntityVision>().OnDeath();
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
         Owner.RemoveUnitFromKingdom(this);
@@ -198,12 +389,13 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="tile">where you wish to move</param>
     /// <param name="cellPos">tile position you wish to move </param>
-    public void TryToMoveUnitToTile(HexTile tile, Vector3Int cellPos)
+    public void TryToMoveUnitToTile( Vector3Int cellPos)
     {
         if (tilesRemain > 0 && !bIsMoving)
         {
 
 
+            startingPosition = GetCellPosition();
             hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
             hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
             CreatePath(hTM.CellToWorldPos(cellPos));
@@ -223,7 +415,10 @@ public class BaseGridUnitScript : BaseGridEntity
         PathTarget = target;
         seeker.StartPath(transform.position, target, OnPathComplete);
     }
-    
+    /// <summary>
+    /// calls when path constucting is complete
+    /// </summary>
+    /// <param name="p">result path</param>
     private void OnPathComplete(Path p)
     {
 
@@ -236,10 +431,14 @@ public class BaseGridUnitScript : BaseGridEntity
                 path = p;
                 CurrentWaypoint = 0;
                 bIsMoving = true;
+                
+                // Store initial cell position for vision updates
+                previousCellPosition = GetCellPosition();
             }
             else
             {
                 //
+                
                 hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
                 GlobalEventManager.InvokeShowUIMessageEvent($"Unavailable tile for {this.gameObject.name} unit!");
             }
@@ -271,6 +470,18 @@ public class BaseGridUnitScript : BaseGridEntity
                         CurrentWaypoint++;
                         tilesRemain--;
                         remainMovementText.text = tilesRemain.ToString();
+                        
+                        // Update vision when entering a new cell
+                        Vector3Int currentCellPosition = GetCellPosition();
+                        if (currentCellPosition != previousCellPosition)
+                        {
+                            EntityVision entityVision = GetComponent<EntityVision>();
+                            if (entityVision != null)
+                            {
+                                entityVision.UpdateVisibilityOnMovement(previousCellPosition);
+                                previousCellPosition = currentCellPosition;
+                            }
+                        }
                     }
                     else
                     {
@@ -293,19 +504,73 @@ public class BaseGridUnitScript : BaseGridEntity
             MoveTo(path.vectorPath[CurrentWaypoint]);
         }
     }
-
+    /// <summary>
+    /// invokes when unit finnish his movement
+    /// </summary>
     private void OnEndOfPathReached()
     {
 
         hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position),this);
         bIsMoving = false;
-
         
+        // Final vision update at destination
+        Vector3Int finalCellPosition = GetCellPosition();
+        if (finalCellPosition != previousCellPosition)
+        {
+            EntityVision entityVision = GetComponent<EntityVision>();
+            if (entityVision != null)
+            {
+                entityVision.UpdateVisibilityOnMovement(previousCellPosition);
+                previousCellPosition = finalCellPosition;
+            }
+        }
+        
+        if(bTryToAttack)
+        {
+            TryToAttack(attackTarget, attackTarget.GetCellPosition());
+        }
+
+        // Calculating distance travelled
+        distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
+        Debug.Log("Distance travelled: " + distanceTravelled);
+        startingPosition = GetCellPosition();
+        if (AttackRange > 1)
+        {
+            hTM.ShowMarkersForRangeAttack(this, AttackRange);
+        }
     }
     protected virtual void Update()
     {
-       MovementCycle();
+        MovementCycle();
+    }
+
+    public int GetCurrentHealth()
+    {
+        return this.CurrentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return this.Health;
     }
   
+    public int GetMeleeDamage()
+    {
+        return this.MeleeAttackDamage;
+    }
 
+    public int GetRangeAttackDamage()
+    {
+        return this.RangeAttackDamage;
+    }
+
+    public int GetRetaliationDamage()
+    {
+        return this.RetallitionAttackDamage;
+    }
+
+    public int GetAtackDistance()
+    {
+        return this.AttackRange;
+    }
 }

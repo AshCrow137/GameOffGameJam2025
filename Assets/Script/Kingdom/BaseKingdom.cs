@@ -56,6 +56,7 @@ public class BaseKingdom : Entity, IMadnessable
 
     private void OnEndTurn(BaseKingdom kingdom)
     {
+        if (kingdom != this) return;
         int unitsCount = GetUnitsCountInRange(5);
         if (unitsCount != 0)
         {
@@ -66,7 +67,7 @@ public class BaseKingdom : Entity, IMadnessable
             DecreaseMadness(3);
         }
 
-        if (kingdom != this) return;
+        
     }
 
     public void AddUnitToKingdom(BaseGridUnitScript unit)
@@ -114,7 +115,9 @@ public class BaseKingdom : Entity, IMadnessable
     [SerializeField]
     public int maxMadnessLevel { get; private set; } = 100;
 
-    public void IncreaseMadness(int amount)
+    public int GetMadnessLevel() { return madnessLevel; }
+
+    public virtual void IncreaseMadness(int amount)
     {
         madnessLevel += amount;
         if(madnessLevel > maxMadnessLevel)
@@ -175,5 +178,6 @@ public class BaseKingdom : Entity, IMadnessable
         Debug.Log("Units in range " + range + ": " + result);
         return result;
     }
+
 
 }

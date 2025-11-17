@@ -1,0 +1,46 @@
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using TMPro;
+
+public class ProductionQueueItem : MonoBehaviour, IPointerClickHandler
+{
+    [Header("UI Components")]
+    public Image productionIcon;
+    public TextMeshProUGUI turnsLeftText;
+    private Production production;
+
+
+    /// <summary>
+    /// Sets up the production queue item with production data
+    /// </summary>
+    public void SetupItem(Production production)
+    {
+        // Set the production icon if production type is building
+        if (production.productionType == ProductionType.Building)
+        {
+            productionIcon.sprite = production.building.sprite;
+        }
+        else if (production.productionType == ProductionType.Unit)
+        {
+            productionIcon.sprite = production.prefab.GetComponent<BaseGridUnitScript>().GetSprite();
+        }
+
+        // Set the turns left text
+        turnsLeftText.text = production.turnsRemaining.ToString();
+        this.production = production;
+    }
+
+    /// <summary>
+    /// Handles pointer click events - right-click to remove production
+    /// </summary>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            GameplayCanvasManager.instance.selectedCity.GetComponent<CityProductionQueue>().RemoveProduction(production);
+        }
+    }
+}
+
+

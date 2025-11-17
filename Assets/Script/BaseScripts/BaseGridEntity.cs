@@ -15,6 +15,8 @@ public class BaseGridEntity : MonoBehaviour
     [SerializeField]
     protected GameObject bodySprite;
     [SerializeField]
+    protected GameObject[] rotatebleObjects;
+    [SerializeField]
     protected Canvas rotatebleCanvas;
     protected Transform CameraArm;
 
@@ -42,25 +44,53 @@ public class BaseGridEntity : MonoBehaviour
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
         HPImage.color = Owner.GetKingdomColor();
         gridPosition = HexTilemapManager.Instance.WorldToCellPos(transform.position);
+
+        // Initialize EntityVision component
+        EntityVision entityVision = GetComponent<EntityVision>();
+        if (entityVision == null)
+        {
+            entityVision = gameObject.AddComponent<EntityVision>();
+        }
+        entityVision.Initialize(this);
     }
+    protected virtual void OnDisable()
+    {
+        GlobalEventManager.EndTurnEvent.RemoveListener(OnEndTurn);
+        GlobalEventManager.StartTurnEvent.RemoveListener(OnStartTurn);
+    }
+    /// <summary>
+    /// Invokes whis EndTurnEvent in GlobalEventManager
+    /// </summary>
+    /// <param name="entity">Kingdom that end his turn</param>
     protected virtual void OnEndTurn(BaseKingdom entity)
     {
-        if (entity != Owner) { return; }
+        
     }
+    /// <summary>
+    /// Invokes whis StartTurnEvent in GlobalEventManager
+    /// </summary>
+    /// <param name="entity">current kingdom's turn</param>
     protected virtual void OnStartTurn(BaseKingdom entity)
     {
-        if (entity != Owner) { return; }
+        
     }
+
     protected virtual void LateUpdate()
     {
         //rotating entity body sprite and canvas facing camera 
-        if(CameraArm == null)
-        {
-            Debug.Log("help");
-        }
+
         bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
+        foreach(GameObject obj in rotatebleObjects)
+        {
+            var objeu = obj.transform.localRotation.eulerAngles;
+            obj.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
+        }
         rotatebleCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, CameraArm.transform.rotation.eulerAngles.z));
     }
+    /// <summary>
+    /// invokes when kingdom select grid entity
+    /// </summary>
+    /// <param name="selector">kingdom that select this grid entity</param>
     public virtual void OnEntitySelect(BaseKingdom selector)
     {
         if (selector != Owner)
@@ -68,13 +98,39 @@ public class BaseGridEntity : MonoBehaviour
             return;
         }
     }
+    /// <summary>
+    /// invokes when kingdom deselect unit
+    /// </summary>
     public virtual void OnEntityDeselect()
     {
 
     }
+    protected virtual void Death()
+    {
+
+    }
+    public virtual void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack)
+    {
+
+    }
+    /// <summary>
+    /// Get cell position of entity on main tilemap
+    /// </summary>
+    /// <returns>Vector3Int position of grid entity on main tilemap </returns>
     public Vector3Int GetCellPosition()
     {
         return hTM.GetMainTilemap().WorldToCell(transform.position);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>Kingdom that own this entity</returns>
     public BaseKingdom GetOwner() { return Owner; }
+
+    /// <summary>
+    /// Gets the canvas component
+    /// </summary>
+    public Canvas GetRotatableCanvas() { return rotatebleCanvas; }
+
+    public Sprite GetSprite() { return bodySprite.GetComponent<SpriteRenderer>().sprite; }
 }

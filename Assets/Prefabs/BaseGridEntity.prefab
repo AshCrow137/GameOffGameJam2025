@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6255468594231157193}
   - component: {fileID: 1922668860728381344}
   - component: {fileID: 5265248503125170079}
+  - component: {fileID: 1740202590531351792}
+  - component: {fileID: 2768406618769371630}
   m_Layer: 0
   m_Name: BaseGridEntity
   m_TagString: Untagged
@@ -28,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.432, y: 0.72, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8000554869655723539}
@@ -42,7 +44,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483940085929675459}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -79,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: -1724408627
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,10 +106,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 2
   CurrentHealth: 2
+  Vision: 5
   HPImage: {fileID: 2967569089052790877}
   bodySprite: {fileID: 6840125131380871672}
   rotatebleCanvas: {fileID: 4984026669913730949}
-  CameraArm: {fileID: 0}
+--- !u!136 &1740202590531351792
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483940085929675459}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2768406618769371630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483940085929675459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2cba9b41939a249ae144ce67048507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionRadius: 1
+  visibleUnderGreyFog: 0
 --- !u!1 &1524044574166410748
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +230,7 @@ MonoBehaviour:
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
+  m_DynamicPixelsPerUnit: 100
   m_PresetInfoIsWorld: 1
 --- !u!114 &7445552091522407045
 MonoBehaviour:

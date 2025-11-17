@@ -54,8 +54,8 @@ public class CityManager : MonoBehaviour
         // TODO: JUST FOR TESTING. REMOVE LATER AND ADD LOGIC FOR FINDING RESOURCE PER CITY
         newCity.resourceGainPerTurn = new Dictionary<ResourceType, int>
         {
-            { ResourceType.Resource1, 10 },
-            { ResourceType.Resource2, 10 }
+            { ResourceType.Materials, 10 },
+            { ResourceType.Gold, 10 }
         };
 
         cities[gridPosition] = newCity;
@@ -183,7 +183,7 @@ public class CityManager : MonoBehaviour
             }
 
             // Add resources from this city to the resource manager
-            resourceManager.AddResource(city.resourceGainPerTurn);
+            resourceManager.AddAll(city.resourceGainPerTurn);
         }
     }
     /// <summary>
@@ -214,7 +214,9 @@ public class CityManager : MonoBehaviour
         if(!cities.ContainsKey(position))
         {
             cities.Add(position, city);
+            HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
             tilemap.RefreshTile(position);
+
             return true;
         }
         return false;

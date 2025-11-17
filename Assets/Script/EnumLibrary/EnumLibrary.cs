@@ -1,7 +1,7 @@
 ﻿//This file is Enum holder
-    public enum TimerDirection
-    {
-        INCREASE,
+public enum TimerDirection
+{
+    INCREASE,
         DECREASE
     }
 
@@ -50,4 +50,25 @@ public enum UnitType
     Archer,
     Cavalry,
     Special
+}
+
+public enum Fog
+{
+    None,   // No fog - entity fully visible
+    Grey,   // Grey fog - visibility depends on entity settings
+    Black   // Black fog - entity hidden
+}
+
+public enum ProductionType
+{
+    None,
+    Unit,
+    Building
+}
+public enum MarkerColor
+{
+    Red,
+    Blue,
+    Green,
+    White
 }

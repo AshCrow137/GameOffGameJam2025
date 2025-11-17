@@ -11,10 +11,8 @@ public class GridCity : BaseGridEntity
     // we can add building's relation to city later
     // public List<Building> buildings;
 
-    public float maxHP = 100f;
-    public float currentHP;
 
-    public int visionRadius = 1;
+    // public int visionRadius = 1;
     public int unitSpawnRadius = 1;
 
     public Dictionary<Vector3Int, GridBuilding> buildings = new Dictionary<Vector3Int, GridBuilding>();
@@ -25,31 +23,46 @@ public class GridCity : BaseGridEntity
     public override void Initialize(BaseKingdom owner)
     {
         base.Initialize(owner);
+        position = HexTilemapManager.Instance.WorldToCellPos(transform.position);
         CityManager.Instance.AddCity(HexTilemapManager.Instance.WorldToCellPos(transform.position), this);
-        
+        if (GetComponent<CityProductionQueue>() == null)
+        {
+           gameObject.AddComponent<CityProductionQueue>();
+        }
+        hTM.PlaceCityOnTheTile(GetCellPosition(),this);
+        owner.AddCityToKingdom(this);
+    }
+    public void OnBuildingConstructed(GridBuilding building)
+    {
+        Health +=(int) building.HpForCity;
+        CurrentHealth += (int)building.HpForCity;
+        HPImage.fillAmount = (float)CurrentHealth / Health;
     }
 
     protected override void OnEndTurn(BaseKingdom entity)
     {
-            base.OnEndTurn(entity);
-            bCanSpawnUnits = true;
-        
+        base.OnEndTurn(entity);
+        bCanSpawnUnits = true;
+        GetComponent<CityProductionQueue>().OnTurnEnd();
+    }
+    protected override void OnStartTurn(BaseKingdom entity)
+    {
+        base.OnStartTurn(entity);
+
+        Debug.Log(buildings.Values);
     }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
     {
         this.sprite = cityData.sprite;
         this.position = position;
-        this.maxHP = cityData.maxHP;
-        this.currentHP = cityData.maxHP;
-        this.visionRadius = cityData.visionRadius;
+        // this.visionRadius = cityData.visionRadius;
         this.unitSpawnRadius = 1;
         this.Owner = owner;
 
         // Initialize empty resource dictionary - will be populated by other means
         this.resourceGainPerTurn = new Dictionary<ResourceType, int>();
         Owner.AddCityToKingdom(this);
-        
         Initialize(Owner);
     }
     public override void OnEntitySelect(BaseKingdom selector)
@@ -85,6 +98,8 @@ public class GridCity : BaseGridEntity
             unitScript.Initialize(Owner);
             Owner.AddUnitToKingdom(unitScript);
             bCanSpawnUnits = false;
+            //lets the others UI production unavaliable
+            UIManager.Instance.UnitsInteractable(false);
         }
         else
         {
@@ -92,5 +107,27 @@ public class GridCity : BaseGridEntity
         }
        
     }
-    
+    public override void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack)
+    {
+        base.TakeDamage(amount, attacker, retallitionAttack);
+        CurrentHealth -= amount;
+        Debug.Log($"{this.gameObject.name} take {amount} damage");
+        HPImage.fillAmount = (float)CurrentHealth / Health;
+        if (CurrentHealth <= 0)
+        {
+
+
+            Death();
+            return;
+        }
+    }
+    protected override void Death()
+    {
+        base.Death();
+        hTM.RemoveCityOnTile(GetCellPosition());
+        GetComponent<EntityVision>().OnDeath();
+        Owner.RemoveCityFromKingdom(this);
+        gameObject.SetActive(false);
+    }
+
 }

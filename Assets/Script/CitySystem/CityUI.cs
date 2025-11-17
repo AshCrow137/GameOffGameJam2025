@@ -24,6 +24,8 @@ public class CityUI : MonoBehaviour
 
     //singleton
     public static CityUI Instance { get; private set; }
+    private int buildingType;
+    private GameObject unitPrefab;
     public void Instantiate()
     {
         if (Instance == null)
@@ -50,22 +52,36 @@ public class CityUI : MonoBehaviour
     {
         // Placeholder for UI logic
     }
-
-    public void SetSpawnUnitMode()
+    private void ShowGreenTIles()
+    {
+        GridCity selectedCity = GameplayCanvasManager.instance.selectedCity;
+        List<Vector3Int> positions = HexTilemapManager.Instance.GetCellsInRange(selectedCity.GetCellPosition(), 1, new List<TileState> { TileState.Land, TileState.Water });
+        foreach (Vector3Int pos in positions)
+        {
+            HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(pos, MarkerColor.Green);
+        }
+    }
+    public void SetSpawnUnitMode(GameObject unitPrefab)
     {
         cityMenuMode = CityMenuMode.SpawnUnit;
         isUsingCityMenu = true;
+        this.unitPrefab=unitPrefab;
+        ShowGreenTIles();
     }
 
-    public void SetSpawnBuildingMode()
+    public void SetSpawnBuildingMode(int BuildingType)
     {
         cityMenuMode = CityMenuMode.SpawnBuilding;
         isUsingCityMenu = true;
+        buildingType=BuildingType;
+        ShowGreenTIles();
+        //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition
     }
 
     private void ClearCityMenuMode()
     {
         cityMenuMode = CityMenuMode.None;
+        
         // StartCoroutine(ClearCityMenuModeDelayed());
     }
 
@@ -74,17 +90,24 @@ public class CityUI : MonoBehaviour
     //     yield return new WaitForSeconds(5f);
     //     isUsingCityMenu = false;
     // }
-
+    private City selectedCity;
     public void OnCitySelected(City city)
     {
         ShowCityUI(city);
         UpdateCityUI(city);
+        selectedCity = city;
     }
 
     public void OnCityDeselected()
     {
         HideCityUI();
         ClearCityMenuMode();
+        if(selectedCity!=null)
+        {
+            HexTilemapManager.Instance.RemoveAllMarkers();
+            selectedCity = null;
+        }
+        
     }
 
     public void OnClick(CallbackContext context)
@@ -92,11 +115,14 @@ public class CityUI : MonoBehaviour
         if(!context.performed) return;
         if (cityMenuMode == CityMenuMode.SpawnUnit)
         {
-            CityManager.Instance.SpawnUnitAtMousePosition(SelectionManager.Instance.selectedCity);
+            UnitSpawner.Instance.QueueUnitAtMousePosition(GameplayCanvasManager.instance.selectedCity, unitPrefab);
+            HexTilemapManager.Instance.RemoveAllMarkers();
         }
         else if (cityMenuMode == CityMenuMode.SpawnBuilding)
         {
-            BuildingManager.Instance.PlaceBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity);
+            BuildingManager.Instance.QueueBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity,buildingType);
+            HexTilemapManager.Instance.RemoveAllMarkers();
+            // BuildingManager.Instance.PlaceBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity);
         }
         ClearCityMenuMode();
         
