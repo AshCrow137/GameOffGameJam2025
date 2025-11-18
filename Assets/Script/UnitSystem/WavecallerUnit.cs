@@ -113,7 +113,7 @@ public class WavecallerUnit : BaseGridUnitScript
                 GlobalEventManager.InvokeShowUIMessageEvent($"Wrong tile!");
                 return;
             }
-
+        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             StartTransformation(mousePosition);
         aiming = false;
         

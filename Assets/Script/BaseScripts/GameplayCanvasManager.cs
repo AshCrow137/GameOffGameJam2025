@@ -20,6 +20,7 @@ public class GameplayCanvasManager : MonoBehaviour
     [SerializeField]
     private GameObject wavecallerButton;
     public BaseGridUnitScript selectedUnit;
+    public bool isOnCanvas = false;
 
     [HideInInspector]
     public GridCity selectedCity { get; private set; } = null;
@@ -84,10 +85,12 @@ public class GameplayCanvasManager : MonoBehaviour
     public void OnMouseEnterCanvasElement()
     {
         InputManager.instance.SetOnUiElement(true);
+        isOnCanvas = true;
     }
     public void OnMouseExitCanvasElement()
     {
         InputManager.instance.SetOnUiElement(false);
+        isOnCanvas = false;
     }
     public void ActivateWavecallerButton(BaseGridUnitScript unit)
     {
@@ -112,7 +115,7 @@ public class GameplayCanvasManager : MonoBehaviour
         if (selectedUnit == null) return;
         Debug.Log(selectedUnit.unitType);
         Debug.Log(selectedUnit.aiming);
-        if (selectedUnit.unitType == UnitType.Special && selectedUnit.aiming == true)
+        if (selectedUnit.unitType == UnitType.Special && selectedUnit.aiming == true && isOnCanvas == false)
         {
             selectedUnit.OnChosingTile();
         }
