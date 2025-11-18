@@ -13,7 +13,7 @@ public class BaseGridUnitScript : BaseGridEntity
 {
     [Header("Unit stats")]
     [SerializeField]
-    protected UnitType unitType;
+    public UnitType unitType;
     [SerializeField]
     protected int MeleeAttackDamage = 1;
     [SerializeField]
@@ -30,11 +30,12 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     private float MovementSpeed = 3;
     [SerializeField]
-    private int AttacksPerTurn = 1;
+    protected int AttacksPerTurn = 1;
     [SerializeField]
     protected bool CanMoveAfterattack = false;
     [SerializeField]
     protected int specialAbilityRange = 1;
+    public bool aiming = false;
 
 
     private Seeker seeker;
@@ -541,6 +542,7 @@ public class BaseGridUnitScript : BaseGridEntity
         }
     }
     public virtual void SpecialAbility() { }
+    public virtual void OnChosingTile() { }
 
     protected virtual void Update()
     {
