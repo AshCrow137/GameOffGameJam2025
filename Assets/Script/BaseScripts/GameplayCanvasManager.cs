@@ -19,7 +19,7 @@ public class GameplayCanvasManager : MonoBehaviour
     private GameObject victoryPanel;
     [SerializeField]
     private GameObject wavecallerButton;
-    public BaseGridUnitScript selectedUnit;
+    private BaseGridUnitScript selectedUnit;
     public bool isOnCanvas = false;
 
     [HideInInspector]

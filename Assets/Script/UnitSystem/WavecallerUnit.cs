@@ -1,16 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
-using UnityEngine.EventSystems;
-using Unity.Profiling.LowLevel;
-using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.InputAction;
 
 public class WavecallerUnit : BaseGridUnitScript
 {
     [SerializeField]
     private int transformProgress = 0;
-    private List<TileState> possibleTileStates = new List<TileState> { TileState.Land };
+    private List<TileState> possibleTileStates = new List<TileState> { TileState.Land,TileState.OccupiedByUnit };
     private UnitMode unitMode = UnitMode.None;
     private Vector3Int transformingTile;
     private List<Vector3Int> possibleCellsInRange;
@@ -27,7 +22,11 @@ public class WavecallerUnit : BaseGridUnitScript
     public override void OnEntityDeselect()
     {
         base.OnEntityDeselect();
-        GameplayCanvasManager.instance.DeactivateWavecallerButton();
+        if(unitMode !=UnitMode.Aiming)
+        {
+            GameplayCanvasManager.instance.DeactivateWavecallerButton();
+        }
+        
         if (unitMode == UnitMode.Casting && transformProgress <= 2) { HPImage.color = Color.yellow; }
     }
 
@@ -74,13 +73,19 @@ public class WavecallerUnit : BaseGridUnitScript
 
     protected void TransformTile(Vector3Int tile)
     {
-        HexTilemapManager.Instance.SetTileState(tile, TileState.Water);
+        HexTilemapManager.Instance.ChangeTile(tile, TileState.Water);
+
         Debug.Log("Tile " + tile + " transformed by " + this);
     }
 
     private void PerformTransformation()
     {
-        TransformTile(transformingTile);
+        possibleCellsInRange = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
+        foreach (Vector3Int pos in possibleCellsInRange)
+        {
+            TransformTile(pos);
+        }
+        
         HexTilemapManager.Instance.RemoveAllMarkers();
         transformProgress = 0;
         unitMode = UnitMode.None;
@@ -113,8 +118,11 @@ public class WavecallerUnit : BaseGridUnitScript
                 GlobalEventManager.InvokeShowUIMessageEvent($"Wrong tile!");
                 return;
             }
-        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            StartTransformation(mousePosition);
+        foreach (var cell in possibleCellsInRange) 
+        {
+            StartTransformation(cell);
+        }
+            
         aiming = false;
         
     }

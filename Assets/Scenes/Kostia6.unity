@@ -6041,7 +6041,7 @@ MonoBehaviour:
   showMessageTime: 3
   victoryPanel: {fileID: 1458594886}
   wavecallerButton: {fileID: 1014128983}
-  selectedUnit: {fileID: 0}
+  isOnCanvas: 0
 --- !u!1 &367701191
 GameObject:
   m_ObjectHideFlags: 0
@@ -16888,6 +16888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlledUnits:
   - {fileID: 642709461}
+  - {fileID: 1954288300}
   controlledCities:
   - {fileID: 196379772}
   kingdomColor: {r: 0.007867813, g: 0, b: 1, a: 1}
@@ -18600,6 +18601,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700968415}
   m_CullTransparentMesh: 1
+--- !u!1001 &1713947948
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618083268933825336, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371597585287878706, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+      propertyPath: m_Name
+      value: WavecallerUnit
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
 --- !u!1 &1723782352
 GameObject:
   m_ObjectHideFlags: 0
@@ -18949,6 +19007,7 @@ MonoBehaviour:
   redMarkerTile: {fileID: 11400000, guid: e548ca3b24ad7e1458589f9a3b27ae5d, type: 2}
   greenMarkerTile: {fileID: 11400000, guid: 5bdbe122c56b2ac419a196b260fa4718, type: 2}
   blueMarkerTile: {fileID: 11400000, guid: da4605d8516c3a0479a41e42445c0b6a, type: 2}
+  waterTile: {fileID: 11400000, guid: 854b8073e00824049a174c9b4f95cb78, type: 2}
   mainCamera: {fileID: 1894823609}
   playerKingdom: {fileID: 1507932131}
 --- !u!4 &1758301930
@@ -20244,6 +20303,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1916049599}
   m_CullTransparentMesh: 1
+--- !u!114 &1954288300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -1984634656711234374, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
+  m_PrefabInstance: {fileID: 1713947948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 860c70edb87bdd84ca6b8491eda43ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1968343641
 GameObject:
   m_ObjectHideFlags: 0
@@ -21350,3 +21420,4 @@ SceneRoots:
   - {fileID: 1827684303}
   - {fileID: 389670692}
   - {fileID: 1990792142}
+  - {fileID: 1713947948}
