@@ -49,12 +49,12 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
-    private void OnStartTurn(BaseKingdom kingdom)
+    protected virtual void OnStartTurn(BaseKingdom kingdom)
     {
         if (kingdom != this) return;
     }
 
-    private void OnEndTurn(BaseKingdom kingdom)
+    protected virtual void OnEndTurn(BaseKingdom kingdom)
     {
         if (kingdom != this) return;
         int unitsCount = GetUnitsCountInRange(5);
@@ -127,7 +127,7 @@ public class BaseKingdom : Entity, IMadnessable
         Debug.Log($"Increase: Current Madness Level is: {madnessLevel}");
     }
 
-    public void DecreaseMadness(int amount)
+    public virtual void DecreaseMadness(int amount)
     {
         madnessLevel -= amount;
         if(madnessLevel < 0)

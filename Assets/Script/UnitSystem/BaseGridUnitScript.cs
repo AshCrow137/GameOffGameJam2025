@@ -77,6 +77,11 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     private string abilityDescription;
 
+    protected int actualMaxHealth;
+    protected int actualMeleeAttackDamage = 1;
+    protected int actualRangeAttackDamage = 1;
+    protected int actualRetallitionAttackDamage = 1;
+
     public Dictionary<ResourceType, int> resource
     {
         get
@@ -129,6 +134,10 @@ public class BaseGridUnitScript : BaseGridEntity
                 movementPointsImages.Add(newImage);
            
         }
+        actualMaxHealth = Health;
+        actualMeleeAttackDamage = MeleeAttackDamage;
+        actualRangeAttackDamage = RangeAttackDamage;
+        actualRetallitionAttackDamage = RetallitionAttackDamage;
     }
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
@@ -148,6 +157,7 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         
     }
+   
     public override void OnEntityDeselect()
     {
         base.OnEntityDeselect();
@@ -166,6 +176,19 @@ public class BaseGridUnitScript : BaseGridEntity
             remainMovementText.text = tilesRemain.ToString();
         UpdateMovementPointsUI();
         
+    }
+    public virtual void ApplyMadnessEffect(MadnessDataStruct madnessEffect)
+    {
+        float mod = (float)madnessEffect.CreatureStatsModifier / 100;
+        actualMaxHealth = Health - (int)Mathf.Round( Health * mod);
+        if(CurrentHealth>actualMaxHealth)
+        {
+            CurrentHealth = actualMaxHealth;
+        }
+        actualMeleeAttackDamage= MeleeAttackDamage -(int)Mathf.Round(MeleeAttackDamage * mod);
+        actualRangeAttackDamage= RangeAttackDamage-(int)Mathf.Round(RangeAttackDamage * mod);
+        actualRetallitionAttackDamage = RetallitionAttackDamage - (int)Mathf.Round(RetallitionAttackDamage * mod);
+
     }
     protected virtual void MoveTo(Vector3 target)
     {
@@ -319,11 +342,11 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position)) == 1)
         {
-            targetEntity.TakeDamage(MeleeAttackDamage, this, false);
+            targetEntity.TakeDamage(actualMeleeAttackDamage, this, false);
         }
         else
         {
-            targetEntity.TakeDamage(RangeAttackDamage, this, false);
+            targetEntity.TakeDamage(actualRangeAttackDamage, this, false);
         }
        //if property true, unit can move after attack
         if(!CanMoveAfterattack)
@@ -377,7 +400,7 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
         {
-            attacker.TakeDamage(RetallitionAttackDamage, this, true);
+            attacker.TakeDamage(actualRetallitionAttackDamage, this, true);
         }
         
     }
@@ -602,22 +625,22 @@ public class BaseGridUnitScript : BaseGridEntity
 
     public int GetMaxHealth()
     {
-        return this.Health;
+        return this.actualMaxHealth;
     }
   
     public int GetMeleeDamage()
     {
-        return this.MeleeAttackDamage;
+        return this.actualMeleeAttackDamage;
     }
 
     public int GetRangeAttackDamage()
     {
-        return this.RangeAttackDamage;
+        return this.actualRangeAttackDamage;
     }
 
     public int GetRetaliationDamage()
     {
-        return this.RetallitionAttackDamage;
+        return this.actualRetallitionAttackDamage;
     }
 
     public int GetAtackDistance()
