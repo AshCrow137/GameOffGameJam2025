@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{8D361FF3-4237-4596-B205-22B74C2F5D1D}",
     "Language": "SFX",
-    "Hash": "{6457B9F1-A64F-0D90-5EBE-DEC3E2473A72}",
+    "Hash": "{D3491C0C-1447-0F33-19C3-225961483CF2}",
     "ObjectPath": "ui_menumain_credits",
     "ShortName": "ui_menumain_credits",
     "Path": "Event/ui_menumain_credits.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{DFFFBE75-B3BA-FA02-CAEF-EE18FC732DAB}"
+  "FileHash": "{08FCED6A-9223-6161-8E87-DC1E699895E8}"
  }
 }

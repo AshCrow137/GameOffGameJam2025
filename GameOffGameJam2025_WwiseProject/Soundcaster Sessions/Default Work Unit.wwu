@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{8C10CA13-FBD4-4450-AB1C-27A7767AC11E}" SchemaVersion="123">
 	<SoundcasterSessions>
-		<WorkUnit Name="Default Work Unit" ID="{8C10CA13-FBD4-4450-AB1C-27A7767AC11E}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{8C10CA13-FBD4-4450-AB1C-27A7767AC11E}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="Combat" ID="{24F46025-6390-42BD-B582-2FAA86FEFB5B}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="En_Longbow" ID="{C5CC13E1-BE72-4F8C-97D1-8B9F307DFF36}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="En_Knight" ID="{14423B13-E070-4E1D-A148-949155B7611C}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Plr_FishInf" ID="{61C3BB4E-E236-4460-9879-6DF7A1CABA62}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="0" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Plr_Wavecaller" ID="{99A4BE72-9291-4A9D-A9F0-0EECB6925DEF}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="0" Y="3"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="En_Mage" ID="{6D4E95B3-BC35-4584-953E-395A7ED9B40D}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Plr_FishArch" ID="{77E3ABAD-F68A-4FAD-A57D-3BE81C486C65}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Plr_Infilt" ID="{EA176A35-9A46-4EBF-B131-F06314646988}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="1" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="En_Madman" ID="{6050CF41-2829-4031-B44D-E4832DA24422}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="1" Y="3"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="En_ManAtArms" ID="{D905F2E1-0002-4936-96C4-B3FA3A2E8504}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+							<Position X="2" Y="3"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true"/>
+					<CurrentStateList ShowAll="true"/>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
 	</SoundcasterSessions>
 </WwiseDocument>
