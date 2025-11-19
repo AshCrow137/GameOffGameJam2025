@@ -72,3 +72,9 @@ public enum MarkerColor
     Green,
     White
 }
+public enum UnitMode
+{
+    None,
+    Aiming,
+    Casting
+}

@@ -19,6 +19,7 @@ public class HexTilemapManager : MonoBehaviour
     [SerializeField] private TileBase redMarkerTile;
     [SerializeField] private TileBase greenMarkerTile;
     [SerializeField] private TileBase blueMarkerTile;
+    [SerializeField] private HexTile waterTile;
 
     [SerializeField] private Camera mainCamera;
 
@@ -284,6 +285,25 @@ public class HexTilemapManager : MonoBehaviour
                 newState = htile.defaultState;
             }
             tileStates[cellPosition] = newState;
+            tilemap.RefreshTile(cellPosition);
+            UpdateTileWalkability(cellPosition, newState);
+        }
+    }
+    public void ChangeTile(Vector3Int cellPosition, TileState newState)
+    {
+        TileBase tile = tilemap.GetTile(cellPosition);
+
+        if (tile is HexTile)
+        {
+            HexTile htile = (HexTile)tile;
+            
+            if (newState == TileState.Default)
+            {
+                newState = htile.defaultState;
+            }
+            tileStates[cellPosition] = newState;
+            htile.SetTileState(newState);
+            tilemap.SetTile(cellPosition, waterTile);
             tilemap.RefreshTile(cellPosition);
             UpdateTileWalkability(cellPosition, newState);
         }
