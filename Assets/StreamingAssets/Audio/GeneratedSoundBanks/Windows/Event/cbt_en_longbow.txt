@@ -1,3 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	4166496371	cbt_en_longbow			\Default Work Unit\Combat\cbt_en_longbow	
-

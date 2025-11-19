@@ -1,3 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	504897617	ui_moveunit_land			\Default Work Unit\UI\InGame\ui_moveunit_land	
-

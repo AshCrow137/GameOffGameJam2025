@@ -1,3 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	1095353422	cbt_plr_infilt			\Default Work Unit\Combat\cbt_plr_infilt	
-
