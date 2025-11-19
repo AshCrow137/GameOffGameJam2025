@@ -5531,11 +5531,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1727560545612876942, guid: e8f6eb35501c2a84080e6d512d0aa3e3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.7239614
+      value: -2.22
       objectReference: {fileID: 0}
     - target: {fileID: 1727560545612876942, guid: e8f6eb35501c2a84080e6d512d0aa3e3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.7144895
+      value: -2.14
       objectReference: {fileID: 0}
     - target: {fileID: 1727560545612876942, guid: e8f6eb35501c2a84080e6d512d0aa3e3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11765,8 +11765,8 @@ GameObject:
   m_Component:
   - component: {fileID: 788129468}
   - component: {fileID: 788129469}
-  - component: {fileID: 788129470}
   - component: {fileID: 788129471}
+  - component: {fileID: 788129472}
   m_Layer: 0
   m_Name: Bot1
   m_TagString: Untagged
@@ -11801,25 +11801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879a14fc36a9aca4f980474ca9024d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &788129470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788129467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fae710e1e3b187141bcb0411c485c618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controlledUnits:
-  - {fileID: 1841548088}
-  - {fileID: 328954362}
-  - {fileID: 2118924541}
-  controlledCities:
-  - {fileID: 867405373}
-  kingdomColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &788129471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11832,6 +11813,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a1a44d872f2334eb8055fe95f59614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &788129472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788129467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cd957071eccf634686e30e4b5289c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlledUnits:
+  - {fileID: 1841548088}
+  - {fileID: 328954362}
+  - {fileID: 2118924541}
+  controlledCities:
+  - {fileID: 867405373}
+  kingdomColor: {r: 1, g: 0, b: 0, a: 0}
+  madnessData: {fileID: 11400000, guid: bd41901770b62a3448876456096ea193, type: 2}
 --- !u!1 &792029833
 GameObject:
   m_ObjectHideFlags: 0
@@ -13378,7 +13379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnOrder:
   - {fileID: 1507932131}
-  - {fileID: 788129470}
+  - {fileID: 788129472}
   turnText: {fileID: 284602317}
 --- !u!4 &924946558
 Transform:
@@ -14570,7 +14571,7 @@ MonoBehaviour:
   toggleManager: {fileID: 2119146657}
   kingdoms:
   - {fileID: 1507932131}
-  - {fileID: 788129470}
+  - {fileID: 788129472}
   selectionManager: {fileID: 0}
   gameplayCanvasManager: {fileID: 363294321}
   resource: {fileID: 1583622226}
