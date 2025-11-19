@@ -4,6 +4,13 @@
 		<WorkUnit Name="Main" ID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}" PersistMode="Standalone">
 			<ChildrenList>
 				<ActorMixer Name="Combat" ID="{2A6723F2-A89A-45EC-858E-837429D7A846}" ShortID="620972214">
+					<PropertyList>
+						<Property Name="MakeUpGain" Type="Real64">
+							<ValueList>
+								<Value>-2</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -82,6 +89,13 @@
 							</ChildrenList>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="Plr_Wavecaller" ID="{99A4BE72-9291-4A9D-A9F0-0EECB6925DEF}" ShortID="225191750">
+							<PropertyList>
+								<Property Name="MakeUpGain" Type="Real64">
+									<ValueList>
+										<Value>-2</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -141,7 +155,7 @@
 							<PropertyList>
 								<Property Name="MakeUpGain" Type="Real64">
 									<ValueList>
-										<Value>6</Value>
+										<Value>1</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -187,6 +201,30 @@
 									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 								</Reference>
 							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="cbt_plr_madman_t01" ID="{FDFBB868-5836-401B-A6F6-A2D46CB3F550}" ShortID="541155972">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="cbt_plr_madman_t01" ID="{6C1B6334-1C81-403A-B752-73E9F30E31CF}">
+											<Language>SFX</Language>
+											<AudioFile>Combat\cbt_plr_madman_t01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="365377757"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="cbt_plr_madman_t01" ID="{6C1B6334-1C81-403A-B752-73E9F30E31CF}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="En_ManAtArms" ID="{D905F2E1-0002-4936-96C4-B3FA3A2E8504}" ShortID="386103796">
 							<ReferenceList>
@@ -197,6 +235,30 @@
 									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 								</Reference>
 							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="cbt_en_maa_t02" ID="{1EBB890E-2FBE-405E-9441-2931ED32074D}" ShortID="400402591">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="cbt_en_maa_t02" ID="{CC20CDCB-3B31-4F3F-B787-8E554FC5E4A4}">
+											<Language>SFX</Language>
+											<AudioFile>Combat\cbt_en_maa_t02.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="923407363"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="cbt_en_maa_t02" ID="{CC20CDCB-3B31-4F3F-B787-8E554FC5E4A4}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="En_Longbow" ID="{C5CC13E1-BE72-4F8C-97D1-8B9F307DFF36}" ShortID="898028685">
 							<ReferenceList>
@@ -309,6 +371,59 @@
 									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 								</Reference>
 							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="cbt_plr_madman_t01" ID="{69E61495-72AE-447E-8C4F-BC47AC8CA15C}" ShortID="42964801">
+									<PropertyList>
+										<Property Name="Inclusion" Type="bool">
+											<ValueList>
+												<Value>False</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="cbt_plr_madman_t01" ID="{7ED7DE80-7874-449B-A2EF-FE87A4DC6FF3}">
+											<Language>SFX</Language>
+											<AudioFile>Combat\cbt_plr_madman_t01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="365377757"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="cbt_plr_madman_t01" ID="{7ED7DE80-7874-449B-A2EF-FE87A4DC6FF3}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="cbt_plr_madman_t03" ID="{799E0F10-A6C7-40EE-9728-B629A0976241}" ShortID="484807983">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="cbt_plr_madman_t03" ID="{6F637CD9-2801-43A7-B6FF-89652F47F536}">
+											<Language>SFX</Language>
+											<AudioFile>Combat\cbt_plr_madman_t03.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="300902806"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="cbt_plr_madman_t03" ID="{6F637CD9-2801-43A7-B6FF-89652F47F536}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
 						</RandomSequenceContainer>
 					</ChildrenList>
 				</ActorMixer>
@@ -323,6 +438,13 @@
 					</ReferenceList>
 					<ChildrenList>
 						<ActorMixer Name="Buildings" ID="{CF7E9B0D-AB53-465F-A2BD-4595EFA141F8}" ShortID="120183708">
+							<PropertyList>
+								<Property Name="MakeUpGain" Type="Real64">
+									<ValueList>
+										<Value>-3</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -409,6 +531,30 @@
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 										</Reference>
 									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="ui_bd_buy_kin_bar_t01" ID="{66CB728F-7685-4ABB-A806-71642D45B878}" ShortID="992068862">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ui_bd_buy_kin_bar_t01" ID="{79A4E342-762F-4628-B04F-1EE840BF2ED2}">
+													<Language>SFX</Language>
+													<AudioFile>UI InGame\ui_bd_buy_kin_bar_t01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="50163665"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="ui_bd_buy_kin_bar_t01" ID="{79A4E342-762F-4628-B04F-1EE840BF2ED2}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
 								</RandomSequenceContainer>
 								<RandomSequenceContainer Name="Marketplace" ID="{2C179EF4-57C0-4441-9EE0-0458D0ACC65C}" ShortID="928895248">
 									<ReferenceList>
@@ -453,6 +599,30 @@
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 										</Reference>
 									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="ui_bd_buy_kin_san_t02" ID="{B9F3BF88-1775-4833-A5DC-D1053F841190}" ShortID="406379989">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ui_bd_buy_kin_san_t02" ID="{B154169E-209D-4534-8BAD-78D7EFF61342}">
+													<Language>SFX</Language>
+													<AudioFile>UI InGame\ui_bd_buy_kin_san_t02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="905576214"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="ui_bd_buy_kin_san_t02" ID="{B154169E-209D-4534-8BAD-78D7EFF61342}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
 								</RandomSequenceContainer>
 								<RandomSequenceContainer Name="Capital" ID="{4CE31A4F-4EAC-488F-867A-B8DCE41F3016}" ShortID="855565582">
 									<ReferenceList>
@@ -1179,6 +1349,13 @@
 					</ChildrenList>
 				</ActorMixer>
 				<ActorMixer Name="UI_Menu" ID="{3A898615-967C-400C-B4E5-B50F9FE3DCEC}" ShortID="705882705">
+					<PropertyList>
+						<Property Name="MakeUpGain" Type="Real64">
+							<ValueList>
+								<Value>-1</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -1325,6 +1502,13 @@
 							</ChildrenList>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="UI_MainMenu_Start" ID="{3912146E-AA45-4EFA-92CE-50DB6E00BDE1}" ShortID="793125948">
+							<PropertyList>
+								<Property Name="MakeUpGain" Type="Real64">
+									<ValueList>
+										<Value>-3</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>

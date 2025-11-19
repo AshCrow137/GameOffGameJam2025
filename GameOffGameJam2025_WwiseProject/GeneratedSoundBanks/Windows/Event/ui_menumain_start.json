@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{EDB3DFCA-E21C-4657-8CD9-50A24FC653D5}",
     "Language": "SFX",
-    "Hash": "{2760C6EB-2F84-0442-2B04-AC16E61B4BA4}",
+    "Hash": "{7939C8A0-5ACB-8EE4-1D3F-F1667710451F}",
     "ObjectPath": "ui_menumain_start",
     "ShortName": "ui_menumain_start",
     "Path": "Event/ui_menumain_start.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{977747A1-48FA-AC39-9DB3-E6090129EE88}"
+  "FileHash": "{E625DFE4-00AD-E61B-CC82-CDBE90C9E225}"
  }
 }

@@ -10,24 +10,39 @@
     "Type": "Event",
     "GUID": "{F45A713A-3287-4CD2-A473-4E0DDC5307F5}",
     "Language": "SFX",
-    "Hash": "{D5792CA5-4F41-C1B8-CE99-4AF56B384B03}",
+    "Hash": "{911F3456-4C32-E09B-C531-E9FABF2F5CE6}",
     "ObjectPath": "cbt_en_knight",
     "ShortName": "cbt_en_knight",
     "Path": "Event/cbt_en_knight.bnk",
+    "Media": [
+     {
+      "Id": "378068383",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_en_knight_t01.wav",
+      "Path": "Media/378068383.wem",
+      "CachePath": "AB/{ABFA4442-2506-78C4-1596-06A1CE9788F9}.wem"
+     }
+    ],
     "Events": [
      {
       "Id": "522465652",
       "Name": "cbt_en_knight",
       "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_knight",
       "GUID": "{F45A713A-3287-4CD2-A473-4E0DDC5307F5}",
-      "MaxAttenuation": "0",
       "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "378068383"
+       }
+      ]
      }
     ]
    }
   ],
-  "FileHash": "{4AFCE572-427B-A115-33B5-FCE415B1CCBE}"
+  "FileHash": "{7C065AB0-11ED-1F1B-1D85-E7FC88EF6272}"
  }
 }
