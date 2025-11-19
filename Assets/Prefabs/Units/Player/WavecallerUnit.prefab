@@ -55,7 +55,15 @@ PrefabInstance:
     - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1418406617, guid: 0443c2d90a44ec8419564e04cc608757, type: 3}
+      objectReference: {fileID: 21300000, guid: bfb8722b63502a04ea8d0bf66a418d9b, type: 3}
+    - target: {fileID: 4347834888168267603, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544720228185591442, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: Health
       value: 20
@@ -88,6 +96,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: WavecallerUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
     m_RemovedGameObjects: []
@@ -97,6 +129,33 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -1984634656711234374}
   m_SourcePrefab: {fileID: 100100000, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+--- !u!114 &149017185224813729 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3006300019162823749, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3146309316788867300}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1494061826218598006 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4544720228185591442, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3146309316788867300}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2576752987947636116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 606746352947840368, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3146309316788867300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3204221827486237449 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -118,17 +177,6 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 2024809114169191824, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 3146309316788867300}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6607980265981133484 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 3146309316788867300}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8371597585287878706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -149,7 +197,7 @@ MonoBehaviour:
   Health: 20
   CurrentHealth: 20
   Vision: 5
-  HPImage: {fileID: 6607980265981133484}
+  HPImage: {fileID: 1494061826218598006}
   bodySprite: {fileID: 3204221827486237449}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 4012846416483646836}
@@ -163,9 +211,26 @@ MonoBehaviour:
   MovementSpeed: 3
   AttacksPerTurn: 1
   CanMoveAfterattack: 0
+  movementPointsPanel: {fileID: 2576752987947636116}
+  movementPointsImage: {fileID: 149017185224813729}
   specialAbilityRange: 1
+  aiming: 0
+  unitAttackSoundEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 3f67443ae45e5fb4688e22f146b7fb32, type: 2}
+  unitLandMovementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 14b9296a3174a7b489d5787eb8dc9cd7, type: 2}
+  unitWaterMovementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 81446f5b8da6ee3439324da1e9369f44, type: 2}
   remainMovementText: {fileID: 3861786582074820448}
   possibleSpawnTiles: 03000000
   resourceRequirements: []
   duration: 1
+  abilityImage: {fileID: 21300000, guid: bfb8722b63502a04ea8d0bf66a418d9b, type: 3}
+  abilityDescription: Convert adjacent land tiles into water tiles
   transformProgress: 0

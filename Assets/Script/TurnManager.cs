@@ -49,6 +49,10 @@ public class TurnManager : MonoBehaviour
     public void OnTurnEnd()
     {
         //do something at the end of the turn
+        if (turnOrder[currentOrderIndex].GetType() == typeof(PlayerKingdom))
+        {
+            AudioManager.Instance.ui_menumain_start.Post(gameObject);
+        }
         currentOrderIndex++;
         if (currentOrderIndex >= turnOrder.Count)
         {
@@ -57,15 +61,17 @@ public class TurnManager : MonoBehaviour
         }
 
         //Debug.Log($"Turn {currentTurnCount} End: {turnOrder[currentOrderIndex].name}'s turn.");
-
+        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
         //when finish the turn, call NextRound
         StartTurn(turnOrder[currentOrderIndex]);
+
+       
     }
 
     private void NextRound()
     {
         currentTurnCount++;
-        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
+
         Debug.Log("Next Turn");
         //increment turn count
         

@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "2194991842",
+    "Type": "Event",
+    "GUID": "{55AD2816-CABC-407C-84CF-22BFD7630A82}",
+    "Language": "SFX",
+    "Hash": "{B5C4C1C6-D688-A1FE-E417-86F42E65F641}",
+    "ObjectPath": "cbt_plr_fisharch",
+    "ShortName": "cbt_plr_fisharch",
+    "Path": "Event/cbt_plr_fisharch.bnk",
+    "Media": [
+     {
+      "Id": "414771213",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_plr_fisharch_t01.wav",
+      "Path": "Media/414771213.wem",
+      "CachePath": "54/{54B47ACE-13EE-D279-1528-C41CD237D88E}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2194991842",
+      "Name": "cbt_plr_fisharch",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_plr_fisharch",
+      "GUID": "{55AD2816-CABC-407C-84CF-22BFD7630A82}",
+      "DurationType": "OneShot",
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "414771213"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{EEAAFBF2-4B23-6A96-243D-818F67FB98AE}"
+ }
+}

@@ -94,12 +94,12 @@ public class GameplayCanvasManager : MonoBehaviour
     }
     public void ActivateWavecallerButton(BaseGridUnitScript unit)
     {
-        wavecallerButton.SetActive(true);
+        //wavecallerButton.SetActive(true);
         selectedUnit = unit;
     }
     public void DeactivateWavecallerButton()
     {
-        wavecallerButton.SetActive(false);
+        //wavecallerButton.SetActive(false);
         selectedUnit = null;
     }
     public void CallSpecialAbility()
