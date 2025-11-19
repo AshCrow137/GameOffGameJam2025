@@ -215,6 +215,18 @@ MonoBehaviour:
   movementPointsImage: {fileID: 149017185224813729}
   specialAbilityRange: 1
   aiming: 0
+  unitAttackSoundEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 3f67443ae45e5fb4688e22f146b7fb32, type: 2}
+  unitLandMovementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 14b9296a3174a7b489d5787eb8dc9cd7, type: 2}
+  unitWaterMovementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 81446f5b8da6ee3439324da1e9369f44, type: 2}
   remainMovementText: {fileID: 3861786582074820448}
   possibleSpawnTiles: 03000000
   resourceRequirements: []

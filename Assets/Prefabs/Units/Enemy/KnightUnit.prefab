@@ -169,10 +169,26 @@ MonoBehaviour:
   CanMoveAfterattack: 0
   movementPointsPanel: {fileID: 7566462901625428597}
   movementPointsImage: {fileID: 5247367068562842432}
+  specialAbilityRange: 1
+  aiming: 0
+  unitAttackSoundEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 679318d3afdc9754cafb6cd3829f7f17, type: 2}
+  unitLandMovementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 14b9296a3174a7b489d5787eb8dc9cd7, type: 2}
+  unitWaterMovementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 81446f5b8da6ee3439324da1e9369f44, type: 2}
   remainMovementText: {fileID: 9175201009330620545}
   possibleSpawnTiles: 00000000
   resourceRequirements: []
   duration: 0
+  abilityImage: {fileID: 0}
+  abilityDescription: 
   chargeActive: 1
   chargeDamage: 5
 --- !u!114 &5247367068562842432 stripped

@@ -39,7 +39,9 @@ public class BaseGridUnitScript : BaseGridEntity
     protected int specialAbilityRange = 1;
     public bool aiming = false;
 
-
+    [SerializeField] public AK.Wwise.Event unitAttackSoundEvent;
+    [SerializeField] public AK.Wwise.Event unitLandMovementEvent;
+    [SerializeField] public AK.Wwise.Event unitWaterMovementEvent;
 
     private Seeker seeker;
     private Path path;
@@ -343,6 +345,7 @@ public class BaseGridUnitScript : BaseGridEntity
         if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position)) == 1)
         {
             targetEntity.TakeDamage(actualMeleeAttackDamage, this, false);
+            
         }
         else
         {
@@ -357,7 +360,7 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         bTryToAttack = false;
         attackTarget = null;
-
+        unitAttackSoundEvent.Post(gameObject);
         UIManager.Instance.UpdateLife(this);
         hTM.RemoveAllMarkers();
     }
@@ -389,6 +392,7 @@ public class BaseGridUnitScript : BaseGridEntity
         //if attack is not retallition attack and this unit survives, this unit try to do retallition attack to it's attacker
         if(!retallitionAttack)
         {
+            
             RetallitionAttack(attacker);
         }
     }
@@ -401,6 +405,7 @@ public class BaseGridUnitScript : BaseGridEntity
         if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
         {
             attacker.TakeDamage(actualRetallitionAttackDamage, this, true);
+            unitAttackSoundEvent.Post(gameObject);
         }
         
     }
@@ -515,9 +520,20 @@ public class BaseGridUnitScript : BaseGridEntity
                     // Check if there is another waypoint or if we have reached the end of the path
                     if (CurrentWaypoint + 1 < path.vectorPath.Count)
                     {
+                        TileState tileUnderUnit = hTM.GetTileState(hTM.WorldToCellPos(path.vectorPath[CurrentWaypoint]));
+                        switch (tileUnderUnit)
+                        {
+                            case TileState.Land:
+                                unitLandMovementEvent.Post(gameObject);
+                                break;
+                            case TileState.Water:
+                                unitWaterMovementEvent.Post(gameObject);
+                                break;
+                        }
                         CurrentWaypoint++;
                         tilesRemain--;
                         remainMovementText.text = tilesRemain.ToString();
+                        
                         UpdateMovementPointsUI();
                         // Update vision when entering a new cell
                         Vector3Int currentCellPosition = GetCellPosition();
