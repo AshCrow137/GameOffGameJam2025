@@ -209,7 +209,11 @@ MonoBehaviour:
   CanMoveAfterattack: 0
   movementPointsPanel: {fileID: 1184091309905177122}
   movementPointsImage: {fileID: 3584198596868510487}
+  specialAbilityRange: 1
+  aiming: 0
   remainMovementText: {fileID: 448980740877416662}
   possibleSpawnTiles: 0000000003000000
   resourceRequirements: []
   duration: 3
+  abilityImage: {fileID: 0}
+  abilityDescription: 

@@ -72,6 +72,11 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField] private List<ResourceRequirement> resourceRequirements = new List<ResourceRequirement>();
 
     public int duration;
+    [SerializeField]
+    private Sprite abilityImage;
+    [SerializeField]
+    private string abilityDescription;
+
     public Dictionary<ResourceType, int> resource
     {
         get
@@ -618,5 +623,13 @@ public class BaseGridUnitScript : BaseGridEntity
     public int GetAtackDistance()
     {
         return this.AttackRange;
+    }
+    public Sprite GetAbilityImage()
+    {
+        return abilityImage;
+    }
+    public string GetAbilityDescription() 
+    {
+        return abilityDescription;
     }
 }
