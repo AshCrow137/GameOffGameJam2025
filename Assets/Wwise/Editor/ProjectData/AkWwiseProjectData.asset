@@ -80,8 +80,767 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: b53265490cd0ba49a1a7c90456f9f526
     GuidInternal: 
-    m_lastTime: -8584393136739437930
-    List: []
+    m_lastTime: -8584382038499390315
+    List:
+    - name: amb_01
+      guid: 0638705d3959a24c979693886d62154b
+      id: 2199192635
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: b3c61863c2b3a14d9510e894d28e1d2d
+      - ElementName: amb_01
+        ObjectType: 3
+        guid: 0638705d3959a24c979693886d62154b
+      Path: Events\Default Work Unit\Ambience\amb_01
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: amb_02
+      guid: 3d15bd86d7063d44bec15449bcc896c7
+      id: 2199192632
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: b3c61863c2b3a14d9510e894d28e1d2d
+      - ElementName: amb_02
+        ObjectType: 3
+        guid: 3d15bd86d7063d44bec15449bcc896c7
+      Path: Events\Default Work Unit\Ambience\amb_02
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: amb_03
+      guid: 30d5183ed960a34d89c7169235122d1a
+      id: 2199192633
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: b3c61863c2b3a14d9510e894d28e1d2d
+      - ElementName: amb_03
+        ObjectType: 3
+        guid: 30d5183ed960a34d89c7169235122d1a
+      Path: Events\Default Work Unit\Ambience\amb_03
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: amb_04
+      guid: 43cf4c148709144da919d73352a689ed
+      id: 2199192638
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: b3c61863c2b3a14d9510e894d28e1d2d
+      - ElementName: amb_04
+        ObjectType: 3
+        guid: 43cf4c148709144da919d73352a689ed
+      Path: Events\Default Work Unit\Ambience\amb_04
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: amb_1
+      guid: 75594c1dbc310a4b95368d88b713e4dd
+      id: 2061769231
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: b3c61863c2b3a14d9510e894d28e1d2d
+      - ElementName: amb_1
+        ObjectType: 3
+        guid: 75594c1dbc310a4b95368d88b713e4dd
+      Path: Events\Default Work Unit\Ambience\amb_1
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Ambience
+      guid: b3c61863c2b3a14d9510e894d28e1d2d
+      id: 85412153
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Ambience
+        ObjectType: 4
+        guid: b3c61863c2b3a14d9510e894d28e1d2d
+      Path: Events\Default Work Unit\Ambience
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: cbt_en_knight
+      guid: 3a715af48732d24ca4734e0ddc5307f5
+      id: 522465652
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_en_knight
+        ObjectType: 3
+        guid: 3a715af48732d24ca4734e0ddc5307f5
+      Path: Events\Default Work Unit\Combat\cbt_en_knight
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_en_longbow
+      guid: 2d20e7b4746ae24b80154284a56458ce
+      id: 4166496371
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_en_longbow
+        ObjectType: 3
+        guid: 2d20e7b4746ae24b80154284a56458ce
+      Path: Events\Default Work Unit\Combat\cbt_en_longbow
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_en_maa
+      guid: 8ae407d95124814cb0940e371f867b39
+      id: 39069146
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_en_maa
+        ObjectType: 3
+        guid: 8ae407d95124814cb0940e371f867b39
+      Path: Events\Default Work Unit\Combat\cbt_en_maa
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_en_madman
+      guid: df227a7634e25e4dba6e917934c573f2
+      id: 21621053
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_en_madman
+        ObjectType: 3
+        guid: df227a7634e25e4dba6e917934c573f2
+      Path: Events\Default Work Unit\Combat\cbt_en_madman
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_en_mage
+      guid: 676a8fbe17d2264a9cafdfc91718b177
+      id: 2255984945
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_en_mage
+        ObjectType: 3
+        guid: 676a8fbe17d2264a9cafdfc91718b177
+      Path: Events\Default Work Unit\Combat\cbt_en_mage
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_plr_fisharch
+      guid: 1628ad55bcca7c4084cf22bfd7630a82
+      id: 2194991842
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_plr_fisharch
+        ObjectType: 3
+        guid: 1628ad55bcca7c4084cf22bfd7630a82
+      Path: Events\Default Work Unit\Combat\cbt_plr_fisharch
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_plr_fishinf
+      guid: d6e02f26d9e3b546936287f946b6c42c
+      id: 1194956263
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_plr_fishinf
+        ObjectType: 3
+        guid: d6e02f26d9e3b546936287f946b6c42c
+      Path: Events\Default Work Unit\Combat\cbt_plr_fishinf
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_plr_infilt
+      guid: 8c997526eb7aed45897f84c85886ee17
+      id: 1095353422
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_plr_infilt
+        ObjectType: 3
+        guid: 8c997526eb7aed45897f84c85886ee17
+      Path: Events\Default Work Unit\Combat\cbt_plr_infilt
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_plr_madman
+      guid: 3f261608c61ab24fad3a5827a6711c49
+      id: 2855531006
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_plr_madman
+        ObjectType: 3
+        guid: 3f261608c61ab24fad3a5827a6711c49
+      Path: Events\Default Work Unit\Combat\cbt_plr_madman
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: cbt_plr_wavecaller
+      guid: 9c30d640ac882442a4f2d667c8b2d10b
+      id: 3335485062
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      - ElementName: cbt_plr_wavecaller
+        ObjectType: 3
+        guid: 9c30d640ac882442a4f2d667c8b2d10b
+      Path: Events\Default Work Unit\Combat\cbt_plr_wavecaller
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Combat
+      guid: 2b2b3c5fbba1da43947064d48c35cade
+      id: 2764240573
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Combat
+        ObjectType: 4
+        guid: 2b2b3c5fbba1da43947064d48c35cade
+      Path: Events\Default Work Unit\Combat
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: InGame
+      guid: 11927462dd7ff14393ac68dcead4b4fd
+      id: 984691642
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      Path: Events\Default Work Unit\UI\InGame
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: MainMenu
+      guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      id: 3604647259
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: MainMenu
+        ObjectType: 4
+        guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      Path: Events\Default Work Unit\UI\MainMenu
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: UI
+      guid: b48d6d813e807341baa07322f8c3feaa
+      id: 1551306167
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      Path: Events\Default Work Unit\UI
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: ui_bd_buy_eld_asp
+      guid: 17f70b32a645e1488fa6c0bb2bde9097
+      id: 1554070556
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_bd_buy_eld_asp
+        ObjectType: 3
+        guid: 17f70b32a645e1488fa6c0bb2bde9097
+      Path: Events\Default Work Unit\UI\InGame\ui_bd_buy_eld_asp
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ui_bd_buy_eld_row
+      guid: 2a8d2329e6a17f4e90f9e86c40df47de
+      id: 1892329880
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_bd_buy_eld_row
+        ObjectType: 3
+        guid: 2a8d2329e6a17f4e90f9e86c40df47de
+      Path: Events\Default Work Unit\UI\InGame\ui_bd_buy_eld_row
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ui_bd_buy_kin_bar
+      guid: 3b112870307d0e478d877ef823a8a6a0
+      id: 1449682236
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_bd_buy_kin_bar
+        ObjectType: 3
+        guid: 3b112870307d0e478d877ef823a8a6a0
+      Path: Events\Default Work Unit\UI\InGame\ui_bd_buy_kin_bar
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ui_bd_buy_kin_mkt
+      guid: 8f9c32856ad3ce4db482fc414dd25128
+      id: 744580895
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_bd_buy_kin_mkt
+        ObjectType: 3
+        guid: 8f9c32856ad3ce4db482fc414dd25128
+      Path: Events\Default Work Unit\UI\InGame\ui_bd_buy_kin_mkt
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ui_bd_buy_kin_san
+      guid: a34d59d5dd60b34783b14687003b3501
+      id: 1379864725
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_bd_buy_kin_san
+        ObjectType: 3
+        guid: a34d59d5dd60b34783b14687003b3501
+      Path: Events\Default Work Unit\UI\InGame\ui_bd_buy_kin_san
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ui_menumain_continue
+      guid: 99e83fadd7ce1b4db0997a59d928e58c
+      id: 1907382704
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: MainMenu
+        ObjectType: 4
+        guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      - ElementName: ui_menumain_continue
+        ObjectType: 3
+        guid: 99e83fadd7ce1b4db0997a59d928e58c
+      Path: Events\Default Work Unit\UI\MainMenu\ui_menumain_continue
+      maxAttenuation: 0
+      maxDuration: 1.47
+      minDuration: 1.47
+    - name: ui_menumain_credits
+      guid: f31f368d37429645b20522b74c2f5d1d
+      id: 93456139
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: MainMenu
+        ObjectType: 4
+        guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      - ElementName: ui_menumain_credits
+        ObjectType: 3
+        guid: f31f368d37429645b20522b74c2f5d1d
+      Path: Events\Default Work Unit\UI\MainMenu\ui_menumain_credits
+      maxAttenuation: 0
+      maxDuration: 0.5
+      minDuration: 0.5
+    - name: ui_menumain_exit
+      guid: 68c503bc83b42a41b9f7a3d4cd3de8a3
+      id: 2662397323
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: MainMenu
+        ObjectType: 4
+        guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      - ElementName: ui_menumain_exit
+        ObjectType: 3
+        guid: 68c503bc83b42a41b9f7a3d4cd3de8a3
+      Path: Events\Default Work Unit\UI\MainMenu\ui_menumain_exit
+      maxAttenuation: 0
+      maxDuration: 1.416125
+      minDuration: 1.416125
+    - name: ui_menumain_mainmenu
+      guid: 19f782423087f24ebb8d9367d2153ea6
+      id: 3794605001
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: MainMenu
+        ObjectType: 4
+        guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      - ElementName: ui_menumain_mainmenu
+        ObjectType: 3
+        guid: 19f782423087f24ebb8d9367d2153ea6
+      Path: Events\Default Work Unit\UI\MainMenu\ui_menumain_mainmenu
+      maxAttenuation: 0
+      maxDuration: 0.875
+      minDuration: 0.875
+    - name: ui_menumain_settings
+      guid: 4c0e95d6e8072749a7fe3939afc11d9b
+      id: 1241344084
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: MainMenu
+        ObjectType: 4
+        guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      - ElementName: ui_menumain_settings
+        ObjectType: 3
+        guid: 4c0e95d6e8072749a7fe3939afc11d9b
+      Path: Events\Default Work Unit\UI\MainMenu\ui_menumain_settings
+      maxAttenuation: 0
+      maxDuration: 0.5
+      minDuration: 0.5
+    - name: ui_menumain_start
+      guid: cadfb3ed1ce257468cd950a24fc653d5
+      id: 308642385
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: MainMenu
+        ObjectType: 4
+        guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      - ElementName: ui_menumain_start
+        ObjectType: 3
+        guid: cadfb3ed1ce257468cd950a24fc653d5
+      Path: Events\Default Work Unit\UI\MainMenu\ui_menumain_start
+      maxAttenuation: 0
+      maxDuration: 1.9571875
+      minDuration: 1.9571875
+    - name: ui_menumain_volume
+      guid: 5ce58d5e2de8b04fa730c1aeb306ed84
+      id: 1923404889
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: MainMenu
+        ObjectType: 4
+        guid: 6c6b3e4b4ae2904fbf105cad7b505c7f
+      - ElementName: ui_menumain_volume
+        ObjectType: 3
+        guid: 5ce58d5e2de8b04fa730c1aeb306ed84
+      Path: Events\Default Work Unit\UI\MainMenu\ui_menumain_volume
+      maxAttenuation: 0
+      maxDuration: 0.28125
+      minDuration: 0.28125
+    - name: ui_menusub_mainmenu
+      guid: fa80f86259a9f5419ad2d32d4a79fd62
+      id: 3482214492
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_menusub_mainmenu
+        ObjectType: 3
+        guid: fa80f86259a9f5419ad2d32d4a79fd62
+      Path: Events\Default Work Unit\UI\InGame\ui_menusub_mainmenu
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ui_menusub_volumeadjust
+      guid: 95e87d49f96a624797ce5de9aeeddb4b
+      id: 3208958385
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_menusub_volumeadjust
+        ObjectType: 3
+        guid: 95e87d49f96a624797ce5de9aeeddb4b
+      Path: Events\Default Work Unit\UI\InGame\ui_menusub_volumeadjust
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ui_moveunit_land
+      guid: 2af5d89525a8cc4faf1e3f0a6be0ab8f
+      id: 504897617
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_moveunit_land
+        ObjectType: 3
+        guid: 2af5d89525a8cc4faf1e3f0a6be0ab8f
+      Path: Events\Default Work Unit\UI\InGame\ui_moveunit_land
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: ui_moveunit_water
+      guid: 8e05c0c1fb41a04e97e2f728847a38fd
+      id: 3166214775
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_moveunit_water
+        ObjectType: 3
+        guid: 8e05c0c1fb41a04e97e2f728847a38fd
+      Path: Events\Default Work Unit\UI\InGame\ui_moveunit_water
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
