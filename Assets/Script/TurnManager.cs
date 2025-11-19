@@ -61,7 +61,7 @@ public class TurnManager : MonoBehaviour
         }
 
         //Debug.Log($"Turn {currentTurnCount} End: {turnOrder[currentOrderIndex].name}'s turn.");
-
+        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
         //when finish the turn, call NextRound
         StartTurn(turnOrder[currentOrderIndex]);
 
@@ -71,7 +71,7 @@ public class TurnManager : MonoBehaviour
     private void NextRound()
     {
         currentTurnCount++;
-        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
+
         Debug.Log("Next Turn");
         //increment turn count
         

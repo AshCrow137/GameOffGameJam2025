@@ -138,4 +138,5 @@ public class BaseGridEntity : MonoBehaviour
     public Canvas GetRotatableCanvas() { return rotatebleCanvas; }
 
     public Sprite GetSprite() { return bodySprite.GetComponent<SpriteRenderer>().sprite; }
+    public int GetVision() { return Vision; }
 }
