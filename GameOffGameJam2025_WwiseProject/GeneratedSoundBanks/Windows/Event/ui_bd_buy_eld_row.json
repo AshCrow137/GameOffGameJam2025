@@ -10,24 +10,39 @@
     "Type": "Event",
     "GUID": "{29238D2A-A1E6-4E7F-90F9-E86C40DF47DE}",
     "Language": "SFX",
-    "Hash": "{8155B13E-CD4D-0A2E-8782-3279ADB3EDF9}",
+    "Hash": "{2DA04FB7-1C5F-0F56-5791-8C3E9384596C}",
     "ObjectPath": "ui_bd_buy_eld_row",
     "ShortName": "ui_bd_buy_eld_row",
     "Path": "Event/ui_bd_buy_eld_row.bnk",
+    "Media": [
+     {
+      "Id": "565564844",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "UI InGame\\ui_bd_buy_eld_row_t01.wav",
+      "Path": "Media/565564844.wem",
+      "CachePath": "12/{1228065C-048A-ED5F-FDBD-F0B27697B67A}.wem"
+     }
+    ],
     "Events": [
      {
       "Id": "1892329880",
       "Name": "ui_bd_buy_eld_row",
       "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_bd_buy_eld_row",
       "GUID": "{29238D2A-A1E6-4E7F-90F9-E86C40DF47DE}",
-      "MaxAttenuation": "0",
       "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
+      "DurationMin": "1.21875",
+      "DurationMax": "1.21875",
+      "MediaRefs": [
+       {
+        "Id": "565564844"
+       }
+      ]
      }
     ]
    }
   ],
-  "FileHash": "{1436E1C7-83A9-9183-BA3A-DAB6E7399A2C}"
+  "FileHash": "{20D27AE1-533D-45B5-669C-101BB766DCFB}"
  }
 }
