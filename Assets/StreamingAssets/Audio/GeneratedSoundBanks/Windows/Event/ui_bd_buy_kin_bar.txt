@@ -1,3 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	1449682236	ui_bd_buy_kin_bar			\Default Work Unit\UI\InGame\ui_bd_buy_kin_bar	
-

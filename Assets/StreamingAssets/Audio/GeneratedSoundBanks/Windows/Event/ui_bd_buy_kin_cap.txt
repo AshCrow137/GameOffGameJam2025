@@ -1,3 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	845540987	ui_bd_buy_kin_cap			\Default Work Unit\UI\InGame\ui_bd_buy_kin_cap	
-

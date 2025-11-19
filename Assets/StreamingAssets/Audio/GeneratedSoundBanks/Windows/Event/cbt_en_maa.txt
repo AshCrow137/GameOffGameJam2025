@@ -1,3 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	39069146	cbt_en_maa			\Default Work Unit\Combat\cbt_en_maa	
-

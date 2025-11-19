@@ -1,3 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	308642385	ui_menumain_start			\Default Work Unit\UI\MainMenu\ui_menumain_start	
-
