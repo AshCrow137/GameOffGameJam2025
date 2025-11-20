@@ -66,6 +66,7 @@ public class CityUI : MonoBehaviour
         cityMenuMode = CityMenuMode.SpawnUnit;
         isUsingCityMenu = true;
         this.unitPrefab=unitPrefab;
+        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
         ShowGreenTIles();
     }
 
@@ -74,6 +75,7 @@ public class CityUI : MonoBehaviour
         cityMenuMode = CityMenuMode.SpawnBuilding;
         isUsingCityMenu = true;
         buildingType=BuildingType;
+        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
         ShowGreenTIles();
         //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition
     }
@@ -116,11 +118,15 @@ public class CityUI : MonoBehaviour
         if (cityMenuMode == CityMenuMode.SpawnUnit)
         {
             UnitSpawner.Instance.QueueUnitAtMousePosition(GameplayCanvasManager.instance.selectedCity, unitPrefab);
+            //TODO replace with actual sound
+            AudioManager.Instance.ui_menumain_exit.Post(gameObject);
             HexTilemapManager.Instance.RemoveAllMarkers();
         }
         else if (cityMenuMode == CityMenuMode.SpawnBuilding)
         {
             BuildingManager.Instance.QueueBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity,buildingType);
+            //TODO replace with actual sound
+            AudioManager.Instance.ui_menumain_exit.Post(gameObject);
             HexTilemapManager.Instance.RemoveAllMarkers();
             // BuildingManager.Instance.PlaceBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity);
         }

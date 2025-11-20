@@ -20,3 +20,7 @@ MonoBehaviour:
   duration: 2
   owner: {fileID: 0}
   buildingPrefab: {fileID: 3832580847944561018, guid: 69fb587d480c39f4c859483f9528ce6b, type: 3}
+  buildingPlacementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: bb0033803b31702449a60e82c4b9e24f, type: 2}

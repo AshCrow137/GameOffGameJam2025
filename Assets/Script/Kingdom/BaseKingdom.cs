@@ -49,12 +49,12 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
-    private void OnStartTurn(BaseKingdom kingdom)
+    protected virtual void OnStartTurn(BaseKingdom kingdom)
     {
         if (kingdom != this) return;
     }
 
-    private void OnEndTurn(BaseKingdom kingdom)
+    protected virtual void OnEndTurn(BaseKingdom kingdom)
     {
         if (kingdom != this) return;
         int unitsCount = GetUnitsCountInRange(5);
@@ -127,7 +127,7 @@ public class BaseKingdom : Entity, IMadnessable
         Debug.Log($"Increase: Current Madness Level is: {madnessLevel}");
     }
 
-    public void DecreaseMadness(int amount)
+    public virtual void DecreaseMadness(int amount)
     {
         madnessLevel -= amount;
         if(madnessLevel < 0)
@@ -163,18 +163,32 @@ public class BaseKingdom : Entity, IMadnessable
 
     public virtual int GetUnitsCountInRange(int range)
     {
+        // Find units, not controlled by this kingdom in rage 
         int result = 0;
         foreach(GridCity city in controlledCities)
         {
-            foreach (BaseGridUnitScript unit in controlledUnits)
+            List<Vector3Int> tilesWithUnits = HexTilemapManager.Instance.GetCellsInRange(city.GetCellPosition(), range, new List<TileState> { TileState.OccupiedByUnit });
+            foreach(Vector3Int unitPos in tilesWithUnits)
             {
-                if(HexTilemapManager.Instance.GetDistanceInCells
-                    (city.GetCellPosition(), unit.GetCellPosition()) <= range)
+                BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(unitPos);
+                if(unit!=null&&unit.GetOwner() is PlayerKingdom)
                 {
                     result++;
                 }
             }
         }
+        //int result = 0;
+        //foreach(GridCity city in controlledCities)
+        //{
+        //    foreach (BaseGridUnitScript unit in controlledUnits)
+        //    {
+        //        if(HexTilemapManager.Instance.GetDistanceInCells
+        //            (city.GetCellPosition(), unit.GetCellPosition()) <= range)
+        //        {
+        //            result++;
+        //        }
+        //    }
+        //}
         Debug.Log("Units in range " + range + ": " + result);
         return result;
     }

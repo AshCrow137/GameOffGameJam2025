@@ -51,6 +51,12 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI atackDistance;
     [SerializeField]
     private TextMeshProUGUI habiliyInfo;
+    [SerializeField]
+    private GameObject AbilitiesPanel;
+    [SerializeField]
+    private Image abilityImage;
+    [SerializeField]
+    private TMP_Text abilityText;
 
     [SerializeField]
     private Image LifeBar;
@@ -99,8 +105,19 @@ public class UIManager : MonoBehaviour
         rangedAtack.text = unit.GetRangeAttackDamage().ToString();
         retaliationAtack.text = unit.GetRetaliationDamage().ToString();
         atackDistance.text = unit.GetAtackDistance().ToString();
-
-        habiliyInfo.text = "nothing yet";
+        Sprite unitAbilityImage = unit.GetAbilityImage();
+        string unitAbilityDescription = unit.GetAbilityDescription();
+        if(unitAbilityImage != null&& unitAbilityDescription != null) 
+        {
+            AbilitiesPanel.SetActive(true);
+            abilityImage.sprite = unitAbilityImage;
+            abilityText.text = unitAbilityDescription;
+        }
+        else
+        {
+            AbilitiesPanel.SetActive(false);
+        }
+        //habiliyInfo.text = "nothing yet";
 
         UpdateLife(unit);
     }
@@ -192,6 +209,7 @@ public class UIManager : MonoBehaviour
     public void SwapUIElementState(GameObject UIElement)
     {
         UIElement.SetActive(!UIElement.activeSelf);
+        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
     }
   
     public void ShowEntityDescription(BaseGridEntity entity)

@@ -83,6 +83,7 @@ public class BuildingManager : MonoBehaviour
         buildingPreview.GetComponent<GridBuilding>().Initialize( playerKngdom);
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
+        building.buildingPlacementEvent.Post(gameObject);
         return buildingPreview;
     }
 
@@ -255,7 +256,7 @@ public class BuildingManager : MonoBehaviour
             Debug.LogError("CityProductionQueue.Instance is null");
             return;
         }
-
+        building.buildingPlacementEvent.Post(gameObject);
         city.GetComponent<CityProductionQueue>().AddToQueue(production);
 
     }
