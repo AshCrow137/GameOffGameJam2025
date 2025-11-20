@@ -155,7 +155,7 @@
 							<PropertyList>
 								<Property Name="MakeUpGain" Type="Real64">
 									<ValueList>
-										<Value>1</Value>
+										<Value>4</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -1047,6 +1047,15 @@
 									</ChildrenList>
 								</RandomSequenceContainer>
 								<RandomSequenceContainer Name="Water" ID="{531DF74A-E818-484E-860F-A22D7EC3F155}" ShortID="246900966">
+									<PropertyList>
+										<Property Name="Pitch" Type="int32">
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{C70048EE-809E-49DF-889F-33E227263DD7}"/>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -1346,6 +1355,60 @@
 								</RandomSequenceContainer>
 							</ChildrenList>
 						</ActorMixer>
+						<RandomSequenceContainer Name="UI_NextTurn" ID="{C7030970-6558-4766-9C4D-15124DDA2061}" ShortID="504210409">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ValueList>
+										<Value>21</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{04F02ABA-187F-4548-865A-153E0497B2A9}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="120"/>
+													<Property Name="Min" Type="Real64" Value="-120"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="ui_menumain_mainmenu_t01" ID="{0CB4578F-F32D-4C95-88E1-2D568946E78B}" ShortID="737185911">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="ui_menumain_mainmenu_t01" ID="{FDD86525-0866-45A8-AC0B-7FEAA37D6BC9}">
+											<Language>SFX</Language>
+											<AudioFile>UI\ui_menumain_mainmenu_t01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="317421359"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="ui_menumain_mainmenu_t01" ID="{FDD86525-0866-45A8-AC0B-7FEAA37D6BC9}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
 					</ChildrenList>
 				</ActorMixer>
 				<ActorMixer Name="UI_Menu" ID="{3A898615-967C-400C-B4E5-B50F9FE3DCEC}" ShortID="705882705">

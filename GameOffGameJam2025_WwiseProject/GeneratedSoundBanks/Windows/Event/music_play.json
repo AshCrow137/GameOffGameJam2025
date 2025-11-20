@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "202194903",
+    "Type": "Event",
+    "GUID": "{DB58C9FE-BD23-4C32-8027-4E7CB4E02DA5}",
+    "Language": "SFX",
+    "Hash": "{66FE5C98-1EDB-EE87-B346-E9F600651C86}",
+    "ObjectPath": "music_play",
+    "ShortName": "music_play",
+    "Path": "Event/music_play.bnk",
+    "Media": [
+     {
+      "Id": "963382323",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Music\\Deep Wave.wav",
+      "Path": "Media/963382323.wem",
+      "CachePath": "51/{51773EC0-6589-8E09-17A8-DD14812E0317}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "202194903",
+      "Name": "music_play",
+      "ObjectPath": "\\Events\\Default Work Unit\\Music\\music_play",
+      "GUID": "{DB58C9FE-BD23-4C32-8027-4E7CB4E02DA5}",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "MediaRefs": [
+       {
+        "Id": "963382323"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{EDC99547-2143-705B-E858-2190A939283A}"
+ }
+}
