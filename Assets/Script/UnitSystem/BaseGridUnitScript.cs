@@ -13,7 +13,7 @@ public class BaseGridUnitScript : BaseGridEntity
 {
     [Header("Unit stats")]
     [SerializeField]
-    protected UnitType unitType;
+    public UnitType unitType;
     [SerializeField]
     protected int MeleeAttackDamage = 1;
     [SerializeField]
@@ -30,9 +30,12 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     private float MovementSpeed = 3;
     [SerializeField]
-    private int AttacksPerTurn = 1;
+    protected int AttacksPerTurn = 1;
     [SerializeField]
     protected bool CanMoveAfterattack = false;
+    [SerializeField]
+    protected int specialAbilityRange = 1;
+    public bool aiming = false;
 
 
     private Seeker seeker;
@@ -112,7 +115,7 @@ public class BaseGridUnitScript : BaseGridEntity
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
-        if(selector!= Owner)
+        if (selector!= Owner)
         {
             GlobalEventManager.InvokeShowUIMessageEvent($"This is not your unit!");
             return;
@@ -156,7 +159,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="tile">clicked tile</param>
     /// <param name="cellPos">position of clicked tile</param>
-    private void OnTileClicked(HexTile tile,Vector3Int cellPos)
+    protected void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
         GridCity city = hTM.GetCityOnTile(cellPos);
@@ -532,13 +535,15 @@ public class BaseGridUnitScript : BaseGridEntity
 
         // Calculating distance travelled
         distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
-        Debug.Log("Distance travelled: " + distanceTravelled);
         startingPosition = GetCellPosition();
         if (AttackRange > 1)
         {
             hTM.ShowMarkersForRangeAttack(this, AttackRange);
         }
     }
+    public virtual void SpecialAbility() { }
+    public virtual void OnChosingTile() { }
+
     protected virtual void Update()
     {
         MovementCycle();
