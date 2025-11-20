@@ -95,6 +95,17 @@
 										</Action>
 									</ChildrenList>
 								</Event>
+								<Event Name="ui_nextturn" ID="{7C5C8177-4169-42DD-AD7A-F5020BA6F758}">
+									<ChildrenList>
+										<Action Name="" ID="{D595C299-EFC8-422D-993E-62F7D0A5EBF8}" ShortID="890751848">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="UI_NextTurn" ID="{C7030970-6558-4766-9C4D-15124DDA2061}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="MainMenu" ID="{4B3E6B6C-E24A-4F90-BF10-5CAD7B505C7F}" ShortID="1026104801">
@@ -301,6 +312,21 @@
 						<Event Name="amb_02" ID="{86BD153D-06D7-443D-BEC1-5449BCC896C7}"/>
 						<Event Name="amb_03" ID="{3E18D530-60D9-4DA3-89C7-169235122D1A}"/>
 						<Event Name="amb_04" ID="{144CCF43-0987-4D14-A919-D73352A689ED}"/>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Music" ID="{E92E2762-B773-492B-8F14-371BBE07CC2D}" ShortID="881322417">
+					<ChildrenList>
+						<Event Name="music_play" ID="{DB58C9FE-BD23-4C32-8027-4E7CB4E02DA5}">
+							<ChildrenList>
+								<Action Name="" ID="{D060CC73-0137-402C-AD65-F723BFFDECFB}" ShortID="307684709">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Main" ID="{7048C2B6-824F-42A3-8312-C05236217FC2}" WorkUnitID="{494395FE-A0CF-4FDA-8FBB-1CC7810C6C3F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>
