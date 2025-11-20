@@ -22,12 +22,14 @@ public class MainMenuController : MonoBehaviour
     void Start()
     {
         Initialize();
+        
     }
     private void OnEnable()
     {
         var map = CustomInput.FindActionMap("InMenu");
         moveAction = map.FindAction("Navigate");
         moveAction.Enable();
+        
     }
     private void OnDisable() {
         moveAction.Disable(); 
@@ -48,6 +50,7 @@ public class MainMenuController : MonoBehaviour
         PanelOpenSettings = !PanelOpenSettings;
         PanelSettings.SetActive(PanelOpenSettings);
         AudioManager.Instance.ui_menumain_settings.Post(gameObject);
+        AudioManager.Instance.ui_menumain_ambienceMusic.Post(gameObject);
     }
     public void TESTPlaySound()
     {
