@@ -10,24 +10,39 @@
     "Type": "Event",
     "GUID": "{D907E48A-2451-4C81-B094-0E371F867B39}",
     "Language": "SFX",
-    "Hash": "{F0608718-128C-8655-8BA9-0AFB0D6417AF}",
+    "Hash": "{EF1DBE2E-2F60-78BB-76FC-1F9C75EC832A}",
     "ObjectPath": "cbt_en_maa",
     "ShortName": "cbt_en_maa",
     "Path": "Event/cbt_en_maa.bnk",
+    "Media": [
+     {
+      "Id": "923407363",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_en_maa_t02.wav",
+      "Path": "Media/923407363.wem",
+      "CachePath": "82/{82D5E246-7435-1EC2-0107-21FE698AE442}.wem"
+     }
+    ],
     "Events": [
      {
       "Id": "39069146",
       "Name": "cbt_en_maa",
       "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_maa",
       "GUID": "{D907E48A-2451-4C81-B094-0E371F867B39}",
-      "MaxAttenuation": "0",
       "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "923407363"
+       }
+      ]
      }
     ]
    }
   ],
-  "FileHash": "{9B1B6D65-D06D-612E-608F-8F1814EEA3A7}"
+  "FileHash": "{FC780B08-B6E8-1D4F-88E5-330F957BF16A}"
  }
 }

@@ -10,24 +10,39 @@
     "Type": "Event",
     "GUID": "{2675998C-7AEB-45ED-897F-84C85886EE17}",
     "Language": "SFX",
-    "Hash": "{81B0A2C6-4057-42E3-9767-970DCF4C4E20}",
+    "Hash": "{D797117E-2F9B-A636-D8FB-E8CF9D6AC808}",
     "ObjectPath": "cbt_plr_infilt",
     "ShortName": "cbt_plr_infilt",
     "Path": "Event/cbt_plr_infilt.bnk",
+    "Media": [
+     {
+      "Id": "120510571",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_plr_infilt_t01.wav",
+      "Path": "Media/120510571.wem",
+      "CachePath": "3C/{3CC7B771-C7A9-8EB3-2FA8-2318C8D9CD8F}.wem"
+     }
+    ],
     "Events": [
      {
       "Id": "1095353422",
       "Name": "cbt_plr_infilt",
       "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_plr_infilt",
       "GUID": "{2675998C-7AEB-45ED-897F-84C85886EE17}",
-      "MaxAttenuation": "0",
       "DurationType": "OneShot",
-      "DurationMin": "0",
-      "DurationMax": "0"
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "120510571"
+       }
+      ]
      }
     ]
    }
   ],
-  "FileHash": "{B9E453A8-8091-9F71-73FE-DA19A9C912C5}"
+  "FileHash": "{CF7E74BD-A1AC-D4A1-8D0D-FAEE767AC64C}"
  }
 }

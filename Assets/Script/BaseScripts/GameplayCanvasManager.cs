@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.InputSystem.InputAction;
 
 public class GameplayCanvasManager : MonoBehaviour
 {
@@ -16,13 +17,17 @@ public class GameplayCanvasManager : MonoBehaviour
     private float showMessageTime = 3;
     [SerializeField]
     private GameObject victoryPanel;
+    [SerializeField]
+    private GameObject wavecallerButton;
+    private BaseGridUnitScript selectedUnit;
+    public bool isOnCanvas = false;
 
     [HideInInspector]
     public GridCity selectedCity { get; private set; } = null;
     private IEnumerator showMessageCoroutine;
     public void Initialize()
     {
-        if(instance!= null)
+        if (instance != null)
         {
             Destroy(this);
         }
@@ -53,7 +58,7 @@ public class GameplayCanvasManager : MonoBehaviour
     public void ShowMessageText(string message)
     {
         messageText.text = message;
-        if(showMessageCoroutine!=null)
+        if (showMessageCoroutine != null)
         {
             StopCoroutine(showMessageCoroutine);
             showMessageCoroutine = null;
@@ -65,9 +70,9 @@ public class GameplayCanvasManager : MonoBehaviour
     {
         messageText.gameObject.SetActive(true);
         float t = showMessageTime;
-        while (t>0)
+        while (t > 0)
         {
-            t-= Time.deltaTime;
+            t -= Time.deltaTime;
             yield return null;
         }
         messageText.gameObject.SetActive(false);
@@ -80,9 +85,39 @@ public class GameplayCanvasManager : MonoBehaviour
     public void OnMouseEnterCanvasElement()
     {
         InputManager.instance.SetOnUiElement(true);
-    } 
+        isOnCanvas = true;
+    }
     public void OnMouseExitCanvasElement()
     {
         InputManager.instance.SetOnUiElement(false);
+        isOnCanvas = false;
+    }
+    public void ActivateWavecallerButton(BaseGridUnitScript unit)
+    {
+        //wavecallerButton.SetActive(true);
+        selectedUnit = unit;
+    }
+    public void DeactivateWavecallerButton()
+    {
+        //wavecallerButton.SetActive(false);
+        selectedUnit = null;
+    }
+    public void CallSpecialAbility()
+    {
+        if (selectedUnit != null)
+        {
+            selectedUnit.SpecialAbility();
+        }
+    }
+    public void OnTileChosen(CallbackContext context)
+    {
+        if (!context.performed) return;
+        if (selectedUnit == null) return;
+        Debug.Log(selectedUnit.unitType);
+        Debug.Log(selectedUnit.aiming);
+        if (selectedUnit.unitType == UnitType.Special && selectedUnit.aiming == true && isOnCanvas == false)
+        {
+            selectedUnit.OnChosingTile();
+        }
     }
 }
