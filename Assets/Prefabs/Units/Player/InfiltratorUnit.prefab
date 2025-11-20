@@ -52,9 +52,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0da4c2c32216599458bf3c6764cd867e, type: 3}
     - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Name
       value: InfiltratorUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394060670405772342, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9176114847490143227, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: visionRadius
@@ -69,6 +97,22 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -7646213806865863853}
   m_SourcePrefab: {fileID: 100100000, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+--- !u!114 &34461746476226409 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3006300019162823749, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3009226122081413932}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2425597009697533532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 606746352947840368, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3009226122081413932}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3322717916722378945 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -135,12 +179,28 @@ MonoBehaviour:
   MovementSpeed: 3
   AttacksPerTurn: 1
   CanMoveAfterattack: 0
+  movementPointsPanel: {fileID: 2425597009697533532}
+  movementPointsImage: {fileID: 34461746476226409}
   specialAbilityRange: 1
   aiming: 0
+  unitAttackSoundEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  unitLandMovementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  unitWaterMovementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   remainMovementText: {fileID: 4034335753520446632}
   possibleSpawnTiles: 0000000003000000
   resourceRequirements:
   - resourceType: 0
     amount: 0
   duration: 2
+  abilityImage: {fileID: 0}
+  abilityDescription: Infiltrates enemy cities to rise madness amongst them
   madnessAmount: 3

@@ -7,6 +7,7 @@ public class InfiltratorUnit : BaseGridUnitScript
     private bool isInCity = false;
     private GridCity infiltratedCity;
 
+    // TODO: Add stealth mechanic and fix madness increase to be each round,not each turn
     protected override void OnStartTurn(BaseKingdom entity)
     {
         base.OnStartTurn(entity);
