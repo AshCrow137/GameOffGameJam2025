@@ -159,7 +159,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="tile">clicked tile</param>
     /// <param name="cellPos">position of clicked tile</param>
-    protected void OnTileClicked(HexTile tile,Vector3Int cellPos)
+    protected virtual void  OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
         GridCity city = hTM.GetCityOnTile(cellPos);
@@ -187,7 +187,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="targetUnit">attacked unit</param>
     /// <param name="targetUnitPosition">attacked unit position</param>
-   private void TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
+   protected void TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
     {
         if (targetUnit.GetOwner() == Owner)
         {
