@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{BC03C568-B483-412A-B9F7-A3D4CD3DE8A3}",
     "Language": "SFX",
-    "Hash": "{FEAA7FE5-4294-684B-134B-0FF784D719A8}",
+    "Hash": "{B2130FB2-5DD4-FDA0-FECB-6E7262E069D4}",
     "ObjectPath": "ui_menumain_exit",
     "ShortName": "ui_menumain_exit",
     "Path": "Event/ui_menumain_exit.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{D744CFBE-7040-F076-B56D-4BD2B78CA85A}"
+  "FileHash": "{97F3A96E-4101-2823-CC4B-37A69D2BF51E}"
  }
 }

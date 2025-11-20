@@ -7,9 +7,9 @@ using UnityEngine;
 /// </summary>
 public class EntityVision : MonoBehaviour
 {
-    [Header("Vision Settings")]
-    [SerializeField]
-    private int visionRadius = 1;
+    //[Header("Vision Settings")]
+    //[SerializeField]
+    //private int visionRadius = 1;
 
     [Header("Fog of War Settings")]
     [SerializeField]
@@ -61,7 +61,7 @@ public class EntityVision : MonoBehaviour
             TileState.Default 
         };
         
-        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(entityPosition, visionRadius, allStates);
+        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(entityPosition, entity.GetVision(), allStates);
 
         // Update fog for each tile
         foreach (Vector3Int tilePosition in updatedTiles)
@@ -92,7 +92,7 @@ public class EntityVision : MonoBehaviour
             TileState.Default 
         };
         
-        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(oldPosition, visionRadius, allStates);
+        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(oldPosition, entity.GetVision(), allStates);
 
         // Remove fog for each tile
         foreach (Vector3Int tilePosition in updatedTiles)
@@ -153,16 +153,16 @@ public class EntityVision : MonoBehaviour
     /// </summary>
     public int GetVisionRadius()
     {
-        return visionRadius;
+        return entity.GetVision();
     }
 
     /// <summary>
     /// Sets the vision radius of this entity
     /// </summary>
-    public void SetVisionRadius(int radius)
-    {
-        visionRadius = radius;
-    }
+    //public void SetVisionRadius(int radius)
+    //{
+    //    entity.GetVision() = radius;
+    //}
 
     /// <summary>
     /// Makes the entity invisible/visible without disabling the GameObject
