@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 9900479ee2cf8e479c24c462e98c193e
     GuidInternal: 
-    m_lastTime: -8584393136739372597
+    m_lastTime: -8584379584876574410
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -80,7 +80,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: b53265490cd0ba49a1a7c90456f9f526
     GuidInternal: 
-    m_lastTime: -8584380376516735163
+    m_lastTime: -8584379584879715447
     List:
     - name: amb_01
       guid: 0638705d3959a24c979693886d62154b
@@ -456,6 +456,43 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: Music
+      guid: 62272ee973b72b498f14371bbe07cc2d
+      id: 3991942870
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Music
+        ObjectType: 4
+        guid: 62272ee973b72b498f14371bbe07cc2d
+      Path: Events\Default Work Unit\Music
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: music_play
+      guid: fec958db23bd324c80274e7cb4e02da5
+      id: 202194903
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: Music
+        ObjectType: 4
+        guid: 62272ee973b72b498f14371bbe07cc2d
+      - ElementName: music_play
+        ObjectType: 3
+        guid: fec958db23bd324c80274e7cb4e02da5
+      Path: Events\Default Work Unit\Music\music_play
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - name: UI
       guid: b48d6d813e807341baa07322f8c3feaa
       id: 1551306167
@@ -818,6 +855,29 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.35822916
       minDuration: 0.35822916
+    - name: ui_nextturn
+      guid: 77815c7c6941dd42ad7af5020ba6f758
+      id: 502354088
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: InGame
+        ObjectType: 4
+        guid: 11927462dd7ff14393ac68dcead4b4fd
+      - ElementName: ui_nextturn
+        ObjectType: 3
+        guid: 77815c7c6941dd42ad7af5020ba6f758
+      Path: Events\Default Work Unit\UI\InGame\ui_nextturn
+      maxAttenuation: 0
+      maxDuration: 0.875
+      minDuration: 0.875
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
