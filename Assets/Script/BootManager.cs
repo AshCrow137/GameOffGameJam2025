@@ -41,6 +41,10 @@ public class BootManager : MonoBehaviour
     [SerializeField]
     private UnitSpawner unitSpawner;
 
+    
+    [SerializeField]
+    private AIController AIController;
+
 
     void Start()
     {
@@ -69,5 +73,7 @@ public class BootManager : MonoBehaviour
         addVisibleTiles?.Initialize();
         unitSpawner?.Instantiate();
 
+        
+        AIController?.Initialize();
     }
 }
