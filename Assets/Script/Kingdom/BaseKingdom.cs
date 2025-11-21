@@ -10,7 +10,7 @@ public class BaseKingdom : Entity, IMadnessable
     [SerializeField]
     protected List<BaseGridUnitScript> controlledUnits = new();
     [SerializeField]
-    protected List<GridCity> controlledCities = new();
+    public List<GridCity> controlledCities { get; private set; } = new();
 
     public List<Vector3Int> visibleTiles { get; protected set; } = new();
 

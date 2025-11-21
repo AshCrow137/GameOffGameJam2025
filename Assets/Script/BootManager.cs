@@ -40,6 +40,9 @@ public class BootManager : MonoBehaviour
     private UIManager UIManager;
     [SerializeField]
     private UnitSpawner unitSpawner;
+    [SerializeField]
+    private GamePlayEventManager gameplayEventManager;
+
 
 
     void Start()
@@ -50,7 +53,6 @@ public class BootManager : MonoBehaviour
         hexTilemapManager?.Initialize();
 
         UIManager?.Initialize();
-        turnManager?.Initialize();
         buildingManager?.Instantiate();
         resource?.Initialize();
         cityManager?.Instantiate();
@@ -68,6 +70,7 @@ public class BootManager : MonoBehaviour
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
         unitSpawner?.Instantiate();
-
+        gameplayEventManager?.Initialize();
+        turnManager?.Initialize();
     }
 }

@@ -123,6 +123,10 @@ public class UnitSpawner : MonoBehaviour
         //HexTilemapManager.Instance.SetTileState(gridPosition, TileState.OccupiedByUnit);
         Seeker seeker = unit.GetComponent<Seeker>();
         var r = seeker.traversableTags;
+
+        //Nekrols Changed for create units to Bots
+        //unit.GetComponent<BaseGridUnitScript>().Initialize(TurnManager.instance.GetCurrentActingKingdom());
+        
         unit.GetComponent<BaseGridUnitScript>().Initialize(playerKingdom);
 
         playerKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
