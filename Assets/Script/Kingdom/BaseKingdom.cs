@@ -33,6 +33,8 @@ public class BaseKingdom : Entity, IMadnessable
     protected Color kingdomColor  = new Color();
 
     public Color GetKingdomColor() { return kingdomColor; }
+    public Resource Resources() => currentResources;
+    public List<BaseGridUnitScript> ControlledUnits => controlledUnits;
 
     public virtual void Initialize()
     {
