@@ -10,7 +10,7 @@ public class BaseKingdom : Entity, IMadnessable
     [SerializeField]
     protected List<BaseGridUnitScript> controlledUnits = new();
     [SerializeField]
-    public List<GridCity> controlledCities { get; private set; } = new();
+    protected List<GridCity> controlledCities = new();
 
     public List<Vector3Int> visibleTiles { get; protected set; } = new();
 
@@ -159,6 +159,11 @@ public class BaseKingdom : Entity, IMadnessable
         {
             return MadnessEffect.None;
         }
+    }
+
+    public List<GridCity> GetControlledCities()
+    {
+        return controlledCities;
     }
 
     public virtual int GetUnitsCountInRange(int range)

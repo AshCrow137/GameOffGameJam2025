@@ -85,7 +85,8 @@ public class GamePlayEventManager : MonoBehaviour
 
     private void SpanwUnit()
     {
-        GridCity city = currentKingdom.controlledCities[Random.Range(0, currentKingdom.controlledCities.Count - 1)];
+        GridCity city = currentKingdom.GetControlledCities()[Random.Range(0, currentKingdom.GetControlledCities().Count - 1)];
+        Debug.Log("SpanwUnit");
         PlayerKingdom pk = currentKingdom.gameObject.GetComponent<PlayerKingdom>();
         AIKingdom bot = currentKingdom.gameObject.GetComponent<AIKingdom>();
 
@@ -106,10 +107,12 @@ public class GamePlayEventManager : MonoBehaviour
         //UnitSpawner.Instance.PlaceUnit(unitSpawned,)
         if (unitSpawned != null)
         {
-            city.TryToSpawnUnitInCity(unitSpawned);
+            GridCity currentCity = currentKingdom.GetControlledCities()[Random.Range(0, currentKingdom.GetControlledCities().Count - 1)];
+            List<Vector3Int> possibleSpawnPosition = HexTilemapManager.Instance.GetCellsInRange(currentCity.position, 1, unitSpawned.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+            Vector3Int spawnPosition = possibleSpawnPosition[Random.Range(0, possibleSpawnPosition.Count - 1)];
+            UnitSpawner.Instance.PlaceUnit(unitSpawned, spawnPosition);
         }
 
-        Debug.Log("SpanwUnit");
     }
 
     private void SpecialEvent()
