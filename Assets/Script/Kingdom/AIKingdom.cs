@@ -40,7 +40,6 @@ public class AIKingdom : BaseKingdom
             unit.ApplyMadnessEffect(currentMadnessEffect);
         }
     }
-    int madnessLevel;
     public bool IsBuildUnit { get;private set; }
     
     public void StartTurn()

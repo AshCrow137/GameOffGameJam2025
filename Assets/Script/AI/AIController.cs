@@ -54,7 +54,6 @@ public class AIController : MonoBehaviour
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
         return true;
     }
 
