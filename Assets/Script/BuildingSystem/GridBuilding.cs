@@ -20,7 +20,7 @@ public class GridBuilding : BaseGridEntity
         
         // Initialize building-specific fields
         buildingName = building.buildingName;
-        bodySprite.GetComponent<SpriteRenderer>().sprite = building.sprite;
+        //bodySprite.GetComponent<SpriteRenderer>().sprite = building.sprite;
         duration = building.duration;
         resources = new Dictionary<ResourceType, int>(building.resource);
         

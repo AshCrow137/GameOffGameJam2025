@@ -72,14 +72,15 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     /// <param name="building">The building object to place</param>
     /// <param name="gridPosition">The position on the grid (Vector3Int)</param>
-    public GameObject PlaceBuilding(Building building, Vector3Int gridPosition,int buildingType)
+    public GameObject PlaceBuilding(Building building, Vector3Int gridPosition)
     {
         if (building == null)
         {
             return null;
         }
-        GameObject buildingPreview = Instantiate(PrefabsBuilding[buildingType], HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
+        GameObject buildingPreview = Instantiate(building.buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
         buildingPreview.GetComponent<GridBuilding>().Initialize(building, playerKngdom);
+        building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         return buildingPreview;
     }
 
@@ -103,58 +104,76 @@ public class BuildingManager : MonoBehaviour
     /// Test function for building system.
     /// Places the assigned building at the mouse position
     /// </summary>
-    public void TestPlaceBuilding()
+    // public void TestPlaceBuilding()
+    // {
+    //     if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.BuildingPlacement)) return;
+    //     Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+    //     if (mousePosition.x == int.MaxValue) return;
+
+    //     if (!CanBuildingBePlaced(building, mousePosition)) return;
+
+    //     if (building.duration > 0)
+    //     {
+    //         Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
+    //         StartBuildingConstruction(building, mousePosition);
+    //     }
+    //     else
+    //     {
+    //         Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
+    //         PlaceBuilding(building, mousePosition);
+    //     }
+
+    //     HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+
+
+    // }
+
+    public bool CheckAndStartConstruction(GridCity city, Building building, Vector3Int position)
     {
-        if (!ToggleManager.Instance.GetToggleState(ToggleUseCase.BuildingPlacement)) return;
-        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
-        if (mousePosition.x == int.MaxValue) return;
-
-        if (!CanBuildingBePlaced(building, mousePosition)) return;
-
-        if (building.duration > 0)
-        {
-            Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
-            StartBuildingConstruction(building, mousePosition,0);
-        }
-        else
-        {
-            Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
-            PlaceBuilding(building, mousePosition,0);
-        }
-
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
-
-
+        if (!CanBuildingBePlaced(city, building, position)) return false;
+        resourceManager.SpendResource(building.resource);
+        building.SetOwnerCity(city);
+        HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
+        return true;
+        // if (building.duration > 0)
+        // {
+        //     Debug.Log($"Starting construction of {building.buildingName} at {position}. Will complete in {building.duration} turns.");
+        //     Production production = new Production(position, ProductionType.Building, building.duration, building);
+        //     city.GetComponent<CityProductionQueue>().AddToQueue(production);
+        // }
     }
 
-    public void PlaceBuildingAtMousePosition(GridCity city, int buildingType)
-    {
-        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
-        if (mousePosition.x == int.MaxValue) return;
+    //private void PlaceBuildingAtPosition(GridCity city, Vector3Int position)
+    //{
+    //    if (!CanBuildingBePlaced(city, building, position)) return;
 
-        if (!CanBuildingBePlaced(city, building, mousePosition)) return;
+    //    if (building.duration > 0)
+    //    {
+    //        Debug.Log($"Starting construction of {building.buildingName} at {position}. Will complete in {building.duration} turns.");
+    //        StartBuildingConstruction(building, position);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log($"Placing {building.buildingName} at {position}.");
+    //        GameObject gridBuilding = PlaceBuilding(building, position);
+    //        if (gridBuilding != null)
+    //        {
+    //            city.buildings[position] = gridBuilding.GetComponent<GridBuilding>();
+    //        }
+    //    }
 
-        if (building.duration > 0)
-        {
-            Debug.Log($"Starting construction of {building.buildingName} at {mousePosition}. Will complete in {building.duration} turns.");
-            StartBuildingConstruction(BuildingsDatas[buildingType], mousePosition,buildingType);
-        }
-        else
-        {
-            Debug.Log($"Placing {building.buildingName} at {mousePosition}.");
-            GameObject gridBuilding = PlaceBuilding(BuildingsDatas[buildingType], mousePosition,buildingType);
-            if( gridBuilding != null)
-            {
-                city.buildings[mousePosition] = gridBuilding.GetComponent<GridBuilding>();
-                Debug.Log(city.buildings);
-                //city.maxHP += gridBuilding.GetComponent<GridBuilding>().HpForCity;
-                //Debug.Log($"!!!!!!!!!!!!CityHp how: {city.maxHP}");
-            }
-        }
+    //    HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
 
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+    //}
 
-    }
+    //private void PlaceBuildingAtMousePosition(GridCity city)
+    //{
+    //    Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+    //    if (mousePosition.x == int.MaxValue) return;
+    //    PlaceBuildingAtPosition(city, mousePosition);
+
+
+    //}
 
     private bool CanBuildingBePlaced(GridCity city, Building building, Vector3Int position)
     {
@@ -180,7 +199,15 @@ public class BuildingManager : MonoBehaviour
         // Get building's resource requirements
         Dictionary<ResourceType, int> resourceRequirements = building.resource;
         // return true;
-        return resourceManager.HasEnough(resourceRequirements) == null;
+        Dictionary<ResourceType, int> resultReqs = resourceManager.HasEnough(resourceRequirements);
+        if(resultReqs!=null)
+        {
+            foreach (var a in resultReqs)
+            {
+                Debug.Log($"not enough {a.Key} - {a.Value}");
+            }
+        }
+        return resultReqs == null;
     }
 
     /// <summary>
@@ -188,50 +215,99 @@ public class BuildingManager : MonoBehaviour
     /// </summary>
     /// <param name="building">The building to construct</param>
     /// <param name="position">The grid position where the building will be placed</param>
-    private void StartBuildingConstruction(Building building, Vector3Int position,int buildingType)
-    {
+    //private void StartBuildingConstruction(Building building, Vector3Int position)
+    //{
 
-        // Consume resources
-        resourceManager.SpendResource(building.resource);
+    //    // Consume resources
+    //    resourceManager.SpendResource(building.resource);
 
-        // Add to construction queue
-        BuildingConstruction construction = new BuildingConstruction(building, position, building.duration, buildingType);
-        ongoingConstructions.Add(construction);
+    //    // Add to construction queue
+    //    BuildingConstruction construction = new BuildingConstruction(building, position, building.duration);
+    //    ongoingConstructions.Add(construction);
 
-    }
+    //}
 
     /// <summary>
-    /// Called at the start of each turn to progress building construction
+    /// Queues a building for production at mouse position
     /// </summary>
-    public void StartTurn()
+    public void QueueBuildingAtMousePosition(GridCity city,int buildingType)
     {
-        // Collect completed constructions to remove after iteration
-        List<BuildingConstruction> completedConstructions = new List<BuildingConstruction>();
-
-        // Process each ongoing construction
-        foreach (BuildingConstruction construction in ongoingConstructions)
+        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+        if (mousePosition.x == int.MaxValue)
         {
-            construction.turnsRemaining--;
-            
-            if (construction.turnsRemaining <= 0)
-            {
-                // Construction complete - place the building
-                PlaceBuilding(construction.building, construction.position, construction.buildingtype);
-                completedConstructions.Add(construction);
-                Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
-            }
-            else
-            {
-                Debug.Log($"{construction.building.buildingName} at {construction.position}: {construction.turnsRemaining} turns remaining");
-            }
+            Debug.LogError("Invalid mouse position");
+            return;
+        }
+        Building building = BuildingsDatas[buildingType];
+        if (!CanBuildingBePlaced(city, building, mousePosition))
+        {
+            Debug.LogError("Building cannot be placed at this position");
+            return;
         }
 
-        // Remove completed constructions from the list
-        foreach (BuildingConstruction construction in completedConstructions)
+        Production production = new Production(mousePosition, ProductionType.Building, building.duration, building);
+
+        if (city.GetComponent<CityProductionQueue>() == null)
         {
-            ongoingConstructions.Remove(construction);
+            Debug.LogError("CityProductionQueue.Instance is null");
+            return;
         }
+
+        city.GetComponent<CityProductionQueue>().AddToQueue(production);
 
     }
+
+    // set tile to available, and refund resources
+    public void CancelConstruction(GridCity city, Building building, Vector3Int position)
+    {
+        if(city == null || building == null || position == null)
+        {
+            Debug.LogError("Invalid parameters");
+            return;
+        }
+        if(HexTilemapManager.Instance.GetTileState(position) != TileState.OccuppiedByBuilding)
+        {
+            Debug.LogError("Tile was not occupied by building when cancelling construction");
+            return;
+        }
+        HexTilemapManager.Instance.SetTileState(position, TileState.Water);
+        resourceManager.AddAll(building.resource);
+
+    }
+
+
+    ///// <summary>
+    ///// Called at the start of each turn to progress building construction
+    ///// </summary>
+    //public void StartTurn()
+    //{
+    //    // Collect completed constructions to remove after iteration
+    //    List<BuildingConstruction> completedConstructions = new List<BuildingConstruction>();
+
+    //    // Process each ongoing construction
+    //    foreach (BuildingConstruction construction in ongoingConstructions)
+    //    {
+    //        construction.turnsRemaining--;
+
+    //        if (construction.turnsRemaining <= 0)
+    //        {
+    //            // Construction complete - place the building
+    //            PlaceBuilding(construction.building, construction.position);
+    //            completedConstructions.Add(construction);
+    //            Debug.Log($"Construction complete! {construction.building.buildingName} placed at {construction.position}");
+    //        }
+    //        else
+    //        {
+    //            Debug.Log($"{construction.building.buildingName} at {construction.position}: {construction.turnsRemaining} turns remaining");
+    //        }
+    //    }
+
+    //    // Remove completed constructions from the list
+    //    foreach (BuildingConstruction construction in completedConstructions)
+    //    {
+    //        ongoingConstructions.Remove(construction);
+    //    }
+
+    //}
 }
 

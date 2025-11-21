@@ -98,7 +98,8 @@ public class CityUI : MonoBehaviour
         }
         else if (cityMenuMode == CityMenuMode.SpawnBuilding)
         {
-            BuildingManager.Instance.PlaceBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity, buildingType);
+            BuildingManager.Instance.QueueBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity,buildingType);
+            // BuildingManager.Instance.PlaceBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity);
         }
         ClearCityMenuMode();
         

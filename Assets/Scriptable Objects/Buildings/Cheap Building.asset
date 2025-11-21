@@ -20,4 +20,5 @@ MonoBehaviour:
   - resourceType: 1
     amount: 2
   duration: 1
-  owner: Player
+  owner: {fileID: 0}
+  buildingPrefab: {fileID: 0}
