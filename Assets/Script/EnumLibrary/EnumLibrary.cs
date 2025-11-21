@@ -75,3 +75,11 @@ public enum AIAction
     BuildUnit
     
 }
+
+public enum AIAttackType
+{
+    None,
+    Attack,
+    AttackMiddleMadness,
+    AttackHighMadness
+}

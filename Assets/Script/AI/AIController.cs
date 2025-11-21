@@ -85,10 +85,22 @@ public class AIController : MonoBehaviour
             return AIAction.BuildCity;
         }
 
-        //if(unit.ShowPlayerUnit)
-        //{
-        //  return AIAction.Attack;
-        //}
+        if(CheckPlayerUnits(kingdom, null)) //add later
+        {
+            switch (GetAttackByMadnessLevel(kingdom))
+            {
+                case AIAttackType.None:
+                    break;
+                case AIAttackType.Attack:
+                    break;
+                case AIAttackType.AttackMiddleMadness:
+                    break;
+                case AIAttackType.AttackHighMadness:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         //if(unit.ShowPlayerSpecialUnit)
         //{
@@ -97,6 +109,37 @@ public class AIController : MonoBehaviour
         
     
     return AIAction.None;
+    }
+
+    private bool CheckPlayerUnits(AIKingdom kingdom, PlayerKingdom playerKingdom)
+    {
+        if (kingdom.ControlledUnits[0])
+        {
+            //add check distance to player units, AI know all
+
+            
+            return true;
+        }
+        return false;
+    }
+
+    private AIAttackType GetAttackByMadnessLevel(AIKingdom kingdom)
+    {
+        if (kingdom.GetMadnessLevel() >= 0 && kingdom.GetMadnessLevel() <= 30) //setup this values from some ScriptableObject library of values
+        {
+            return AIAttackType.Attack;
+        }
+            
+        if (kingdom.GetMadnessLevel() >= 31 && kingdom.GetMadnessLevel() <= 70)
+        {
+            return AIAttackType.AttackMiddleMadness;   
+        }
+            
+        if (kingdom.GetMadnessLevel() >= 71 && kingdom.GetMadnessLevel() <= 99)
+        {
+            return AIAttackType.AttackHighMadness;
+        }
+        return AIAttackType.None;
     }
     
 }
