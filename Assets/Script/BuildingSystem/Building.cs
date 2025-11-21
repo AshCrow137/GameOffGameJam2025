@@ -16,6 +16,7 @@ public class Building : ScriptableObject
     public GameObject owner;
     public GameObject buildingPrefab;
     public GridCity ownerCity { get; private set; }
+    [SerializeField] public AK.Wwise.Event buildingPlacementEvent;
     // Property to access resources as Dictionary
     public Dictionary<ResourceType, int> resource
     {

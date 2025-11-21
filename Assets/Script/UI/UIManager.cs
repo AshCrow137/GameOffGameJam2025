@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     private Image CityPanel;
     [SerializeField] 
     private TextMeshProUGUI MadnessLavel;
+    [SerializeField]
+    private Image madnessFillImage;
 
     [SerializeField]
     private Image panelStats;
@@ -23,9 +25,17 @@ public class UIManager : MonoBehaviour
     private Image infantaryImg;
 
     [SerializeField]
-    private Image essenceImg;
+    private Image magicResourceImg;
     [SerializeField]
-    private TextMeshProUGUI essenceValue;
+    private Image goldResourceImg;
+    [SerializeField]
+    private Image materialsResourceImg;
+    [SerializeField]
+    private TextMeshProUGUI magicResourceText;
+    [SerializeField]
+    private TextMeshProUGUI goldResourceText;
+    [SerializeField]
+    private TextMeshProUGUI materialsResourceText;
 
     [SerializeField]
     private TextMeshProUGUI TurnCount;
@@ -41,6 +51,12 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI atackDistance;
     [SerializeField]
     private TextMeshProUGUI habiliyInfo;
+    [SerializeField]
+    private GameObject AbilitiesPanel;
+    [SerializeField]
+    private Image abilityImage;
+    [SerializeField]
+    private TMP_Text abilityText;
 
     [SerializeField]
     private Image LifeBar;
@@ -89,8 +105,19 @@ public class UIManager : MonoBehaviour
         rangedAtack.text = unit.GetRangeAttackDamage().ToString();
         retaliationAtack.text = unit.GetRetaliationDamage().ToString();
         atackDistance.text = unit.GetAtackDistance().ToString();
-
-        habiliyInfo.text = "nothing yet";
+        Sprite unitAbilityImage = unit.GetAbilityImage();
+        string unitAbilityDescription = unit.GetAbilityDescription();
+        if(unitAbilityImage != null&& unitAbilityDescription != null) 
+        {
+            AbilitiesPanel.SetActive(true);
+            abilityImage.sprite = unitAbilityImage;
+            abilityText.text = unitAbilityDescription;
+        }
+        else
+        {
+            AbilitiesPanel.SetActive(false);
+        }
+        //habiliyInfo.text = "nothing yet";
 
         UpdateLife(unit);
     }
@@ -106,8 +133,8 @@ public class UIManager : MonoBehaviour
         HasCitySelected(true);
 
         CityPanel.sprite = UIElements.CityPanel;
-        MadnessLavel.text = city.GetOwner().madnessLevel.ToString();
-
+        MadnessLavel.text = $"Madness: {city.GetOwner().madnessLevel}";
+        madnessFillImage.fillAmount = (float)city.GetOwner().madnessLevel / city.GetOwner().maxMadnessLevel;
     }
 
     public void UnitsInteractable(bool value)
@@ -118,9 +145,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ChangeTurn(int currentTurn, int totalTurns)
+    public void ChangeTurn(int currentTurn)
     {
-        TurnCount.text = (currentTurn + 1).ToString() + " / " + totalTurns.ToString();
+        TurnCount.text = (currentTurn).ToString() ;
         UnitsInteractable(true);
     }
 
@@ -129,11 +156,28 @@ public class UIManager : MonoBehaviour
         LifeBar.fillAmount = (float)unit.GetCurrentHealth() / (float)unit.GetMaxHealth();
     }
 
-    public void ChangeEssence(int essence)
+    public void UpdateResourceImages(int resourceValue,ResourceType resourceType)
     {
+        Image resource = null;
+        TextMeshProUGUI text = null;
+        switch (resourceType)
+        {
+            case ResourceType.Magic:
+                resource = magicResourceImg;
+                text = magicResourceText;
+                break;
+            case ResourceType.Gold: 
+                resource = goldResourceImg;
+                text = goldResourceText;
+                break;
+            case ResourceType.Materials: 
+                resource = materialsResourceImg; 
+                text = materialsResourceText;
+                break;
+        }
         int index = 0;
-        essenceValue.text = essence.ToString();
-        switch (essence)
+        text.text = resourceValue.ToString();
+        switch (resourceValue)
         {
             case < 12:
                 index = 0;
@@ -160,13 +204,22 @@ public class UIManager : MonoBehaviour
                 index = 7;
                 break;
         }
-        essenceImg.sprite = UIElements.EssenceImgs[index];
+        resource.sprite = UIElements.EssenceImgs[index];
     }
+    public void SwapUIElementState(GameObject UIElement)
+    {
+        UIElement.SetActive(!UIElement.activeSelf);
+        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
+    }
+  
+    public void ShowEntityDescription(BaseGridEntity entity)
+    {
 
+    }
     private void Update()
     {
         //timer += Time.deltaTime;
-        //ChangeEssence((int)timer);
+        //UpdateResourceImages((int)timer);
         //if(timer >= 120)
         //{
         //    timer = 0;

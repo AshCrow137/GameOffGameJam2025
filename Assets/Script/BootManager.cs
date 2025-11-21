@@ -24,7 +24,8 @@ public class BootManager : MonoBehaviour
     private SelectionManager selectionManager;
     [SerializeField]
     private GameplayCanvasManager gameplayCanvasManager;
-
+    [SerializeField]
+    private Resource resource;
     [SerializeField]
     private CityUI cityUI;
     [SerializeField]
@@ -37,6 +38,9 @@ public class BootManager : MonoBehaviour
     private ProductionQueueUI productionQueueUI;
     [SerializeField]
     private UIManager UIManager;
+    [SerializeField]
+    private UnitSpawner unitSpawner;
+
     
     [SerializeField]
     private AIController AIController;
@@ -45,13 +49,14 @@ public class BootManager : MonoBehaviour
     void Start()
     {
         // testScript.Initialize();
+        productionQueueUI?.Instantiate();
         globalVisionManager?.Initialize();
         hexTilemapManager?.Initialize();
 
         UIManager?.Initialize();
         turnManager?.Initialize();
         buildingManager?.Instantiate();
-
+        resource?.Initialize();
         cityManager?.Instantiate();
         toggleManager?.Initialize();
         inputManager?.Initialize();
@@ -66,6 +71,8 @@ public class BootManager : MonoBehaviour
         cityUI?.Instantiate();
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
+        unitSpawner?.Instantiate();
+
         
         AIController?.Initialize();
     }

@@ -1,7 +1,7 @@
 ﻿//This file is Enum holder
-    public enum TimerDirection
-    {
-        INCREASE,
+public enum TimerDirection
+{
+    INCREASE,
         DECREASE
     }
 
@@ -82,4 +82,18 @@ public enum AIAttackType
     Attack,
     AttackMiddleMadness,
     AttackHighMadness
+}
+}
+public enum MarkerColor
+{
+    Red,
+    Blue,
+    Green,
+    White
+}
+public enum UnitMode
+{
+    None,
+    Aiming,
+    Casting
 }

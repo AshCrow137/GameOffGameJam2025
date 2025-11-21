@@ -79,11 +79,11 @@ crashlytics-build.properties
 # From: https://gist.github.com/binary1230/983ca3168c8a92ab7b295b2a47a84b84
 
 # Wwise Project Stuff
-PacketBreach_WwiseProject/.cache/
-PacketBreach_WwiseProject/*.prof
-PacketBreach_WwiseProject/*_WwiseProject.*.validationcache
-PacketBreach_WwiseProject/*_WwiseProject.*.wsettings
-PacketBreach_WwiseProject/**/*.akd
+GameOffGameJam2025_WwiseProject/.cache/
+GameOffGameJam2025_WwiseProject/*.prof
+GameOffGameJam2025_WwiseProject/*_WwiseProject.*.validationcache
+GameOffGameJam2025_WwiseProject/*_WwiseProject.*.wsettings
+GameOffGameJam2025_WwiseProject/**/*.akd
 
 # Build Stuff (Unsure?)
 # Assets/Wwise/Deployment/Plugins/Windows/**/*.meta

@@ -35,16 +35,23 @@ public class MainMenuController : MonoBehaviour
     public void btn_StartGame(string Scene)
     {
         SceneManager.LoadSceneAsync(Scene);
+        AudioManager.Instance.ui_menumain_start.Post(gameObject);
     }
     public void btn_SwitchSounds()
     {
         PanelOpenSounds = !PanelOpenSounds;
         PanelSounds.SetActive(PanelOpenSounds);
+        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
     }
     public void btn_SwitchSettings()
     {
         PanelOpenSettings = !PanelOpenSettings;
         PanelSettings.SetActive(PanelOpenSettings);
+        AudioManager.Instance.ui_menumain_settings.Post(gameObject);
+    }
+    public void TESTPlaySound()
+    {
+        AudioManager.Instance.ui_menumain_settings.Post(gameObject);
     }
     public void btn_QuitGame()
     {

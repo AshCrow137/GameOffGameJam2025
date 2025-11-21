@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2662397323	ui_menumain_exit			\Default Work Unit\UI\MainMenu\ui_menumain_exit	
+

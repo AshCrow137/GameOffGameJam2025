@@ -3,17 +3,13 @@ using Pathfinding;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using System.Collections;
-using System.Linq;
-using System.Data;
 
 [RequireComponent(typeof(Seeker))]
 public class BaseGridUnitScript : BaseGridEntity
 {
     [Header("Unit stats")]
     [SerializeField]
-    protected UnitType unitType;
+    public UnitType unitType;
     [SerializeField]
     protected int MeleeAttackDamage = 1;
     [SerializeField]
@@ -30,10 +26,22 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     private float MovementSpeed = 3;
     [SerializeField]
-    private int AttacksPerTurn = 1;
+    protected int AttacksPerTurn = 1;
     [SerializeField]
     protected bool CanMoveAfterattack = false;
+    [SerializeField]
+    protected GameObject movementPointsPanel;
+    [SerializeField]
+    protected Image movementPointsImage;
+    protected List<Image> movementPointsImages = new List<Image>();
+    
+    [SerializeField]
+    protected int specialAbilityRange = 1;
+    public bool aiming = false;
 
+    [SerializeField] public AK.Wwise.Event unitAttackSoundEvent;
+    [SerializeField] public AK.Wwise.Event unitLandMovementEvent;
+    [SerializeField] public AK.Wwise.Event unitWaterMovementEvent;
 
     private Seeker seeker;
     private Path path;
@@ -57,16 +65,43 @@ public class BaseGridUnitScript : BaseGridEntity
     private List<TileState> possibleSpawnTiles = new List<TileState>();
 
     private bool bTryToAttack = false;
-    private BaseGridUnitScript attackTarget;
+    private BaseGridEntity attackTarget;
 
     // Vision system - track previous position for fog updates during movement
     private Vector3Int previousCellPosition;
 
+
+    [SerializeField] private List<ResourceRequirement> resourceRequirements = new List<ResourceRequirement>();
+
+    public int duration;
+    [SerializeField]
+    private Sprite abilityImage;
+    [SerializeField]
+    private string abilityDescription;
+
+    protected int actualMaxHealth;
+    protected int actualMeleeAttackDamage = 1;
+    protected int actualRangeAttackDamage = 1;
+    protected int actualRetallitionAttackDamage = 1;
+
+    public Dictionary<ResourceType, int> resource
+    {
+        get
+        {
+            Dictionary<ResourceType, int> dict = new Dictionary<ResourceType, int>();
+            foreach (var req in resourceRequirements)
+            {
+                dict[req.resourceType] = req.amount;
+            }
+            return dict;
+        }
+    }
+
     private static readonly float[,] AttackModifiers = {
-    /*Cavalry*/{1.0f,1.0f,1.5f,1f },
+    /*Cavalry*/ {1.0f,1.0f,1.5f,1f },
     /*Infantry*/{1.5f,1.0f,1.0f,1f },
-    /*Archers*/{1.0f,1.5f,1.0f,1f },
-    /*Special*/{1.0f,1.0f,1.0f,1f },
+    /*Archers*/ {1.0f,1.5f,1.0f,1f },
+    /*Special*/ {1.0f,1.0f,1.0f,1f },
     };
     private float GetDamageModifier(UnitType attacker,UnitType defender)
     {
@@ -88,28 +123,50 @@ public class BaseGridUnitScript : BaseGridEntity
         seeker = GetComponent<Seeker>();
         tilesRemain = MovementDistance;
         remainMovementText.text = tilesRemain.ToString();
-
+        UpdateMovementPointsUI();
         hTM.PlaceUnitOnTile(hTM.WorldToCellPos(transform.position),this);
-
+        movementPointsImages = new List<Image>(MovementDistance)
+        {
+            movementPointsImage
+        };
+        for (int i=0;i<MovementDistance-1;i++)
+        {
+            
+                Image newImage = Instantiate(movementPointsImage, movementPointsPanel.transform);
+                movementPointsImages.Add(newImage);
+           
+        }
+        actualMaxHealth = Health;
+        actualMeleeAttackDamage = MeleeAttackDamage;
+        actualRangeAttackDamage = RangeAttackDamage;
+        actualRetallitionAttackDamage = RetallitionAttackDamage;
     }
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
-        if(selector!= Owner)
+        if (selector!= Owner)
         {
             GlobalEventManager.InvokeShowUIMessageEvent($"This is not your unit!");
             return;
         }
         Debug.Log($"Select {this.name} unit");
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
-        HPImage.color = Color.gray;
+       
+        baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
+        if(AttackRange>1)
+        {
+            hTM.ShowMarkersForRangeAttack(this, AttackRange);
+        }
+        
     }
+   
     public override void OnEntityDeselect()
     {
         base.OnEntityDeselect();
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
-        HPImage.color = Owner.GetKingdomColor();
+        Color ownerColor = Owner.GetKingdomColor();
+        baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
         hTM.RemoveAllMarkers();
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
@@ -119,7 +176,21 @@ public class BaseGridUnitScript : BaseGridEntity
             tilesRemain = MovementDistance;
             attacksRemain = AttacksPerTurn;
             remainMovementText.text = tilesRemain.ToString();
+        UpdateMovementPointsUI();
         
+    }
+    public virtual void ApplyMadnessEffect(MadnessDataStruct madnessEffect)
+    {
+        float mod = (float)madnessEffect.CreatureStatsModifier / 100;
+        actualMaxHealth = Health - (int)Mathf.Round( Health * mod);
+        if(CurrentHealth>actualMaxHealth)
+        {
+            CurrentHealth = actualMaxHealth;
+        }
+        actualMeleeAttackDamage= MeleeAttackDamage -(int)Mathf.Round(MeleeAttackDamage * mod);
+        actualRangeAttackDamage= RangeAttackDamage-(int)Mathf.Round(RangeAttackDamage * mod);
+        actualRetallitionAttackDamage = RetallitionAttackDamage - (int)Mathf.Round(RetallitionAttackDamage * mod);
+
     }
     protected virtual void MoveTo(Vector3 target)
     {
@@ -134,13 +205,18 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="tile">clicked tile</param>
     /// <param name="cellPos">position of clicked tile</param>
-    private void OnTileClicked(HexTile tile,Vector3Int cellPos)
+    protected void OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
+        GridCity city = hTM.GetCityOnTile(cellPos);
         if(targetedUnit != null)
         {
             TryToAttack(targetedUnit, cellPos);
             
+        }
+        else if(city!=null)
+        {
+            TryToAttack(city, cellPos);
         }
         else
         {
@@ -157,7 +233,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="targetUnit">attacked unit</param>
     /// <param name="targetUnitPosition">attacked unit position</param>
-   private void TryToAttack(BaseGridUnitScript targetUnit, Vector3Int targetUnitPosition)
+   private void TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
     {
         if (targetUnit.GetOwner() == Owner)
         {
@@ -263,27 +339,30 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <summary>
     /// Base attack function, controls what kind of attack is used, ranged or melee
     /// </summary>
-    /// <param name="targetUnit"></param>
-    protected virtual void Attack(BaseGridUnitScript targetUnit)
+    /// <param name="targetEntity"></param>
+    protected virtual void Attack(BaseGridEntity targetEntity)
     {
-        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetUnit.transform.position)) == 1)
+        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position)) == 1)
         {
-            targetUnit.TakeDamage(MeleeAttackDamage, this, false);
+            targetEntity.TakeDamage(actualMeleeAttackDamage, this, false);
+            
         }
         else
         {
-            targetUnit.TakeDamage(RangeAttackDamage, this, false);
+            targetEntity.TakeDamage(actualRangeAttackDamage, this, false);
         }
        //if property true, unit can move after attack
         if(!CanMoveAfterattack)
         {
             tilesRemain=0;
             remainMovementText.text = tilesRemain.ToString();
+            UpdateMovementPointsUI();
         }
         bTryToAttack = false;
         attackTarget = null;
-
+        unitAttackSoundEvent.Post(gameObject);
         UIManager.Instance.UpdateLife(this);
+        hTM.RemoveAllMarkers();
     }
 
     /// <summary>
@@ -292,9 +371,8 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <param name="amount">amount of taken damage before calculation</param>
     /// <param name="attacker">unit that attack this unit</param>
     /// <param name="retallitionAttack">bool if this damage was retallition damage or not</param>
-    public virtual void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
+    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
     {
-        //TODO Calculate result damage
         int resultDamage = amount;
         if(!retallitionAttack)
         {
@@ -306,11 +384,7 @@ public class BaseGridUnitScript : BaseGridEntity
         HPImage.fillAmount = (float)CurrentHealth / Health;
         if (CurrentHealth <= 0 ) 
         {
-            //calculate the distance to main City if equal or less of 5 increase Madness in 5 points
-            if(GetDistanceToMainCity() <= 5)
-            {
-                TurnManager.instance.GetCurrentActingKingdom().IncreaseMadness(MadnessValue.EnemyUnitDead);
-            }
+           
             
             Death();
             return;
@@ -318,6 +392,7 @@ public class BaseGridUnitScript : BaseGridEntity
         //if attack is not retallition attack and this unit survives, this unit try to do retallition attack to it's attacker
         if(!retallitionAttack)
         {
+            
             RetallitionAttack(attacker);
         }
     }
@@ -329,7 +404,8 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
         {
-            attacker.TakeDamage(RetallitionAttackDamage, this, true);
+            attacker.TakeDamage(actualRetallitionAttackDamage, this, true);
+            unitAttackSoundEvent.Post(gameObject);
         }
         
     }
@@ -337,8 +413,13 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <summary>
     /// invokes when unit dies
     /// </summary>
-    protected virtual void Death()
+    protected override void Death()
     {
+        //calculate the distance to main City if equal or less of 5 increase Madness in 5 points
+        if (GetDistanceToMainCity() <= 5)
+        {
+            Owner.IncreaseMadness(MadnessValue.EnemyUnitDead);
+        }
         GetComponent<EntityVision>().OnDeath();
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
@@ -439,10 +520,21 @@ public class BaseGridUnitScript : BaseGridEntity
                     // Check if there is another waypoint or if we have reached the end of the path
                     if (CurrentWaypoint + 1 < path.vectorPath.Count)
                     {
+                        TileState tileUnderUnit = hTM.GetTileState(hTM.WorldToCellPos(path.vectorPath[CurrentWaypoint]));
+                        switch (tileUnderUnit)
+                        {
+                            case TileState.Land:
+                                unitLandMovementEvent.Post(gameObject);
+                                break;
+                            case TileState.Water:
+                                unitWaterMovementEvent.Post(gameObject);
+                                break;
+                        }
                         CurrentWaypoint++;
                         tilesRemain--;
                         remainMovementText.text = tilesRemain.ToString();
                         
+                        UpdateMovementPointsUI();
                         // Update vision when entering a new cell
                         Vector3Int currentCellPosition = GetCellPosition();
                         if (currentCellPosition != previousCellPosition)
@@ -504,9 +596,39 @@ public class BaseGridUnitScript : BaseGridEntity
 
         // Calculating distance travelled
         distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
-        Debug.Log("Distance travelled: " + distanceTravelled);
         startingPosition = GetCellPosition();
+        if (AttackRange > 1)
+        {
+            hTM.ShowMarkersForRangeAttack(this, AttackRange);
+        }
     }
+    private void UpdateMovementPointsUI()
+    {
+        if(tilesRemain<MovementDistance)
+        {
+            int i = tilesRemain;
+            if (i < 0)
+            {
+                i = 0;
+            }
+            for(int index = movementPointsImages.Count - 1; index >= i;index--)
+            {
+                movementPointsImages[index].color = Color.gray;
+            }
+            
+        }
+        else
+        {
+            foreach (var image in movementPointsImages) 
+            {
+                image.color = Color.white;  
+            }
+        }
+        
+    }
+    public virtual void SpecialAbility() { }
+    public virtual void OnChosingTile() { }
+
     protected virtual void Update()
     {
         MovementCycle();
@@ -519,26 +641,34 @@ public class BaseGridUnitScript : BaseGridEntity
 
     public int GetMaxHealth()
     {
-        return this.Health;
+        return this.actualMaxHealth;
     }
   
     public int GetMeleeDamage()
     {
-        return this.MeleeAttackDamage;
+        return this.actualMeleeAttackDamage;
     }
 
     public int GetRangeAttackDamage()
     {
-        return this.RangeAttackDamage;
+        return this.actualRangeAttackDamage;
     }
 
     public int GetRetaliationDamage()
     {
-        return this.RetallitionAttackDamage;
+        return this.actualRetallitionAttackDamage;
     }
 
     public int GetAtackDistance()
     {
         return this.AttackRange;
+    }
+    public Sprite GetAbilityImage()
+    {
+        return abilityImage;
+    }
+    public string GetAbilityDescription() 
+    {
+        return abilityDescription;
     }
 }

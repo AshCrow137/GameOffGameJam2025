@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Rift of Whispers
   m_EditorClassIdentifier: 
   buildingName: Rift of Whispers
-  sprite: {fileID: 619974284, guid: 634650d54e6fbe0428a24d962ba4a8a5, type: 3}
+  sprite: {fileID: -641524543, guid: f09834d4c45767044b70237fae6ee10f, type: 3}
   resourceRequirements:
   - resourceType: 0
-    amount: 10
+    amount: 40
   duration: 2
   owner: {fileID: 0}
   buildingPrefab: {fileID: 3832580847944561018, guid: 69fb587d480c39f4c859483f9528ce6b, type: 3}
+  buildingPlacementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: bb0033803b31702449a60e82c4b9e24f, type: 2}
