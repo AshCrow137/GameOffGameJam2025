@@ -83,7 +83,7 @@ public enum AIAttackType
     AttackMiddleMadness,
     AttackHighMadness
 }
-}
+
 public enum MarkerColor
 {
     Red,
