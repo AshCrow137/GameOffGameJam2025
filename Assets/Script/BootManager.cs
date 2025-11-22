@@ -63,7 +63,6 @@ public class BootManager : MonoBehaviour
         toggleManager?.Initialize();
         inputManager?.Initialize();
         gameplayCanvasManager?.Initialize();
-        unitSpawner?.Instantiate();
         //grid units and kingdoms should initialize after hexTilemapManager
         foreach (BaseKingdom kingdom in kingdoms)
         {
@@ -74,14 +73,11 @@ public class BootManager : MonoBehaviour
         cityUI?.Instantiate();
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
-<<<<<<< HEAD
         gameplayEventManager?.Initialize();
         turnManager?.Initialize();
-=======
         unitSpawner?.Instantiate();
 
         
         AIController?.Initialize();
->>>>>>> main
     }
 }
