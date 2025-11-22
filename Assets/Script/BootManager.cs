@@ -73,9 +73,9 @@ public class BootManager : MonoBehaviour
         cityUI?.Instantiate();
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
-        gameplayEventManager?.Initialize();
         turnManager?.Initialize();
         unitSpawner?.Instantiate();
+        gameplayEventManager?.Initialize();
 
         
         AIController?.Initialize();

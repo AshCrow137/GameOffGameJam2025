@@ -12,6 +12,11 @@ public class GamePlayEventManager : MonoBehaviour
     [SerializeField]
     private GameObject enemyMeleeUnit;
 
+    [SerializeField]
+    private GameObject knightUnit;
+    [SerializeField]
+    private GameObject madmanUnit;
+
     private BaseKingdom currentKingdom;
 
     private GamePlayEvent[] gamePlayEvents = {GamePlayEvent.GainResource,
@@ -38,9 +43,23 @@ public class GamePlayEventManager : MonoBehaviour
     {
         currentKingdom = kingdom;
         int chance = Random.Range(1, 100);
+        Debug.Log($"The chance is {chance}");
         if (chance <= ChanceToEvent)
         {
             chosenEvents[gamePlayEvents[Random.Range(0, gamePlayEvents.Length)]].Invoke();
+        }
+    }
+
+    private bool isPlayerTurn()
+    {
+        PlayerKingdom pk = currentKingdom as PlayerKingdom;
+        if(pk != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -61,6 +80,11 @@ public class GamePlayEventManager : MonoBehaviour
                 break;
         }
         Resource.Instance.AddAll(new Dictionary<ResourceType, int> { { resource, gainValue } });
+        if (isPlayerTurn())
+        {
+            string text = $"You Receive {gainValue} of {resource}.";
+            UIManager.Instance.ShowGamePlayEvent(text);
+        }
         Debug.Log($"Gain {gainValue} Resource");
     }
 
@@ -81,6 +105,11 @@ public class GamePlayEventManager : MonoBehaviour
                 break;
         }
         Resource.Instance.Remove(new Dictionary<ResourceType, int> { { resource, lostValue } });
+        if (isPlayerTurn())
+        {
+            string text = $"You Lost {lostValue} of {resource}.";
+            UIManager.Instance.ShowGamePlayEvent(text);
+        }
         Debug.Log($"Lost {lostValue} Resource");
     }
 
@@ -88,17 +117,17 @@ public class GamePlayEventManager : MonoBehaviour
     {
         Debug.Log("SpanwUnit");
         GridCity city = currentKingdom.GetControlledCities()[Random.Range(0, currentKingdom.GetControlledCities().Count - 1)];
-        PlayerKingdom pk = currentKingdom.gameObject.GetComponent<PlayerKingdom>();
-        AIKingdom bot = currentKingdom.gameObject.GetComponent<AIKingdom>();
 
         GameObject unitSpawned = null;
 
-        if (pk != null)
+        if (isPlayerTurn())
         {
             unitSpawned = playerMeleeUnit;
-        }
 
-        if (bot != null)
+            string text = "You Receive a Melee Unit.";
+            UIManager.Instance.ShowGamePlayEvent(text);
+        }
+        else
         {
             unitSpawned = enemyMeleeUnit;
         }
@@ -107,8 +136,14 @@ public class GamePlayEventManager : MonoBehaviour
         {
             //Get random city
             GridCity currentCity = currentKingdom.GetControlledCities()[Random.Range(0, currentKingdom.GetControlledCities().Count - 1)];
-            //get the possibles spawn positions this city
-            List<Vector3Int> possibleSpawnPosition = HexTilemapManager.Instance.GetCellsInRange(currentCity.position, 1, unitSpawned.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+            //get the possibles spawn positions from this city
+            int possibleSpawnRange = 1;
+            List<Vector3Int> possibleSpawnPosition = HexTilemapManager.Instance.GetCellsInRange(city.position, possibleSpawnRange, unitSpawned.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+            while (possibleSpawnPosition.Count == 0)
+            {
+                possibleSpawnRange++;
+                possibleSpawnPosition = HexTilemapManager.Instance.GetCellsInRange(city.position, possibleSpawnRange, unitSpawned.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+            }
             //get the random spawn position
             Vector3Int spawnPosition = possibleSpawnPosition[Random.Range(0, possibleSpawnPosition.Count - 1)];
             //instanciate the unit
@@ -120,27 +155,56 @@ public class GamePlayEventManager : MonoBehaviour
     private void SpecialEvent()
     {
         Debug.Log("Special Event");
-        PlayerKingdom pk = currentKingdom as PlayerKingdom;
-        AIKingdom bot = currentKingdom as AIKingdom;
+        //who is the turn
 
-        if (pk != null)
+        //player
+        if (isPlayerTurn())
         {
             Debug.Log("Special Event Player");
+            GameObject[] botKingdonsObjects = GameObject.FindGameObjectsWithTag("EnemyCity");
+            GridCity botCity = botKingdonsObjects[Random.Range(0, botKingdonsObjects.Length - 1)].GetComponent<GridCity>();
+            SpecialEventPlayer(botCity);
         }
-
-        if(bot != null)
+        else
         {
             Debug.Log("Special Event Enemy");
+            //choose a random city
+            GridCity city = currentKingdom.GetControlledCities()[Random.Range(0, currentKingdom.GetControlledCities().Count - 1)];
+            SpecialEventEnemy(city);
         }
     }
 
-    private void SpecialEventPlayer()
+    private void SpecialEventPlayer(GridCity city)
     {
+        List<Vector3Int> rangeSix = HexTilemapManager.Instance.GetCellsInRange(city.position, 6, madmanUnit.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+        List<Vector3Int> possibleSpawnPositions = HexTilemapManager.Instance.GetCellsInRange(city.position, 10, madmanUnit.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
 
+        foreach (Vector3Int pos in rangeSix)
+        {
+            possibleSpawnPositions.Remove(pos);
+        }
+
+        Vector3Int spawnPosition = possibleSpawnPositions[Random.Range(0, possibleSpawnPositions.Count - 1)];
+
+        UnitSpawner.Instance.PlaceUnit(madmanUnit, spawnPosition);
+
+        string text = "You Receive a MadMan Unit.";
+        UIManager.Instance.ShowGamePlayEvent(text);
     }
 
-    private void SpecialEventEnemy()
+    private void SpecialEventEnemy(GridCity city)
     {
-
+        //get the possibles spawn positions from this city
+        int possibleSpawnRange = 1;
+        List<Vector3Int> possibleSpawnPosition = HexTilemapManager.Instance.GetCellsInRange(city.position, possibleSpawnRange, knightUnit.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+        while (possibleSpawnPosition.Count == 0)
+        {
+            possibleSpawnRange++;
+            possibleSpawnPosition = HexTilemapManager.Instance.GetCellsInRange(city.position, possibleSpawnRange, knightUnit.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+        }
+        //get the random spawn position
+        Vector3Int spawnPosition = possibleSpawnPosition[Random.Range(0, possibleSpawnPosition.Count - 1)];
+        //instanciate the unit
+        UnitSpawner.Instance.PlaceUnit(knightUnit, spawnPosition);
     }
 }
