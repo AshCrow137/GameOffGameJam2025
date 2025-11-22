@@ -125,11 +125,12 @@ public class UnitSpawner : MonoBehaviour
         var r = seeker.traversableTags;
 
         //Nekrols Changed for create units to Bots
-        //unit.GetComponent<BaseGridUnitScript>().Initialize(TurnManager.instance.GetCurrentActingKingdom());
+        BaseKingdom currentKingdom = TurnManager.instance.GetCurrentActingKingdom();
+        unit.GetComponent<BaseGridUnitScript>().Initialize(currentKingdom);
         
-        unit.GetComponent<BaseGridUnitScript>().Initialize(playerKingdom);
+        //unit.GetComponent<BaseGridUnitScript>().Initialize(playerKingdom);
 
-        playerKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
+        currentKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
         UIManager.Instance.UnitsInteractable(false);
 
         // Initialize unit if it has a GridUnit component

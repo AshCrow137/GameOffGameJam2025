@@ -4546,7 +4546,7 @@ Transform:
   - {fileID: 2116678395}
   - {fileID: 1437429910}
   - {fileID: 1075506211}
-  - {fileID: 477325003}
+  - {fileID: 1820431941}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &141420211
@@ -4876,6 +4876,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151617128}
   m_CullTransparentMesh: 1
+--- !u!114 &196379772 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6795368171325193502, guid: 71c5904b4d954124fba1bf8fec2e5585, type: 3}
+  m_PrefabInstance: {fileID: 1990792142}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78b0bb7d9b09d847bcd9734d33af99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &230309783
 GameObject:
   m_ObjectHideFlags: 0
@@ -9015,53 +9026,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468695987}
   m_CullTransparentMesh: 1
---- !u!1 &477325002
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 477325003}
-  - component: {fileID: 477325004}
-  m_Layer: 0
-  m_Name: GamePlayEventManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &477325003
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477325002}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 140203639}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &477325004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477325002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90654bc6b12ab5b48be08b83c11fee11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChanceToEvent: 99
-  playerMeleeUnit: {fileID: 2786966312003196167, guid: 8eaf211b604964b4da20280006963c3f, type: 3}
-  enemyMeleeUnit: {fileID: 5669369260484363274, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
 --- !u!1 &491259132
 GameObject:
   m_ObjectHideFlags: 0
@@ -11785,6 +11749,8 @@ MonoBehaviour:
   - {fileID: 1841548088}
   - {fileID: 328954362}
   - {fileID: 2118924541}
+  controlledCities:
+  - {fileID: 867405373}
   kingdomColor: {r: 1, g: 0, b: 0, a: 0}
   madnessData: {fileID: 11400000, guid: bd41901770b62a3448876456096ea193, type: 2}
 --- !u!1 &792029833
@@ -12297,6 +12263,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858866042}
   m_CullTransparentMesh: 1
+--- !u!114 &867405373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2611280260778541834, guid: 18b457d349f55814d8d97f3fede38906, type: 3}
+  m_PrefabInstance: {fileID: 1274527132}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78b0bb7d9b09d847bcd9734d33af99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &872422059
 GameObject:
   m_ObjectHideFlags: 0
@@ -14098,6 +14075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlledUnits: []
+  controlledCities: []
   kingdomColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &991894914
 GameObject:
@@ -14524,7 +14502,7 @@ MonoBehaviour:
   productionQueueUI: {fileID: 28648850}
   UIManager: {fileID: 2116678396}
   unitSpawner: {fileID: 1437429911}
-  gameplayEventManager: {fileID: 477325004}
+  gameplayEventManager: {fileID: 1820431942}
 --- !u!4 &1011269897
 Transform:
   m_ObjectHideFlags: 0
@@ -16895,10 +16873,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyCity Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 2611280260778541834, guid: 18b457d349f55814d8d97f3fede38906, type: 3}
-      propertyPath: sprite
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4806783304079660976, guid: 18b457d349f55814d8d97f3fede38906, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.7787886
@@ -16937,22 +16911,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4806783304079660976, guid: 18b457d349f55814d8d97f3fede38906, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9132317792638940692, guid: 18b457d349f55814d8d97f3fede38906, type: 3}
-      propertyPath: m_Size.x
-      value: 1.1145834
-      objectReference: {fileID: 0}
-    - target: {fileID: 9132317792638940692, guid: 18b457d349f55814d8d97f3fede38906, type: 3}
-      propertyPath: m_Size.y
-      value: 1.9427084
-      objectReference: {fileID: 0}
-    - target: {fileID: 9132317792638940692, guid: 18b457d349f55814d8d97f3fede38906, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9132317792638940692, guid: 18b457d349f55814d8d97f3fede38906, type: 3}
-      propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -19149,6 +19107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlledUnits:
   - {fileID: 642709461}
+  controlledCities:
+  - {fileID: 196379772}
   kingdomColor: {r: 0.007867813, g: 0, b: 1, a: 1}
 --- !u!114 &1507932132
 MonoBehaviour:
@@ -21592,6 +21552,53 @@ MonoBehaviour:
   m_Spacing: {x: 4, y: 2}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!1 &1820431940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1820431941}
+  - component: {fileID: 1820431942}
+  m_Layer: 0
+  m_Name: GamePlayEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1820431941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820431940}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 140203639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1820431942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820431940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90654bc6b12ab5b48be08b83c11fee11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChanceToEvent: 99
+  playerMeleeUnit: {fileID: 2786966312003196167, guid: 8eaf211b604964b4da20280006963c3f, type: 3}
+  enemyMeleeUnit: {fileID: 5669369260484363274, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
 --- !u!1001 &1827684303
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25184,6 +25191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlledUnits: []
+  controlledCities: []
   kingdomColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2119146657
 MonoBehaviour:
