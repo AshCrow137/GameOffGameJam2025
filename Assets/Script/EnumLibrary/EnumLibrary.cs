@@ -65,6 +65,25 @@ public enum ProductionType
     Unit,
     Building
 }
+
+public enum AIAction
+{
+    None,
+    Attack,
+    PreferredAttack,
+    BuildCity,
+    BuildUnit
+    
+}
+
+public enum AIAttackType
+{
+    None,
+    Attack,
+    AttackMiddleMadness,
+    AttackHighMadness
+}
+
 public enum MarkerColor
 {
     Red,

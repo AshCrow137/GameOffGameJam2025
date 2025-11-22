@@ -44,6 +44,10 @@ public class BootManager : MonoBehaviour
     private GamePlayEventManager gameplayEventManager;
 
 
+    
+    [SerializeField]
+    private AIController AIController;
+
 
     void Start()
     {
@@ -70,7 +74,14 @@ public class BootManager : MonoBehaviour
         cityUI?.Instantiate();
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
+<<<<<<< HEAD
         gameplayEventManager?.Initialize();
         turnManager?.Initialize();
+=======
+        unitSpawner?.Instantiate();
+
+        
+        AIController?.Initialize();
+>>>>>>> main
     }
 }
