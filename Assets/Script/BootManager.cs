@@ -74,6 +74,7 @@ public class BootManager : MonoBehaviour
         kingdomUI?.Initialize();
         addVisibleTiles?.Initialize();
         unitSpawner?.Instantiate();
+        //GamePlayEventManager must be initialize first of TurnManager
         gameplayEventManager?.Initialize();
         turnManager?.Initialize();
 
