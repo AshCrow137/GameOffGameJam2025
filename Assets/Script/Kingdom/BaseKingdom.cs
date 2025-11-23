@@ -11,11 +11,14 @@ public class BaseKingdom : Entity, IMadnessable
     protected List<BaseGridUnitScript> controlledUnits = new();
     [SerializeField]
     protected List<GridCity> controlledCities = new();
+    [SerializeField]
+    protected List<BaseGridUnitScript> unlockedUnits = new List<BaseGridUnitScript> ();
 
     public List<Vector3Int> visibleTiles { get; protected set; } = new();
 
     public Dictionary<Vector3Int, City> cities { get; protected set; } = new();
     protected bool isDefeated = false;
+    protected VisionManager visionManager;
     public void AddCity(City city)
     {
         cities.Add(city.position, city);
@@ -40,6 +43,8 @@ public class BaseKingdom : Entity, IMadnessable
     {
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
+        visionManager = GetComponent<VisionManager>();
+        visionManager.Initialize();
         // Initializing controlled units
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
@@ -54,6 +59,10 @@ public class BaseKingdom : Entity, IMadnessable
     protected virtual void OnStartTurn(BaseKingdom kingdom)
     {
         if (kingdom != this) return;
+        foreach( BaseGridUnitScript unit in controlledUnits)
+        {
+            unit.RefreshUnit();
+        }
     }
 
     protected virtual void OnEndTurn(BaseKingdom kingdom)

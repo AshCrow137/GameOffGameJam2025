@@ -49,7 +49,7 @@ public class GridCity : BaseGridEntity
     {
         base.OnStartTurn(entity);
 
-        Debug.Log(buildings.Values);
+
     }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)

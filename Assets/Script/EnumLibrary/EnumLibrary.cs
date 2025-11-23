@@ -44,12 +44,14 @@ public enum SelectionType
         SpawnUnit,
         SpawnBuilding
     }
-public enum UnitType
+public enum EntityType
 {
     Infantry,
     Archer,
     Cavalry,
-    Special
+    Special,
+    Building,
+    None
 }
 
 public enum Fog
@@ -66,23 +68,24 @@ public enum ProductionType
     Building
 }
 
-public enum AIAction
+public enum AIUnitAction
 {
     None,
     Attack,
-    PreferredAttack,
-    BuildCity,
-    BuildUnit
+    Move,
+    UseAbility,
+    Explore
     
 }
-
-public enum AIAttackType
+public enum AIMacroAction
 {
     None,
-    Attack,
-    AttackMiddleMadness,
-    AttackHighMadness
+    Combat,
+    Build,
+    Explore
 }
+
+
 
 public enum MarkerColor
 {

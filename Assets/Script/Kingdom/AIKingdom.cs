@@ -4,15 +4,41 @@ using UnityEngine;
 public class AIKingdom : BaseKingdom
 {
     int relationsWithPlayer;
-
+    public KnightUnit DEBUGunit;
     [SerializeField]
     private MadnessData madnessData;
 
     private MadnessDataStruct currentMadnessEffect;
-
+    public override void Initialize()
+    {
+        //for (int i = 0; i < 50; i++)
+        //{
+        //    KnightUnit newUnit = Instantiate(DEBUGunit, new Vector3(-20 + i, -37, 0), Quaternion.identity);
+        //    AddUnitToKingdom(newUnit);
+        //}
+        //for (int i = 0; i < 50; i++)
+        //{
+        //    KnightUnit newUnit = Instantiate(DEBUGunit, new Vector3(-20 + i, -28, 0), Quaternion.identity);
+        //    AddUnitToKingdom(newUnit);
+        //}
+        //for (int i = 0; i < 50; i++)
+        //{
+        //    KnightUnit newUnit = Instantiate(DEBUGunit, new Vector3(-20 + i, -34, 0), Quaternion.identity);
+        //    AddUnitToKingdom(newUnit);
+        //}
+        //for (int i = 0; i < 50; i++)
+        //{
+        //    KnightUnit newUnit = Instantiate(DEBUGunit, new Vector3(-20 + i, -30, 0), Quaternion.identity);
+        //    AddUnitToKingdom(newUnit);
+        //}
+        base.Initialize();
+    }
     protected override void OnStartTurn(BaseKingdom kingdom)
     {
         base.OnStartTurn(kingdom);
+        if (kingdom != this) return;
+        Debug.Log($"AI Kingdom StartTurn | {gameObject.name}");
+        AIController.Instance.ExecuteTurn(this);
     }
     protected override void OnEndTurn(BaseKingdom kingdom)
     {
@@ -44,11 +70,8 @@ public class AIKingdom : BaseKingdom
     
     public void StartTurn()
     {
-        Debug.Log($"AI Kingdom StartTurn | {gameObject.name}");
-        if (AIController.Instance.ExecuteTurn(this))
-        {
-            EndTurn();   
-        }
+
+
     }
 
     public void EndTurn()

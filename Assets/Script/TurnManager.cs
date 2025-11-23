@@ -45,6 +45,13 @@ public class TurnManager : MonoBehaviour
     {
         return turnOrder[currentOrderIndex];
     }
+    public void EndPlayerTurn()
+    {
+        if(turnOrder[currentOrderIndex].GetType() == typeof(PlayerKingdom))
+        {
+            OnTurnEnd();
+        }
+    }
 
     public void OnTurnEnd()
     {
