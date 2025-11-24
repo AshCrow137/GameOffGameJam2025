@@ -100,3 +100,11 @@ public enum UnitMode
     Aiming,
     Casting
 }
+
+public enum GamePlayEvent
+{
+    GainResource,
+    LostResource,
+    SpawnUnit,
+    SpecialEvent
+}

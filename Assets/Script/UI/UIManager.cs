@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,6 +37,8 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI goldResourceText;
     [SerializeField]
     private TextMeshProUGUI materialsResourceText;
+    [SerializeField]
+    private GameObject GamePlayEvents;
 
     [SerializeField]
     private TextMeshProUGUI TurnCount;
@@ -217,14 +220,20 @@ public class UIManager : MonoBehaviour
     {
 
     }
-    private void Update()
-    {
-        //timer += Time.deltaTime;
-        //UpdateResourceImages((int)timer);
-        //if(timer >= 120)
-        //{
-        //    timer = 0;
-        //}
 
+    public void ShowGamePlayEvent(string text)
+    {
+        GamePlayEvents.SetActive(true);
+        TextMeshProUGUI panelText = GamePlayEvents.GetComponentInChildren<TextMeshProUGUI>();
+        panelText.text = text;
+
+        StartCoroutine("ShowOffGamePlayEvents");
+    }
+
+    IEnumerator ShowOffGamePlayEvents()
+    {
+        yield return new WaitForSeconds(3);
+
+        GamePlayEvents.SetActive(false);
     }
 }

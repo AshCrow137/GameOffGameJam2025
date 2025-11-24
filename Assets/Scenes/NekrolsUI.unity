@@ -4131,11 +4131,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CityPanel: {fileID: 1301097836}
   MadnessLavel: {fileID: 210756702}
+  madnessFillImage: {fileID: 0}
   panelStats: {fileID: 288761733}
   infantaryType: {fileID: 972479904}
   infantaryImg: {fileID: 2091411716}
-  essenceImg: {fileID: 1761658964}
-  essenceValue: {fileID: 1217748369}
+  magicResourceImg: {fileID: 0}
+  goldResourceImg: {fileID: 0}
+  materialsResourceImg: {fileID: 0}
+  magicResourceText: {fileID: 0}
+  goldResourceText: {fileID: 0}
+  materialsResourceText: {fileID: 0}
   TurnCount: {fileID: 913427589}
   meleeAtack: {fileID: 876877404}
   rangedAtack: {fileID: 1241184431}
@@ -8923,12 +8928,14 @@ MonoBehaviour:
   - {fileID: 788129470}
   selectionManager: {fileID: 0}
   gameplayCanvasManager: {fileID: 363294321}
+  resource: {fileID: 0}
   cityUI: {fileID: 28648849}
   kingdomUI: {fileID: 0}
   addVisibleTiles: {fileID: 0}
   globalVisionManager: {fileID: 165527153}
   productionQueueUI: {fileID: 28648850}
   UIManager: {fileID: 107787484}
+  unitSpawner: {fileID: 0}
 --- !u!4 &1011269897
 Transform:
   m_ObjectHideFlags: 0
@@ -11490,6 +11497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725177744475894788b5b12f341b279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartingMagic: 50
+  StartingGold: 20
+  StartingMaterials: 30
 --- !u!4 &1583622227
 Transform:
   m_ObjectHideFlags: 0
@@ -11916,7 +11926,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 4958529}
   markerTilemap: {fileID: 1072141323}
-  markerTile: {fileID: 11400000, guid: e548ca3b24ad7e1458589f9a3b27ae5d, type: 2}
+  redMarkerTile: {fileID: 0}
+  greenMarkerTile: {fileID: 0}
+  blueMarkerTile: {fileID: 0}
   mainCamera: {fileID: 1894823609}
   playerKingdom: {fileID: 1507932131}
 --- !u!4 &1758301930

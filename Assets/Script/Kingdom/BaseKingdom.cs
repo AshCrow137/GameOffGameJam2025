@@ -172,6 +172,11 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
+    public List<GridCity> GetControlledCities()
+    {
+        return controlledCities;
+    }
+
     public virtual int GetUnitsCountInRange(int range)
     {
         // Find units, not controlled by this kingdom in rage 
