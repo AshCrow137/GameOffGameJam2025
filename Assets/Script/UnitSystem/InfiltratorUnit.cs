@@ -30,12 +30,14 @@ public class InfiltratorUnit : BaseGridUnitScript
             TryToMoveUnitToTile(cellPos);
             isInCity = true;
             infiltratedCity = city;
+            animator.SetBool("inCity", true);
         }
         else
         {
             TryToMoveUnitToTile(cellPos);
             isInCity = false;
             infiltratedCity = null;
+            animator.SetBool("inCity", false);
         }
 
     }
