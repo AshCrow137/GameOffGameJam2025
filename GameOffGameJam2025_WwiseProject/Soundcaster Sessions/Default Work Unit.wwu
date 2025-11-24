@@ -38,6 +38,10 @@
 							<Position X="1" Y="3"/>
 						</Module>
 						<Module>
+							<ObjectRef Name="Main" ID="{7048C2B6-824F-42A3-8312-C05236217FC2}" WorkUnitID="{494395FE-A0CF-4FDA-8FBB-1CC7810C6C3F}"/>
+							<Position X="2" Y="1"/>
+						</Module>
+						<Module>
 							<ObjectRef Name="En_ManAtArms" ID="{D905F2E1-0002-4936-96C4-B3FA3A2E8504}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
 							<Position X="2" Y="3"/>
 						</Module>
