@@ -51,7 +51,7 @@ public class TurnManager : MonoBehaviour
         //do something at the end of the turn
         if (turnOrder[currentOrderIndex].GetType() == typeof(PlayerKingdom))
         {
-            AudioManager.Instance.ui_menumain_start.Post(gameObject);
+            //AudioManager.Instance.ui_menumain_start.Post(gameObject);
         }
         currentOrderIndex++;
         if (currentOrderIndex >= turnOrder.Count)

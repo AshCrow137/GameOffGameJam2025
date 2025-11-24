@@ -80,6 +80,7 @@ public class BaseGridEntity : MonoBehaviour
     protected virtual void LateUpdate()
     {
         //rotating entity body sprite and canvas facing camera 
+        if (CameraArm == null) return;
 
         bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
         foreach(GameObject obj in rotatebleObjects)

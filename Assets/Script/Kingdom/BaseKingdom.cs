@@ -33,6 +33,8 @@ public class BaseKingdom : Entity, IMadnessable
     protected Color kingdomColor  = new Color();
 
     public Color GetKingdomColor() { return kingdomColor; }
+    public Resource Resources() => currentResources;
+    public List<BaseGridUnitScript> ControlledUnits => controlledUnits;
 
     public virtual void Initialize()
     {
@@ -159,6 +161,11 @@ public class BaseKingdom : Entity, IMadnessable
         {
             return MadnessEffect.None;
         }
+    }
+
+    public List<GridCity> GetControlledCities()
+    {
+        return controlledCities;
     }
 
     public virtual int GetUnitsCountInRange(int range)

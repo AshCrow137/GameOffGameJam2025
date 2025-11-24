@@ -82,6 +82,10 @@ public class GameplayCanvasManager : MonoBehaviour
     {
         selectedCity?.TryToSpawnUnitInCity(unitPrefab);
     }
+    public void TryToSpawnUnit(GridCity selectedOutsideCity,GameObject unitPrefab)
+    {
+        selectedOutsideCity?.TryToSpawnUnitInCity(unitPrefab);
+    }
     public void OnMouseEnterCanvasElement()
     {
         InputManager.instance.SetOnUiElement(true);
