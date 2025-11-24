@@ -115,6 +115,12 @@ public class UnitSpawner : MonoBehaviour
     /// </summary>
     public GameObject PlaceUnit(GameObject unitPrefab, Vector3Int gridPosition)
     {
+        BaseKingdom currentKingdom = TurnManager.instance.GetCurrentActingKingdom();
+        return PlaceUnit(unitPrefab, gridPosition, currentKingdom);
+    }
+
+    public GameObject PlaceUnit(GameObject unitPrefab, Vector3Int gridPosition, BaseKingdom ownerKingdom)
+    {
         //if (unitPrefab == null)
         //{
         //    return null;
@@ -124,13 +130,11 @@ public class UnitSpawner : MonoBehaviour
         Seeker seeker = unit.GetComponent<Seeker>();
         var r = seeker.traversableTags;
 
-        //Nekrols Changed for create units to Bots
-        BaseKingdom currentKingdom = TurnManager.instance.GetCurrentActingKingdom();
-        unit.GetComponent<BaseGridUnitScript>().Initialize(currentKingdom);
-        
+        unit.GetComponent<BaseGridUnitScript>().Initialize(ownerKingdom);
+
         //unit.GetComponent<BaseGridUnitScript>().Initialize(playerKingdom);
 
-        currentKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
+        ownerKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
         UIManager.Instance.UnitsInteractable(false);
 
         // Initialize unit if it has a GridUnit component
