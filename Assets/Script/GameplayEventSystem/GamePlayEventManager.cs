@@ -20,7 +20,7 @@ public class GamePlayEventManager : MonoBehaviour
     private BaseKingdom currentKingdom;
 
     [SerializeField]
-    private GamePlayEvents[] gamePlayEvents;
+    private BaseGameplayEvent[] gamePlayEvents;
 
     //private Dictionary<GamePlayEvent, Action> chosenEvents;
 
@@ -42,11 +42,13 @@ public class GamePlayEventManager : MonoBehaviour
         currentKingdom = kingdom;
         int chance = Random.Range(1, 100);
         Debug.Log($"The chance is {chance}");
-        if (chance <= ChanceToEvent)
+        BaseGameplayEvent gameplayEvent = gamePlayEvents[Random.Range(0, gamePlayEvents.Length)];
+
+        if (chance <= gameplayEvent.GetEventChance())
         {
             //chosenEvents[gamePlayEvents[Random.Range(0, gamePlayEvents.Length)]].Invoke();
 
-            gamePlayEvents[Random.Range(0, gamePlayEvents.Length)].ExecuteEvent();
+            gameplayEvent.ExecuteEvent(kingdom);
         }
     }
 

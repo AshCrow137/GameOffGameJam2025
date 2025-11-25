@@ -2,24 +2,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[CreateAssetMenu(fileName = "GamePlayEvents", menuName = "GamePlayEvents")]
-public class GamePlayEvents : ScriptableObject
+[CreateAssetMenu(fileName = "BaseGameplayEvent", menuName = "BaseGameplayEvent")]
+public class BaseGameplayEvent : ScriptableObject
 {
-    public virtual void ExecuteEvent()
+    [SerializeField]
+    protected int EventChance = 5;
+    public virtual void ExecuteEvent(BaseKingdom kingdom )
     {
 
     }
+
+    public int GetEventChance() => EventChance;
 }
 
-[CreateAssetMenu(fileName = "ResourceEvents", menuName = "GamePlayEvents/ResourceEvent")]
-public class ResourceEvents : GamePlayEvents
+[CreateAssetMenu(fileName = "ResourceEvents", menuName = "BaseGameplayEvent/ResourceEvent")]
+public class ResourceEvents : BaseGameplayEvent
 {
     public List<ResourceType> resources;
     public bool isIncremented;
     public int minResource;
     public int maxResource;
 
-    public override void ExecuteEvent()
+    public override void ExecuteEvent(BaseKingdom kingdom)
     {
         int amount = Random.Range(minResource, maxResource);
         ResourceType resource = resources[Random.Range(0, resources.Count)];
@@ -49,15 +53,15 @@ public class ResourceEvents : GamePlayEvents
     }
 }
 
-[CreateAssetMenu(fileName = "SpawnEvent", menuName = "GamePlayEvents/SpawnEvent")]
-public class SpawnEvents : GamePlayEvents
+[CreateAssetMenu(fileName = "SpawnEvent", menuName = "BaseGameplayEvent/SpawnEvent")]
+public class SpawnEvents : BaseGameplayEvent
 {
     public GameObject PlayerMeleePrefab;
     public GameObject EnemyMeleePrefab;
 
-    public override void ExecuteEvent()
+    public override void ExecuteEvent(BaseKingdom kingdom)
     {
-        BaseKingdom currentKingdom = TurnManager.instance.GetCurrentActingKingdom();
+        BaseKingdom currentKingdom = kingdom;
         GridCity city = currentKingdom.GetControlledCities()[Random.Range(0, currentKingdom.GetControlledCities().Count - 1)];
 
         GameObject prefab = currentKingdom is PlayerKingdom ? PlayerMeleePrefab : EnemyMeleePrefab;
@@ -83,22 +87,28 @@ public class SpawnEvents : GamePlayEvents
 
     }
 
-    [CreateAssetMenu(fileName = "SpawnSpecialEvent", menuName = "GamePlayEvents/SpawnSpecialEvent")]
-    public class SpawnSpecialEvents : GamePlayEvents
+    [CreateAssetMenu(fileName = "SpawnSpecialEvent", menuName = "BaseGameplayEvent/SpawnSpecialEvent")]
+    public class SpawnSpecialEvents : BaseGameplayEvent
     {
         public GameObject PlayerMeleePrefab;
         public GameObject EnemyMeleePrefab;
 
-        public override void ExecuteEvent()
+        public override void ExecuteEvent(BaseKingdom kingdom)
         {
-            BaseKingdom currentKingdom = TurnManager.instance.GetCurrentActingKingdom();
+            BaseKingdom currentKingdom = kingdom;
             //player
             if (currentKingdom is PlayerKingdom)
             {
                 Debug.Log("Special Event Player");
-                GameObject[] botKingdonsObjects = GameObject.FindGameObjectsWithTag("EnemyCity");
-                GridCity botCity = botKingdonsObjects[Random.Range(0, botKingdonsObjects.Length - 1)].GetComponent<GridCity>();
-                SpecialEventPlayer(botCity);
+                List<BaseKingdom> baseKingdoms = TurnManager.instance.GetKingdoms();
+                List<AIKingdom> aiKingdoms = new List<AIKingdom>();
+                foreach(BaseKingdom bKingdom in baseKingdoms)
+                {
+                    if (bKingdom is AIKingdom) aiKingdoms.Add(bKingdom as AIKingdom);
+                }
+                AIKingdom randomKingdom = aiKingdoms[Random.Range(0, aiKingdoms.Count - 1)];
+                GridCity randomCity = randomKingdom.GetControlledCities()[Random.Range(0, randomKingdom.GetControlledCities().Count - 1)];
+                SpecialEventPlayer(randomCity);
             }
             else
             {
