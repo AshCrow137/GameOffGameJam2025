@@ -22,7 +22,7 @@ public class MadnessData : ScriptableObject
     {
         foreach(MadnessDataStruct mstruct in madnessEffectsList)
         {
-            if(currentMadness>=mstruct.minMadness&&currentMadness<=mstruct.maxMadness)
+            if(currentMadness >= mstruct.minMadness && currentMadness <= mstruct.maxMadness)
             {
                 return mstruct;
             }

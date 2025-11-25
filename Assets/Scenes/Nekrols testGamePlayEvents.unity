@@ -21674,11 +21674,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90654bc6b12ab5b48be08b83c11fee11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChanceToEvent: 3
+  ChanceToEvent: 90
   playerMeleeUnit: {fileID: 2786966312003196167, guid: 8eaf211b604964b4da20280006963c3f, type: 3}
   enemyMeleeUnit: {fileID: 5669369260484363274, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
   knightUnit: {fileID: 4534822996348475347, guid: f575349a19512e44986b544e1e216aba, type: 3}
   madmanUnit: {fileID: 5660066150968908325, guid: e732294eda88f0341afccf18725fb5f2, type: 3}
+  gamePlayEvents:
+  - {fileID: 11400000, guid: 184ada62440776442b86bd2b94626c7e, type: 2}
+  - {fileID: 11400000, guid: a8f425cc3fcf1a640a8ecd265748dd5b, type: 2}
+  - {fileID: 11400000, guid: 20b2b5170b788144e8c4ab7041cb730f, type: 2}
+  - {fileID: 11400000, guid: 041184487ae1c2348a07f264690f4ad3, type: 2}
 --- !u!1001 &1827684303
 PrefabInstance:
   m_ObjectHideFlags: 0
