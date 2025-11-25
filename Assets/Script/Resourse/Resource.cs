@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 public enum ResourceType { Magic, Gold, Materials }
-public class Resource : MonoBehaviour
+public class Resource 
 {
-    public static Resource Instance { get; private set; }
+    //public static Resource Instance { get; private set; }
     private Dictionary<ResourceType, int> resources = new();
     [SerializeField]
     private int StartingMagic = 50;
@@ -12,14 +12,18 @@ public class Resource : MonoBehaviour
     [SerializeField]
     private int StartingMaterials = 30;
 
-
-    public void Initialize()
+    public BaseKingdom Owner { get; private set; }
+    public Resource(BaseKingdom owner)
     {
-        Instance = this;
         resources[ResourceType.Magic] = StartingMagic;
         resources[ResourceType.Gold] = StartingGold;
         resources[ResourceType.Materials] = StartingMaterials;
-        UpdateUI();
+        Owner = owner;
+        if(Owner is PlayerKingdom)
+        {
+            UpdateUI();
+        }
+        
     }
 
     public void AddAll(Dictionary<ResourceType,int> required)
@@ -72,10 +76,14 @@ public class Resource : MonoBehaviour
     }
     private void UpdateUI()
     {
-        foreach (KeyValuePair<ResourceType, int> kvp in resources)
+        if (Owner is PlayerKingdom)
         {
-            UIManager.Instance.UpdateResourceImages(kvp.Value, kvp.Key);
+            foreach (KeyValuePair<ResourceType, int> kvp in resources)
+            {
+                UIManager.Instance.UpdateResourceImages(kvp.Value, kvp.Key);
+            }
         }
+            
     }
 
     public void TESTADDFORBUTTON()

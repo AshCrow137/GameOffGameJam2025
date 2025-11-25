@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Seeker))]
-public class BaseGridUnitScript : BaseGridEntity
+public class BaseGridUnitScript : BaseGridEntity, IDamageable
 {
     [Header("Unit stats")]
 
@@ -86,6 +86,7 @@ public class BaseGridUnitScript : BaseGridEntity
     protected int actualRetallitionAttackDamage = 1;
 
     private bool bStartCreatePath = false;
+    private bool bWasSelected = false;
     public UnityEvent MovementFinishEvent {  get; protected set; } = new UnityEvent();
     public UnityEvent AttackFinishEvent {  get; protected set; } = new UnityEvent();
     public UnityEvent<bool> PathFinishEvent {  get; protected set; } = new UnityEvent<bool>();
@@ -101,8 +102,8 @@ public class BaseGridUnitScript : BaseGridEntity
             return dict;
         }
     }
+    private Vector3Int previousMarkerPos = Vector3Int.one*int.MaxValue;
 
-    
     public void BanExploring()
     {
         bCanExplore = false;
@@ -145,6 +146,15 @@ public class BaseGridUnitScript : BaseGridEntity
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
+        bWasSelected = true;
+        if (AttackRange > 1)
+        {
+            if (Owner is PlayerKingdom) hTM.ShowMarkersForRangeAttack(this, AttackRange);
+            foreach (Vector3Int pos in hTM.GetCellsInRange(GetCellPosition(), AttackRange, HexTilemapManager.allStates))
+            {
+                hTM.PlaceColoredMarkerOnPosition(pos, MarkerColor.White);
+            }
+        }
         if (selector!= Owner)
         {
             GlobalEventManager.InvokeShowUIMessageEvent($"This is not your unit!");
@@ -154,10 +164,8 @@ public class BaseGridUnitScript : BaseGridEntity
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
        
         baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
-        if(AttackRange>1&&Owner is PlayerKingdom)
-        {
-            hTM.ShowMarkersForRangeAttack(this, AttackRange);
-        }
+
+
 
 
 
@@ -166,12 +174,14 @@ public class BaseGridUnitScript : BaseGridEntity
    
     public override void OnEntityDeselect()
     {
+        bWasSelected= false;
+        hTM.RemoveAllMarkers();
         base.OnEntityDeselect();
         Debug.Log($"Deselect {this.name} unit");
         GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
         Color ownerColor = Owner.GetKingdomColor();
         baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
-        hTM.RemoveAllMarkers();
+        
     }
     //TODO replace Entitry with controller class and remove unit end turn listener
     protected override void OnEndTurn(BaseKingdom entity)
@@ -188,6 +198,7 @@ public class BaseGridUnitScript : BaseGridEntity
     }
     public virtual void RefreshUnit()
     {
+        bWasSelected = false;
         bCanExplore = true;
         tilesRemain = MovementDistance;
         attacksRemain = AttacksPerTurn;
@@ -251,9 +262,15 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <param name="targetUnitPosition">attacked unit position</param>
    public bool TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
     {
+        if (!targetUnit)
+        {
+            AttackFinishEvent.Invoke();
+            return false;
+        }
         if (targetUnit.GetOwner() == Owner)
         {
             GlobalEventManager.InvokeShowUIMessageEvent($"You try to attack your kingdom unit!");
+            AttackFinishEvent.Invoke();
             return false;
         }
         bTryToAttack = true;
@@ -272,6 +289,7 @@ public class BaseGridUnitScript : BaseGridEntity
             else
             {
                 GlobalEventManager.InvokeShowUIMessageEvent($"This unit has not enough attacks!");
+                AttackFinishEvent.Invoke();
                 bTryToAttack = false;
                 return false;
             }
@@ -303,21 +321,24 @@ public class BaseGridUnitScript : BaseGridEntity
                 {
                     if(TryToMoveUnitToTile(resPos))
                     {
+                        AttackFinishEvent.Invoke();
                         return true;
                     }
                     else
                     {
+                        AttackFinishEvent.Invoke();
                         return false;
                     }
                 }
 
             }
             if(Owner is PlayerKingdom) GlobalEventManager.InvokeShowUIMessageEvent($"Target unit too far!");
+            AttackFinishEvent.Invoke();
             return false;
         }
         
     }
-    private Vector3Int previousMarkerPos;
+
     private void OnMouseEnter()
     {
         // added InputManager.instance.selectedUnit != null cause could be city selection
@@ -358,7 +379,7 @@ public class BaseGridUnitScript : BaseGridEntity
     void OnMouseExit()
     {
         hTM.RemoveMarkerOnTilePosition(previousMarkerPos);
-        previousMarkerPos = Vector3Int.zero;
+        previousMarkerPos = Vector3Int.one * int.MaxValue;
         InputManager.instance.SetDefaultCursor();
     }
 
@@ -485,7 +506,7 @@ public class BaseGridUnitScript : BaseGridEntity
         else
         {
             if(Owner is PlayerKingdom) GlobalEventManager.InvokeShowUIMessageEvent($"Not enough movement points remain!");
-
+            MovementFinishEvent.Invoke();
             return false;
         }
     }
@@ -641,9 +662,14 @@ public class BaseGridUnitScript : BaseGridEntity
         // Calculating distance travelled
         distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
         startingPosition = GetCellPosition();
-        if (AttackRange > 1&&Owner is PlayerKingdom)
+        if (AttackRange > 1&&bWasSelected)
         {
-            hTM.ShowMarkersForRangeAttack(this, AttackRange);
+            hTM.RemoveAllMarkers();
+            if (Owner is PlayerKingdom) hTM.ShowMarkersForRangeAttack(this, AttackRange);
+            foreach (Vector3Int pos in hTM.GetCellsInRange(GetCellPosition(), AttackRange, HexTilemapManager.allStates))
+            {
+                hTM.PlaceColoredMarkerOnPosition(pos, MarkerColor.White);
+            }
         }
     }
     private void UpdateMovementPointsUI()
@@ -738,5 +764,10 @@ public class BaseGridUnitScript : BaseGridEntity
     public int GetRemainAttacksCount()
     {
         return attacksRemain;
+    }
+    public List<TileState> GetWalkableTiles()
+    {
+        //TODO combine spawn tiles with seeker's walkable tiles
+        return possibleSpawnTiles;
     }
 }

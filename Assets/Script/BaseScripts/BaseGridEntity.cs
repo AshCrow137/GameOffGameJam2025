@@ -1,6 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+//TODO replace TakeDamage function with interface
+public interface IDamageable
+{
+
+}
+
 public class BaseGridEntity : MonoBehaviour
 {
     [Header("Grid entity variables")]

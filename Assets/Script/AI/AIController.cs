@@ -13,6 +13,7 @@ public class AIController : MonoBehaviour
 {
     public static AIController Instance { get; private set; }
     private Dictionary<BaseGridUnitScript, AIUnitTask> unitsToAct;
+    private Dictionary<GridCity, AICityTask> citiesToAct;
     CancellationTokenSource cancellationTokenSource;
     public void Initialize()
     {
@@ -160,9 +161,16 @@ public class AIController : MonoBehaviour
             
             List<BaseGridUnitScript> kingdomUnits = new List<BaseGridUnitScript>(kingdom.ControlledUnits);
             int attempt = 0;
-            while (attempt<=5)
+            int actionCount = 0;
+            #region unitTasks
+            while (attempt<=10)
             {
                 attempt++;
+                if(attempt>=9)
+                {
+
+                }
+                
                 unitsToAct = new Dictionary<BaseGridUnitScript, AIUnitTask>();
                 foreach (BaseGridUnitScript unit in kingdomUnits)
                 {
@@ -174,14 +182,14 @@ public class AIController : MonoBehaviour
                     break;
                 }
                 List<Action> UnitActions = new List<Action>();
-                int actionCount = 0;
+                actionCount = 0;
 
                 foreach (KeyValuePair<BaseGridUnitScript, AIUnitTask> pair in unitsToAct)
                 {
                     BaseGridUnitScript unit = pair.Key;
                     AIUnitTask unitTask = pair.Value;
                     AIUnitAction unitAction = unitTask.Action;
-                    Action action = () => actionCount--;
+                    Action action = () => actionCount--;unitTask.Finished = true;
                     Debug.Log($"{unit} action: {unitAction}");
                     switch (unitAction)
                     {
@@ -191,61 +199,28 @@ public class AIController : MonoBehaviour
                             Debug.Log("Try to move unit");
                             if (unit.TryToMoveUnitToTile(unitTask.Target))
                             {
-                                //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(randomTile, MarkerColor.Green);
-                                //bool bpathSuccec = false;
-                                //bool actionDone = false;
-                                //Action<bool> pathSuccesAction = (bool context) => bpathSuccec = context; actionDone = true;
-                                //unit.PathFinishEvent.AddListener(pathSuccesAction.Invoke);
-                                //await WaitUntil(() => actionDone);
-                                //unit.PathFinishEvent.RemoveListener(pathSuccesAction.Invoke);   
-                                //if (bpathSuccec)
-                                //{
                                 actionCount++;
                                 unit.MovementFinishEvent.AddListener(action.Invoke);
                                 UnitActions.Add(action);
-                                //}
+
 
                             }
                             break;
                         case AIUnitAction.Attack:
-                            if (unit.TryToAttack(HexTilemapManager.Instance.GetUnitOnTile(unitTask.Target), unitTask.Target))
+                            if (!HexTilemapManager.Instance.GetEntityOnCell(unitTask.Target)) break;
+                            if (unit.TryToAttack(HexTilemapManager.Instance.GetEntityOnCell(unitTask.Target), unitTask.Target))
                             {
-                                //    //if(HexTilemapManager.Instance.GetDistanceInCells(unit.GetCellPosition(),unitTask.Target)<=unit.GetAtackDistance())
-                                //    //{
-                                //    //    bool bpathSuccec = false;
-                                //    //    bool actionDone = false;
-                                //    //    Action<bool> pathSuccesAction = (bool context) => bpathSuccec = context; actionDone = true;
-                                //    //    unit.PathFinishEvent.AddListener(pathSuccesAction.Invoke);
-                                //    //    await WaitUntil(() => actionDone);
-                                //    //    if (bpathSuccec)
-                                //    //    {
-                                //    //        actionCount++;
-                                //    //        unit.AttackFinishEvent.AddListener(action.Invoke);
-                                //    //        UnitActions.Add(action);
-                                //    //    }
-                                //    //}
-                                //    //else
-                                //    //{
                                 actionCount++;
                                 unit.AttackFinishEvent.AddListener(action.Invoke);
-                                UnitActions.Add(action);
-                            //    //}
+ 
 
                             }
-                    Debug.Log("Attack!");
-                            actionCount--;
+
                             break;
                         case AIUnitAction.Move:
                             if (unit.TryToMoveUnitToTile(unitTask.Target))
                             {
-                                //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(randomTile, MarkerColor.Green);
-                                //bool bpathSuccec = false;
-                                //bool actionDone = false;
-                                //Action<bool> pathSuccesAction = (bool context) => bpathSuccec = context; actionDone = true;
-                                //unit.PathFinishEvent.AddListener(pathSuccesAction.Invoke);
-                                //await WaitUntil(() => actionDone);
-                                //if (bpathSuccec)
-                                //{
+ 
                                 actionCount++;
                                 unit.MovementFinishEvent.AddListener(action.Invoke);
                                 UnitActions.Add(action);
@@ -257,28 +232,58 @@ public class AIController : MonoBehaviour
                     }
 
                 }
-                if(await WaitUntil(() => actionCount <= 0, cancellationTokenSource))
+                if (await WaitUntil(() => actionCount <= 0, cancellationTokenSource))
+                //if (await WaitUntil(CheckForEndTurn, cancellationTokenSource))
                 {
+                    
                     foreach (KeyValuePair<BaseGridUnitScript, AIUnitTask> pair in unitsToAct)
                     {
                         BaseGridUnitScript unit = pair.Key;
                         unit.MovementFinishEvent.RemoveAllListeners();
+                        unit.AttackFinishEvent.RemoveAllListeners();
                     }
                 }
                 else
                 {
-                    Debug.Log($"failed unit {UnitActions}");
-                    Debug.Log($"failed unit {unitsToAct}");
+                    Debug.Log(actionCount);
+                    foreach (KeyValuePair<BaseGridUnitScript, AIUnitTask> pair in unitsToAct)
+                    {
+                        if (!pair.Value.Finished)
+                        {
+                            Debug.Log($"{pair.Key.name} don't finish task {pair.Value.Action}");
+                        }
+                    }
                     break;
                 }
+               
 
             }
-            kingdom.EndTurn();
-            cancellationTokenSource.Cancel();
-            if(attempt>=5)
+            #endregion
+
+            if(attempt>=10)
             {
                 Debug.LogError("Too many attempts");
             }
+            attempt = 0;
+            #region macroTasks
+            while (attempt<=10)
+            {
+                attempt++;
+                List<GridCity> controlledCities = new List<GridCity>(kingdom.GetControlledCities());
+                citiesToAct = new Dictionary<GridCity, AICityTask>();
+                foreach (GridCity city in controlledCities)
+                {
+                    AICityAction cityAction = AssignCityAction(city, kingdom);
+                }
+                if (citiesToAct.Count > 0)
+                {
+
+                }
+                
+            }
+            #endregion
+            kingdom.EndTurn();
+            cancellationTokenSource.Cancel();
         }
         catch (Exception ex)
         {
@@ -290,6 +295,30 @@ public class AIController : MonoBehaviour
             cancellationTokenSource = null;
         }
     }
+
+    private bool CheckForEndTurn()
+    {
+        foreach (KeyValuePair<BaseGridUnitScript, AIUnitTask> pair in unitsToAct)
+        {
+            if (!pair.Value.Finished)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //private bool CheckForEndTurn(KeyValuePair<BaseGridUnitScript, AIUnitTask> units)
+    //{
+    //    foreach (KeyValuePair<BaseGridUnitScript, AIUnitTask> pair in unitsToAct)
+    //    {
+    //        if(!pair.Value.Finished)
+    //        {
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //}
     public static async Task<bool> WaitUntil(Func<bool> predicate, CancellationTokenSource token, int sleep = 50)
     {
 
@@ -318,10 +347,10 @@ public class AIController : MonoBehaviour
         List<BaseGridEntity> potentialTargets = new List<BaseGridEntity>();
         foreach(Vector3Int pos in kingdomVision)
         {
-            if(HexTilemapManager.Instance.GetTileState(pos)==TileState.OccupiedByUnit)
+            if(HexTilemapManager.Instance.GetTileState(pos)==TileState.OccupiedByUnit|| HexTilemapManager.Instance.GetTileState(pos) == TileState.OccuppiedByBuilding)
             {
                 BaseGridEntity potentialTarget = HexTilemapManager.Instance.GetEntityOnCell(pos);
-                if(potentialTarget&&potentialTarget.GetOwner()!=kingdom)
+                if(potentialTarget&&potentialTarget.GetOwner()!=kingdom&&potentialTarget.GetComponent<IDamageable>()!=null)
                 {
                     potentialTargets.Add(potentialTarget);
                 }
@@ -339,14 +368,14 @@ public class AIController : MonoBehaviour
         {
             Vector3Int pos = fpair.Key;
             bool inFog = fpair.Value;
-            if (!inFog && HexTilemapManager.Instance.GetTileState(pos) == TileState.Land) fogTiles.Add(pos);
+            if (!inFog && unit.GetWalkableTiles().Contains(HexTilemapManager.Instance.GetTileState(pos))) fogTiles.Add(pos);
             else if(inFog)
             {
                 notFogTiles.Add(pos);
                 //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(pos, MarkerColor.Blue);
             }
         }
-
+        //Attack 
         List<BaseGridEntity> targets = CheckForTargets(unit, notFogTiles, kingdom);
         if(targets.Count > 0)
         {
@@ -354,14 +383,15 @@ public class AIController : MonoBehaviour
             Dictionary<BaseGridEntity,AIAttackWeight> potentialTargetWithWeight = new Dictionary<BaseGridEntity, AIAttackWeight>();
             foreach (BaseGridEntity target in targets)
             {
+
                 int distanceBetween = HexTilemapManager.Instance.GetDistanceInCells(unit.GetCellPosition(), target.GetCellPosition());
                 if (distanceBetween <= unit.GetAtackDistance()&&unit.GetFinalDamageWithModifiers(unit,target)>=target.GetCurrentHealth()) 
                 {
-                    potentialTargetWithWeight.Add(target,new AIAttackWeight(5,false));
+                    potentialTargetWithWeight.Add(target,new AIAttackWeight(6,false));
                 }
-                else if (distanceBetween <= unit.GetAtackDistance()+unit.GetMovementDistance() && unit.GetFinalDamageWithModifiers(unit, target) >= target.GetCurrentHealth())
+                else if (distanceBetween <= unit.GetAtackDistance()+unit.GetMovementDistance() && unit.GetFinalDamageWithModifiers(unit, target) >= target.GetCurrentHealth()&&unit.tilesRemain>0)
                 {
-                    potentialTargetWithWeight.Add(target, new AIAttackWeight(4, true));
+                    potentialTargetWithWeight.Add(target, new AIAttackWeight(5, true));
                 }
                 //TODO SpecialAbility
                 else if(distanceBetween <= unit.GetAtackDistance()&&target.entityType==unit.getVulnerableEntityType(unit.entityType))
@@ -371,20 +401,20 @@ public class AIController : MonoBehaviour
                         BaseGridUnitScript unitTarget = (BaseGridUnitScript)target; 
                         if(unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage() ) 
                         {
-                            potentialTargetWithWeight.Add(target, new AIAttackWeight(3, false));
+                            potentialTargetWithWeight.Add(target, new AIAttackWeight(4, false));
                         }
                     }
                    
                 }
                 //TODO else if target close than 6 tiles from one of kingdom cities
-                else if (distanceBetween <= unit.GetAtackDistance() + unit.GetMovementDistance() && target.entityType == unit.getVulnerableEntityType(unit.entityType))
+                else if (distanceBetween <= unit.GetAtackDistance() + unit.GetMovementDistance() && target.entityType == unit.getVulnerableEntityType(unit.entityType)&&unit.tilesRemain>0)
                 {
                     if (target is BaseGridUnitScript)
                     {
                         BaseGridUnitScript unitTarget = (BaseGridUnitScript)target;
                         if (unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage())
                         {
-                            potentialTargetWithWeight.Add(target, new AIAttackWeight(2, true));
+                            potentialTargetWithWeight.Add(target, new AIAttackWeight(3, true));
                         }
                     }
                 }
@@ -393,15 +423,30 @@ public class AIController : MonoBehaviour
                     if (target is BaseGridUnitScript)
                     {
                         BaseGridUnitScript unitTarget = (BaseGridUnitScript)target;
-                        if (unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage())
+                        if (unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage()||unit.GetAtackDistance()>1)
                         {
-                            potentialTargetWithWeight.Add(target, new AIAttackWeight(1, false));
+                            potentialTargetWithWeight.Add(target, new AIAttackWeight(2, false));
                         }
                     }
+                    else
+                    {
+                        potentialTargetWithWeight.Add(target, new AIAttackWeight(2, false));
+                    }
                 }
-                else if(distanceBetween <= unit.GetAtackDistance() + unit.GetMovementDistance())
+                else if(distanceBetween <= unit.GetAtackDistance() + unit.GetMovementDistance()&&unit.tilesRemain>0)
                 {
-
+                    if (target is BaseGridUnitScript)
+                    {
+                        BaseGridUnitScript unitTarget = (BaseGridUnitScript)target;
+                        if (unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage() || unit.GetAtackDistance() > 1)
+                        {
+                            potentialTargetWithWeight.Add(target, new AIAttackWeight(1, true));
+                        }
+                    }
+                    else
+                    {
+                        potentialTargetWithWeight.Add(target, new AIAttackWeight(1, true));
+                    }
                 }
 
                 if (!potentialTargetWithWeight.TryGetValue(target,out AIAttackWeight value))
@@ -433,7 +478,7 @@ public class AIController : MonoBehaviour
                     targetPos = potentialTarget.GetCellPosition();
                     if(bNeedToMove)
                     {
-                        List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(targetPos, 1, new List<TileState>() { TileState.Land });
+                        List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(targetPos, unit.GetAtackDistance(), unit.GetWalkableTiles());
                         List<Vector3Int> closestAdjPos = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), adjPos);
                         if (closestAdjPos.Count > 0)
                         {
@@ -464,7 +509,7 @@ public class AIController : MonoBehaviour
                     if (closestTargetPoses.Count > 0&& unit.tilesRemain > 0)
                     {
                         targetPos = closestTargetPoses[0];
-                        List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(targetPos, 1, new List<TileState>() { TileState.Land });
+                        List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(targetPos, 1, unit.GetWalkableTiles());
                         List<Vector3Int> closestAdjPos = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), adjPos);
                         if(closestAdjPos.Count>0)
                         {
@@ -501,6 +546,28 @@ public class AIController : MonoBehaviour
         //2) check for special ability
         // 3) check if available to move
         // 4) no more available actions
+    }
+    private AICityAction AssignCityAction(GridCity city, AIKingdom kingdom)
+    {
+        Resource kingdomResources = kingdom.Resources();
+        List<GridBuilding> unlockedBuildings = kingdom.GetUnlockedBuildings();
+        List<BaseGridUnitScript> unlockedUnits = kingdom.GetunlockedUnits();
+        Dictionary<Vector3Int,GridBuilding> cityBuildings = new Dictionary<Vector3Int, GridBuilding>(city.buildings);
+        List<FabricResourses>  productionBuildings = new List<FabricResourses>();
+        if (cityBuildings.Count > 0)
+        {
+            foreach(KeyValuePair<Vector3Int,GridBuilding> pair in cityBuildings)
+            {
+                Vector3Int pos = pair.Key;
+                GridBuilding building = pair.Value;
+                if(building is FabricResourses)
+                {
+                    productionBuildings.Add(building as FabricResourses);
+                }
+            }
+
+        }
+        return AICityAction.None;
     }
     private bool CheckResources(AIKingdom kingdom, Dictionary<ResourceType, int> required)
     {
@@ -539,7 +606,17 @@ public class AIController : MonoBehaviour
             Target = target;
         }
     }
-   
+   private class AICityTask
+    {
+        public bool Finished;
+        public AICityAction Action;
+        public AICityTask(AICityAction action)
+        {
+            this.Action = action;
+            Finished= false;
+        }
+
+    }
 
 
     

@@ -228,10 +228,11 @@ MonoBehaviour:
   Vision: 5
   HPImage: {fileID: 1921259495853501412}
   bodySprite: {fileID: 7884187323099228737}
+  rotatebleObjects: []
   rotatebleCanvas: {fileID: 8551652696335946812}
-  buildingName: 
-  duration: 0
+  entityType: 0
   HpForCity: 35
+  buildingData: {fileID: 11400000, guid: 9528b066d38da6f4b81f121c1496488f, type: 2}
   unitName: Kingdom Military
 --- !u!4 &6260741474477631231 stripped
 Transform:

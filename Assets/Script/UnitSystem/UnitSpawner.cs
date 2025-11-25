@@ -10,8 +10,8 @@ public class UnitSpawner : MonoBehaviour
 
 
 
-    [SerializeField]
-    private Resource resourceManager;
+    //[SerializeField]
+    //private Resource resourceManager;
 
     [SerializeField]
     private PlayerKingdom playerKingdom;
@@ -69,7 +69,7 @@ public class UnitSpawner : MonoBehaviour
             return;
         }
         // Refund resources
-        resourceManager.AddAll(unit.GetComponent<BaseGridUnitScript>().resource);
+        city.GetOwner().Resources().AddAll(unit.GetComponent<BaseGridUnitScript>().resource);
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public class UnitSpawner : MonoBehaviour
             return false;
         }
         Dictionary<ResourceType, int> resourceRequirements = unitPrefab.GetComponent<BaseGridUnitScript>().resource;
-        Dictionary<ResourceType, int> resultReqs = resourceManager.HasEnough(resourceRequirements);
+        Dictionary<ResourceType, int> resultReqs = city.GetOwner().Resources().HasEnough(resourceRequirements);
         if (resultReqs != null)
         {
             foreach (var a in resultReqs)
@@ -103,8 +103,8 @@ public class UnitSpawner : MonoBehaviour
     public bool CheckAndStartUnitSpawn(GridCity city, GameObject unitPrefab, Vector3Int position)
     {
         if (!CanUnitBePlaced(city, unitPrefab, position)) return false;
-        
-        resourceManager.SpendResource(unitPrefab.GetComponent<BaseGridUnitScript>().resource);
+
+        city.GetOwner().Resources().SpendResource(unitPrefab.GetComponent<BaseGridUnitScript>().resource);
         HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByUnit);
 
         return true;

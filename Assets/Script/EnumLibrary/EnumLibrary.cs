@@ -84,6 +84,15 @@ public enum AIMacroAction
     Build,
     Explore
 }
+public enum AICityAction
+{
+    BuildProductionBuilding,
+    BuildUnitTechBuilding,
+    BuildHighTirUnit,
+    BuildRangeUnit,
+    BuildMeleeUnit,
+    None
+}
 
 
 

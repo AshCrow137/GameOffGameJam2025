@@ -58,7 +58,7 @@ public class BootManager : MonoBehaviour
 
         UIManager?.Initialize();
         buildingManager?.Instantiate();
-        resource?.Initialize();
+
         cityManager?.Instantiate();
         toggleManager?.Initialize();
         inputManager?.Initialize();

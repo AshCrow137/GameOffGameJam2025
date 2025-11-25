@@ -7,6 +7,16 @@ public class AIKingdom : BaseKingdom
     public KnightUnit DEBUGunit;
     [SerializeField]
     private MadnessData madnessData;
+    [SerializeField]
+    private int maxMainProductionBuildings = 2; 
+    public int GetMaxMainProductionBuildings() { return maxMainProductionBuildings  ; }
+
+    [SerializeField]
+    private int maxSecondaryProductionBuilding = 1; 
+    public int GetMaxSecondaryProductionBuildings() { return maxSecondaryProductionBuilding; }
+
+    [SerializeField]
+    private ResourceType mainResourceType = ResourceType.Gold;
 
     private MadnessDataStruct currentMadnessEffect;
     public override void Initialize()

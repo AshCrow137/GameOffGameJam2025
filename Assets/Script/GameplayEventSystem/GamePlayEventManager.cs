@@ -3,6 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[CreateAssetMenu(fileName = "TestEvent", menuName = "Scriptable Objects/TestEvent")]
+public class TestEvent:ScriptableObject
+{
+    public int chance = 3;
+    public virtual void ExecuteEvent()
+    {
+
+    }
+
+}
+[CreateAssetMenu(fileName = "SpawnUnitEvent", menuName = "Scriptable Objects/SpawnUnitEvent")]
+public class SpawnUnitEvent:TestEvent
+{
+    public GameObject prefab;
+    ///
+    public override void ExecuteEvent()
+    {
+        base.ExecuteEvent();
+
+    }
+}
+
 public class GamePlayEventManager : MonoBehaviour
 {
     [SerializeField]
@@ -18,6 +40,8 @@ public class GamePlayEventManager : MonoBehaviour
     private GameObject madmanUnit;
 
     private BaseKingdom currentKingdom;
+    [SerializeField]
+    private List<TestEvent> testEvents = new List<TestEvent>();
 
     private GamePlayEvent[] gamePlayEvents = {GamePlayEvent.GainResource,
                                               GamePlayEvent.LostResource,
@@ -79,7 +103,7 @@ public class GamePlayEventManager : MonoBehaviour
                 resource = ResourceType.Materials;
                 break;
         }
-        Resource.Instance.AddAll(new Dictionary<ResourceType, int> { { resource, gainValue } });
+        currentKingdom.Resources().AddAll(new Dictionary<ResourceType, int> { { resource, gainValue } });
         if (isPlayerTurn())
         {
             string text = $"You Receive {gainValue} of {resource}.";
@@ -104,7 +128,7 @@ public class GamePlayEventManager : MonoBehaviour
                 resource = ResourceType.Materials;
                 break;
         }
-        Resource.Instance.Remove(new Dictionary<ResourceType, int> { { resource, lostValue } });
+        currentKingdom.Resources().Remove(new Dictionary<ResourceType, int> { { resource, lostValue } });
         if (isPlayerTurn())
         {
             string text = $"You Lost {lostValue} of {resource}.";

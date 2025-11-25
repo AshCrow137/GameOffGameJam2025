@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using Pathfinding;
 using NUnit.Framework;
+using UnityEngine.Timeline;
 
 
 /// <summary>
@@ -20,6 +21,7 @@ public class HexTilemapManager : MonoBehaviour
     [SerializeField] private TileBase redMarkerTile;
     [SerializeField] private TileBase greenMarkerTile;
     [SerializeField] private TileBase blueMarkerTile;
+    [SerializeField] private TileBase whiteMarkerTile;
     [SerializeField] private HexTile waterTile;
 
     [SerializeField] private Camera mainCamera;
@@ -31,7 +33,7 @@ public class HexTilemapManager : MonoBehaviour
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
     private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
 
-    public readonly List<TileState> allStates = new List<TileState>
+    public static readonly List<TileState> allStates = new List<TileState>
         {
             TileState.Land,
             TileState.Water,
@@ -114,6 +116,7 @@ public class HexTilemapManager : MonoBehaviour
             case MarkerColor.Green:marker = greenMarkerTile; break;
             case MarkerColor.Blue:marker = blueMarkerTile; break;
             case MarkerColor.Red:marker = redMarkerTile; break;
+            case MarkerColor.White:marker = whiteMarkerTile; break;
         }
         markerTilemap?.SetTile(cellPos, marker);
         markerTilemap?.RefreshTile(cellPos);

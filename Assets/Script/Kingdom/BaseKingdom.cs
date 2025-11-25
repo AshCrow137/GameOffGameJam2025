@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using NUnit.Framework;
 
 // Base kingdom class
 public class BaseKingdom : Entity, IMadnessable
 {
-    private Resource currentResources = new Resource();
+    private Resource currentResources;
     public List<HexTile> occupiedTiles { get; protected set; } = new();
     [SerializeField]
     protected List<BaseGridUnitScript> controlledUnits = new();
@@ -13,6 +14,8 @@ public class BaseKingdom : Entity, IMadnessable
     protected List<GridCity> controlledCities = new();
     [SerializeField]
     protected List<BaseGridUnitScript> unlockedUnits = new List<BaseGridUnitScript> ();
+    [SerializeField]
+    protected List<GridBuilding> unlockedBuildings= new List<GridBuilding> ();
 
     public List<Vector3Int> visibleTiles { get; protected set; } = new();
 
@@ -45,6 +48,7 @@ public class BaseKingdom : Entity, IMadnessable
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
         visionManager = GetComponent<VisionManager>();
         visionManager.Initialize();
+        currentResources = new Resource(this);
         // Initializing controlled units
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
@@ -208,6 +212,7 @@ public class BaseKingdom : Entity, IMadnessable
         Debug.Log("Units in range " + range + ": " + result);
         return result;
     }
-
+    public List<GridBuilding> GetUnlockedBuildings() { return unlockedBuildings; }
+    public List<BaseGridUnitScript> GetunlockedUnits() { return unlockedUnits; }
 
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GridCity : BaseGridEntity
+public class GridCity : BaseGridEntity,IDamageable
 {
     public Sprite sprite;
     public Vector3Int position;

@@ -173,11 +173,11 @@ public class InputManager : MonoBehaviour
             if (unit)
             {
                 unit.OnEntitySelect(playerKngdom);
-                if(unit.GetOwner()==playerKngdom)
-                {
+                //if(unit.GetOwner()==playerKngdom)
+                //{
                     selectedUnit = unit;
                     bHasSelectedEntity = true;
-                }
+                //}
                 UIManager.Instance.SelectedUnit(unit);
             }
             else if(city)
