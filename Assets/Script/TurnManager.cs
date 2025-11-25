@@ -18,7 +18,7 @@ public class TurnManager : MonoBehaviour
     //{
     //    this.turnOrder = turnOrder;
     //}
-
+    public List<BaseKingdom> GetKingdoms ()=> turnOrder;
     public void Initialize()
     {
         instance = this;
