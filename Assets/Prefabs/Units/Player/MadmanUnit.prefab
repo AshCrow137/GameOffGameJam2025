@@ -55,7 +55,7 @@ PrefabInstance:
     - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -460827616, guid: 91772c389e9f4e0428f7cc5cacf4f6f9, type: 3}
+      objectReference: {fileID: 21300000, guid: e061bce18a712bd47ad8d7b31428501a, type: 3}
     - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: Health
       value: 15
@@ -120,6 +120,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1221700581662863507}
+    - targetCorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9070642404346802157}
   m_SourcePrefab: {fileID: 100100000, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
 --- !u!223 &941539317012512611 stripped
 Canvas:
@@ -142,6 +145,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 1227393816778969843}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &9070642404346802157
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645737243709669662}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 58807a2053e6045469e909be9e5b45d4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1829319873166530435 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 606746352947840368, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -194,6 +219,7 @@ MonoBehaviour:
   CanMoveAfterattack: 0
   movementPointsPanel: {fileID: 1829319873166530435}
   movementPointsImage: {fileID: 4084784499067203254}
+  animator: {fileID: 9070642404346802157}
   specialAbilityRange: 1
   aiming: 0
   unitAttackSoundEvent:
