@@ -5,15 +5,13 @@ public class Resource
 {
     //public static Resource Instance { get; private set; }
     private Dictionary<ResourceType, int> resources = new();
-    [SerializeField]
-    private int StartingMagic = 50;
-    [SerializeField]
-    private int StartingGold = 20;
-    [SerializeField]
-    private int StartingMaterials = 30;
+
+    //private int StartingMagic = 50;
+    //private int StartingGold = 20;
+    //private int StartingMaterials = 30;
 
     public BaseKingdom Owner { get; private set; }
-    public Resource(BaseKingdom owner)
+    public Resource(BaseKingdom owner,int StartingMagic,int StartingGold, int StartingMaterials)
     {
         resources[ResourceType.Magic] = StartingMagic;
         resources[ResourceType.Gold] = StartingGold;

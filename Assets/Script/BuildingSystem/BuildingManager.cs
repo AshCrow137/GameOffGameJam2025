@@ -80,7 +80,7 @@ public class BuildingManager : MonoBehaviour
             return null;
         }
         GameObject buildingPreview = Instantiate(building.buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
-        buildingPreview.GetComponent<GridBuilding>().Initialize( playerKngdom);
+        buildingPreview.GetComponent<GridBuilding>().Initialize(building.ownerCity.GetOwner());
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
         building.buildingPlacementEvent.Post(gameObject);

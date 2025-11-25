@@ -57,6 +57,18 @@ public class UnitSpawner : MonoBehaviour
 
         city.GetComponent<CityProductionQueue>().AddToQueue(production);
     }
+    public void QueueUnitAtPosition(Vector3Int position,GridCity city,BaseGridUnitScript unitPrefab)
+    {
+        Production production = new Production(position, ProductionType.Unit, unitPrefab.GetComponent<BaseGridUnitScript>().duration, unitPrefab.gameObject);
+
+        if (city.GetComponent<CityProductionQueue>() == null)
+        {
+            Debug.LogError("CityProductionQueue is null");
+            return;
+        }
+
+        city.GetComponent<CityProductionQueue>().AddToQueue(production);
+    }
 
     /// <summary>
     /// Cancels unit production and refunds resources
@@ -112,12 +124,12 @@ public class UnitSpawner : MonoBehaviour
 
     /// <summary>
     /// Places a unit at the specified grid position
-    /// </summary>
-    public GameObject PlaceUnit(GameObject unitPrefab, Vector3Int gridPosition)
-    {
-        BaseKingdom currentKingdom = TurnManager.instance.GetCurrentActingKingdom();
-        return PlaceUnit(unitPrefab, gridPosition, currentKingdom);
-    }
+    ///// </summary>
+    //public GameObject PlaceUnit(GameObject unitPrefab, Vector3Int gridPosition)
+    //{
+    //    BaseKingdom currentKingdom = TurnManager.instance.GetCurrentActingKingdom();
+    //    return PlaceUnit(unitPrefab, gridPosition, currentKingdom);
+    //}
 
     public GameObject PlaceUnit(GameObject unitPrefab, Vector3Int gridPosition, BaseKingdom ownerKingdom)
     {

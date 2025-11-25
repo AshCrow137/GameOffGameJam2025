@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 // Ai controlled kingdom class
 public class AIKingdom : BaseKingdom
 {
@@ -17,7 +17,26 @@ public class AIKingdom : BaseKingdom
 
     [SerializeField]
     private ResourceType mainResourceType = ResourceType.Gold;
+    public ResourceType GetMainResourceType() { return mainResourceType; }
 
+    [SerializeField]
+    private List<BaseGridUnitScript> TotalUnlockableUnits = new List<BaseGridUnitScript>();
+    public List<BaseGridUnitScript> GetUnlockableUnits()
+    {
+        return TotalUnlockableUnits;
+    }
+    public List<BaseGridUnitScript> GetNotUnlockedUnits()
+    {
+        List<BaseGridUnitScript> temp = new List<BaseGridUnitScript>(TotalUnlockableUnits);
+        foreach(BaseGridUnitScript unit in unlockedUnits)
+        {
+            if(temp.Contains(unit))
+            {
+                temp.Remove(unit);
+            }
+        }
+        return temp;
+    }
     private MadnessDataStruct currentMadnessEffect;
     public override void Initialize()
     {

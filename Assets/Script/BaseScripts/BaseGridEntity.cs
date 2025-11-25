@@ -127,10 +127,10 @@ public class BaseGridEntity : MonoBehaviour
     /// <param name="selector">kingdom that select this grid entity</param>
     public virtual void OnEntitySelect(BaseKingdom selector)
     {
-        if (selector != Owner)
-        {
-            return;
-        }
+        //if (selector != Owner)
+        //{
+        //    return;
+        //}
         baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
         AudioManager.Instance.ui_menumain_volume.Post(gameObject);
     }

@@ -45,6 +45,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     [SerializeField] public AK.Wwise.Event unitLandMovementEvent;
     [SerializeField] public AK.Wwise.Event unitWaterMovementEvent;
 
+
+    [SerializeField]
+    protected int unitTier = 1;
     private Seeker seeker;
     private Path path;
     public int tilesRemain { get; protected set; }
@@ -719,7 +722,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         else return (int)Mathf.Round(actualMeleeAttackDamage * GetDamageModifier(attacker.entityType, entityType)); ;
     }
-    public virtual void SpecialAbility() { }
+    //public virtual void SpecialAbility() { }
     public virtual void SpecialAbility() { animator.Play("Attack", 0, 0); }
     public virtual void OnChosingTile() { }
 
@@ -777,5 +780,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         //TODO combine spawn tiles with seeker's walkable tiles
         return possibleSpawnTiles;
+    }
+    public int GetTier()
+    {
+        return unitTier;
     }
 }

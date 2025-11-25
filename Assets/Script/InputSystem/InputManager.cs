@@ -182,9 +182,9 @@ public class InputManager : MonoBehaviour
             }
             else if(city)
             {
-                if(city.GetOwner()!=playerKngdom){
-                    return;
-                }
+                //if(city.GetOwner()!=playerKngdom){
+                //    return;
+                //}
                 selectedCity = city;
                 selectedCity.OnEntitySelect(playerKngdom);
                 bHasSelectedEntity= true;

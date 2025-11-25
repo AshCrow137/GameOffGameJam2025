@@ -3,27 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[CreateAssetMenu(fileName = "TestEvent", menuName = "Scriptable Objects/TestEvent")]
-public class TestEvent:ScriptableObject
-{
-    public int chance = 3;
-    public virtual void ExecuteEvent()
-    {
 
-    }
-
-}
-[CreateAssetMenu(fileName = "SpawnUnitEvent", menuName = "Scriptable Objects/SpawnUnitEvent")]
-public class SpawnUnitEvent:TestEvent
-{
-    public GameObject prefab;
-    ///
-    public override void ExecuteEvent()
-    {
-        base.ExecuteEvent();
-
-    }
-}
 
 public class GamePlayEventManager : MonoBehaviour
 {
@@ -40,8 +20,7 @@ public class GamePlayEventManager : MonoBehaviour
     private GameObject madmanUnit;
 
     private BaseKingdom currentKingdom;
-    [SerializeField]
-    private List<TestEvent> testEvents = new List<TestEvent>();
+
 
     [SerializeField]
     private BaseGameplayEvent[] gamePlayEvents;

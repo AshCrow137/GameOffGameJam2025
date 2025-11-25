@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: LostResource
   m_EditorClassIdentifier: Assembly-CSharp::ResourceEvents
+  EventChance: 5
   resources: 000000000100000002000000
   isIncremented: 0
   minResource: 30
-  maxResource: 50
+  maxResource: 40

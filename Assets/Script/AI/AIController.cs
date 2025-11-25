@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.UI.GridLayoutGroup;
+using UnityEngine.UIElements;
+
 
 public class AIController : MonoBehaviour
 {
@@ -159,14 +159,15 @@ public class AIController : MonoBehaviour
         try
         {
             
-            List<BaseGridUnitScript> kingdomUnits = new List<BaseGridUnitScript>(kingdom.ControlledUnits);
+            
             int attempt = 0;
             int actionCount = 0;
             #region unitTasks
             while (attempt<=10)
             {
                 attempt++;
-                if(attempt>=9)
+                List<BaseGridUnitScript> kingdomUnits = new List<BaseGridUnitScript>(kingdom.ControlledUnits);
+                if (attempt>=9)
                 {
 
                 }
@@ -277,9 +278,51 @@ public class AIController : MonoBehaviour
                 }
                 if (citiesToAct.Count > 0)
                 {
-
+                    foreach(KeyValuePair<GridCity,AICityTask> pair in citiesToAct)
+                    {
+                        GridCity city = pair.Key;
+                        AICityTask cityTask = pair.Value;
+                        switch(cityTask.Action)
+                        {
+                            case AICityAction.BuildProductionBuilding:
+                                
+                                GridBuilding buildingToPlace = cityTask.taskTarget as GridBuilding;
+                                if (!buildingToPlace) break;
+                                List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(city.GetCellPosition(), 1, new List<TileState>() { TileState.Land });
+                                if (adjPos.Count > 1 && CheckResources(kingdom, buildingToPlace.GetBuilding().resource))
+                                {
+                                    Vector3Int randPos = adjPos[UnityEngine.Random.Range(0, adjPos.Count - 1)];
+                                    BuildingManager.Instance.QueueBuildingAtPosition(randPos, city, buildingToPlace);
+                                }
+                                break;
+                            case AICityAction.BuildUnitTechBuilding:
+                                
+                                GridBuilding techbuildingToPlace = cityTask.taskTarget as GridBuilding;
+                                if (!techbuildingToPlace) break;
+                                List<Vector3Int> adjPoses = HexTilemapManager.Instance.GetCellsInRange(city.GetCellPosition(), 1, new List<TileState>() { TileState.Land });
+                                if (adjPoses.Count > 1 && CheckResources(kingdom, techbuildingToPlace.GetBuilding().resource))
+                                {
+                                    Vector3Int randPos = adjPoses[UnityEngine.Random.Range(0, adjPoses.Count - 1)];
+                                    BuildingManager.Instance.QueueBuildingAtPosition(randPos, city, techbuildingToPlace);
+                                }
+                                break;
+                            case AICityAction.BuildMeleeUnit:
+                                BaseGridUnitScript buildUnit = cityTask.taskTarget as BaseGridUnitScript;
+                                if (!buildUnit) break;
+                                List<Vector3Int> unitAdjPoses = HexTilemapManager.Instance.GetCellsInRange(city.GetCellPosition(), 1, buildUnit.GetPossibleSpawnTiles());
+                                if (unitAdjPoses.Count > 0 && CheckResources(kingdom, buildUnit.resource))
+                                {
+                                    Vector3Int randPos = unitAdjPoses[UnityEngine.Random.Range(0, unitAdjPoses.Count - 1)];
+                                    UnitSpawner.Instance.QueueUnitAtPosition(randPos, city, buildUnit);
+                                }
+                                break;
+                        }
+                    }
                 }
-                
+                else
+                {
+                    break;
+                }
             }
             #endregion
             kingdom.EndTurn();
@@ -322,7 +365,7 @@ public class AIController : MonoBehaviour
     public static async Task<bool> WaitUntil(Func<bool> predicate, CancellationTokenSource token, int sleep = 50)
     {
 
-        token.CancelAfter(TimeSpan.FromSeconds(5));
+        token.CancelAfter(TimeSpan.FromSeconds(3));
         float t = 0;
         try
         {
@@ -549,11 +592,17 @@ public class AIController : MonoBehaviour
     }
     private AICityAction AssignCityAction(GridCity city, AIKingdom kingdom)
     {
+        //if(kingdom.HasPMS )
+        //{
+        //    return AICityAction.None;
+        //}
         Resource kingdomResources = kingdom.Resources();
         List<GridBuilding> unlockedBuildings = kingdom.GetUnlockedBuildings();
         List<BaseGridUnitScript> unlockedUnits = kingdom.GetunlockedUnits();
         Dictionary<Vector3Int,GridBuilding> cityBuildings = new Dictionary<Vector3Int, GridBuilding>(city.buildings);
         List<FabricResourses>  productionBuildings = new List<FabricResourses>();
+        CityProductionQueue productionQueue = city.GetComponent<CityProductionQueue>();
+        List<Production> cityProduction = productionQueue.productionQueue;
         if (cityBuildings.Count > 0)
         {
             foreach(KeyValuePair<Vector3Int,GridBuilding> pair in cityBuildings)
@@ -564,16 +613,180 @@ public class AIController : MonoBehaviour
                 {
                     productionBuildings.Add(building as FabricResourses);
                 }
+                
             }
+            //Build economic buildings
+            if (productionBuildings.Count < 2)
+            {
+                FabricResourses mainProductionFabric = GetUnlockedFabric(kingdom, unlockedBuildings);
+                if (mainProductionFabric != null)
+                {
+                    List<Production> totalProduction = new List<Production>(cityProduction);
+                    if (productionQueue.currentProduction != null)
+                    {
+                        totalProduction.Add(productionQueue.currentProduction);
+                    }
+                    int totalProductionBuilding = productionBuildings.Count;
+                    foreach (Production prod in totalProduction)
+                    {
+                        if (prod.building?.buildingPrefab.GetComponent<FabricResourses>())
+                        {
+                            totalProductionBuilding++;
+                        }
+                    }
+                    if (totalProductionBuilding < 2 && CheckResources(kingdom, mainProductionFabric.GetBuilding().resource))
+                    {
+                        citiesToAct.Add(city, new AICityTask(AICityAction.BuildProductionBuilding, mainProductionFabric));
+                        return AICityAction.BuildProductionBuilding;
+                    }
+                }
+            }
+            List<BaseGridUnitScript> notUnlockedUnits = kingdom.GetNotUnlockedUnits();
+            //build tech buildings
+            if(notUnlockedUnits.Count > 0)
+            {
+                Debug.Log(notUnlockedUnits);
+                List<OpenNewUnit> techBuildings = new List<OpenNewUnit>();
+                foreach(GridBuilding techBuilding in unlockedBuildings)
+                {
+                    if(techBuilding is OpenNewUnit)
+                    {
+                        techBuildings.Add((OpenNewUnit)techBuilding);
+                    }
+                }
+                if(techBuildings.Count > 0)
+                {
+                    foreach(OpenNewUnit tBuilding in techBuildings)
+                    {
+                        if(notUnlockedUnits.Contains(tBuilding.GetUnitToOpen()))
+                        {
+                            bool bHasSimilarBuildingInProduction = false;
+                            if (cityProduction.Count > 0||productionQueue.currentProduction!=null)
+                            {
+                                if(productionQueue.currentProduction!=null&&productionQueue.currentProduction.building?.buildingPrefab==tBuilding.gameObject)
+                                {
+                                    bHasSimilarBuildingInProduction = true;
+                                }
+                                foreach (Production production in cityProduction)
+                                {
+                                    if (tBuilding != null && production.building?.buildingPrefab == tBuilding.gameObject)
+                                    {
+                                        bHasSimilarBuildingInProduction = true;
+                                        break;
+                                    }
+                                }
 
+                            }
+                            if(!bHasSimilarBuildingInProduction&&CheckResources(kingdom,tBuilding.GetBuilding().resource))
+                            {
+                                citiesToAct.Add(city, new AICityTask(AICityAction.BuildUnitTechBuilding, tBuilding));
+                                return AICityAction.BuildUnitTechBuilding;
+                            }
+                        }
+                    }
+                }
+            }
+            //build units
+            List<BaseGridUnitScript> potentialUnits = new List<BaseGridUnitScript>();
+            int highestTier = 0;
+            foreach (BaseGridUnitScript unlockedUnit in unlockedUnits)
+            {
+                if (!CheckResources(kingdom, unlockedUnit.resource)) continue;
+
+                if(unlockedUnit.GetTier()>highestTier)
+                {
+                    potentialUnits.Clear();
+                    potentialUnits.Add(unlockedUnit);
+                    highestTier = unlockedUnit.GetTier();
+                }
+                else if(unlockedUnit.GetTier()==highestTier)
+                {
+                    potentialUnits.Add(unlockedUnit);
+                } 
+            }
+            if(potentialUnits.Count>0)
+            {
+                BaseGridUnitScript potentialUnit = potentialUnits[UnityEngine.Random.Range(0, potentialUnits.Count)];
+                List<Production> totalProduction = new List<Production>(cityProduction);
+                if (productionQueue.currentProduction != null)
+                {
+                    totalProduction.Add(productionQueue.currentProduction);
+                }
+                int similarUnitsInQueue = 0;
+                foreach (Production production in totalProduction)
+                {
+                    if(production.prefab==potentialUnit.gameObject)
+                    {
+                        similarUnitsInQueue++;
+                    }
+                }
+
+                if (potentialUnit != null&& CheckResources(kingdom, potentialUnit.resource)&&similarUnitsInQueue<=2)
+                {
+                    citiesToAct.Add(city, new AICityTask(AICityAction.BuildMeleeUnit, potentialUnit));
+                    return AICityAction.BuildMeleeUnit;
+                }
+            }
+        }
+        else
+        {
+
+            FabricResourses mainProductionFabric = GetUnlockedFabric(kingdom, unlockedBuildings);
+            bool bHasSimilarBuildingInProduction = false;
+
+            if(productionQueue.currentProduction !=null&& productionQueue.currentProduction.building?.buildingPrefab== mainProductionFabric.gameObject)
+            {
+                    bHasSimilarBuildingInProduction = true;
+            }
+            else
+            {
+                if (cityProduction.Count > 0)
+                {
+                    foreach (Production production in cityProduction)
+                    {
+                        if (mainProductionFabric!=null&&production.building.buildingPrefab == mainProductionFabric.gameObject)
+                        {
+                            bHasSimilarBuildingInProduction = true;
+                            break;
+                        }
+                    }
+                }
+                
+            }
+            if (mainProductionFabric != null && CheckResources(kingdom, mainProductionFabric.GetBuilding().resource)&&!bHasSimilarBuildingInProduction)
+            {
+                citiesToAct.Add(city, new AICityTask(AICityAction.BuildProductionBuilding, mainProductionFabric));
+                return AICityAction.BuildProductionBuilding;
+            }
         }
         return AICityAction.None;
     }
+    private FabricResourses GetUnlockedFabric(AIKingdom kingdom,List<GridBuilding> unlockedBuildings)
+    {
+        List<FabricResourses> unlockedProductionBuildings = new List<FabricResourses>();
+        foreach (GridBuilding unlockedBuilding in unlockedBuildings)
+        {
+            if (unlockedBuilding is FabricResourses)
+            {
+                unlockedProductionBuildings.Add((FabricResourses)unlockedBuilding);
+            }
+        }
+        foreach (FabricResourses fabric in unlockedProductionBuildings)
+        {
+            foreach (KeyValuePair<ResourceType, int> pair in fabric.GetProduction())
+            {
+                if (pair.Key == kingdom.GetMainResourceType() && pair.Value > 0)
+                {
+                    return fabric;
+                }
+            }
+        }
+        return null;
+    }
     private bool CheckResources(AIKingdom kingdom, Dictionary<ResourceType, int> required)
     {
-        if (kingdom.Resources().HasEnough(required) != null) // seem to be right, right?
+        if (kingdom.Resources().HasEnough(required) == null) 
         {
-            kingdom.Resources().SpendResource(required);
             return true;
         }
         return false;
@@ -610,10 +823,13 @@ public class AIController : MonoBehaviour
     {
         public bool Finished;
         public AICityAction Action;
-        public AICityTask(AICityAction action)
+        public BaseGridEntity taskTarget;
+
+        public AICityTask(AICityAction action, BaseGridEntity taskTarget)
         {
             this.Action = action;
-            Finished= false;
+            Finished = false;
+            this.taskTarget = taskTarget;
         }
 
     }

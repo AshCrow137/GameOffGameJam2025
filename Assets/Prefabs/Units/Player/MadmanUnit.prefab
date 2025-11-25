@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 794239194931534683, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: traversableTags
-      value: -31
+      value: -29
       objectReference: {fileID: 0}
     - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -172,6 +172,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 606746352947840368, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 1227393816778969843}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3322111554733202529 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4544720228185591442, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 1227393816778969843}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4084784499067203254 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3006300019162823749, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -203,11 +214,11 @@ MonoBehaviour:
   Health: 15
   CurrentHealth: 15
   Vision: 3
-  HPImage: {fileID: 6995559725722239163}
+  HPImage: {fileID: 3322111554733202529}
   bodySprite: {fileID: 1645737243709669662}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 941539317012512611}
-  unitType: 0
+  entityType: 0
   MeleeAttackDamage: 6
   RangeAttackDamage: 1
   RetallitionAttackDamage: 2
@@ -234,20 +245,10 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 81446f5b8da6ee3439324da1e9369f44, type: 2}
+  unitTier: 1
   remainMovementText: {fileID: 1096250359029712247}
   possibleSpawnTiles: 00000000
   resourceRequirements: []
   duration: 0
   abilityImage: {fileID: 0}
   abilityDescription: 
---- !u!114 &6995559725722239163 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8078803168960123464, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
-  m_PrefabInstance: {fileID: 1227393816778969843}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -194,7 +194,7 @@ MonoBehaviour:
   bodySprite: {fileID: 3322717916722378945}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 3880829780483507900}
-  unitType: 3
+  entityType: 0
   MeleeAttackDamage: 0
   RangeAttackDamage: 0
   RetallitionAttackDamage: 0
@@ -221,6 +221,7 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 0}
+  unitTier: 2
   remainMovementText: {fileID: 4034335753520446632}
   possibleSpawnTiles: 0000000003000000
   resourceRequirements:

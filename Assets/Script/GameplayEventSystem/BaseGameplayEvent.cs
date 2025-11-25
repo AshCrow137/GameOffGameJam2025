@@ -33,7 +33,7 @@ public class ResourceEvents : BaseGameplayEvent
             amount *= -1;
         }
 
-        Resource.Instance.AddAll(new Dictionary<ResourceType, int> { { resource, amount } });
+        kingdom.Resources().AddAll(new Dictionary<ResourceType, int> { { resource, amount } });
 
         Debug.Log($"Gain {amount} {resource}");
 
@@ -77,7 +77,7 @@ public class SpawnEvents : BaseGameplayEvent
         //get the random spawn position
         Vector3Int spawnPosition = possibleSpawnPosition[Random.Range(0, possibleSpawnPosition.Count - 1)];
         //instanciate the unit
-        UnitSpawner.Instance.PlaceUnit(prefab, spawnPosition);
+        UnitSpawner.Instance.PlaceUnit(prefab, spawnPosition,kingdom);
 
         if (currentKingdom is PlayerKingdom)
         {
@@ -108,18 +108,18 @@ public class SpawnEvents : BaseGameplayEvent
                 }
                 AIKingdom randomKingdom = aiKingdoms[Random.Range(0, aiKingdoms.Count - 1)];
                 GridCity randomCity = randomKingdom.GetControlledCities()[Random.Range(0, randomKingdom.GetControlledCities().Count - 1)];
-                SpecialEventPlayer(randomCity);
+                SpecialEventPlayer(randomCity, kingdom as PlayerKingdom);
             }
             else
             {
                 Debug.Log("Special Event Enemy");
                 //choose a random city
                 GridCity city = currentKingdom.GetControlledCities()[Random.Range(0, currentKingdom.GetControlledCities().Count - 1)];
-                SpecialEventEnemy(city);
+                SpecialEventEnemy(city, kingdom as AIKingdom);
             }
         }
 
-        private void SpecialEventPlayer(GridCity city)
+        private void SpecialEventPlayer(GridCity city,PlayerKingdom kingdom)
         {
             List<Vector3Int> rangeSix = HexTilemapManager.Instance.GetCellsInRange(city.position, 6, PlayerMeleePrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
             List<Vector3Int> possibleSpawnPositions = HexTilemapManager.Instance.GetCellsInRange(city.position, 10, PlayerMeleePrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
@@ -131,13 +131,13 @@ public class SpawnEvents : BaseGameplayEvent
 
             Vector3Int spawnPosition = possibleSpawnPositions[Random.Range(0, possibleSpawnPositions.Count - 1)];
 
-            UnitSpawner.Instance.PlaceUnit(PlayerMeleePrefab, spawnPosition);
+            UnitSpawner.Instance.PlaceUnit(PlayerMeleePrefab, spawnPosition, kingdom);
 
             string text = "You Receive a MadMan Unit.";
             UIManager.Instance.ShowGamePlayEvent(text);
         }
 
-        private void SpecialEventEnemy(GridCity city)
+        private void SpecialEventEnemy(GridCity city, AIKingdom kingdom)
         {
             //get the possibles spawn positions from this city
             int possibleSpawnRange = 1;
@@ -150,7 +150,7 @@ public class SpawnEvents : BaseGameplayEvent
             //get the random spawn position
             Vector3Int spawnPosition = possibleSpawnPosition[Random.Range(0, possibleSpawnPosition.Count - 1)];
             //instanciate the unit
-            UnitSpawner.Instance.PlaceUnit(EnemyMeleePrefab, spawnPosition);
+            UnitSpawner.Instance.PlaceUnit(EnemyMeleePrefab, spawnPosition, kingdom);
         }
     }
 }

@@ -2074,8 +2074,8 @@ Tilemap:
   - first: {x: 2, y: 0, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2084,8 +2084,8 @@ Tilemap:
   - first: {x: 3, y: 0, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2094,8 +2094,8 @@ Tilemap:
   - first: {x: 4, y: 0, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2204,8 +2204,8 @@ Tilemap:
   - first: {x: 1, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2214,8 +2214,8 @@ Tilemap:
   - first: {x: 2, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2334,8 +2334,8 @@ Tilemap:
   - first: {x: 1, y: 2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2344,8 +2344,8 @@ Tilemap:
   - first: {x: 2, y: 2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2354,8 +2354,8 @@ Tilemap:
   - first: {x: 3, y: 2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2454,8 +2454,8 @@ Tilemap:
   - first: {x: -1, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2464,8 +2464,8 @@ Tilemap:
   - first: {x: 0, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2474,8 +2474,8 @@ Tilemap:
   - first: {x: 1, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -2604,8 +2604,8 @@ Tilemap:
   - first: {x: 1, y: 4, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 4
+      m_TileIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
@@ -3213,24 +3213,24 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 83
+  - m_RefCount: 95
     m_Data: {fileID: 11400000, guid: 57d438f5de39d86458a678cf5cd0875c, type: 2}
   - m_RefCount: 88
     m_Data: {fileID: 11400000, guid: e8862c54883e48d4c9cdc2346101585b, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 41
+  - m_RefCount: 29
     m_Data: {fileID: 11400000, guid: 854b8073e00824049a174c9b4f95cb78, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 88
     m_Data: {fileID: 54086242, guid: a5446fda9bf1ead4ea0b3adc248833fb, type: 3}
-  - m_RefCount: 83
+  - m_RefCount: 95
     m_Data: {fileID: -1287209148, guid: a5446fda9bf1ead4ea0b3adc248833fb, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 41
+  - m_RefCount: 29
     m_Data: {fileID: -1965546251, guid: a5446fda9bf1ead4ea0b3adc248833fb, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 212
@@ -5157,6 +5157,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1304465443759730138, guid: e8f6eb35501c2a84080e6d512d0aa3e3, type: 3}
+      propertyPath: Vision
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 80474639308438593, guid: e8f6eb35501c2a84080e6d512d0aa3e3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11484,13 +11488,19 @@ MonoBehaviour:
   unlockedBuildings:
   - {fileID: 224768452701571168, guid: 6098f03a7c5656847b684b15279a71a8, type: 3}
   - {fileID: 2983230553345176240, guid: ef2bfdbaeeb79184d95276ab6cb08647, type: 3}
-  - {fileID: 224768452701571168, guid: e7c48c72b5fac4f4683acfb5edd309c5, type: 3}
+  StartingMagic: 20
+  StartingGold: 60
+  StartingMaterials: 40
   kingdomColor: {r: 1, g: 0, b: 0, a: 0}
   DEBUGunit: {fileID: 3182714646584768010, guid: f575349a19512e44986b544e1e216aba, type: 3}
   madnessData: {fileID: 11400000, guid: bd41901770b62a3448876456096ea193, type: 2}
   maxMainProductionBuildings: 2
   maxSecondaryProductionBuilding: 1
   mainResourceType: 1
+  TotalUnlockableUnits:
+  - {fileID: 8529587581568595625, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}
+  - {fileID: 6177816509522111356, guid: db609474c7d29344d8029ccc95058d9a, type: 3}
+  - {fileID: 3182714646584768010, guid: f575349a19512e44986b544e1e216aba, type: 3}
 --- !u!1 &792029833
 GameObject:
   m_ObjectHideFlags: 0
@@ -18465,10 +18475,11 @@ MonoBehaviour:
   enemyMeleeUnit: {fileID: 2939275677540073900, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}
   knightUnit: {fileID: 4534822996348475347, guid: f575349a19512e44986b544e1e216aba, type: 3}
   madmanUnit: {fileID: 5660066150968908325, guid: e732294eda88f0341afccf18725fb5f2, type: 3}
-  testEvents:
-  - {fileID: 11400000, guid: ea6781e60a20d9d40ad00387d6bbade3, type: 2}
-  - {fileID: 11400000, guid: 80115ce5266488e4db385372153d04f8, type: 2}
-  - {fileID: 11400000, guid: 83c5fb71f84fc4e4090ef31a266f95c1, type: 2}
+  gamePlayEvents:
+  - {fileID: 11400000, guid: 184ada62440776442b86bd2b94626c7e, type: 2}
+  - {fileID: 11400000, guid: 43b6f69c01f7b7c4e9d123d411d12151, type: 2}
+  - {fileID: 11400000, guid: 20b2b5170b788144e8c4ab7041cb730f, type: 2}
+  - {fileID: 11400000, guid: 041184487ae1c2348a07f264690f4ad3, type: 2}
 --- !u!1 &1458594886
 GameObject:
   m_ObjectHideFlags: 0
@@ -19048,6 +19059,9 @@ MonoBehaviour:
   unlockedBuildings:
   - {fileID: 224768452701571168, guid: 64c33e0fa77d8c043bb0558b02262698, type: 3}
   - {fileID: 2983230553345176240, guid: 69fb587d480c39f4c859483f9528ce6b, type: 3}
+  StartingMagic: 50
+  StartingGold: 20
+  StartingMaterials: 30
   kingdomColor: {r: 0.007867813, g: 0, b: 1, a: 1}
 --- !u!114 &1507932132
 MonoBehaviour:
@@ -25293,6 +25307,9 @@ MonoBehaviour:
   controlledCities: []
   unlockedUnits: []
   unlockedBuildings: []
+  StartingMagic: 50
+  StartingGold: 20
+  StartingMaterials: 30
   kingdomColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2119146657
 MonoBehaviour:

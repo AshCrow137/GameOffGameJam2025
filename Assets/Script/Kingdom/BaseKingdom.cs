@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
-using NUnit.Framework;
 
 // Base kingdom class
 public class BaseKingdom : Entity, IMadnessable
@@ -16,7 +14,12 @@ public class BaseKingdom : Entity, IMadnessable
     protected List<BaseGridUnitScript> unlockedUnits = new List<BaseGridUnitScript> ();
     [SerializeField]
     protected List<GridBuilding> unlockedBuildings= new List<GridBuilding> ();
-
+    [SerializeField]
+    private int StartingMagic = 50;
+    [SerializeField]
+    private int StartingGold = 20;
+    [SerializeField]
+    private int StartingMaterials = 30;
     public List<Vector3Int> visibleTiles { get; protected set; } = new();
 
     public Dictionary<Vector3Int, City> cities { get; protected set; } = new();
@@ -48,7 +51,7 @@ public class BaseKingdom : Entity, IMadnessable
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
         visionManager = GetComponent<VisionManager>();
         visionManager.Initialize();
-        currentResources = new Resource(this);
+        currentResources = new Resource(this, StartingMagic,StartingGold,StartingMaterials);
         // Initializing controlled units
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
@@ -125,7 +128,20 @@ public class BaseKingdom : Entity, IMadnessable
     {
         return visibleTiles.Contains(position);
     }
-
+    public void UnlockUnit(BaseGridUnitScript unit)
+    {
+        if(!unlockedUnits.Contains(unit))
+        {
+            unlockedUnits.Add(unit);
+        }
+    }
+    public void UnlockBuilding(GridBuilding building)
+    {
+        if(!unlockedBuildings.Contains(building))
+        {
+            unlockedBuildings.Add(building);
+        }
+    }
     public int madnessLevel { get; private set; } = 0;
     [SerializeField]
     public int maxMadnessLevel { get; private set; } = 100;
