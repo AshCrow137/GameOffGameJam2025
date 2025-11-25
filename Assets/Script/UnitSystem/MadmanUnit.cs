@@ -2,9 +2,19 @@ using UnityEngine;
 
 public class MadmanUnit : BaseGridUnitScript
 {
-    public override void Initialize(BaseKingdom owner) 
-    {  
+    private int resultDamage;
+    private int baseDamage;
+
+    public override void Initialize(BaseKingdom owner)
+    {
         base.Initialize(owner);
-        MeleeAttackDamage += (int)Mathf.Round(6 * (0.1f * this.Owner.GetMadnessLevel()));
+        baseDamage = MeleeAttackDamage;
+    }
+
+    protected override void Attack(BaseGridEntity targetEntity)
+    {
+        MeleeAttackDamage += (int)Mathf.Round(6 * (0.1f * targetEntity.GetOwner().GetMadnessLevel()));
+        base.Attack(targetEntity);
+        MeleeAttackDamage = baseDamage;
     }
 }
