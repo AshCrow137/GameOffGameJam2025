@@ -34,6 +34,8 @@ public class BaseGridUnitScript : BaseGridEntity
     [SerializeField]
     protected Image movementPointsImage;
     protected List<Image> movementPointsImages = new List<Image>();
+    [SerializeField]
+    protected Animator animator;
     
     [SerializeField]
     protected int specialAbilityRange = 1;
@@ -205,7 +207,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="tile">clicked tile</param>
     /// <param name="cellPos">position of clicked tile</param>
-    protected void OnTileClicked(HexTile tile,Vector3Int cellPos)
+    protected virtual void  OnTileClicked(HexTile tile,Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
         GridCity city = hTM.GetCityOnTile(cellPos);
@@ -233,7 +235,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// </summary>
     /// <param name="targetUnit">attacked unit</param>
     /// <param name="targetUnitPosition">attacked unit position</param>
-   private void TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
+   protected void TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
     {
         if (targetUnit.GetOwner() == Owner)
         {
@@ -342,6 +344,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <param name="targetEntity"></param>
     protected virtual void Attack(BaseGridEntity targetEntity)
     {
+        animator.Play("Attack", 0, 0);
         if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position)) == 1)
         {
             targetEntity.TakeDamage(actualMeleeAttackDamage, this, false);
@@ -373,6 +376,7 @@ public class BaseGridUnitScript : BaseGridEntity
     /// <param name="retallitionAttack">bool if this damage was retallition damage or not</param>
     public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
     {
+        animator.Play("TakeDamage", 0, 0);
         int resultDamage = amount;
         if(!retallitionAttack)
         {
@@ -510,6 +514,7 @@ public class BaseGridUnitScript : BaseGridEntity
     {
         if (bIsMoving)
         {
+            animator.SetBool("isMoving", true);
             bReachedEndOfPath = false;
             float distanceToWaypoint;
             while (!bReachedEndOfPath)
@@ -553,6 +558,7 @@ public class BaseGridUnitScript : BaseGridEntity
                         // You can use this to trigger some special code if your game requires that.
                         bReachedEndOfPath = true;
                         OnEndOfPathReached();
+                        animator.SetBool("isMoving", false);
                         break;
                     }
                 }
@@ -564,6 +570,7 @@ public class BaseGridUnitScript : BaseGridEntity
             if (tilesRemain < 0)
             {
                 OnEndOfPathReached();
+                animator.SetBool("isMoving", false);
             }
             MoveTo(path.vectorPath[CurrentWaypoint]);
         }
@@ -626,7 +633,7 @@ public class BaseGridUnitScript : BaseGridEntity
         }
         
     }
-    public virtual void SpecialAbility() { }
+    public virtual void SpecialAbility() { animator.Play("Attack", 0, 0); }
     public virtual void OnChosingTile() { }
 
     protected virtual void Update()
