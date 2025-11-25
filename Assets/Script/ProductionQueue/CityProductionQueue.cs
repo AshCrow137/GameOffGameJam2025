@@ -30,7 +30,8 @@ public class CityProductionQueue : MonoBehaviour
     {
         if (currentProduction.IsComplete())
         {
-            currentProduction.EndProduction();
+
+            currentProduction.EndProduction(GetComponent<GridCity>());
             RemoveCurrentProduction();
             //ProceedProductionQueue();
         }
