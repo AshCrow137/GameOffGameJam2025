@@ -39,7 +39,8 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI materialsResourceText;
     [SerializeField]
     private GameObject GamePlayEvents;
-
+    [SerializeField]
+    private Image NextTurnImg;
     [SerializeField]
     private TextMeshProUGUI TurnCount;
 
@@ -76,6 +77,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         
         panelStats.gameObject.SetActive(false);
+        NextTurnImg.sprite = UIElements.EnemyTurn;
     }
 
     public void HasUnitSelected(bool value)
@@ -151,8 +153,14 @@ public class UIManager : MonoBehaviour
     public void ChangeTurn(int currentTurn)
     {
         TurnCount.text = (currentTurn).ToString() ;
+        ChangeNextTurnImg();
         currentturnText.text = $"current turn: {TurnManager.instance.GetCurrentActingKingdom()}";
         UnitsInteractable(true);
+    }
+
+    private void ChangeNextTurnImg()
+    {
+        NextTurnImg.sprite = NextTurnImg.sprite == UIElements.PlayerTurn ? UIElements.EnemyTurn : UIElements.PlayerTurn;
     }
 
     public void UpdateLife(BaseGridUnitScript unit)
