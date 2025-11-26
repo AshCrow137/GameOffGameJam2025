@@ -27,6 +27,18 @@
 									<ChildrenList>
 										<MusicPlaylistItem Name="" ID="{4AEA0DD2-4F5A-4973-8B45-8FCE72E3F2D9}" ShortID="195395569">
 											<PropertyList>
+												<Property Name="LoopCount" Type="int16">
+													<ModifierList>
+														<ModifierInfo>
+															<Modifier Name="" ID="{C29C13C4-3084-4232-9FE2-C57D4C961A3A}">
+																<PropertyList>
+																	<Property Name="Enabled" Type="bool" Value="True"/>
+																	<Property Name="Max" Type="Real64" Value="1"/>
+																</PropertyList>
+															</Modifier>
+														</ModifierInfo>
+													</ModifierList>
+												</Property>
 												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
 											</PropertyList>
 											<ReferenceList>
@@ -34,6 +46,43 @@
 													<ObjectRef Name="Deep Wave" ID="{DC1B1B4F-0E82-42F4-AB60-F22C47FCD12A}" WorkUnitID="{494395FE-A0CF-4FDA-8FBB-1CC7810C6C3F}"/>
 												</Reference>
 											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{D9E9288A-76FB-4A31-A27C-6B9656755CEB}" ShortID="983950661">
+											<PropertyList>
+												<Property Name="PlayMode" Type="int16" Value="3"/>
+											</PropertyList>
+											<ChildrenList>
+												<MusicPlaylistItem Name="" ID="{C5AEC358-635C-46F2-8CE5-9BDF54507304}" ShortID="145257204">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+														<Property Name="Weight" Type="Real64">
+															<ValueList>
+																<Value>40</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="Deep Wave Calm NO PERC" ID="{2849CC58-A97E-4EC9-9BB8-1924ED080B71}" WorkUnitID="{494395FE-A0CF-4FDA-8FBB-1CC7810C6C3F}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+												<MusicPlaylistItem Name="" ID="{081C416C-CCB2-4121-B4DB-F43A2B6B0DD7}" ShortID="464329050">
+													<PropertyList>
+														<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+														<Property Name="Weight" Type="Real64">
+															<ValueList>
+																<Value>60</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Segment">
+															<ObjectRef Name="Deep Wave Calm WITH PERC" ID="{40CD810B-AFD7-43F9-AAC9-E5F361FDDA86}" WorkUnitID="{494395FE-A0CF-4FDA-8FBB-1CC7810C6C3F}"/>
+														</Reference>
+													</ReferenceList>
+												</MusicPlaylistItem>
+											</ChildrenList>
 										</MusicPlaylistItem>
 									</ChildrenList>
 								</MusicPlaylistItem>
@@ -47,7 +96,31 @@
 									</PropertyList>
 									<ChildrenList>
 										<MusicTransition Name="Transition" ID="{8EF7CFA4-27A2-40F9-A408-126B70230276}">
-											<TransitionInfo/>
+											<PropertyList>
+												<Property Name="EnableDestinationFadeIn" Type="bool" Value="True"/>
+												<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
+											</PropertyList>
+											<TransitionInfo>
+												<SourceFadeOut>
+													<MusicFade Name="Source Fade-out" ID="{15217D87-EAA0-4354-AE8D-A5349E1DBDDB}">
+														<PropertyList>
+															<Property Name="FadeCurve" Type="int16" Value="1"/>
+															<Property Name="FadeOffset" Type="Real64" Value="2"/>
+															<Property Name="FadeTime" Type="Real64" Value="4"/>
+															<Property Name="FadeType" Type="int16" Value="1"/>
+														</PropertyList>
+													</MusicFade>
+												</SourceFadeOut>
+												<DestinationFadeIn>
+													<MusicFade Name="Destination Fade-in" ID="{AE56E396-0191-4A16-84BB-DADCC8EBAD0A}">
+														<PropertyList>
+															<Property Name="FadeCurve" Type="int16" Value="1"/>
+															<Property Name="FadeOffset" Type="Real64" Value="-2"/>
+															<Property Name="FadeTime" Type="Real64" Value="4"/>
+														</PropertyList>
+													</MusicFade>
+												</DestinationFadeIn>
+											</TransitionInfo>
 										</MusicTransition>
 									</ChildrenList>
 									<TransitionInfo/>
@@ -58,7 +131,7 @@
 					<ChildrenList>
 						<MusicSegment Name="Deep Wave" ID="{DC1B1B4F-0E82-42F4-AB60-F22C47FCD12A}" ShortID="146913305">
 							<PropertyList>
-								<Property Name="EndPosition" Type="Real64" Value="160013.015873016"/>
+								<Property Name="EndPosition" Type="Real64" Value="387095.089482587"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -137,6 +210,198 @@
 													<Property Name="TimeMs" Type="Real64" Value="160013.015873016"/>
 												</PropertyList>
 											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Deep Wave Calm NO PERC" ID="{2849CC58-A97E-4EC9-9BB8-1924ED080B71}" ShortID="112852796">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="160013.015873016"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="deepwave calm NO PERC" ID="{1EB4E187-B1D2-4689-B2A2-8A7D1928D444}" ShortID="481184430">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{845E030D-BDB3-4CC1-81A8-CFADF247A104}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="deepwave calm NO PERC" ID="{BA2B450C-B462-4D83-A0D3-15F04555CAA7}">
+											<Language>SFX</Language>
+											<AudioFile>Music\deepwave calm NO PERC.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1003314151"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{35558ECD-B0C4-489B-903E-D324BDF0445E}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="deepwave calm NO PERC" ID="{5982A4DD-9DDB-4BD0-8048-4B695F82A755}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="160013.015873016"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="deepwave calm NO PERC" ID="{BA2B450C-B462-4D83-A0D3-15F04555CAA7}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{0EBC87E4-B40C-4749-BB82-6EE00067DF77}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{3923F025-6E15-4B1A-A2CA-45E3BC001C9B}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="1000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Deep Wave Calm WITH PERC" ID="{40CD810B-AFD7-43F9-AAC9-E5F361FDDA86}" ShortID="756953291">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="160013.015873016"/>
+								<Property Name="OverrideEffect" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="deepwave calm with perc" ID="{8135E69B-D1A2-402E-B33F-89628C6A1416}" ShortID="3753394">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{8A9A4665-BE4C-40C3-B6BE-131E95398A14}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="deepwave calm with perc" ID="{67DF669B-37F5-4AD7-BC65-E1EC8CD6CA21}">
+											<Language>SFX</Language>
+											<AudioFile>Music\deepwave calm with perc.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="459420146"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{0562CACE-9B0A-490E-8C67-09ECDAD01E97}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="deepwave calm with perc" ID="{448C3794-DD22-4D45-9E9E-DF70DCB569C5}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="160013.015873016"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="deepwave calm with perc" ID="{67DF669B-37F5-4AD7-BC65-E1EC8CD6CA21}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{D2EFAB33-4BAD-4D57-AD72-DA6FEDA50519}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{B9BB85BA-A3AF-48D0-8E5B-FADD74E33C42}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="1000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+								<ObjectList Name="Effects">
+									<Reference>
+										<Local>
+											<EffectSlot Name="" ID="{E22CE123-E308-433E-A0C1-6127A83B2863}" ShortID="129318558">
+												<ReferenceList>
+													<Reference Name="Effect" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
+														<ObjectRef Name="Cut_3dB_100Hz" ID="{67423B74-4F0A-4719-92FE-343347C717C7}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+													</Reference>
+												</ReferenceList>
+											</EffectSlot>
 										</Local>
 									</Reference>
 								</ObjectList>
