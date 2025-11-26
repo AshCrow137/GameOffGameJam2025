@@ -4971,10 +4971,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.55
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -5009,7 +5009,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 8.032089, y: -74.58362, z: 6.8846436, w: -47.045044}
+  m_margin: {x: -4.5021515, y: -74.58362, z: -4.989868, w: -47.045044}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8885,10 +8885,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.55
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -8923,7 +8923,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 8.032089, y: -74.58362, z: 6.8846436, w: -47.045044}
+  m_margin: {x: -0.5439911, y: -74.58362, z: -1.0317078, w: -47.045044}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -12212,10 +12212,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.55
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -12250,7 +12250,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 8.032089, y: -74.58362, z: 6.8846436, w: -47.045044}
+  m_margin: {x: 0.1157074, y: -74.58362, z: 0.2876892, w: -47.045044}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -21674,14 +21674,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90654bc6b12ab5b48be08b83c11fee11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChanceToEvent: 90
-  playerMeleeUnit: {fileID: 2786966312003196167, guid: 8eaf211b604964b4da20280006963c3f, type: 3}
-  enemyMeleeUnit: {fileID: 5669369260484363274, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
-  knightUnit: {fileID: 4534822996348475347, guid: f575349a19512e44986b544e1e216aba, type: 3}
-  madmanUnit: {fileID: 5660066150968908325, guid: e732294eda88f0341afccf18725fb5f2, type: 3}
-  gamePlayEvents:
+  ChanceToEvent: 5
+  gamePlayEventsPlayer:
   - {fileID: 11400000, guid: 184ada62440776442b86bd2b94626c7e, type: 2}
   - {fileID: 11400000, guid: a8f425cc3fcf1a640a8ecd265748dd5b, type: 2}
+  - {fileID: 11400000, guid: eb67b7f519eed0d429c842806c5d6dc3, type: 2}
+  - {fileID: 11400000, guid: 07a045e39c1b9e64d8cd83eeeeae9ff6, type: 2}
+  gamePlayEventsEnemy:
+  - {fileID: 11400000, guid: b5f751ae0f2dcb7409270c3841dee32b, type: 2}
+  - {fileID: 11400000, guid: 89045a19fab739b43a7ffafdc937db29, type: 2}
+  - {fileID: 11400000, guid: 71c0bb101d762b44aaf7edbde0912fa7, type: 2}
+  - {fileID: 11400000, guid: 3ae3e7fc5551467458b5ee102f1a3613, type: 2}
   - {fileID: 11400000, guid: 20b2b5170b788144e8c4ab7041cb730f, type: 2}
   - {fileID: 11400000, guid: 041184487ae1c2348a07f264690f4ad3, type: 2}
   - {fileID: 11400000, guid: bfdeb19a3d2f28d4389eac2994a82b42, type: 2}
@@ -25320,6 +25323,7 @@ MonoBehaviour:
   goldResourceText: {fileID: 464154181}
   materialsResourceText: {fileID: 230309785}
   GamePlayEvents: {fileID: 1615774908}
+  NextTurnImg: {fileID: 540311420}
   TurnCount: {fileID: 1525202479}
   meleeAtack: {fileID: 427457301}
   rangedAtack: {fileID: 962420948}
@@ -25348,6 +25352,8 @@ MonoBehaviour:
   PlayerType: {fileID: -1121857622, guid: ef78c797c8b09354483f822a43370524, type: 3}
   CityPanel: {fileID: -246493143, guid: ef78c797c8b09354483f822a43370524, type: 3}
   UnitsProduction: []
+  PlayerTurn: {fileID: -1496866391, guid: ae95b652dd8032f4d82b755aab24d4c0, type: 3}
+  EnemyTurn: {fileID: -279877241, guid: ae95b652dd8032f4d82b755aab24d4c0, type: 3}
   EssenceImgs:
   - {fileID: 1238184722, guid: ef78c797c8b09354483f822a43370524, type: 3}
   - {fileID: 1631564902, guid: ef78c797c8b09354483f822a43370524, type: 3}
