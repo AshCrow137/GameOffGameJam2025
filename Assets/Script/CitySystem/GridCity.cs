@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GridCity : BaseGridEntity
+public class GridCity : BaseGridEntity,IDamageable
 {
     public Sprite sprite;
     public Vector3Int position;
@@ -20,15 +20,19 @@ public class GridCity : BaseGridEntity
     // Resources this city generates per turn
     public Dictionary<ResourceType, int> resourceGainPerTurn = new Dictionary<ResourceType, int>();
     private bool bCanSpawnUnits = true;
+    public CityProductionQueue productionQueue { get; private set; }
     public override void Initialize(BaseKingdom owner)
     {
         base.Initialize(owner);
         position = HexTilemapManager.Instance.WorldToCellPos(transform.position);
         CityManager.Instance.AddCity(HexTilemapManager.Instance.WorldToCellPos(transform.position), this);
-        if (GetComponent<CityProductionQueue>() == null)
+        productionQueue = GetComponent<CityProductionQueue>();
+        if (productionQueue == null)
         {
            gameObject.AddComponent<CityProductionQueue>();
+            productionQueue = GetComponent<CityProductionQueue>();
         }
+        productionQueue.Initialize(owner, this);
         hTM.PlaceCityOnTheTile(GetCellPosition(),this);
         owner.AddCityToKingdom(this);
     }
@@ -49,7 +53,7 @@ public class GridCity : BaseGridEntity
     {
         base.OnStartTurn(entity);
 
-        Debug.Log(buildings.Values);
+
     }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
@@ -70,6 +74,7 @@ public class GridCity : BaseGridEntity
         base.OnEntitySelect(selector);
         Debug.Log($"Select {this.name} city");
         GameplayCanvasManager.instance.ActivateUnitProductionPanel(this);
+        ProductionQueueUI.Instance.UpdateUI(productionQueue);
         
     }
     public override void OnEntityDeselect()

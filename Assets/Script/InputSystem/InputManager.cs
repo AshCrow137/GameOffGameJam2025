@@ -154,7 +154,7 @@ public class InputManager : MonoBehaviour
         else
         {
             
-            TileState state = HexTilemapManager.Instance.GetHoweredTileState();
+            TileState state = HexTilemapManager.Instance.GetTileState(HexTilemapManager.Instance.GetCellAtMousePosition());
             Debug.Log($"clicked tile type: {state}");
             if (selectedUnit)
             {
@@ -173,18 +173,18 @@ public class InputManager : MonoBehaviour
             if (unit)
             {
                 unit.OnEntitySelect(playerKngdom);
-                if(unit.GetOwner()==playerKngdom)
-                {
+                //if(unit.GetOwner()==playerKngdom)
+                //{
                     selectedUnit = unit;
                     bHasSelectedEntity = true;
-                }
+                //}
                 UIManager.Instance.SelectedUnit(unit);
             }
             else if(city)
             {
-                if(city.GetOwner()!=playerKngdom){
-                    return;
-                }
+                //if(city.GetOwner()!=playerKngdom){
+                //    return;
+                //}
                 selectedCity = city;
                 selectedCity.OnEntitySelect(playerKngdom);
                 bHasSelectedEntity= true;

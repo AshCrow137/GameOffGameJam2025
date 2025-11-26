@@ -33,7 +33,7 @@ public class ResourceEvents : BaseGameplayEvent
             amount *= -1;
         }
 
-        Resource.Instance.AddAll(new Dictionary<ResourceType, int> { { resource, amount } });
+        kingdom.Resources().AddAll(new Dictionary<ResourceType, int> { { resource, amount } });
 
         Debug.Log($"Gain {amount} {resource}");
 
@@ -75,7 +75,7 @@ public class SpawnEvents : BaseGameplayEvent
         //get the random spawn position
         Vector3Int spawnPosition = possibleSpawnPosition[Random.Range(0, possibleSpawnPosition.Count - 1)];
         //instanciate the unit
-        UnitSpawner.Instance.PlaceUnit(prefab, spawnPosition);
+        UnitSpawner.Instance.PlaceUnit(prefab, spawnPosition,kingdom);
 
         if (kingdom is PlayerKingdom)
         {
@@ -121,7 +121,7 @@ public class SpawnEvents : BaseGameplayEvent
 
                 Vector3Int spawnPosition = possibleSpawnPositions[Random.Range(0, possibleSpawnPositions.Count - 1)];
 
-                UnitSpawner.Instance.PlaceUnit(prefab, spawnPosition);
+            UnitSpawner.Instance.PlaceUnit(prefab, spawnPosition, kingdom);
 
                 string text = "You Receive a MadMan Unit.";
                 UIManager.Instance.ShowGamePlayEvent(text);
@@ -147,7 +147,7 @@ public class SpawnEvents : BaseGameplayEvent
                 //get the random spawn position
                 Vector3Int spawnPosition = possibleSpawnPosition[Random.Range(0, possibleSpawnPosition.Count - 1)];
                 //instanciate the unit
-                UnitSpawner.Instance.PlaceUnit(prefab, spawnPosition);
+                UnitSpawner.Instance.PlaceUnit(prefab, spawnPosition,kingdom);
             }
         }
     }

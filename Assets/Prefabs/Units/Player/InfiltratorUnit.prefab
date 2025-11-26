@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 794239194931534683, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: traversableTags
-      value: -21
+      value: -53
       objectReference: {fileID: 0}
     - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -194,7 +194,8 @@ MonoBehaviour:
   bodySprite: {fileID: 3322717916722378945}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 3880829780483507900}
-  unitType: 3
+  entityType: 0
+  CanStandOnTiles: 
   MeleeAttackDamage: 0
   RangeAttackDamage: 0
   RetallitionAttackDamage: 0
@@ -221,8 +222,9 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 0}
+  unitTier: 2
   remainMovementText: {fileID: 4034335753520446632}
-  possibleSpawnTiles: 0000000003000000
+  possibleSpawnTiles: 0000000001000000
   resourceRequirements:
   - resourceType: 0
     amount: 0

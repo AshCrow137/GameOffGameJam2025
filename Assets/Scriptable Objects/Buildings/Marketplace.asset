@@ -16,10 +16,10 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: d2894da8f47ade644b065d1578057ffa, type: 3}
   resourceRequirements:
   - resourceType: 1
-    amount: 60
+    amount: 30
   duration: 2
   owner: {fileID: 0}
-  buildingPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 3832580847944561018, guid: ef2bfdbaeeb79184d95276ab6cb08647, type: 3}
   buildingPlacementEvent:
     idInternal: 0
     valueGuidInternal: 

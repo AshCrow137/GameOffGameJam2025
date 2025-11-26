@@ -8,7 +8,9 @@ public class GridBuilding : BaseGridEntity
     //public int duration;
     //public Dictionary<ResourceType, int> resources;
     public float HpForCity;
-    
+
+    [SerializeField]
+    private Building buildingData;
 
     /// <summary>
     /// Initialize the GridBuilding with a Building scriptable object
@@ -24,6 +26,10 @@ public class GridBuilding : BaseGridEntity
         //duration = building.duration;
         //resources = new Dictionary<ResourceType, int>(building.resource);
         
+    }
+    public Building GetBuilding()
+    {
+        return buildingData;
     }
 
     public override void Death()

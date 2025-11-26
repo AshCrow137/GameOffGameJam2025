@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+
 public class GamePlayEventManager : MonoBehaviour
 {
     [SerializeField]
@@ -11,6 +13,7 @@ public class GamePlayEventManager : MonoBehaviour
 
     [SerializeField]
     private BaseGameplayEvent[] gamePlayEventsPlayer;
+
 
     [SerializeField]
     private BaseGameplayEvent[] gamePlayEventsEnemy;
@@ -22,7 +25,7 @@ public class GamePlayEventManager : MonoBehaviour
 
     public void OnStartTurn(BaseKingdom kingdom)
     {
-        int chance = Random.Range(1, ChanceToEvent);
+        int chance = Random.Range(1, 100);
         Debug.Log($"The chance is {chance}");
 
         BaseGameplayEvent gameplayEvent = null;

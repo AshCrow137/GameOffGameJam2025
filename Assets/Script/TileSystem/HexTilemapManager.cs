@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using Pathfinding;
+using NUnit.Framework;
+using UnityEngine.Timeline;
 
 
 /// <summary>
@@ -19,6 +21,7 @@ public class HexTilemapManager : MonoBehaviour
     [SerializeField] private TileBase redMarkerTile;
     [SerializeField] private TileBase greenMarkerTile;
     [SerializeField] private TileBase blueMarkerTile;
+    [SerializeField] private TileBase whiteMarkerTile;
     [SerializeField] private HexTile waterTile;
 
     [SerializeField] private Camera mainCamera;
@@ -30,15 +33,7 @@ public class HexTilemapManager : MonoBehaviour
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
     private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
 
-    public readonly List<TileState> allStates = new List<TileState>
-        {
-            TileState.Land,
-            TileState.Water,
-            TileState.OccuppiedByBuilding,
-            TileState.OccupiedByUnit,
-            TileState.Unavailable,
-            TileState.Default
-        };
+
     // Singleton instance for easy access
     public static HexTilemapManager Instance { get; private set; }
 
@@ -113,13 +108,27 @@ public class HexTilemapManager : MonoBehaviour
             case MarkerColor.Green:marker = greenMarkerTile; break;
             case MarkerColor.Blue:marker = blueMarkerTile; break;
             case MarkerColor.Red:marker = redMarkerTile; break;
+            case MarkerColor.White:marker = whiteMarkerTile; break;
         }
         markerTilemap?.SetTile(cellPos, marker);
         markerTilemap?.RefreshTile(cellPos);
     }
+    public BaseGridEntity GetEntityOnCell(Vector3Int pos)
+    {
+        BaseGridEntity entityOnCell;
+        if (GetUnitOnTile(pos))
+        {
+            entityOnCell = GetUnitOnTile(pos);
+        }
+        else
+        {
+            entityOnCell = GetCityOnTile(pos);
+        }
+        return entityOnCell;
+    }
     public void ShowMarkersForRangeAttack(BaseGridUnitScript unit,int attackRange)
     {
-       List<Vector3Int> cells =  GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, allStates);
+       List<Vector3Int> cells =  GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, EnumLibrary.AllTileStates);
         foreach (var cell in cells)
         {
             BaseGridEntity entityOnCell;
@@ -215,6 +224,40 @@ public class HexTilemapManager : MonoBehaviour
                     possibleCellsInRage.Add(pos);
 
                 }
+            }
+        }
+        return possibleCellsInRage;
+    }
+    public List<Vector3Int> GetClosestTiles(Vector3Int pos, List<Vector3Int> tiles)
+    {
+        List<Vector3Int> tempTiles = new List<Vector3Int>(tiles);
+        int dist = int.MaxValue;
+        foreach (Vector3Int tempPos in tiles)
+        {
+            int distDelta = HexTilemapManager.Instance.GetDistanceInCells(pos, tempPos);
+            if (distDelta < dist)
+            {
+                dist = distDelta;
+                tempTiles.Clear();
+                tempTiles.Add(tempPos);
+            }
+            else if (distDelta == dist)
+            {
+                tempTiles.Add(tempPos);
+            }
+        }
+        return tempTiles;
+    }
+    public List<Vector3Int> GetAllCellsOnDistance(Vector3Int startPos,int range)
+    {
+        List<Vector3Int> possibleCellsInRage = new List<Vector3Int>();
+        for (int x = startPos.x - range; x <= startPos.x + range; x++)
+        {
+            for (int y = startPos.y - range; y <= startPos.y + range; y++)
+            {
+                Vector3Int pos = new Vector3Int(x, y, 0);
+                int distance = GetDistanceInCells(startPos, pos);
+                if (distance == range)  possibleCellsInRage.Add(pos);
             }
         }
         return possibleCellsInRage;
@@ -360,6 +403,18 @@ public class HexTilemapManager : MonoBehaviour
         }
         return null;
     }
+    public List<BaseGridUnitScript> GetUnitsInRange(Vector3Int startPos, int range)
+    {
+        List<BaseGridUnitScript> unitsInRange = new List<BaseGridUnitScript>();
+        List<Vector3Int> positions = GetCellsInRange(startPos, range, new List<TileState>() {TileState.OccupiedByUnit });
+        foreach(Vector3Int pos in positions)
+        {
+            unitsInRange.Add(GetUnitOnTile(pos));
+        }
+
+
+        return unitsInRange;
+    }
     public void PlaceCityOnTheTile(Vector3Int cellPosition, GridCity city)
     {
         TileBase tile = tilemap.GetTile(cellPosition);
@@ -454,7 +509,15 @@ public class HexTilemapManager : MonoBehaviour
         // No tile at this position
         return TileState.Unavailable;
     }
-
+    public HexTile GetHexTile(Vector3Int cellPosition)
+    {
+        TileBase tile = tilemap.GetTile(cellPosition);
+        if (tile is HexTile hexTile)
+        {
+            return hexTile;
+        }
+        return null;
+    }
     /// <summary>
     /// Clears all tile states (useful for resetting the tilemap)
     /// </summary>

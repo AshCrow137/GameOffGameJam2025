@@ -117,9 +117,9 @@ public class GameplayCanvasManager : MonoBehaviour
     {
         if (!context.performed) return;
         if (selectedUnit == null) return;
-        Debug.Log(selectedUnit.unitType);
+        Debug.Log(selectedUnit.entityType);
         Debug.Log(selectedUnit.aiming);
-        if (selectedUnit.unitType == UnitType.Special && selectedUnit.aiming == true && isOnCanvas == false)
+        if (selectedUnit.entityType == EntityType.Special && selectedUnit.aiming == true && isOnCanvas == false)
         {
             selectedUnit.OnChosingTile();
         }

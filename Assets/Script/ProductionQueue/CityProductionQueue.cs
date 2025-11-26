@@ -8,6 +8,14 @@ public class CityProductionQueue : MonoBehaviour
     public Production currentProduction { get; private set; } = null;
     public List<Production> productionQueue { get; private set; } = new List<Production>();
 
+    private GridCity ownerCity;
+    private BaseKingdom ownerKingdom;
+
+    public void Initialize(BaseKingdom kingdom, GridCity city)
+    {
+        ownerCity = city;
+        ownerKingdom = kingdom;
+    }
 
     public void OnTurnEnd()
     {
@@ -22,7 +30,11 @@ public class CityProductionQueue : MonoBehaviour
         }
         currentProduction.UpdateProduction();
         CheckIfProductionComplete();
-        ProductionQueueUI.Instance.UpdateUI(this);
+        if(ownerKingdom is PlayerKingdom)
+        {
+            ProductionQueueUI.Instance.UpdateUI(this);
+        }
+        
 
     }
 
@@ -75,7 +87,10 @@ public class CityProductionQueue : MonoBehaviour
         {
             ProceedProductionQueue();
         }
-        ProductionQueueUI.Instance.UpdateUI(this);
+        if (ownerKingdom is PlayerKingdom)
+        {
+            ProductionQueueUI.Instance.UpdateUI(this);
+        }
 
     }
 
@@ -96,7 +111,10 @@ public class CityProductionQueue : MonoBehaviour
         {
             RemoveCurrentProduction();
         }
-        ProductionQueueUI.Instance.UpdateUI(this);
+        if (ownerKingdom is PlayerKingdom)
+        {
+            ProductionQueueUI.Instance.UpdateUI(this);
+        }
 
     }
 

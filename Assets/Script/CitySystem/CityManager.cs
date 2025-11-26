@@ -19,7 +19,7 @@ public class CityManager : MonoBehaviour
     [SerializeField]
     private Tilemap tilemap;
     
-    [SerializeField]
+
     private Resource resourceManager;
     public void Instantiate()
     {
@@ -214,7 +214,7 @@ public class CityManager : MonoBehaviour
         if(!cities.ContainsKey(position))
         {
             cities.Add(position, city);
-            HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
+            HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByCity);
             tilemap.RefreshTile(position);
 
             return true;

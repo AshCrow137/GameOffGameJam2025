@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EnemySpawnMeleeUnit
   m_EditorClassIdentifier: Assembly-CSharp::SpawnEvents
   EventChance: 5
-  meleePrefab: {fileID: 5669369260484363274, guid: 02cf4c5a11f847649bc6695efd1abd41, type: 3}
+  meleePrefab: {fileID: 2939275677540073900, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}

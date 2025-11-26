@@ -48,6 +48,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AK.Wwise.Event ui_menumain_settings;
     [SerializeField] public AK.Wwise.Event ui_menumain_start;
     [SerializeField] public AK.Wwise.Event ui_menumain_volume;
+    [SerializeField] public AK.Wwise.Event ui_gameplay_startTurn;
+    [SerializeField] public AK.Wwise.Event ui_menumain_ambienceMusic;
 
     //[Header("SFX Dialogue")]
     [SerializeField] public AK.Wwise.Event E_vox_empathy;

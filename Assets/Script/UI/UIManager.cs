@@ -65,7 +65,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image LifeBar;
 
-
+    public TMP_Text currentturnText;
     public void Initialize()
     {
         UIElements = GetComponent<UIElements>();
@@ -154,6 +154,7 @@ public class UIManager : MonoBehaviour
     {
         TurnCount.text = (currentTurn).ToString() ;
         ChangeNextTurnImg();
+        currentturnText.text = $"current turn: {TurnManager.instance.GetCurrentActingKingdom()}";
         UnitsInteractable(true);
     }
 

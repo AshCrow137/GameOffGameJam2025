@@ -3671,7 +3671,6 @@ MonoBehaviour:
   cityData: {fileID: 11400000, guid: 99b31f0fe19403e459d44bbacb35203b, type: 2}
   cityPrefab: {fileID: 5362795681503080690, guid: 3993b84286f151c4082707370c80c74f, type: 3}
   tilemap: {fileID: 4958529}
-  resourceManager: {fileID: 1583622226}
   unitPrefab: {fileID: 8707968407589381669, guid: b8884c110a136f642968b0bcbd82b94c, type: 3}
   unitOwner: {fileID: 1507932131}
 --- !u!114 &28648849
@@ -11752,8 +11751,18 @@ MonoBehaviour:
   - {fileID: 2118924541}
   controlledCities:
   - {fileID: 867405373}
+  unlockedUnits: []
+  unlockedBuildings: []
+  StartingMagic: 50
+  StartingGold: 20
+  StartingMaterials: 30
   kingdomColor: {r: 1, g: 0, b: 0, a: 0}
+  DEBUGunit: {fileID: 0}
   madnessData: {fileID: 11400000, guid: bd41901770b62a3448876456096ea193, type: 2}
+  maxMainProductionBuildings: 2
+  maxSecondaryProductionBuilding: 1
+  mainResourceType: 1
+  TotalUnlockableUnits: []
 --- !u!1 &792029833
 GameObject:
   m_ObjectHideFlags: 0
@@ -14046,7 +14055,6 @@ MonoBehaviour:
   - {fileID: 3832580847944561018, guid: 69fb587d480c39f4c859483f9528ce6b, type: 3}
   - {fileID: 3832580847944561018, guid: 64c33e0fa77d8c043bb0558b02262698, type: 3}
   tilemap: {fileID: 4958529}
-  resourceManager: {fileID: 1583622226}
   playerKngdom: {fileID: 1507932131}
 --- !u!4 &991753256
 Transform:
@@ -14077,6 +14085,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlledUnits: []
   controlledCities: []
+  unlockedUnits: []
+  unlockedBuildings: []
+  StartingMagic: 50
+  StartingGold: 20
+  StartingMaterials: 30
   kingdomColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &991894914
 GameObject:
@@ -14495,7 +14508,6 @@ MonoBehaviour:
   - {fileID: 788129472}
   selectionManager: {fileID: 0}
   gameplayCanvasManager: {fileID: 363294321}
-  resource: {fileID: 1583622226}
   cityUI: {fileID: 28648849}
   kingdomUI: {fileID: 0}
   addVisibleTiles: {fileID: 0}
@@ -15421,6 +15433,14 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 4eca13488e42b7e43886f271c84b99dd, type: 2}
+  ui_gameplay_startTurn:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  ui_menumain_ambienceMusic:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   E_vox_empathy:
     idInternal: 0
     valueGuidInternal: 
@@ -18537,7 +18557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427883bf8671e454da70443ee203f64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceManager: {fileID: 1583622226}
   playerKingdom: {fileID: 1507932131}
 --- !u!1 &1458594886
 GameObject:
@@ -19111,6 +19130,11 @@ MonoBehaviour:
   - {fileID: 642709461}
   controlledCities:
   - {fileID: 196379772}
+  unlockedUnits: []
+  unlockedBuildings: []
+  StartingMagic: 50
+  StartingGold: 20
+  StartingMaterials: 30
   kingdomColor: {r: 0.007867813, g: 0, b: 1, a: 1}
 --- !u!114 &1507932132
 MonoBehaviour:
@@ -21246,6 +21270,7 @@ MonoBehaviour:
   redMarkerTile: {fileID: 11400000, guid: e548ca3b24ad7e1458589f9a3b27ae5d, type: 2}
   greenMarkerTile: {fileID: 11400000, guid: 5bdbe122c56b2ac419a196b260fa4718, type: 2}
   blueMarkerTile: {fileID: 11400000, guid: da4605d8516c3a0479a41e42445c0b6a, type: 2}
+  whiteMarkerTile: {fileID: 0}
   waterTile: {fileID: 11400000, guid: 854b8073e00824049a174c9b4f95cb78, type: 2}
   mainCamera: {fileID: 1894823609}
   playerKingdom: {fileID: 1507932131}
@@ -21677,7 +21702,7 @@ MonoBehaviour:
   ChanceToEvent: 5
   gamePlayEventsPlayer:
   - {fileID: 11400000, guid: 184ada62440776442b86bd2b94626c7e, type: 2}
-  - {fileID: 11400000, guid: a8f425cc3fcf1a640a8ecd265748dd5b, type: 2}
+  - {fileID: 11400000, guid: 43b6f69c01f7b7c4e9d123d411d12151, type: 2}
   - {fileID: 11400000, guid: eb67b7f519eed0d429c842806c5d6dc3, type: 2}
   - {fileID: 11400000, guid: 07a045e39c1b9e64d8cd83eeeeae9ff6, type: 2}
   - {fileID: 11400000, guid: bfdeb19a3d2f28d4389eac2994a82b42, type: 2}
@@ -25332,6 +25357,7 @@ MonoBehaviour:
   abilityImage: {fileID: 1235331827}
   abilityText: {fileID: 1002019620}
   LifeBar: {fileID: 648495051}
+  currentturnText: {fileID: 0}
 --- !u!114 &2116678397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25419,6 +25445,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlledUnits: []
   controlledCities: []
+  unlockedUnits: []
+  unlockedBuildings: []
+  StartingMagic: 50
+  StartingGold: 20
+  StartingMaterials: 30
   kingdomColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2119146657
 MonoBehaviour:

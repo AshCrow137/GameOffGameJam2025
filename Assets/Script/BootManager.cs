@@ -24,8 +24,8 @@ public class BootManager : MonoBehaviour
     private SelectionManager selectionManager;
     [SerializeField]
     private GameplayCanvasManager gameplayCanvasManager;
-    [SerializeField]
-    private Resource resource;
+    //[SerializeField]
+    //private Resource resource;
     [SerializeField]
     private CityUI cityUI;
     [SerializeField]
@@ -58,7 +58,7 @@ public class BootManager : MonoBehaviour
 
         UIManager?.Initialize();
         buildingManager?.Instantiate();
-        resource?.Initialize();
+
         cityManager?.Instantiate();
         toggleManager?.Initialize();
         inputManager?.Initialize();
