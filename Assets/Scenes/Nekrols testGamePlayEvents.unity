@@ -21680,14 +21680,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8f425cc3fcf1a640a8ecd265748dd5b, type: 2}
   - {fileID: 11400000, guid: eb67b7f519eed0d429c842806c5d6dc3, type: 2}
   - {fileID: 11400000, guid: 07a045e39c1b9e64d8cd83eeeeae9ff6, type: 2}
+  - {fileID: 11400000, guid: bfdeb19a3d2f28d4389eac2994a82b42, type: 2}
   gamePlayEventsEnemy:
   - {fileID: 11400000, guid: b5f751ae0f2dcb7409270c3841dee32b, type: 2}
   - {fileID: 11400000, guid: 89045a19fab739b43a7ffafdc937db29, type: 2}
   - {fileID: 11400000, guid: 71c0bb101d762b44aaf7edbde0912fa7, type: 2}
   - {fileID: 11400000, guid: 3ae3e7fc5551467458b5ee102f1a3613, type: 2}
-  - {fileID: 11400000, guid: 20b2b5170b788144e8c4ab7041cb730f, type: 2}
-  - {fileID: 11400000, guid: 041184487ae1c2348a07f264690f4ad3, type: 2}
-  - {fileID: 11400000, guid: bfdeb19a3d2f28d4389eac2994a82b42, type: 2}
 --- !u!1001 &1827684303
 PrefabInstance:
   m_ObjectHideFlags: 0
