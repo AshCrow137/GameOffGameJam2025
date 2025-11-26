@@ -226,7 +226,7 @@ MonoBehaviour:
   bodySprite: {fileID: 3204221827486237449}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 4012846416483646836}
-  entityType: 0
+  entityType: 3
   CanStandOnTiles: 
   MeleeAttackDamage: 2
   RangeAttackDamage: 1
