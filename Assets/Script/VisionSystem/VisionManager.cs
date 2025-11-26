@@ -22,41 +22,11 @@ public class VisionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds all entities at the given position
-    /// </summary>
-    public List<BaseGridEntity> FindAllEntitiesAtPosition(Vector3Int position)
-    {
-        List<BaseGridEntity> entities = new List<BaseGridEntity>();
-
-        // Find unit at position
-        BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(position);
-        if (unit != null)
-        {
-            entities.Add(unit);
-        }
-
-        // Find city at position
-        GridCity city = CityManager.Instance.GetCity(position);
-        if (city != null)
-        {
-            entities.Add(city);
-
-            // Find building at position
-            if (city.buildings.TryGetValue(position, out GridBuilding building))
-            {
-                entities.Add(building);
-            }
-        }
-
-        return entities;
-    }
-
-    /// <summary>
     /// Updates all entities at the given position with the specified fog state
     /// </summary>
     public void UpdateEntitiesAtPosition(Vector3Int position, Fog fogState)
     {
-        List<BaseGridEntity> entities = FindAllEntitiesAtPosition(position);
+        List<BaseGridEntity> entities = HexTilemapManager.Instance.FindAllEntitiesAtPosition(position);
 
         foreach (BaseGridEntity entity in entities)
         {

@@ -147,6 +147,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         actualMeleeAttackDamage = MeleeAttackDamage;
         actualRangeAttackDamage = RangeAttackDamage;
         actualRetallitionAttackDamage = RetallitionAttackDamage;
+        CanStandOnTiles = possibleSpawnTiles;
     }
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
@@ -468,7 +469,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// <summary>
     /// invokes when unit dies
     /// </summary>
-    protected override void Death()
+    public override void Death()
     {
         //calculate the distance to main City if equal or less of 5 increase Madness in 5 points
         if (GetDistanceToMainCity() <= 5)

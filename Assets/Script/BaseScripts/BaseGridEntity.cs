@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,6 +59,9 @@ public class BaseGridEntity : MonoBehaviour
         }
         return EntityType.None;
     }
+    [SerializeField]
+    public List<TileState> CanStandOnTiles = new List<TileState>();
+
     public virtual void Initialize(BaseKingdom owner)
     {
         hTM = HexTilemapManager.Instance;
@@ -142,7 +146,7 @@ public class BaseGridEntity : MonoBehaviour
         Color ownerColor = Owner.GetKingdomColor();
         baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
     }
-    protected virtual void Death()
+    public virtual void Death()
     {
 
     }
@@ -175,4 +179,6 @@ public class BaseGridEntity : MonoBehaviour
     {
         return CurrentHealth;
     }
+
+    public List<TileState> GetCanStandOnTiles() { return CanStandOnTiles; }
 }
