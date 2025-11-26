@@ -14336,11 +14336,11 @@ MonoBehaviour:
     - {r: 0, g: 0, b: 0, a: 0}
   tagNames:
   - Land
-  - OccupiedByBuilding
-  - OccupiedByUnit
   - Water
+  - OccupiedByUnit
+  - OccupiedByBuilding
+  - OccupiedByCity
   - Unavailable
-  - 5
   - 6
   - 7
   - 8

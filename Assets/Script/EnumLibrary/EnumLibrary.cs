@@ -1,4 +1,19 @@
 ﻿//This file is Enum holder
+using System.Collections.Generic;
+
+public static class EnumLibrary
+{
+    public static List<TileState> AllTileStates = new List<TileState>()
+        {
+            TileState.Land,
+            TileState.Water,
+            TileState.OccuppiedByBuilding,
+            TileState.OccupiedByUnit,
+            TileState.OccupiedByCity,
+            TileState.Unavailable,
+            TileState.Default
+        };
+}
 public enum TimerDirection
 {
     INCREASE,
@@ -10,10 +25,12 @@ public enum TimerDirection
         Land,
         OccuppiedByBuilding,
         OccupiedByUnit,
+        OccupiedByCity,
         Water,
         Unavailable,
         Default
     }
+
 
     public enum ToggleUseCase
     {

@@ -33,15 +33,7 @@ public class HexTilemapManager : MonoBehaviour
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
     private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
 
-    public static readonly List<TileState> allStates = new List<TileState>
-        {
-            TileState.Land,
-            TileState.Water,
-            TileState.OccuppiedByBuilding,
-            TileState.OccupiedByUnit,
-            TileState.Unavailable,
-            TileState.Default
-        };
+
     // Singleton instance for easy access
     public static HexTilemapManager Instance { get; private set; }
 
@@ -136,7 +128,7 @@ public class HexTilemapManager : MonoBehaviour
     }
     public void ShowMarkersForRangeAttack(BaseGridUnitScript unit,int attackRange)
     {
-       List<Vector3Int> cells =  GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, allStates);
+       List<Vector3Int> cells =  GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, EnumLibrary.AllTileStates);
         foreach (var cell in cells)
         {
             BaseGridEntity entityOnCell;

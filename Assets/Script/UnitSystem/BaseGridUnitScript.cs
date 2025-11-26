@@ -155,7 +155,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         if (AttackRange > 1)
         {
             if (Owner is PlayerKingdom) hTM.ShowMarkersForRangeAttack(this, AttackRange);
-            foreach (Vector3Int pos in hTM.GetCellsInRange(GetCellPosition(), AttackRange, HexTilemapManager.allStates))
+            foreach (Vector3Int pos in hTM.GetCellsInRange(GetCellPosition(), AttackRange, EnumLibrary.AllTileStates))
             {
                 hTM.PlaceColoredMarkerOnPosition(pos, MarkerColor.White);
             }
@@ -676,7 +676,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         {
             hTM.RemoveAllMarkers();
             if (Owner is PlayerKingdom) hTM.ShowMarkersForRangeAttack(this, AttackRange);
-            foreach (Vector3Int pos in hTM.GetCellsInRange(GetCellPosition(), AttackRange, HexTilemapManager.allStates))
+            foreach (Vector3Int pos in hTM.GetCellsInRange(GetCellPosition(), AttackRange, EnumLibrary.AllTileStates))
             {
                 hTM.PlaceColoredMarkerOnPosition(pos, MarkerColor.White);
             }

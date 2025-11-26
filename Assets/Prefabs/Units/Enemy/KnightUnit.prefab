@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 794239194931534683, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: traversableTags
-      value: -29
+      value: -31
       objectReference: {fileID: 0}
     - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_LocalPosition.x
