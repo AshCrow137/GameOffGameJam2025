@@ -25,6 +25,12 @@ public class UIElements : MonoBehaviour
     [SerializeField]
     public Button[] UnitsProduction;
 
+    [Header("NextTurn Images")]
+    [SerializeField]
+    public Sprite PlayerTurn;
+    [SerializeField]
+    public Sprite EnemyTurn;
+
     [Header("Essence System")]
     [Header("Essence Images")]
     [SerializeField]
