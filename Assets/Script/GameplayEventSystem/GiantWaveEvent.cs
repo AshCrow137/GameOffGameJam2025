@@ -30,7 +30,7 @@ public class GiantWaveEvent : BaseGameplayEvent
         };
         
         // Step 4: Get all tiles within radius 3 from origin
-        List<Vector3Int> affectedTiles = hexManager.GetCellsInRange(origin, 3, hexManager.allStates);
+        List<Vector3Int> affectedTiles = hexManager.GetCellsInRange(origin, 3, allStates);
         
         // Step 5: Process each tile in radius
         foreach (Vector3Int tilePos in affectedTiles)
