@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{85329C8F-D36A-4DCE-B482-FC414DD25128}",
     "Language": "SFX",
-    "Hash": "{65D40C71-7DBF-17A1-60E5-D0B21ED9C099}",
+    "Hash": "{9E051873-5831-327A-FF4E-CF4C60F6A626}",
     "ObjectPath": "ui_bd_buy_kin_mkt",
     "ShortName": "ui_bd_buy_kin_mkt",
     "Path": "Event/ui_bd_buy_kin_mkt.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{B29CA0F2-EBAB-BAFF-F93F-41DA8AD5D89B}"
+  "FileHash": "{B69E9A15-3763-1603-A140-C0E9522E4EE9}"
  }
 }

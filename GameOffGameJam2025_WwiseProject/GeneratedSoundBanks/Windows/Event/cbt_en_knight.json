@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{F45A713A-3287-4CD2-A473-4E0DDC5307F5}",
     "Language": "SFX",
-    "Hash": "{911F3456-4C32-E09B-C531-E9FABF2F5CE6}",
+    "Hash": "{4C9F5149-2E50-C202-1626-1B064E2BCBF2}",
     "ObjectPath": "cbt_en_knight",
     "ShortName": "cbt_en_knight",
     "Path": "Event/cbt_en_knight.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{7C065AB0-11ED-1F1B-1D85-E7FC88EF6272}"
+  "FileHash": "{D16C6CDB-7172-4989-F224-734ABEC4BE4F}"
  }
 }
