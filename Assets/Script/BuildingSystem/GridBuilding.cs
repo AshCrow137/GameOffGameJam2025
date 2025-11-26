@@ -25,5 +25,27 @@ public class GridBuilding : BaseGridEntity
         //resources = new Dictionary<ResourceType, int>(building.resource);
         
     }
+
+    public override void Death()
+    {
+        base.Death();
+        
+        // Find parent city and remove this building from it
+        Vector3Int buildingPosition = GetCellPosition();
+        Dictionary<Vector3Int, GridCity> allCities = CityManager.Instance.GetAllCities();
+        
+        foreach (var cityEntry in allCities)
+        {
+            GridCity city = cityEntry.Value;
+            if (city.buildings.ContainsKey(buildingPosition))
+            {
+                city.buildings.Remove(buildingPosition);
+                break;
+            }
+        }
+        
+        GetComponent<EntityVision>()?.OnDeath();
+        gameObject.SetActive(false);
+    }
 }
 

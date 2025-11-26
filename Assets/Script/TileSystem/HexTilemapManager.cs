@@ -178,6 +178,27 @@ public class HexTilemapManager : MonoBehaviour
 
 
     }
+
+    /// <summary>
+    /// Gets all coastal land tiles (land tiles adjacent to water tiles)
+    /// </summary>
+    public List<Vector3Int> GetAllCoastalLandTiles()
+    {
+        List<Vector3Int> coastalTiles = new List<Vector3Int>();
+        BoundsInt bounds = tilemap.cellBounds;
+        
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            TileBase tile = tilemap.GetTile(pos);
+            if (tile is HexTile && GetTileState(pos) == TileState.Land && GetCellsInRange(pos, 1, new List<TileState> { TileState.Water }).Count > 0)
+            {
+                coastalTiles.Add(pos);
+            }
+        }
+        
+        return coastalTiles;
+    }
+
     public List<Vector3Int> GetCellsInRange(Vector3Int startPos, int range, List<TileState> possibleStates = null )
     {
         possibleStates = possibleStates ?? new List<TileState> { TileState.Land, TileState.Water };
@@ -367,6 +388,37 @@ public class HexTilemapManager : MonoBehaviour
         }
         return null;
     }
+
+    /// <summary>
+    /// Finds all entities at the given position
+    /// </summary>
+    public List<BaseGridEntity> FindAllEntitiesAtPosition(Vector3Int position)
+    {
+        List<BaseGridEntity> entities = new List<BaseGridEntity>();
+
+        // Find unit at position
+        BaseGridUnitScript unit = GetUnitOnTile(position);
+        if (unit != null)
+        {
+            entities.Add(unit);
+        }
+
+        // Find city at position
+        GridCity city = CityManager.Instance.GetCity(position);
+        if (city != null)
+        {
+            entities.Add(city);
+
+            // Find building at position
+            if (city.buildings.TryGetValue(position, out GridBuilding building))
+            {
+                entities.Add(building);
+            }
+        }
+
+        return entities;
+    }
+
     private void UpdateTileWalkability(Vector3Int cellPos,TileState state)
     {
         Bounds newBounds = new Bounds();

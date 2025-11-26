@@ -43,6 +43,7 @@ public class GamePlayEventManager : MonoBehaviour
         int chance = Random.Range(1, 100);
         Debug.Log($"The chance is {chance}");
         BaseGameplayEvent gameplayEvent = gamePlayEvents[Random.Range(0, gamePlayEvents.Length)];
+        // BaseGameplayEvent gameplayEvent = gamePlayEvents[4]; //testing greatwave event
 
         if (chance <= gameplayEvent.GetEventChance())
         {
