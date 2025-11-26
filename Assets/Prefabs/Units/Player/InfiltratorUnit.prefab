@@ -195,6 +195,7 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 3880829780483507900}
   entityType: 0
+  CanStandOnTiles: 
   MeleeAttackDamage: 0
   RangeAttackDamage: 0
   RetallitionAttackDamage: 0
@@ -223,7 +224,7 @@ MonoBehaviour:
     WwiseObjectReference: {fileID: 0}
   unitTier: 2
   remainMovementText: {fileID: 4034335753520446632}
-  possibleSpawnTiles: 0000000004000000
+  possibleSpawnTiles: 0000000001000000
   resourceRequirements:
   - resourceType: 0
     amount: 0
