@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 794239194931534683, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: traversableTags
-      value: -24
+      value: -54
       objectReference: {fileID: 0}
     - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -128,6 +128,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1984634656711234374}
+    - targetCorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5374767065553080683}
   m_SourcePrefab: {fileID: 100100000, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
 --- !u!114 &149017185224813729 stripped
 MonoBehaviour:
@@ -161,6 +164,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 566962491661030381, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 3146309316788867300}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &5374767065553080683
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3204221827486237449}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 56a9d3d3bfd835c4d9ae6bf03f9bf72a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3861786582074820448 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2179247202424280964, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
@@ -201,7 +226,8 @@ MonoBehaviour:
   bodySprite: {fileID: 3204221827486237449}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 4012846416483646836}
-  unitType: 3
+  entityType: 3
+  CanStandOnTiles: 
   MeleeAttackDamage: 2
   RangeAttackDamage: 1
   RetallitionAttackDamage: 1
@@ -213,6 +239,7 @@ MonoBehaviour:
   CanMoveAfterattack: 0
   movementPointsPanel: {fileID: 2576752987947636116}
   movementPointsImage: {fileID: 149017185224813729}
+  animator: {fileID: 5374767065553080683}
   specialAbilityRange: 1
   aiming: 0
   unitAttackSoundEvent:
@@ -227,8 +254,9 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 81446f5b8da6ee3439324da1e9369f44, type: 2}
+  unitTier: 2
   remainMovementText: {fileID: 3861786582074820448}
-  possibleSpawnTiles: 03000000
+  possibleSpawnTiles: 01000000
   resourceRequirements: []
   duration: 1
   abilityImage: {fileID: 21300000, guid: bfb8722b63502a04ea8d0bf66a418d9b, type: 3}

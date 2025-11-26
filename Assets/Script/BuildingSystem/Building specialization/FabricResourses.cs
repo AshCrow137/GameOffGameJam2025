@@ -18,6 +18,10 @@ public class FabricResourses : GridBuilding
         if (productGold > 0)    product.Add(ResourceType.Gold, productGold);
         if (productMagic > 0)   product.Add(ResourceType.Magic, productMagic);
         if (productMaterial > 0)product.Add(ResourceType.Materials, productMaterial);
-        Resource.Instance.AddAll(product);
+        Owner.Resources().AddAll(product);
+    }
+    public Dictionary<ResourceType, int> GetProduction()
+    {
+        return new Dictionary<ResourceType, int>() { {ResourceType.Magic, productMagic }, { ResourceType.Gold, productGold }, { ResourceType.Materials, productMaterial} };
     }
 }

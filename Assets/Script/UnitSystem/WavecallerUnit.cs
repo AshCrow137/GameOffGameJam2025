@@ -54,6 +54,7 @@ public class WavecallerUnit : BaseGridUnitScript
     // Triggers after pressing ability button, returns if no land tiles in range, starts transformation if right tile is chosen
     public override void SpecialAbility()
     {
+        base.SpecialAbility();
         possibleCellsInRange = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
         if (possibleCellsInRange.Count == 0)
         {

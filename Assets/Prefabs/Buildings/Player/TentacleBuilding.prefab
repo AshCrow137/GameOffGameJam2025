@@ -445,7 +445,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 483940085929675459, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Name
-      value: RiftofWhispers Variant
+      value: TentacleBuilding
       objectReference: {fileID: 0}
     - target: {fileID: 1922668860728381344, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Size.x
@@ -638,9 +638,9 @@ MonoBehaviour:
   - {fileID: 2110435113456005617}
   - {fileID: 5752808428077572717}
   rotatebleCanvas: {fileID: 8551652696335946812}
-  buildingName: 
-  duration: 0
+  entityType: 4
   HpForCity: 10
+  buildingData: {fileID: 0}
   productGold: 0
   productMagic: 10
   productMaterial: 0

@@ -12,17 +12,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCity Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: entityType
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4086409141070172977, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: visionRadius
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5193054833253384982, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.57
+      value: 4.4774203
       objectReference: {fileID: 0}
     - target: {fileID: 5193054833253384982, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.32
+      value: 4.293129
       objectReference: {fileID: 0}
     - target: {fileID: 5193054833253384982, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_LocalPosition.z

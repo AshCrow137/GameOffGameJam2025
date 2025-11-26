@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,7 +37,10 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI goldResourceText;
     [SerializeField]
     private TextMeshProUGUI materialsResourceText;
-
+    [SerializeField]
+    private GameObject GamePlayEvents;
+    [SerializeField]
+    private Image NextTurnImg;
     [SerializeField]
     private TextMeshProUGUI TurnCount;
 
@@ -61,7 +65,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image LifeBar;
 
-
+    public TMP_Text currentturnText;
     public void Initialize()
     {
         UIElements = GetComponent<UIElements>();
@@ -73,6 +77,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         
         panelStats.gameObject.SetActive(false);
+        NextTurnImg.sprite = UIElements.EnemyTurn;
     }
 
     public void HasUnitSelected(bool value)
@@ -148,7 +153,14 @@ public class UIManager : MonoBehaviour
     public void ChangeTurn(int currentTurn)
     {
         TurnCount.text = (currentTurn).ToString() ;
+        ChangeNextTurnImg();
+        currentturnText.text = $"current turn: {TurnManager.instance.GetCurrentActingKingdom()}";
         UnitsInteractable(true);
+    }
+
+    private void ChangeNextTurnImg()
+    {
+        NextTurnImg.sprite = NextTurnImg.sprite == UIElements.PlayerTurn ? UIElements.EnemyTurn : UIElements.PlayerTurn;
     }
 
     public void UpdateLife(BaseGridUnitScript unit)
@@ -216,14 +228,20 @@ public class UIManager : MonoBehaviour
     {
 
     }
-    private void Update()
-    {
-        //timer += Time.deltaTime;
-        //UpdateResourceImages((int)timer);
-        //if(timer >= 120)
-        //{
-        //    timer = 0;
-        //}
 
+    public void ShowGamePlayEvent(string text)
+    {
+        GamePlayEvents.SetActive(true);
+        TextMeshProUGUI panelText = GamePlayEvents.GetComponentInChildren<TextMeshProUGUI>();
+        panelText.text = text;
+
+        StartCoroutine("ShowOffGamePlayEvents");
+    }
+
+    IEnumerator ShowOffGamePlayEvents()
+    {
+        yield return new WaitForSeconds(3);
+
+        GamePlayEvents.SetActive(false);
     }
 }
