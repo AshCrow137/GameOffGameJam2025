@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{0816263F-1AC6-4FB2-AD3A-5827A6711C49}",
     "Language": "SFX",
-    "Hash": "{A43F55A9-A466-800B-1130-16886C5950EF}",
+    "Hash": "{26250620-BC92-53BA-BD9D-1C73E2CF8DB5}",
     "ObjectPath": "cbt_plr_madman",
     "ShortName": "cbt_plr_madman",
     "Path": "Event/cbt_plr_madman.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{1A7FC11A-49C6-76EC-78B0-C3C44E17BD93}"
+  "FileHash": "{E04D095A-EEF5-8C94-E213-49BA6CF95367}"
  }
 }

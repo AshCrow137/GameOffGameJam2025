@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{7C5C8177-4169-42DD-AD7A-F5020BA6F758}",
     "Language": "SFX",
-    "Hash": "{A0DCBBDA-56CD-A04A-9440-B31217C261F8}",
+    "Hash": "{1BA653EF-D4F9-E385-7B94-603EF98D7F02}",
     "ObjectPath": "ui_nextturn",
     "ShortName": "ui_nextturn",
     "Path": "Event/ui_nextturn.bnk",
@@ -32,8 +32,8 @@
       "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_nextturn",
       "GUID": "{7C5C8177-4169-42DD-AD7A-F5020BA6F758}",
       "DurationType": "OneShot",
-      "DurationMin": "0.875",
-      "DurationMax": "0.875",
+      "DurationMin": "0.8164039",
+      "DurationMax": "0.9378017",
       "MediaRefs": [
        {
         "Id": "317421359"
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{3DA8740C-7C06-CC00-091E-B3AFC20AB1CC}"
+  "FileHash": "{B5759A14-E5B7-D310-CED3-4F3A74AEC35E}"
  }
 }

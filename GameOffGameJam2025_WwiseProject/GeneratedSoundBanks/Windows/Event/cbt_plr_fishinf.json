@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{262FE0D6-E3D9-46B5-9362-87F946B6C42C}",
     "Language": "SFX",
-    "Hash": "{3F6F05B0-B701-DDDB-D3F6-2861EBE99D71}",
+    "Hash": "{FC207974-497D-04C6-4778-65A0CDE852F3}",
     "ObjectPath": "cbt_plr_fishinf",
     "ShortName": "cbt_plr_fishinf",
     "Path": "Event/cbt_plr_fishinf.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{042E5729-308A-8391-74FD-A385426B5180}"
+  "FileHash": "{53080E02-C76B-C8AC-2DBA-D84A74390A9A}"
  }
 }

@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{B4E7202D-6A74-4BE2-8015-4284A56458CE}",
     "Language": "SFX",
-    "Hash": "{6E2D77FA-3DE1-C896-1987-244C7E748AE3}",
+    "Hash": "{30008CB0-C98F-83C2-0F6F-651B7A6C584E}",
     "ObjectPath": "cbt_en_longbow",
     "ShortName": "cbt_en_longbow",
     "Path": "Event/cbt_en_longbow.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{EC44FCB1-3B84-07F5-C62B-CAAECBCF2FE1}"
+  "FileHash": "{50E243D6-13B2-5D90-CA90-258864B7728D}"
  }
 }
