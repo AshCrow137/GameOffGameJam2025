@@ -242,10 +242,11 @@ MonoBehaviour:
   bodySprite: {fileID: 7884187323099228737}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 8551652696335946812}
-  entityType: 0
+  entityType: 4
   HpForCity: 20
   buildingData: {fileID: 11400000, guid: f9272fbad5721e84397692ed845db65e, type: 2}
   unitName: Special
+  unitToOpen: {fileID: 0}
 --- !u!4 &6260741474477631231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}

@@ -218,7 +218,7 @@ MonoBehaviour:
   bodySprite: {fileID: 7884187323099228737}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 8551652696335946812}
-  entityType: 0
+  entityType: 4
   HpForCity: 15
   buildingData: {fileID: 11400000, guid: 8ccc24d5e45226748bdcbec96dd41d33, type: 2}
   productGold: 25

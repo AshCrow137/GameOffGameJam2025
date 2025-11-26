@@ -154,7 +154,7 @@ public class InputManager : MonoBehaviour
         else
         {
             
-            TileState state = HexTilemapManager.Instance.GetHoweredTileState();
+            TileState state = HexTilemapManager.Instance.GetTileState(HexTilemapManager.Instance.GetCellAtMousePosition());
             Debug.Log($"clicked tile type: {state}");
             if (selectedUnit)
             {

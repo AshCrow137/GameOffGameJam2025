@@ -214,6 +214,7 @@ public class CityManager : MonoBehaviour
         if(!cities.ContainsKey(position))
         {
             cities.Add(position, city);
+            HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(position, MarkerColor.Green);
             HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByCity);
             tilemap.RefreshTile(position);
 

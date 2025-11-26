@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 794239194931534683, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: traversableTags
-      value: -22
+      value: -54
       objectReference: {fileID: 0}
     - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -255,7 +255,7 @@ MonoBehaviour:
     WwiseObjectReference: {fileID: 11400000, guid: 81446f5b8da6ee3439324da1e9369f44, type: 2}
   unitTier: 2
   remainMovementText: {fileID: 3861786582074820448}
-  possibleSpawnTiles: 03000000
+  possibleSpawnTiles: 04000000
   resourceRequirements: []
   duration: 1
   abilityImage: {fileID: 21300000, guid: bfb8722b63502a04ea8d0bf66a418d9b, type: 3}

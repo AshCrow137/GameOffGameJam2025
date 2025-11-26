@@ -5161,6 +5161,10 @@ PrefabInstance:
       propertyPath: Vision
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: -1304465443759730138, guid: e8f6eb35501c2a84080e6d512d0aa3e3, type: 3}
+      propertyPath: 'possibleSpawnTiles.Array.data[1]'
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 80474639308438593, guid: e8f6eb35501c2a84080e6d512d0aa3e3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14306,7 +14310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAoIeyNnseEdgIAADsFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVMty2jAU/RVG68L4gSF010JCukjChHS68UbY11iDLHkkOUAy/Ht15WfcrhDn3Me5L38SJnQJiZFqq1j6JFMg3yfkES70KAXl5Nukt2jQPfuA1nDDaAEGFNpRZ/ZKDZOW8tFTS8sqlvwQR4720Xy2DKMFcpVgmVTFfXqEtdRGW9aoCiyjpMEYwiKfE3KxP9N5ZPGrfQVLz74+7GvlTW72mYDA9J2p1xh6s3kYhUE4Xy4bh9q+EgmnRQkpVtG7BdEs8PzgbhG2iTrAuQlbb+Phz7zI86Jwgdkl50w3Wom5lq4pr/SK/Ujb3tTNyIEdc4Ohh44vWabBNMIVvW6Ysk2sI5Kf0uQYqaD6VGt9p7zCHHdOVR3y6R926js6U7J4bLP6HmYwOUtOVl9CNYIZ5RpG8Oar7EqcKT/RA4c/OYhnuVWyEmk/rUpDsOn/doWtc0hOPV5LHYFV+Z/BNePCGm6u9suas+JQz7QG9ly6Tq/QGJSdzS8r2C2NbkJYFFX81vBGj3pQakM8MKWNpZoqBco7yEqhKdmzC7Y9qcxaKgFqsJwl2Ksw150NYsbjG3GDpCPmgeI5Nakbrj2RkYuDe3vPG1E7ee5GpXN5fgKdv1SGMwG9aCSebZfWUoh6u4Ydad32lcpoMtRwrFj6dbMInoQfBku6iFbR4XA3XQXhMslWGUSJ74fpgrjVY8IWSvmuVtr0xw5N9KKEXTOMiN+dyVbR0q16quh5yz4KOeg5E5ncJwpAvNQROuWgbBJ7lul9ymyH9mAME27c5DMmXCYnSOMuUOxKvb8YReM+SkxK9i4NIjFZu89JTBDuVnmn4J3BGZO3wW7k9hdQSwMEFAAACAgAACgh7BcLX49tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKhkYWZobGReaKZqaVpUpKFrqWRsXlymmVaqmmyoaFxiplSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAACgh7I2ex4R2AgAAOwUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAACgh7BcLX49tAAAAeAAAAAkAJAAAAAAAAAAAAAAAwwIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAB7AwAAAAA=
+    dataString: UEsDBBQAAAgIAAAoIeyQR1DGdgIAADoFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVMty2jAU/RVG68L4gSF010JCukjChHS68UbY11iDLHkkOUAy/Ht15WfcrhDn3Me5L38SJnQJiZFqq1j6JFMg3yfkES70KAXl5Nukt2jQPfuA1nDDaAEGFNpRZ/ZKDZOW8tFTS8sqlvwQR4720Xy2DKMFcpVgmVTFfXqEtdRGW9aoCiyjpMEYwiKfE3KxP9N5ZPGrfQVLz74+7GvlTW72mYDA9J2p1xh6s3kYhUE4Xy4bh9q+EgmnRQkpVtG7BdEs8PzgbhG2iTrAuQlbb+Phz7zI86Jwgdkl50w3Wom5lq4pr/SK/Ujb3tTNyIEdc4Ohh44vWabBNMIVvW6Ysk2sI5Kf0uQYqaD6VGt9p7zCHHdOVR3y6R926js6U7J4bLP6HmYwOUtOVl9CNYIZ5RpG8Oar7EqcKT/RA4c/OYhnuVWyEmk/rUpDsOn/doWtc0hOPV5LHYFV+Z/BNePCGm6u9suas+JQz7QG9ly6Tq/QGJSdzS8r2C2NbkJYFFX81vBGj3pQakM8MKWNpZoqBco7yEqhKdmzC7Y9qcxaKgFqsJwl2Ksw150NYsbjG3GDpCPmgeI5Nakbrj2RkYuDe3vPG1E7ee5GpXN5fgKdv1SGMwG9aCSebZfWUoh6u4Ydad32lcpoMnA7Viz9ulgEL8IPgyVdRKvocLibroJwmWSrDKLE98N0QdzmMWHrpHxXC23aY2cm+uDCbhlGxM/OZKto6TY9VfS8ZR+FHLSciUzuEwUgXuoInXBQNom9yvQ+ZbZBezCGCTdt8hkTLpMTpHEXKHaV3l+MonEfJSYle5cGkZis3dckJgh3m7xT8M7gjMnbYDdy+wtQSwMEFAAACAgAACgh7BcLX49tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKhkYWZobGReaKZqaVpUpKFrqWRsXlymmVaqmmyoaFxiplSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAACgh7JBHUMZ2AgAAOgUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAACgh7BcLX49tAAAAeAAAAAkAJAAAAAAAAAAAAAAAwwIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAB7AwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -18199,13 +18203,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5231169225954592556, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: traversableTags
+      value: -53
+      objectReference: {fileID: 0}
     - target: {fileID: 5503908492604276651, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.786
+      value: 1.54
       objectReference: {fileID: 0}
     - target: {fileID: 5503908492604276651, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.875
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 5503908492604276651, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18471,15 +18479,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChanceToEvent: 3
-  playerMeleeUnit: {fileID: 2024756050137535649, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
-  enemyMeleeUnit: {fileID: 2939275677540073900, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}
-  knightUnit: {fileID: 4534822996348475347, guid: f575349a19512e44986b544e1e216aba, type: 3}
-  madmanUnit: {fileID: 5660066150968908325, guid: e732294eda88f0341afccf18725fb5f2, type: 3}
-  gamePlayEvents:
+  gamePlayEventsPlayer:
   - {fileID: 11400000, guid: 184ada62440776442b86bd2b94626c7e, type: 2}
   - {fileID: 11400000, guid: 43b6f69c01f7b7c4e9d123d411d12151, type: 2}
-  - {fileID: 11400000, guid: 20b2b5170b788144e8c4ab7041cb730f, type: 2}
-  - {fileID: 11400000, guid: 041184487ae1c2348a07f264690f4ad3, type: 2}
+  - {fileID: 11400000, guid: eb67b7f519eed0d429c842806c5d6dc3, type: 2}
+  - {fileID: 11400000, guid: 07a045e39c1b9e64d8cd83eeeeae9ff6, type: 2}
+  gamePlayEventsEnemy:
+  - {fileID: 11400000, guid: b5f751ae0f2dcb7409270c3841dee32b, type: 2}
+  - {fileID: 11400000, guid: 89045a19fab739b43a7ffafdc937db29, type: 2}
+  - {fileID: 11400000, guid: 71c0bb101d762b44aaf7edbde0912fa7, type: 2}
+  - {fileID: 11400000, guid: 3ae3e7fc5551467458b5ee102f1a3613, type: 2}
 --- !u!1 &1458594886
 GameObject:
   m_ObjectHideFlags: 0
@@ -25220,6 +25229,7 @@ MonoBehaviour:
   goldResourceText: {fileID: 464154181}
   materialsResourceText: {fileID: 230309785}
   GamePlayEvents: {fileID: 1774377255}
+  NextTurnImg: {fileID: 540311420}
   TurnCount: {fileID: 1525202479}
   meleeAtack: {fileID: 427457301}
   rangedAtack: {fileID: 962420948}
@@ -25249,6 +25259,8 @@ MonoBehaviour:
   PlayerType: {fileID: -1121857622, guid: ef78c797c8b09354483f822a43370524, type: 3}
   CityPanel: {fileID: -246493143, guid: ef78c797c8b09354483f822a43370524, type: 3}
   UnitsProduction: []
+  PlayerTurn: {fileID: -1496866391, guid: af1588c3f8ec96c4683b50c2815dadee, type: 3}
+  EnemyTurn: {fileID: -279877241, guid: ae95b652dd8032f4d82b755aab24d4c0, type: 3}
   EssenceImgs:
   - {fileID: 1238184722, guid: ef78c797c8b09354483f822a43370524, type: 3}
   - {fileID: 1631564902, guid: ef78c797c8b09354483f822a43370524, type: 3}

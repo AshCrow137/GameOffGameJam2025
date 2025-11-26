@@ -23,10 +23,10 @@ public enum TimerDirection
     public enum TileState
     {
         Land,
-        OccuppiedByBuilding,
-        OccupiedByUnit,
-        OccupiedByCity,
         Water,
+        OccupiedByUnit,
+        OccuppiedByBuilding,
+        OccupiedByCity,
         Unavailable,
         Default
     }

@@ -25,7 +25,7 @@ public class GamePlayEventManager : MonoBehaviour
 
     public void OnStartTurn(BaseKingdom kingdom)
     {
-        int chance = Random.Range(1, ChanceToEvent);
+        int chance = Random.Range(1, 100);
         Debug.Log($"The chance is {chance}");
 
         BaseGameplayEvent gameplayEvent = null;
