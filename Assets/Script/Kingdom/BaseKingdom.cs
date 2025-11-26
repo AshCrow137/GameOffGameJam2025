@@ -1,21 +1,30 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 // Base kingdom class
 public class BaseKingdom : Entity, IMadnessable
 {
-    private Resource currentResources = new Resource();
+    private Resource currentResources;
     public List<HexTile> occupiedTiles { get; protected set; } = new();
     [SerializeField]
     protected List<BaseGridUnitScript> controlledUnits = new();
     [SerializeField]
     protected List<GridCity> controlledCities = new();
-
+    [SerializeField]
+    protected List<BaseGridUnitScript> unlockedUnits = new List<BaseGridUnitScript> ();
+    [SerializeField]
+    protected List<GridBuilding> unlockedBuildings= new List<GridBuilding> ();
+    [SerializeField]
+    private int StartingMagic = 50;
+    [SerializeField]
+    private int StartingGold = 20;
+    [SerializeField]
+    private int StartingMaterials = 30;
     public List<Vector3Int> visibleTiles { get; protected set; } = new();
 
     public Dictionary<Vector3Int, City> cities { get; protected set; } = new();
     protected bool isDefeated = false;
+    protected VisionManager visionManager;
     public void AddCity(City city)
     {
         cities.Add(city.position, city);
@@ -33,11 +42,16 @@ public class BaseKingdom : Entity, IMadnessable
     protected Color kingdomColor  = new Color();
 
     public Color GetKingdomColor() { return kingdomColor; }
+    public Resource Resources() => currentResources;
+    public List<BaseGridUnitScript> ControlledUnits => controlledUnits;
 
     public virtual void Initialize()
     {
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
+        visionManager = GetComponent<VisionManager>();
+        visionManager.Initialize();
+        currentResources = new Resource(this, StartingMagic,StartingGold,StartingMaterials);
         // Initializing controlled units
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
@@ -52,6 +66,10 @@ public class BaseKingdom : Entity, IMadnessable
     protected virtual void OnStartTurn(BaseKingdom kingdom)
     {
         if (kingdom != this) return;
+        foreach( BaseGridUnitScript unit in controlledUnits)
+        {
+            unit.RefreshUnit();
+        }
     }
 
     protected virtual void OnEndTurn(BaseKingdom kingdom)
@@ -110,7 +128,20 @@ public class BaseKingdom : Entity, IMadnessable
     {
         return visibleTiles.Contains(position);
     }
-
+    public void UnlockUnit(BaseGridUnitScript unit)
+    {
+        if(!unlockedUnits.Contains(unit))
+        {
+            unlockedUnits.Add(unit);
+        }
+    }
+    public void UnlockBuilding(GridBuilding building)
+    {
+        if(!unlockedBuildings.Contains(building))
+        {
+            unlockedBuildings.Add(building);
+        }
+    }
     public int madnessLevel { get; private set; } = 0;
     [SerializeField]
     public int maxMadnessLevel { get; private set; } = 100;
@@ -161,6 +192,11 @@ public class BaseKingdom : Entity, IMadnessable
         }
     }
 
+    public List<GridCity> GetControlledCities()
+    {
+        return controlledCities;
+    }
+
     public virtual int GetUnitsCountInRange(int range)
     {
         // Find units, not controlled by this kingdom in rage 
@@ -192,6 +228,7 @@ public class BaseKingdom : Entity, IMadnessable
         Debug.Log("Units in range " + range + ": " + result);
         return result;
     }
-
+    public List<GridBuilding> GetUnlockedBuildings() { return unlockedBuildings; }
+    public List<BaseGridUnitScript> GetunlockedUnits() { return unlockedUnits; }
 
 }

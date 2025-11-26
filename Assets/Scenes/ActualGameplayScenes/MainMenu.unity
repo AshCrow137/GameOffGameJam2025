@@ -674,6 +674,14 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 4eca13488e42b7e43886f271c84b99dd, type: 2}
+  ui_gameplay_startTurn:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 7d17c8025e0d9b04daf095f729e34a72, type: 2}
+  ui_menumain_ambienceMusic:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 0677e1c10a4144c44b02625553d13dbc, type: 2}
   E_vox_empathy:
     idInternal: 0
     valueGuidInternal: 
@@ -2279,7 +2287,7 @@ Transform:
   m_GameObject: {fileID: 1571807263}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.234938, y: -6.1032057, z: -3.834849}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

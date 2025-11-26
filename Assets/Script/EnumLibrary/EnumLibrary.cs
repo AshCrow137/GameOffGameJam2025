@@ -1,4 +1,19 @@
 ﻿//This file is Enum holder
+using System.Collections.Generic;
+
+public static class EnumLibrary
+{
+    public static List<TileState> AllTileStates = new List<TileState>()
+        {
+            TileState.Land,
+            TileState.Water,
+            TileState.OccuppiedByBuilding,
+            TileState.OccupiedByUnit,
+            TileState.OccupiedByCity,
+            TileState.Unavailable,
+            TileState.Default
+        };
+}
 public enum TimerDirection
 {
     INCREASE,
@@ -8,12 +23,14 @@ public enum TimerDirection
     public enum TileState
     {
         Land,
-        OccuppiedByBuilding,
-        OccupiedByUnit,
         Water,
+        OccupiedByUnit,
+        OccuppiedByBuilding,
+        OccupiedByCity,
         Unavailable,
         Default
     }
+
 
     public enum ToggleUseCase
     {
@@ -44,12 +61,14 @@ public enum SelectionType
         SpawnUnit,
         SpawnBuilding
     }
-public enum UnitType
+public enum EntityType
 {
     Infantry,
     Archer,
     Cavalry,
-    Special
+    Special,
+    Building,
+    None
 }
 
 public enum Fog
@@ -65,6 +84,35 @@ public enum ProductionType
     Unit,
     Building
 }
+
+public enum AIUnitAction
+{
+    None,
+    Attack,
+    Move,
+    UseAbility,
+    Explore
+    
+}
+public enum AIMacroAction
+{
+    None,
+    Combat,
+    Build,
+    Explore
+}
+public enum AICityAction
+{
+    BuildProductionBuilding,
+    BuildUnitTechBuilding,
+    BuildHighTirUnit,
+    BuildRangeUnit,
+    BuildMeleeUnit,
+    None
+}
+
+
+
 public enum MarkerColor
 {
     Red,
@@ -77,4 +125,12 @@ public enum UnitMode
     None,
     Aiming,
     Casting
+}
+
+public enum GamePlayEvent
+{
+    GainResource,
+    LostResource,
+    SpawnUnit,
+    SpecialEvent
 }

@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 512
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -95,12 +95,408 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: sea_walker_anim_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 1041
+        width: 440
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3385f08faa086a1458778edf6fa10ce3
+      internalID: 124134938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_1
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1045
+        width: 432
+        height: 511
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f0f9cf640c944f44ae9992d3b633e88
+      internalID: 52234419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_2
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 1047
+        width: 426
+        height: 509
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79af1df09f3bc134dbca97a653a05338
+      internalID: -1406411362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_3
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 1045
+        width: 422
+        height: 511
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7371e2bff66a9d48b81386bd7da1bde
+      internalID: -1832511515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_4
+      rect:
+        serializedVersion: 2
+        x: 1807
+        y: 1042
+        width: 419
+        height: 514
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bab240895de65f4eb53ad8b8afa77cd
+      internalID: -991910198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_5
+      rect:
+        serializedVersion: 2
+        x: 2250
+        y: 1041
+        width: 413
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d3fc327d89d1f049ae4d05b19fae2f9
+      internalID: -1591795020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_6
+      rect:
+        serializedVersion: 2
+        x: 2702
+        y: 1045
+        width: 419
+        height: 509
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9459367edc1b021429fc4d3e558845c6
+      internalID: 77991895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_7
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 514
+        width: 422
+        height: 509
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e65924081ea5924abae8c36232aa756
+      internalID: 1994493788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_8
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 512
+        width: 421
+        height: 511
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe4aa3828553a8f4d9a2bec09b0e314f
+      internalID: 1936857475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_9
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 511
+        width: 426
+        height: 511
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60794c5cef26db84094a957bbf9e5021
+      internalID: -109560037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_10
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 529
+        width: 422
+        height: 493
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08dd76888153d8d4cabe31ebe05b69d4
+      internalID: -1133832182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_11
+      rect:
+        serializedVersion: 2
+        x: 1807
+        y: 538
+        width: 445
+        height: 478
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a3050591e37b614881aba435cc7d274
+      internalID: 70799754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_12
+      rect:
+        serializedVersion: 2
+        x: 2259
+        y: 541
+        width: 445
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e883aceb9c71ae24f8c1a6a155fa0584
+      internalID: 1753076633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_13
+      rect:
+        serializedVersion: 2
+        x: 2711
+        y: 538
+        width: 445
+        height: 478
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0af4ac2ec28067745b1e311d17100784
+      internalID: -1857214748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_14
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 29
+        width: 446
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92406d773ea7a944cbe63264903e9822
+      internalID: 1435829331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_15
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 30
+        width: 450
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aba537c7dfec26d4884993b1fa4907d8
+      internalID: 2034244064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_16
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 27
+        width: 447
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf94baf9c09ee64409b8136f6f953d74
+      internalID: 1602891238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sea_walker_anim_17
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 16
+        width: 434
+        height: 492
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c157f9e931f854419bbebfe079a5949
+      internalID: -1496975828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fb1932e17eff9274a9a0ae28241a110a
     internalID: 0
     vertices: []
     indices: 
@@ -109,7 +505,25 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sea_walker_anim_0: 124134938
+      sea_walker_anim_1: 52234419
+      sea_walker_anim_10: -1133832182
+      sea_walker_anim_11: 70799754
+      sea_walker_anim_12: 1753076633
+      sea_walker_anim_13: -1857214748
+      sea_walker_anim_14: 1435829331
+      sea_walker_anim_15: 2034244064
+      sea_walker_anim_16: 1602891238
+      sea_walker_anim_17: -1496975828
+      sea_walker_anim_2: -1406411362
+      sea_walker_anim_3: -1832511515
+      sea_walker_anim_4: -991910198
+      sea_walker_anim_5: -1591795020
+      sea_walker_anim_6: 77991895
+      sea_walker_anim_7: 1994493788
+      sea_walker_anim_8: 1936857475
+      sea_walker_anim_9: -109560037
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

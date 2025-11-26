@@ -10,8 +10,8 @@ public class UnitSpawner : MonoBehaviour
 
 
 
-    [SerializeField]
-    private Resource resourceManager;
+    //[SerializeField]
+    //private Resource resourceManager;
 
     [SerializeField]
     private PlayerKingdom playerKingdom;
@@ -57,6 +57,18 @@ public class UnitSpawner : MonoBehaviour
 
         city.GetComponent<CityProductionQueue>().AddToQueue(production);
     }
+    public void QueueUnitAtPosition(Vector3Int position,GridCity city,BaseGridUnitScript unitPrefab)
+    {
+        Production production = new Production(position, ProductionType.Unit, unitPrefab.GetComponent<BaseGridUnitScript>().duration, unitPrefab.gameObject);
+
+        if (city.GetComponent<CityProductionQueue>() == null)
+        {
+            Debug.LogError("CityProductionQueue is null");
+            return;
+        }
+
+        city.GetComponent<CityProductionQueue>().AddToQueue(production);
+    }
 
     /// <summary>
     /// Cancels unit production and refunds resources
@@ -69,7 +81,7 @@ public class UnitSpawner : MonoBehaviour
             return;
         }
         // Refund resources
-        resourceManager.AddAll(unit.GetComponent<BaseGridUnitScript>().resource);
+        city.GetOwner().Resources().AddAll(unit.GetComponent<BaseGridUnitScript>().resource);
     }
 
     /// <summary>
@@ -86,7 +98,7 @@ public class UnitSpawner : MonoBehaviour
             return false;
         }
         Dictionary<ResourceType, int> resourceRequirements = unitPrefab.GetComponent<BaseGridUnitScript>().resource;
-        Dictionary<ResourceType, int> resultReqs = resourceManager.HasEnough(resourceRequirements);
+        Dictionary<ResourceType, int> resultReqs = city.GetOwner().Resources().HasEnough(resourceRequirements);
         if (resultReqs != null)
         {
             foreach (var a in resultReqs)
@@ -103,8 +115,8 @@ public class UnitSpawner : MonoBehaviour
     public bool CheckAndStartUnitSpawn(GridCity city, GameObject unitPrefab, Vector3Int position)
     {
         if (!CanUnitBePlaced(city, unitPrefab, position)) return false;
-        
-        resourceManager.SpendResource(unitPrefab.GetComponent<BaseGridUnitScript>().resource);
+
+        city.GetOwner().Resources().SpendResource(unitPrefab.GetComponent<BaseGridUnitScript>().resource);
         HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByUnit);
 
         return true;
@@ -112,8 +124,14 @@ public class UnitSpawner : MonoBehaviour
 
     /// <summary>
     /// Places a unit at the specified grid position
-    /// </summary>
-    public GameObject PlaceUnit(GameObject unitPrefab, Vector3Int gridPosition)
+    ///// </summary>
+    //public GameObject PlaceUnit(GameObject unitPrefab, Vector3Int gridPosition)
+    //{
+    //    BaseKingdom currentKingdom = TurnManager.instance.GetCurrentActingKingdom();
+    //    return PlaceUnit(unitPrefab, gridPosition, currentKingdom);
+    //}
+
+    public GameObject PlaceUnit(GameObject unitPrefab, Vector3Int gridPosition, BaseKingdom ownerKingdom)
     {
         //if (unitPrefab == null)
         //{
@@ -123,9 +141,12 @@ public class UnitSpawner : MonoBehaviour
         //HexTilemapManager.Instance.SetTileState(gridPosition, TileState.OccupiedByUnit);
         Seeker seeker = unit.GetComponent<Seeker>();
         var r = seeker.traversableTags;
-        unit.GetComponent<BaseGridUnitScript>().Initialize(playerKingdom);
 
-        playerKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
+        unit.GetComponent<BaseGridUnitScript>().Initialize(ownerKingdom);
+
+        //unit.GetComponent<BaseGridUnitScript>().Initialize(playerKingdom);
+
+        ownerKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
         UIManager.Instance.UnitsInteractable(false);
 
         // Initialize unit if it has a GridUnit component

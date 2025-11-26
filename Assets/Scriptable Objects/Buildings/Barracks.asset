@@ -19,7 +19,7 @@ MonoBehaviour:
     amount: 100
   duration: 2
   owner: {fileID: 0}
-  buildingPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 3832580847944561018, guid: 6098f03a7c5656847b684b15279a71a8, type: 3}
   buildingPlacementEvent:
     idInternal: 0
     valueGuidInternal: 

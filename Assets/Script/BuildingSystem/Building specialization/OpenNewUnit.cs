@@ -9,6 +9,13 @@ public class OpenNewUnit : GridBuilding
     [SerializeField]
     private string unitName;
     private GameObject btn;
+    [SerializeField]
+    private BaseGridUnitScript unitToOpen;
+
+    public BaseGridUnitScript GetUnitToOpen()
+    {
+        return unitToOpen;
+    }
 
     public override void Initialize(BaseKingdom owner)
     {
@@ -29,6 +36,7 @@ public class OpenNewUnit : GridBuilding
         {
             Debug.LogWarning($"UI объект '{unitName}' на сцене не найден!");
         }
+        Owner.UnlockUnit(unitToOpen);
     }
 
 
