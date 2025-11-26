@@ -121,7 +121,7 @@ public class GridCity : BaseGridEntity
             return;
         }
     }
-    protected override void Death()
+    public override void Death()
     {
         base.Death();
         hTM.RemoveCityOnTile(GetCellPosition());

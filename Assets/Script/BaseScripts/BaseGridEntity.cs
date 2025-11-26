@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,9 @@ public class BaseGridEntity : MonoBehaviour
 
     protected BaseKingdom Owner;
     protected SpriteRenderer baseSprite;
+
+    [SerializeField]
+    public List<TileState> CanStandOnTiles = new List<TileState>();
 
     public virtual void Initialize(BaseKingdom owner)
     {
@@ -111,7 +115,7 @@ public class BaseGridEntity : MonoBehaviour
         Color ownerColor = Owner.GetKingdomColor();
         baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
     }
-    protected virtual void Death()
+    public virtual void Death()
     {
 
     }
@@ -140,4 +144,6 @@ public class BaseGridEntity : MonoBehaviour
 
     public Sprite GetSprite() { return bodySprite.GetComponent<SpriteRenderer>().sprite; }
     public int GetVision() { return Vision; }
+
+    public List<TileState> GetCanStandOnTiles() { return CanStandOnTiles; }
 }
