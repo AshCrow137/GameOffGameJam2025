@@ -876,8 +876,8 @@ MonoBehaviour:
         guid: 77815c7c6941dd42ad7af5020ba6f758
       Path: Events\Default Work Unit\UI\InGame\ui_nextturn
       maxAttenuation: 0
-      maxDuration: 0.875
-      minDuration: 0.875
+      maxDuration: 0.9378017
+      minDuration: 0.8164039
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
