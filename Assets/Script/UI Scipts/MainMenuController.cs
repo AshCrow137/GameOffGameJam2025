@@ -30,12 +30,14 @@ public class MainMenuController : MonoBehaviour
     void Start()
     {
         Initialize();
+        
     }
     private void OnEnable()
     {
         var map = CustomInput.FindActionMap("InMenu");
         moveAction = map.FindAction("Navigate");
         moveAction.Enable();
+        
     }
     private void OnDisable() {
         moveAction.Disable(); 
@@ -51,6 +53,8 @@ public class MainMenuController : MonoBehaviour
     }
     public void btn_OpenLevels()
     {
+        SceneManager.LoadSceneAsync(Scene);
+        AudioManager.Instance.ui_menumain_start.Post(gameObject);
         currentLevel="";
         ButtonStartLevel.interactable=false;
         PanelOpenLevels = !PanelOpenLevels;
@@ -61,11 +65,18 @@ public class MainMenuController : MonoBehaviour
     {
         PanelOpenSounds = !PanelOpenSounds;
         PanelSounds.SetActive(PanelOpenSounds);
+        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
     }
     public void btn_SwitchSettings()
     {
         PanelOpenSettings = !PanelOpenSettings;
         PanelSettings.SetActive(PanelOpenSettings);
+        AudioManager.Instance.ui_menumain_settings.Post(gameObject);
+        AudioManager.Instance.ui_menumain_ambienceMusic.Post(gameObject);
+    }
+    public void TESTPlaySound()
+    {
+        AudioManager.Instance.ui_menumain_settings.Post(gameObject);
     }
     public void btn_QuitGame()
     {

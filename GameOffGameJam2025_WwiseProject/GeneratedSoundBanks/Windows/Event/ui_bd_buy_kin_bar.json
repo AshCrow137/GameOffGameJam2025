@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1449682236",
+    "Type": "Event",
+    "GUID": "{7028113B-7D30-470E-8D87-7EF823A8A6A0}",
+    "Language": "SFX",
+    "Hash": "{5D5EBB3F-6B89-8E66-B7A4-8396D44B3A75}",
+    "ObjectPath": "ui_bd_buy_kin_bar",
+    "ShortName": "ui_bd_buy_kin_bar",
+    "Path": "Event/ui_bd_buy_kin_bar.bnk",
+    "Media": [
+     {
+      "Id": "50163665",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "UI InGame\\ui_bd_buy_kin_bar_t01.wav",
+      "Path": "Media/50163665.wem",
+      "CachePath": "A4/{A46B53B1-38BD-0995-0A0F-4765B4305C3C}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1449682236",
+      "Name": "ui_bd_buy_kin_bar",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_bd_buy_kin_bar",
+      "GUID": "{7028113B-7D30-470E-8D87-7EF823A8A6A0}",
+      "DurationType": "OneShot",
+      "DurationMin": "1.26875",
+      "DurationMax": "1.26875",
+      "MediaRefs": [
+       {
+        "Id": "50163665"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{5E3AC49F-B0A8-E402-856E-D90EF0F6469A}"
+ }
+}

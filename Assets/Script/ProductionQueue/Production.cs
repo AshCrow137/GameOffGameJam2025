@@ -8,16 +8,25 @@ public class Production
     public bool isStarted;
     public ProductionType productionType;
     public Building building;
+    public GameObject prefab;
 
-    public Production(Vector3Int position, ProductionType productionType, int duration, Building building=null)
+    public Production(Vector3Int position, ProductionType productionType, int duration, Building building=null, GameObject prefab=null)
     {
+        this.prefab = prefab;
         this.building = building;
         this.position = position;
         this.turnsRemaining = duration;
         this.productionType = productionType;
         this.isStarted = false;
     }
-
+    public Production(Vector3Int position, ProductionType productionType, int duration, GameObject prefab = null)
+    {
+        this.prefab = prefab;
+        this.position = position;
+        this.turnsRemaining = duration;
+        this.productionType = productionType;
+        this.isStarted = false;
+    }
     public bool StartProduction(GridCity city){
         if(isStarted)
         {
@@ -27,12 +36,20 @@ public class Production
         {
             isStarted = true;
         }
-        return isStarted;
+        else if(productionType == ProductionType.Unit && UnitSpawner.Instance.CheckAndStartUnitSpawn(city, prefab, position))
+        {
+            isStarted = true;
+        }
+            return isStarted;
     }
 
-    public void EndProduction(){
+    public void EndProduction(GridCity city){
         if(productionType == ProductionType.Building){
             BuildingManager.Instance.PlaceBuilding(building, position);
+        }
+        else if (productionType == ProductionType.Unit)
+        {
+            UnitSpawner.Instance.PlaceUnit(prefab, position, city.GetOwner());
         }
     }
 
@@ -54,6 +71,12 @@ public class Production
         if(productionType == ProductionType.Building)
         {
             BuildingManager.Instance.CancelConstruction(city, building, position);
+            return true;
+        }
+        else
+        if (productionType == ProductionType.Unit)
+        {
+            UnitSpawner.Instance.CancelSpawning(city, prefab, position);
             return true;
         }
         return false;

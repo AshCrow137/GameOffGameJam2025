@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "4166496371",
+    "Type": "Event",
+    "GUID": "{B4E7202D-6A74-4BE2-8015-4284A56458CE}",
+    "Language": "SFX",
+    "Hash": "{30008CB0-C98F-83C2-0F6F-651B7A6C584E}",
+    "ObjectPath": "cbt_en_longbow",
+    "ShortName": "cbt_en_longbow",
+    "Path": "Event/cbt_en_longbow.bnk",
+    "Media": [
+     {
+      "Id": "228095754",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_en_longbow_t01.wav",
+      "Path": "Media/228095754.wem",
+      "CachePath": "23/{23F651E0-3D62-E94B-3D34-728C1C5AF816}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "4166496371",
+      "Name": "cbt_en_longbow",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_longbow",
+      "GUID": "{B4E7202D-6A74-4BE2-8015-4284A56458CE}",
+      "DurationType": "OneShot",
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "228095754"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{50E243D6-13B2-5D90-CA90-258864B7728D}"
+ }
+}

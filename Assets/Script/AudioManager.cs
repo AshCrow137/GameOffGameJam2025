@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,8 @@ public class AudioManager : MonoBehaviour
 
     private WwiseGameState currentGameState;
 
-    [Header("Music State Variables")]
+
+    //[Header("Music State Variables")]
     [SerializeField] private AK.Wwise.State Music_MusicMainMenu;
     [SerializeField] private AK.Wwise.State Music_MusicIntro;
     [SerializeField] private AK.Wwise.State Music_MusicPathHigher;
@@ -32,26 +34,29 @@ public class AudioManager : MonoBehaviour
 
     private WwiseMusicState currentMusicState;
 
-    [Header("Wwise Music Events")]
+    //[Header("Wwise Music Events")]
     [SerializeField] public AK.Wwise.Event Play_Music;
     [SerializeField] public AK.Wwise.Event Stop_Music;
 
     [Header("Wwise SFX Events")]
 
-    [Header("SFX Actions")]
-    [SerializeField] public AK.Wwise.Event E_play_flamethrower;
-    [SerializeField] public AK.Wwise.Event E_play_grapplehook_retract;
-    [SerializeField] public AK.Wwise.Event E_play_grapplehook_spool;
-    [SerializeField] public AK.Wwise.Event E_play_grapplehook_start;
-    [SerializeField] public AK.Wwise.Event E_play_hookconnect;
-    [SerializeField] public AK.Wwise.Event E_stop_grapplehook_spool;
+    [Header("MainMenu")]
+    [SerializeField] public AK.Wwise.Event ui_menumain_credits;
+    [SerializeField] public AK.Wwise.Event ui_menumain_continue;
+    [SerializeField] public AK.Wwise.Event ui_menumain_exit;
+    [SerializeField] public AK.Wwise.Event ui_menumain_mainmenu;
+    [SerializeField] public AK.Wwise.Event ui_menumain_settings;
+    [SerializeField] public AK.Wwise.Event ui_menumain_start;
+    [SerializeField] public AK.Wwise.Event ui_menumain_volume;
+    [SerializeField] public AK.Wwise.Event ui_gameplay_startTurn;
+    [SerializeField] public AK.Wwise.Event ui_menumain_ambienceMusic;
 
-    [Header("SFX Dialogue")]
+    //[Header("SFX Dialogue")]
     [SerializeField] public AK.Wwise.Event E_vox_empathy;
     [SerializeField] public AK.Wwise.Event E_vox_logic;
     [SerializeField] public AK.Wwise.Event E_vox_watchdog;
 
-    [Header("SFX Player")]
+    //[Header("SFX Player")]
 
     [SerializeField] public AK.Wwise.Event E_player_climb;
     [SerializeField] public AK.Wwise.Event E_player_damage;

@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "522465652",
+    "Type": "Event",
+    "GUID": "{F45A713A-3287-4CD2-A473-4E0DDC5307F5}",
+    "Language": "SFX",
+    "Hash": "{4C9F5149-2E50-C202-1626-1B064E2BCBF2}",
+    "ObjectPath": "cbt_en_knight",
+    "ShortName": "cbt_en_knight",
+    "Path": "Event/cbt_en_knight.bnk",
+    "Media": [
+     {
+      "Id": "378068383",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_en_knight_t01.wav",
+      "Path": "Media/378068383.wem",
+      "CachePath": "AB/{ABFA4442-2506-78C4-1596-06A1CE9788F9}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "522465652",
+      "Name": "cbt_en_knight",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_knight",
+      "GUID": "{F45A713A-3287-4CD2-A473-4E0DDC5307F5}",
+      "DurationType": "OneShot",
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "378068383"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{D16C6CDB-7172-4989-F224-734ABEC4BE4F}"
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "2255984945",
+    "Type": "Event",
+    "GUID": "{BE8F6A67-D217-4A26-9CAF-DFC91718B177}",
+    "Language": "SFX",
+    "Hash": "{FAFFD16F-B77C-BE05-ADE2-B67779315D78}",
+    "ObjectPath": "cbt_en_mage",
+    "ShortName": "cbt_en_mage",
+    "Path": "Event/cbt_en_mage.bnk",
+    "Media": [
+     {
+      "Id": "834104649",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_en_mage_t01.wav",
+      "Path": "Media/834104649.wem",
+      "CachePath": "61/{61EDD4E6-ABFB-D6BD-1A09-861389A6A7BA}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2255984945",
+      "Name": "cbt_en_mage",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_mage",
+      "GUID": "{BE8F6A67-D217-4A26-9CAF-DFC91718B177}",
+      "DurationType": "OneShot",
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "834104649"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{5B9ED1B1-D889-20ED-4D4A-1EED19044EEC}"
+ }
+}

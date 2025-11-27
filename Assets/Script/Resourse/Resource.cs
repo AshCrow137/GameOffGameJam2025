@@ -1,21 +1,27 @@
 using UnityEngine;
 using System.Collections.Generic;
 public enum ResourceType { Magic, Gold, Materials }
-public class Resource : MonoBehaviour
+public class Resource 
 {
-    public static Resource Instance { get; private set; }
+    //public static Resource Instance { get; private set; }
     private Dictionary<ResourceType, int> resources = new();
 
-    void Start()
+    //private int StartingMagic = 50;
+    //private int StartingGold = 20;
+    //private int StartingMaterials = 30;
+
+    public BaseKingdom Owner { get; private set; }
+    public Resource(BaseKingdom owner,int StartingMagic,int StartingGold, int StartingMaterials)
     {
-        Initialize();
-    }
-    public void Initialize()
-    {
-        Instance = this;
-        resources[ResourceType.Magic] = 10;
-        resources[ResourceType.Gold] = 10;
-        resources[ResourceType.Materials] = 10;
+        resources[ResourceType.Magic] = StartingMagic;
+        resources[ResourceType.Gold] = StartingGold;
+        resources[ResourceType.Materials] = StartingMaterials;
+        Owner = owner;
+        if(Owner is PlayerKingdom)
+        {
+            UpdateUI();
+        }
+        
     }
 
     public void AddAll(Dictionary<ResourceType,int> required)
@@ -25,6 +31,7 @@ public class Resource : MonoBehaviour
             resources[req.Key] += req.Value;
             Debug.Log($"Add {req.Key} - {req.Value}");
         }
+        UpdateUI();
     }
 
     public void SpendResource(Dictionary<ResourceType, int> required)
@@ -33,6 +40,7 @@ public class Resource : MonoBehaviour
         {
             resources[req.Key] = Mathf.Max(0, resources[req.Key] - req.Value);
         }
+        UpdateUI();
     }
 
     public void Remove( Dictionary<ResourceType,int> required)
@@ -41,8 +49,8 @@ public class Resource : MonoBehaviour
         foreach (var req in required)
         {
             resources[req.Key] = Mathf.Max(0, resources[req.Key] - req.Value);
-            
         }
+        UpdateUI();
     }
 
     public int Get(ResourceType type) => resources[type];
@@ -63,6 +71,17 @@ public class Resource : MonoBehaviour
         else
             return _temp;
 
+    }
+    private void UpdateUI()
+    {
+        if (Owner is PlayerKingdom)
+        {
+            foreach (KeyValuePair<ResourceType, int> kvp in resources)
+            {
+                UIManager.Instance.UpdateResourceImages(kvp.Value, kvp.Key);
+            }
+        }
+            
     }
 
     public void TESTADDFORBUTTON()

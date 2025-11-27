@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Handles vision and fog of war for grid entities
@@ -7,9 +8,9 @@ using UnityEngine;
 /// </summary>
 public class EntityVision : MonoBehaviour
 {
-    [Header("Vision Settings")]
-    [SerializeField]
-    private int visionRadius = 1;
+    //[Header("Vision Settings")]
+    //[SerializeField]
+    //private int visionRadius = 1;
 
     [Header("Fog of War Settings")]
     [SerializeField]
@@ -51,17 +52,9 @@ public class EntityVision : MonoBehaviour
         Vector3Int entityPosition = entity.GetCellPosition();
 
         // Get all tiles in vision radius (includes all tile states)
-        List<TileState> allStates = new List<TileState> 
-        { 
-            TileState.Land, 
-            TileState.Water, 
-            TileState.OccuppiedByBuilding, 
-            TileState.OccupiedByUnit, 
-            TileState.Unavailable, 
-            TileState.Default 
-        };
+
         
-        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(entityPosition, visionRadius, allStates);
+        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(entityPosition, entity.GetVision(), EnumLibrary.AllTileStates);
 
         // Update fog for each tile
         foreach (Vector3Int tilePosition in updatedTiles)
@@ -82,17 +75,9 @@ public class EntityVision : MonoBehaviour
     public List<Vector3Int> RemoveFog(Vector3Int oldPosition)
     {
         // Get all tiles in vision radius from old position (includes all tile states)
-        List<TileState> allStates = new List<TileState> 
-        { 
-            TileState.Land, 
-            TileState.Water, 
-            TileState.OccuppiedByBuilding, 
-            TileState.OccupiedByUnit, 
-            TileState.Unavailable, 
-            TileState.Default 
-        };
+
         
-        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(oldPosition, visionRadius, allStates);
+        List<Vector3Int> updatedTiles = hTM.GetCellsInRange(oldPosition, entity.GetVision(), EnumLibrary.AllTileStates);
 
         // Remove fog for each tile
         foreach (Vector3Int tilePosition in updatedTiles)
@@ -153,16 +138,16 @@ public class EntityVision : MonoBehaviour
     /// </summary>
     public int GetVisionRadius()
     {
-        return visionRadius;
+        return entity.GetVision();
     }
 
     /// <summary>
     /// Sets the vision radius of this entity
     /// </summary>
-    public void SetVisionRadius(int radius)
-    {
-        visionRadius = radius;
-    }
+    //public void SetVisionRadius(int radius)
+    //{
+    //    entity.GetVision() = radius;
+    //}
 
     /// <summary>
     /// Makes the entity invisible/visible without disabling the GameObject
@@ -206,6 +191,7 @@ public class EntityVision : MonoBehaviour
         switch (fog)
         {
             case Fog.None:
+                
                 shouldBeVisible = true;
                 break;
             case Fog.Grey:

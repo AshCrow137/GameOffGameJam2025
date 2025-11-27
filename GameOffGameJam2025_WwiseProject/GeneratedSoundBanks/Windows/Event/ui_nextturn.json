@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "502354088",
+    "Type": "Event",
+    "GUID": "{7C5C8177-4169-42DD-AD7A-F5020BA6F758}",
+    "Language": "SFX",
+    "Hash": "{1BA653EF-D4F9-E385-7B94-603EF98D7F02}",
+    "ObjectPath": "ui_nextturn",
+    "ShortName": "ui_nextturn",
+    "Path": "Event/ui_nextturn.bnk",
+    "Media": [
+     {
+      "Id": "317421359",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "UI\\ui_menumain_mainmenu_t01.wav",
+      "Path": "Media/317421359.wem",
+      "CachePath": "EE/{EE36C010-03E2-A6F9-51D6-DA357E99B50E}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "502354088",
+      "Name": "ui_nextturn",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_nextturn",
+      "GUID": "{7C5C8177-4169-42DD-AD7A-F5020BA6F758}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.8164039",
+      "DurationMax": "0.9378017",
+      "MediaRefs": [
+       {
+        "Id": "317421359"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{B5759A14-E5B7-D310-CED3-4F3A74AEC35E}"
+ }
+}

@@ -47,6 +47,10 @@ public class HexTile : Tile
         }
 
     }
+    public void SetTileState(TileState newState)
+    {
+        state = newState;
+    }
     
 }
 

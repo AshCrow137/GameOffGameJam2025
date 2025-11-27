@@ -11,10 +11,10 @@ public class KingdomTurnHandler : EntityTurnHandler
     /// Called when this entity's turn starts
     /// Progresses all city resource accumulation by one turn
     /// </summary>
-    public override void OnTurnStart()
-    {
-        base.OnTurnStart();
-        GetComponent<PlayerKingdom>().StartTurn();
-    }
+    //public override void OnTurnStart()
+    //{
+    //    base.OnTurnStart();
+    //    GetComponent<PlayerKingdom>().StartTurn();
+    //}
 }
 

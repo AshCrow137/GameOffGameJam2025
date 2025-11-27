@@ -28,8 +28,8 @@ public class BuildingManager : MonoBehaviour
     [SerializeField]
     private Tilemap tilemap;
     
-    [SerializeField]
-    private Resource resourceManager;
+    //[SerializeField]
+    //private Resource resourceManager;
 
     // List to track buildings under construction
     private List<BuildingConstruction> ongoingConstructions = new List<BuildingConstruction>();
@@ -65,6 +65,7 @@ public class BuildingManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        //GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
     }
 
     /// <summary>
@@ -79,8 +80,10 @@ public class BuildingManager : MonoBehaviour
             return null;
         }
         GameObject buildingPreview = Instantiate(building.buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
-        buildingPreview.GetComponent<GridBuilding>().Initialize(building, playerKngdom);
+        buildingPreview.GetComponent<GridBuilding>().Initialize(building.ownerCity.GetOwner());
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
+        building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
+        building.buildingPlacementEvent.Post(gameObject);
         return buildingPreview;
     }
 
@@ -131,7 +134,8 @@ public class BuildingManager : MonoBehaviour
     public bool CheckAndStartConstruction(GridCity city, Building building, Vector3Int position)
     {
         if (!CanBuildingBePlaced(city, building, position)) return false;
-        resourceManager.SpendResource(building.resource);
+        Resource kingdomResource = city.GetOwner().Resources();
+        kingdomResource.SpendResource(building.resource);
         building.SetOwnerCity(city);
         HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
         return true;
@@ -185,11 +189,11 @@ public class BuildingManager : MonoBehaviour
             return false;
         }
 
-        return CanBuildingBePlaced(building, position);
+        return CanBuildingBePlaced(building, position, city.GetOwner());
     }
 
 
-    private bool CanBuildingBePlaced(Building building, Vector3Int position){
+    private bool CanBuildingBePlaced(Building building, Vector3Int position, BaseKingdom kingdom){
 
         if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land && HexTilemapManager.Instance.GetTileState(position) != TileState.Water)
         {
@@ -199,12 +203,14 @@ public class BuildingManager : MonoBehaviour
         // Get building's resource requirements
         Dictionary<ResourceType, int> resourceRequirements = building.resource;
         // return true;
-        Dictionary<ResourceType, int> resultReqs = resourceManager.HasEnough(resourceRequirements);
+        Resource kingdomResource = kingdom.Resources();
+        Dictionary<ResourceType, int> resultReqs = kingdomResource.HasEnough(resourceRequirements);
         if(resultReqs!=null)
         {
             foreach (var a in resultReqs)
             {
-                Debug.Log($"not enough {a.Key} - {a.Value}");
+                GlobalEventManager.InvokeShowUIMessageEvent($"not enough {a.Key} - {a.Value}");
+                //Debug.Log($"not enough {a.Key} - {a.Value}");
             }
         }
         return resultReqs == null;
@@ -252,9 +258,33 @@ public class BuildingManager : MonoBehaviour
             Debug.LogError("CityProductionQueue.Instance is null");
             return;
         }
-
+        building.buildingPlacementEvent.Post(gameObject);
         city.GetComponent<CityProductionQueue>().AddToQueue(production);
 
+    }
+    public bool QueueBuildingAtPosition(Vector3Int position,GridCity city,GridBuilding gridBuilding )
+    {
+        Building building = gridBuilding.GetBuilding();
+        if (!CanBuildingBePlaced(city, building, position))
+        {
+            Debug.LogError("Building cannot be placed at this position");
+            return false;
+        }
+
+        Production production = new Production(position, ProductionType.Building, building.duration, building);
+
+        if (city.GetComponent<CityProductionQueue>() == null)
+        {
+            Debug.LogError("CityProductionQueue.Instance is null");
+            return false;
+        }
+        if(TurnManager.instance.GetCurrentActingKingdom() is PlayerKingdom)
+        {
+            building.buildingPlacementEvent.Post(gameObject);
+        }
+
+        city.GetComponent<CityProductionQueue>().AddToQueue(production);
+        return true;
     }
 
     // set tile to available, and refund resources
@@ -271,7 +301,7 @@ public class BuildingManager : MonoBehaviour
             return;
         }
         HexTilemapManager.Instance.SetTileState(position, TileState.Water);
-        resourceManager.AddAll(building.resource);
+        city.GetOwner().Resources().AddAll(building.resource);
 
     }
 
