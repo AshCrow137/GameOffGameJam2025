@@ -393,7 +393,7 @@ public class AIController : MonoBehaviour
             if(HexTilemapManager.Instance.GetTileState(pos)==TileState.OccupiedByUnit|| HexTilemapManager.Instance.GetTileState(pos) == TileState.OccuppiedByBuilding)
             {
                 BaseGridEntity potentialTarget = HexTilemapManager.Instance.GetEntityOnCell(pos);
-                if(potentialTarget&&potentialTarget.GetOwner()!=kingdom&&potentialTarget.GetComponent<IDamageable>()!=null)
+                if(potentialTarget&&potentialTarget.GetOwner()!=kingdom&&potentialTarget.GetComponent<IDamageable>()!=null&&potentialTarget.CanBeActtacked())
                 {
                     potentialTargets.Add(potentialTarget);
                 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 //TODO replace TakeDamage function with interface
 public interface IDamageable
 {
-
+    
 }
 
 public class BaseGridEntity : MonoBehaviour
@@ -27,6 +27,8 @@ public class BaseGridEntity : MonoBehaviour
     protected Canvas rotatebleCanvas;
     [SerializeField]
     public EntityType entityType;
+    [SerializeField]
+    protected bool bCanBeAttacked = true;
     protected Transform CameraArm;
 
     protected EntityVision entityVision;
@@ -179,6 +181,9 @@ public class BaseGridEntity : MonoBehaviour
     {
         return CurrentHealth;
     }
-
+    public bool CanBeActtacked()
+    {
+        return bCanBeAttacked;
+    }
     public List<TileState> GetCanStandOnTiles() { return CanStandOnTiles; }
 }

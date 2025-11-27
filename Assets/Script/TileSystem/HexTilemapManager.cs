@@ -18,12 +18,13 @@ public class HexTilemapManager : MonoBehaviour
 {
     [SerializeField] private Tilemap tilemap; 
     [SerializeField] private Tilemap markerTilemap;
+    [SerializeField] private Tilemap EffectTilemap;
     [SerializeField] private TileBase redMarkerTile;
     [SerializeField] private TileBase greenMarkerTile;
     [SerializeField] private TileBase blueMarkerTile;
     [SerializeField] private TileBase whiteMarkerTile;
     [SerializeField] private HexTile waterTile;
-
+    [SerializeField] private TileBase waterWaveEffect;
     [SerializeField] private Camera mainCamera;
 
     [SerializeField] private PlayerKingdom playerKingdom;
@@ -45,6 +46,7 @@ public class HexTilemapManager : MonoBehaviour
         AstarPath.active.Scan();
         InitializeTileStates();
         tilemap.RefreshAllTiles();
+        SetupWaterEffectTiles();
         GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
     }
 
@@ -59,6 +61,20 @@ public class HexTilemapManager : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+        }
+    }
+    private void SetupWaterEffectTiles()
+    {
+        foreach(Vector3Int pos in GetAllTilePositions())
+        {
+            if(tilemap.GetTile(pos)==waterTile)
+            {
+                EffectTilemap.SetTile(pos, waterWaveEffect);
+                if(GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(pos)==Fog.Black)
+                {
+                    UpdateEffectTileAtPosition(pos, false);
+                }
+            }
         }
     }
     
@@ -368,6 +384,7 @@ public class HexTilemapManager : MonoBehaviour
             tileStates[cellPosition] = newState;
             htile.SetTileState(newState);
             tilemap.SetTile(cellPosition, waterTile);
+            EffectTilemap.SetTile(cellPosition, waterWaveEffect);
             tilemap.RefreshTile(cellPosition);
             UpdateTileWalkability(cellPosition, newState);
         }
@@ -540,20 +557,46 @@ public class HexTilemapManager : MonoBehaviour
         return tilemap.CellToWorld(cellPos);
     }
 
+    public void UpdateEffectTileAtPosition(Vector3Int position,bool bVisible)
+    {
+        TileBase effectTile = EffectTilemap.GetTile(position);
+        if(effectTile!=null)
+        {
+            switch(bVisible)
+            {
+                case true:
+                    EffectTilemap.SetTileFlags(position, TileFlags.None);
+                    Color color = EffectTilemap.GetColor(position);
+                    color.a = 1;
+                    EffectTilemap.SetColor(position, color);
+                    break;
+                case false:
+                    EffectTilemap.SetTileFlags(position, TileFlags.None);
+                    Color transparentColor = EffectTilemap.GetColor(position);
+                    transparentColor.a = 0;
+                    EffectTilemap.SetColor(position, transparentColor);
+                    break;
 
+            }
+        }
+    }
     public Color GetTileColorAtPosition(Vector3Int position)
     {
         // color derived from fog
         Fog fog = GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(position);
+        
+        
         if (fog == Fog.Grey)
         {
+            UpdateEffectTileAtPosition(position, true);
             return Color.gray;
         }
         else if (fog == Fog.Black)
         {
+            UpdateEffectTileAtPosition(position, false);
             return Color.black;
         }
-
+        UpdateEffectTileAtPosition(position, true);
         //// color derived from tilestate
         //TileState state = GetTileState(position);
         //if (state == TileState.OccuppiedByBuilding)

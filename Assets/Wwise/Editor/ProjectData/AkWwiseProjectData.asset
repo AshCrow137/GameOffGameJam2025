@@ -876,8 +876,8 @@ MonoBehaviour:
         guid: 77815c7c6941dd42ad7af5020ba6f758
       Path: Events\Default Work Unit\UI\InGame\ui_nextturn
       maxAttenuation: 0
-      maxDuration: 0.875
-      minDuration: 0.875
+      maxDuration: 0.9378017
+      minDuration: 0.8164039
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
@@ -935,7 +935,7 @@ MonoBehaviour:
     m_lastTime: -8584393136739312572
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 030000000400000005000000060000000700000008000000090000000a0000000b00000026000000270000002800000029000000
+  ExpandedWaapiItemIds: 0300000004000000050000000600000007000000080000000a0000000b0000000d0000000e0000000f0000001000000011000000260000002700000028000000290000002a0000002d0000002e000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
