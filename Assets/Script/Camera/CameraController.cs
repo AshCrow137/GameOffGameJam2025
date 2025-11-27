@@ -41,6 +41,7 @@ public class CameraController : MonoBehaviour
     {
         moveAction.Disable();
     }
+    public Transform GetCameraArm() { return CameraArm; }
     void LateUpdate()
     {
         if(!bCameraPosFixed)

@@ -69,6 +69,7 @@ public class GiantWaveEvent : BaseGameplayEvent
         {
             CameraController.instance.SmoothMoveCameraToPosition(hexManager.CellToWorldPos(origin));
             waveClone.transform.position = Vector3.Lerp(waveClone.transform.position, hexManager.CellToWorldPos(origin), Time.deltaTime);
+            waveClone.transform.localRotation = Quaternion.Euler(new Vector3(0,0,CameraController.instance.GetCameraArm().rotation.eulerAngles.z));
             await Task.Yield();
         }
         // Step 5: Process each tile in radius
