@@ -140,6 +140,7 @@ public class UIManager : MonoBehaviour
         CityPanel.sprite = UIElements.CityPanel;
         MadnessLavel.text = $"Madness: {city.GetOwner().madnessLevel}";
         madnessFillImage.fillAmount = (float)city.GetOwner().madnessLevel / city.GetOwner().maxMadnessLevel;
+        CityUI.Instance.UpdateUnitButtonsInteractability();
     }
 
     public void UnitsInteractable(bool value)

@@ -33,6 +33,10 @@ public class InputManager : MonoBehaviour
     {
         bIsOnUIElement = value;
     }
+    public bool IsCursorOverUIElement()
+    {
+        return bIsOnUIElement;
+    }
     //Menu Inputs
     public void OnNavigate(CallbackContext value)
     {
