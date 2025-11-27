@@ -133,6 +133,8 @@ public class BaseKingdom : Entity, IMadnessable
         if(!unlockedUnits.Contains(unit))
         {
             unlockedUnits.Add(unit);
+            CityUI.Instance.UpdateUnitButtonsInteractability();
+
         }
     }
     public void UnlockBuilding(GridBuilding building)
@@ -140,6 +142,8 @@ public class BaseKingdom : Entity, IMadnessable
         if(!unlockedBuildings.Contains(building))
         {
             unlockedBuildings.Add(building);
+            CityUI.Instance.UpdateUnitButtonsInteractability();
+
         }
     }
     public int madnessLevel { get; private set; } = 0;
