@@ -445,7 +445,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 483940085929675459, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Name
-      value: TentacleBuilding
+      value: AbyssOfMadness
       objectReference: {fileID: 0}
     - target: {fileID: 1922668860728381344, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Size.x
@@ -597,7 +597,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 483940085929675459, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2983230553345176240}
+      addedObject: {fileID: 6023460372539411072}
   m_SourcePrefab: {fileID: 100100000, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
 --- !u!114 &1921259495853501412 stripped
 MonoBehaviour:
@@ -615,7 +615,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 483940085929675459, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
   m_PrefabInstance: {fileID: 3713010119913143225}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2983230553345176240
+--- !u!114 &6023460372539411072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -624,7 +624,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3832580847944561018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55954285150c7d24fa1f51f6c293741f, type: 3}
+  m_Script: {fileID: 11500000, guid: a8835fba7b5f8b74896fba208306bea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 2
@@ -639,11 +639,12 @@ MonoBehaviour:
   - {fileID: 5752808428077572717}
   rotatebleCanvas: {fileID: 8551652696335946812}
   entityType: 4
+  bCanBeAttacked: 1
+  CanStandOnTiles: 0000000001000000
   HpForCity: 10
   buildingData: {fileID: 0}
-  productGold: 0
-  productMagic: 10
-  productMaterial: 0
+  unitName: 
+  unitToOpen: {fileID: -7646213806865863853, guid: 11aa7507cd5f0b7458f692639cb818e1, type: 3}
 --- !u!4 &7298259681629756016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}

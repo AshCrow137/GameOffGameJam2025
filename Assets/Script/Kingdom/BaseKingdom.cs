@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 // Base kingdom class
-public class BaseKingdom : Entity, IMadnessable
+public class BaseKingdom : Entity
 {
     private Resource currentResources;
     public List<HexTile> occupiedTiles { get; protected set; } = new();
@@ -172,29 +172,29 @@ public class BaseKingdom : Entity, IMadnessable
         Debug.Log($"Decrease: Current Madness Level is: {madnessLevel}");
     }
 
-    public virtual MadnessEffect GetMadnessEffects()
-    {
-        if(madnessLevel == MadnessCosts.almostDefeat)
-        {
-            return MadnessEffect.almostDefeat;
-        }
-        else if(madnessLevel >= MadnessCosts.less35)
-        {
-            return MadnessEffect.less35;
-        }
-        else if(madnessLevel >= MadnessCosts.less25)
-        {
-            return MadnessEffect.less25;
-        }
-        else if(madnessLevel >= MadnessCosts.less10)
-        {
-            return MadnessEffect.less10;
-        }
-        else
-        {
-            return MadnessEffect.None;
-        }
-    }
+    //public virtual MadnessEffect GetMadnessEffects()
+    //{
+    //    if(madnessLevel == MadnessCosts.almostDefeat)
+    //    {
+    //        return MadnessEffect.almostDefeat;
+    //    }
+    //    else if(madnessLevel >= MadnessCosts.less35)
+    //    {
+    //        return MadnessEffect.less35;
+    //    }
+    //    else if(madnessLevel >= MadnessCosts.less25)
+    //    {
+    //        return MadnessEffect.less25;
+    //    }
+    //    else if(madnessLevel >= MadnessCosts.less10)
+    //    {
+    //        return MadnessEffect.less10;
+    //    }
+    //    else
+    //    {
+    //        return MadnessEffect.None;
+    //    }
+    //}
 
     public List<GridCity> GetControlledCities()
     {
@@ -234,5 +234,6 @@ public class BaseKingdom : Entity, IMadnessable
     }
     public List<GridBuilding> GetUnlockedBuildings() { return unlockedBuildings; }
     public List<BaseGridUnitScript> GetunlockedUnits() { return unlockedUnits; }
+    public VisionManager GetVisionManager() { return visionManager; }
 
 }

@@ -393,7 +393,7 @@ public class AIController : MonoBehaviour
             if(HexTilemapManager.Instance.GetTileState(pos)==TileState.OccupiedByUnit|| HexTilemapManager.Instance.GetTileState(pos) == TileState.OccuppiedByBuilding)
             {
                 BaseGridEntity potentialTarget = HexTilemapManager.Instance.GetEntityOnCell(pos);
-                if(potentialTarget&&potentialTarget.GetOwner()!=kingdom&&potentialTarget.GetComponent<IDamageable>()!=null)
+                if(potentialTarget&&potentialTarget.GetOwner()!=kingdom&&potentialTarget.GetComponent<IDamageable>()!=null&&potentialTarget.CanBeActtacked())
                 {
                     potentialTargets.Add(potentialTarget);
                 }
@@ -419,7 +419,12 @@ public class AIController : MonoBehaviour
             }
         }
         //Attack 
-        List<BaseGridEntity> targets = CheckForTargets(unit, notFogTiles, kingdom);
+        List<BaseGridEntity> targets = new List<BaseGridEntity>();
+        if(kingdom.GetCurrentMadnessEffect().CanFight)
+        {
+            targets = CheckForTargets(unit, notFogTiles, kingdom);
+        }
+         
         if(targets.Count > 0)
         {
             List<Vector3Int> potentialTargetPositions = new List<Vector3Int>();

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f24917011541eac418e87a7b2c880594, type: 3}
+  m_Name: AbyssOfMadness
+  m_EditorClassIdentifier: 
+  buildingName: Abyssal Spawning Pool
+  sprite: {fileID: 932184325, guid: f09834d4c45767044b70237fae6ee10f, type: 3}
+  resourceRequirements:
+  - resourceType: 0
+    amount: 60
+  duration: 2
+  owner: {fileID: 0}
+  buildingPrefab: {fileID: 3832580847944561018, guid: 1f2e2bc2d4f8bab4797b77a9bda01331, type: 3}
+  buildingPlacementEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: de8e8d641ee5f104d813a8f05800d93b, type: 2}

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Handles vision and fog of war for grid entities
@@ -190,6 +191,7 @@ public class EntityVision : MonoBehaviour
         switch (fog)
         {
             case Fog.None:
+                
                 shouldBeVisible = true;
                 break;
             case Fog.Grey:
