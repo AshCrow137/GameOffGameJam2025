@@ -227,6 +227,7 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 4012846416483646836}
   entityType: 3
+  bCanBeAttacked: 1
   CanStandOnTiles: 
   MeleeAttackDamage: 2
   RangeAttackDamage: 1
@@ -240,7 +241,7 @@ MonoBehaviour:
   movementPointsPanel: {fileID: 2576752987947636116}
   movementPointsImage: {fileID: 149017185224813729}
   animator: {fileID: 5374767065553080683}
-  specialAbilityRange: 1
+  specialAbilityRange: 2
   aiming: 0
   unitAttackSoundEvent:
     idInternal: 0

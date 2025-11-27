@@ -419,7 +419,12 @@ public class AIController : MonoBehaviour
             }
         }
         //Attack 
-        List<BaseGridEntity> targets = CheckForTargets(unit, notFogTiles, kingdom);
+        List<BaseGridEntity> targets = new List<BaseGridEntity>();
+        if(kingdom.GetCurrentMadnessEffect().CanFight)
+        {
+            targets = CheckForTargets(unit, notFogTiles, kingdom);
+        }
+         
         if(targets.Count > 0)
         {
             List<Vector3Int> potentialTargetPositions = new List<Vector3Int>();

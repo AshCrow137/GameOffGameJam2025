@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: WaterAnimatedTile
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 362217616, guid: 92a09ea2fc348034e9ca15fc148e03e9, type: 3}
-  - {fileID: -1511601177, guid: 92a09ea2fc348034e9ca15fc148e03e9, type: 3}
-  - {fileID: -1684714438, guid: 92a09ea2fc348034e9ca15fc148e03e9, type: 3}
-  - {fileID: 1944909775, guid: 92a09ea2fc348034e9ca15fc148e03e9, type: 3}
-  - {fileID: -1771739056, guid: 92a09ea2fc348034e9ca15fc148e03e9, type: 3}
+  - {fileID: 1619893316, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
+  - {fileID: -989305889, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
+  - {fileID: 864455322, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
+  - {fileID: 2055746942, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
+  - {fileID: 1517404542, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
   m_MinSpeed: 4
   m_MaxSpeed: 6
   m_AnimationStartTime: 0

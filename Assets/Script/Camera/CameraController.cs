@@ -15,8 +15,20 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Transform CameraArm;
 
+    private bool bCameraPosFixed = false;
     public Transform GetCameraArmTransform()
     { return CameraArm; }
+
+    public static CameraController instance { get; private set; }
+
+    private void Awake()
+    {
+        if(instance!=null)
+        {
+            Destroy(this);
+        }
+        instance = this;
+    }
     private void OnEnable()
     {
         var map = CustomInput.FindActionMap("InGame");
@@ -31,18 +43,32 @@ public class CameraController : MonoBehaviour
     }
     void LateUpdate()
     {
-        Vector2 mousepos = moveActionMouse.ReadValue<Vector2>();
-        Vector2 screenUV = new Vector2(mousepos.x / Screen.width - .5f, mousepos.y / Screen.height - .5f);
-        float rotateValue = rotateAction.ReadValue<float>();
-        Vector3 move = Vector3.zero;
-        if (screenUV.x < -EDGE_THRESHOLD) move.x = -1f;
-        if (screenUV.x > EDGE_THRESHOLD)  move.x =  1f;
-        if (screenUV.y < -EDGE_THRESHOLD) move.y = -1f;
-        if (screenUV.y > EDGE_THRESHOLD)  move.y =  1f;
-        Vector2 movementInput = moveAction.ReadValue<Vector2>();
-        // the final calculation of the movement vector and the movement itself
-        Vector3 movement = new Vector3(movementInput.x, movementInput.y, 0f);
-        transform.Translate(Time.deltaTime * (move+movement) * moveSpeed);
-        transform.Rotate(Vector3.forward * rotateValue*CameraRotationSpeed);
+        if(!bCameraPosFixed)
+        {
+            Vector2 mousepos = moveActionMouse.ReadValue<Vector2>();
+            Vector2 screenUV = new Vector2(mousepos.x / Screen.width - .5f, mousepos.y / Screen.height - .5f);
+            float rotateValue = rotateAction.ReadValue<float>();
+            Vector3 move = Vector3.zero;
+            if (screenUV.x < -EDGE_THRESHOLD) move.x = -1f;
+            if (screenUV.x > EDGE_THRESHOLD) move.x = 1f;
+            if (screenUV.y < -EDGE_THRESHOLD) move.y = -1f;
+            if (screenUV.y > EDGE_THRESHOLD) move.y = 1f;
+            Vector2 movementInput = moveAction.ReadValue<Vector2>();
+            // the final calculation of the movement vector and the movement itself
+            Vector3 movement = new Vector3(movementInput.x, movementInput.y, 0f);
+            transform.Translate(Time.deltaTime * (move + movement) * moveSpeed);
+            transform.Rotate(Vector3.forward * rotateValue * CameraRotationSpeed);
+        }
+
+    }
+
+    public void SmoothMoveCameraToPosition(Vector3 position)
+    {
+        bCameraPosFixed = true;
+        transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime);
+    }
+    public void UnlockCameraMovement()
+    {
+        bCameraPosFixed = false;
     }
 }

@@ -707,6 +707,11 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         
     }
+    public void DecreaseSpeedForFirstTurn()
+    {
+        tilesRemain--;
+        UpdateMovementPointsUI();
+    }
     public int GetFinalDamage()
     {
         if (AttackRange > 1)

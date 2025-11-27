@@ -23,7 +23,7 @@ public class HexTilemapManager : MonoBehaviour
     [SerializeField] private TileBase greenMarkerTile;
     [SerializeField] private TileBase blueMarkerTile;
     [SerializeField] private TileBase whiteMarkerTile;
-    [SerializeField] private HexTile waterTile;
+    [SerializeField] private List<HexTile> waterTiles;
     [SerializeField] private TileBase waterWaveEffect;
     [SerializeField] private Camera mainCamera;
 
@@ -67,7 +67,7 @@ public class HexTilemapManager : MonoBehaviour
     {
         foreach(Vector3Int pos in GetAllTilePositions())
         {
-            if(tilemap.GetTile(pos)==waterTile)
+            if(GetTileState(pos)==TileState.Water)
             {
                 EffectTilemap.SetTile(pos, waterWaveEffect);
                 if(GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(pos)==Fog.Black)
@@ -383,6 +383,7 @@ public class HexTilemapManager : MonoBehaviour
             }
             tileStates[cellPosition] = newState;
             htile.SetTileState(newState);
+            HexTile waterTile = waterTiles[Random.Range(0, waterTiles.Count)];
             tilemap.SetTile(cellPosition, waterTile);
             EffectTilemap.SetTile(cellPosition, waterWaveEffect);
             tilemap.RefreshTile(cellPosition);
