@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: PlayerSpawnEvent
-  m_EditorClassIdentifier: Assembly-CSharp::SpawnEvents
+  m_Script: {fileID: 11500000, guid: 9f8a427f21412b547b6a1af9c397620f, type: 3}
+  m_Name: GainResource
+  m_EditorClassIdentifier: 
   EventChance: 5
-  meleePrefab: {fileID: 2024756050137535649, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+  resources: 000000000100000002000000
+  isIncremented: 1
+  minResource: 40
+  maxResource: 60

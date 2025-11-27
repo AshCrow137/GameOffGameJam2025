@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: EnemyLostResource
-  m_EditorClassIdentifier: Assembly-CSharp::ResourceEvents
+  m_Script: {fileID: 11500000, guid: 9f8a427f21412b547b6a1af9c397620f, type: 3}
+  m_Name: LoseResource
+  m_EditorClassIdentifier: 
   EventChance: 5
   resources: 000000000100000002000000
   isIncremented: 0
   minResource: 30
-  maxResource: 50
+  maxResource: 40

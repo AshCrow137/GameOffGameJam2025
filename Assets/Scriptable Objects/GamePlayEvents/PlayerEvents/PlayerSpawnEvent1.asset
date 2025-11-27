@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: SpawnSpecialEventPlayer
-  m_EditorClassIdentifier: Assembly-CSharp::SpawnEvents/SpawnSpecialEvents/SpecialEventPlayer
+  m_Script: {fileID: 11500000, guid: bffc4aeca82640a4b9b47db961109f90, type: 3}
+  m_Name: PlayerSpawnEvent1
+  m_EditorClassIdentifier: 
   EventChance: 5
-  prefab: {fileID: 5660066150968908325, guid: e732294eda88f0341afccf18725fb5f2, type: 3}
+  meleePrefab: {fileID: 2024756050137535649, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}

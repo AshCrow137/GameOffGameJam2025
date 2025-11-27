@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: EnemyGainResource
-  m_EditorClassIdentifier: Assembly-CSharp::ResourceEvents
+  m_Script: {fileID: 11500000, guid: bffc4aeca82640a4b9b47db961109f90, type: 3}
+  m_Name: EnemySpawnEvent
+  m_EditorClassIdentifier: 
   EventChance: 5
-  resources: 000000000100000002000000
-  isIncremented: 1
-  minResource: 50
-  maxResource: 80
+  meleePrefab: {fileID: 2939275677540073900, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}
