@@ -53,7 +53,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void btn_OpenLevels()
     {
-        //SceneManager.LoadSceneAsync(Scene);
+        SceneManager.LoadSceneAsync(Scene);
         AudioManager.Instance.ui_menumain_start.Post(gameObject);
         currentLevel="";
         ButtonStartLevel.interactable=false;
