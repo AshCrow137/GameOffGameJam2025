@@ -43,7 +43,8 @@ public class BootManager : MonoBehaviour
     [SerializeField]
     private GamePlayEventManager gameplayEventManager;
 
-
+    [SerializeField]
+    private DropSystem dropSystem;
     
     [SerializeField]
     private AIController AIController;
@@ -78,6 +79,7 @@ public class BootManager : MonoBehaviour
         gameplayEventManager?.Initialize();
         turnManager?.Initialize();
 
+        dropSystem?.Instantiate();
         
         AIController?.Initialize();
     }

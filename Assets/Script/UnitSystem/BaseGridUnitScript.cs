@@ -440,8 +440,8 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         HPImage.fillAmount = (float)CurrentHealth / Health;
         if (CurrentHealth <= 0 ) 
         {
-           
-            
+
+            DropSystem.instance.DropTo(attacker.Owner);
             Death();
             return;
         }
