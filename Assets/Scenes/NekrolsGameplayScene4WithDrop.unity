@@ -13150,7 +13150,7 @@ MonoBehaviour:
   UIManager: {fileID: 2116678396}
   unitSpawner: {fileID: 1437429911}
   gameplayEventManager: {fileID: 1447804456}
-  dropSystem: {fileID: 0}
+  dropSystem: {fileID: 378020112}
   AIController: {fileID: 1089584158}
 --- !u!4 &1011269897
 Transform:
@@ -15421,7 +15421,7 @@ Tilemap:
       - {fileID: 864455322, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
       - {fileID: 2055746942, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
       - {fileID: 1517404542, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
-      m_AnimationSpeed: 4.5862994
+      m_AnimationSpeed: 4.0640097
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: 6, z: 0}
@@ -15433,7 +15433,7 @@ Tilemap:
       - {fileID: 864455322, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
       - {fileID: 2055746942, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
       - {fileID: 1517404542, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
-      m_AnimationSpeed: 4.9675856
+      m_AnimationSpeed: 4.534573
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: 6, z: 0}
@@ -15445,7 +15445,7 @@ Tilemap:
       - {fileID: 864455322, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
       - {fileID: 2055746942, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
       - {fileID: 1517404542, guid: cf20aebf3107c9b48b8771758f500df4, type: 3}
-      m_AnimationSpeed: 5.528318
+      m_AnimationSpeed: 5.0242023
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
