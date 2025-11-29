@@ -64,7 +64,16 @@ public class Production
     }
 
     public void EndProduction(GridCity city){
-        if(productionType == ProductionType.Building){
+        //if (placedObject != null)
+        //{
+        //    BaseGridEntity entity = placedObject.GetComponent<BaseGridEntity>();
+        //    if (entity != null)
+        //    {
+        //        HexTilemapManager.Instance.RemoveEntityFromDirectory(position, entity);
+        //    }
+        //    UnityEngine.Object.Destroy(placedObject);
+        //}
+        if (productionType == ProductionType.Building){
             BuildingManager.Instance.PlaceBuilding(building, position);
         }
         else if (productionType == ProductionType.Unit)
@@ -73,14 +82,7 @@ public class Production
         }
         
         // Clean up the preview/queued object from the directory before it's destroyed
-        // if (placedObject != null)
-        // {
-        //     BaseGridEntity entity = placedObject.GetComponent<BaseGridEntity>();
-        //     if (entity != null)
-        //     {
-        //         HexTilemapManager.Instance.RemoveEntityFromDirectory(position, entity);
-        //     }
-        // }
+
     }
 
     public void UpdateProduction(){
@@ -97,7 +99,7 @@ public class Production
 
     public bool Cancel(GridCity city)
     {
-        if (!isStarted) return true;
+        //if (!isStarted) return true;
         if(productionType == ProductionType.Building)
         {
             BuildingManager.Instance.CancelConstruction(city, building, position);

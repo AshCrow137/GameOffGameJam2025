@@ -141,6 +141,8 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 8551652696335946812}
   entityType: 4
+  bCanBeAttacked: 1
+  CanStandOnTiles: 00000000
   HpForCity: 35
   buildingData: {fileID: 11400000, guid: 9528b066d38da6f4b81f121c1496488f, type: 2}
   unitName: Kingdom Military

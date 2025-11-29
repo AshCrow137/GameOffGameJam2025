@@ -54,6 +54,8 @@ public class UnitSpawner : MonoBehaviour
             sr.color = Color.gray;
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
         }
+        //HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByUnit);
+
         //find canvas among children and disable it
         // Canvas canvas = unit.GetComponentInChildren<Canvas>();
         // if (canvas != null)
@@ -171,6 +173,7 @@ public class UnitSpawner : MonoBehaviour
 
         ownerKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
         UIManager.Instance.UnitsInteractable(false);
+        HexTilemapManager.Instance.SetTileState(gridPosition, TileState.OccupiedByUnit);
 
         // Initialize unit if it has a GridUnit component
         // unitObject.GetComponent<GridUnit>().Initialize(unit, playerKingdom);

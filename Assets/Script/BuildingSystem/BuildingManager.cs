@@ -85,6 +85,8 @@ public class BuildingManager : MonoBehaviour
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
         building.buildingPlacementEvent.Post(gameObject);
+        HexTilemapManager.Instance.SetTileState(gridPosition, TileState.OccuppiedByBuilding);
+
         return buildingPreview;
     }
 
@@ -97,6 +99,8 @@ public class BuildingManager : MonoBehaviour
             sr.color = Color.gray;
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
         }
+        HexTilemapManager.Instance.SetTileState(position, TileState.OccuppiedByBuilding);
+
         //find canvas among children and disable it
         // Canvas canvas = buildingGO.GetComponentInChildren<Canvas>();
         // if (canvas != null)
@@ -214,7 +218,7 @@ public class BuildingManager : MonoBehaviour
 
     private bool CanBuildingBePlaced(Building building, Vector3Int position, BaseKingdom kingdom){
 
-        if(HexTilemapManager.Instance.GetTileState(position) != TileState.Land && HexTilemapManager.Instance.GetTileState(position) != TileState.Water)
+        if(!building.buildingPrefab.GetComponent<BaseGridEntity>().GetCanStandOnTiles().Contains(HexTilemapManager.Instance.GetTileState(position)))
         {
             return false;
         }
@@ -314,7 +318,7 @@ public class BuildingManager : MonoBehaviour
             Debug.LogError("Tile was not occupied by building when cancelling construction");
             return;
         }
-        HexTilemapManager.Instance.SetTileState(position, TileState.Water);
+        HexTilemapManager.Instance.SetTileState(position, TileState.Water);//TODO: remove hardcoding
         city.GetOwner().Resources().AddAll(building.resource);
 
     }
