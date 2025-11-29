@@ -278,6 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d122fd7dc56c3314996113f840a98873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Fishman archer
   Health: 15
   CurrentHealth: 15
   Vision: 7

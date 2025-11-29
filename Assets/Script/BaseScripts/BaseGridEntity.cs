@@ -12,6 +12,8 @@ public class BaseGridEntity : MonoBehaviour
 {
     [Header("Grid entity variables")]
     [SerializeField]
+    private string EntityDisplayName;
+    [SerializeField]
     protected int Health = 2;
     [SerializeField]
     protected int CurrentHealth = 2;
@@ -186,4 +188,8 @@ public class BaseGridEntity : MonoBehaviour
         return bCanBeAttacked;
     }
     public List<TileState> GetCanStandOnTiles() { return CanStandOnTiles; }
+    public string GetEntityDisplayName()
+    {
+        return EntityDisplayName;
+    }
 }

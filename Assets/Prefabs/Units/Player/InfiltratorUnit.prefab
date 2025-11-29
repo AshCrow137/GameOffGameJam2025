@@ -191,6 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2897d34aefd59478bb2d1d3ddff7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Infiltrator
   Health: 10
   CurrentHealth: 10
   Vision: 4

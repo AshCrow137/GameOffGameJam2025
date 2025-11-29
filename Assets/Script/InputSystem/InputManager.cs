@@ -225,6 +225,10 @@ public class InputManager : MonoBehaviour
     {
         return mousePos;
     }
+    public Vector2 GetMousePosVector2()
+    {
+        return mousePos;
+    }
     public Vector3 GetWorldPositionOnMousePosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(mousePos);

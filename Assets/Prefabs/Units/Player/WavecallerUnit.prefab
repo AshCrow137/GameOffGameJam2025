@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860c70edb87bdd84ca6b8491eda43ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Wavecaller
   Health: 20
   CurrentHealth: 20
   Vision: 5

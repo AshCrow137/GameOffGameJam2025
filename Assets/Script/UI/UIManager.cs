@@ -44,7 +44,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI TurnCount;
 
-    [Header("Status Texts")]
+    [Header("Stats Texts")]
+    [SerializeField]
+    private TextMeshProUGUI unitName;
+    [SerializeField]
+    private TextMeshProUGUI unitHealthText;
     [SerializeField]
     private TextMeshProUGUI meleeAtack;
     [SerializeField]
@@ -79,6 +83,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject ProductionFirstItemPanel;
     public TMP_Text currentturnText;
+
+    [SerializeField]
+    private GameObject HintObject;
+
+    private UIElementHints currentHints;
     public void Initialize()
     {
         UIElements = GetComponent<UIElements>();
@@ -118,7 +127,9 @@ public class UIManager : MonoBehaviour
             infantaryType.sprite = UIElements.EnemyType;
         }
         infantaryImg.sprite = unit.gameObject.transform.Find("BodySprite").GetComponent<SpriteRenderer>().sprite;
-
+        
+        unitName.text = unit.GetEntityDisplayName();
+        unitHealthText.text = $"{unit.GetCurrentHealth()}/{unit.GetMaxHealth()}";
         meleeAtack.text = unit.GetMeleeDamage().ToString();
         rangedAtack.text = unit.GetRangeAttackDamage().ToString();
         retaliationAtack.text = unit.GetRetaliationDamage().ToString();
@@ -283,4 +294,11 @@ public class UIManager : MonoBehaviour
 
         GamePlayEvents.SetActive(false);
     }
+
+    public GameObject GetHintObject()
+    {
+        return HintObject;
+    }
+
+
 }

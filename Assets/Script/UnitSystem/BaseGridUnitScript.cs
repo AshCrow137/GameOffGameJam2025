@@ -244,12 +244,12 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         GridCity city = hTM.GetCityOnTile(cellPos);
         if( city != null)
         {
-            TryToAttack(targetedUnit, cellPos);
+            TryToAttack(city, cellPos);
             
         }
         else if(targetedUnit != null)
         {
-            TryToAttack(city, cellPos);
+            TryToAttack(targetedUnit, cellPos);
         }
         else
         {
