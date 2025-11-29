@@ -398,9 +398,9 @@ MonoBehaviour:
   HpForCity: 10
   buildingData: {fileID: 11400000, guid: a6420cfb96e5aea408c4351422405b35, type: 2}
   BuildingFunction: 
-  productGold: 0
-  productMagic: 10
-  productMaterial: 0
+  productGold: 5
+  productMagic: 15
+  productMaterial: 1
 --- !u!4 &6260741474477631231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}

@@ -225,18 +225,20 @@ MonoBehaviour:
   EntityDisplayName: Longbowman
   Health: 12
   CurrentHealth: 12
-  Vision: 8
+  Vision: 7
   HPImage: {fileID: 1479423447086613288}
   bodySprite: {fileID: 3191821091930545751}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 4002697416325505066}
   entityType: 0
+  requiredBuildings: []
   bCanBeAttacked: 1
+  EntityDescription: 
   CanStandOnTiles: 
-  MeleeAttackDamage: 1
+  MeleeAttackDamage: 4
   RangeAttackDamage: 13
   RetallitionAttackDamage: 4
-  AttackRange: 7
+  AttackRange: 6
   MovementDistance: 2
   ProductionTime: 2
   MovementSpeed: 3
