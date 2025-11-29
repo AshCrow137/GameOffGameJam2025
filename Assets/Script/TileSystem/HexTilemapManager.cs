@@ -34,6 +34,8 @@ public class HexTilemapManager : MonoBehaviour
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
     private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
 
+    private Dictionary<Vector3Int, List<BaseGridEntity> > allEntityDirectory = new();
+
 
     // Singleton instance for easy access
     public static HexTilemapManager Instance { get; private set; }
@@ -462,6 +464,36 @@ public class HexTilemapManager : MonoBehaviour
         return null;
     }
 
+    public void AddEntityToDirectory(Vector3Int position, BaseGridEntity entity)
+    {
+        if (!allEntityDirectory.TryGetValue(position, out List<BaseGridEntity> entities))
+        {
+            entities = new List<BaseGridEntity>();
+            allEntityDirectory.Add(position, entities);
+        }
+        
+        if (!entities.Contains(entity))
+        {
+            entities.Add(entity);
+        }
+    }
+    public bool RemoveEntityFromDirectory(Vector3Int position, BaseGridEntity entity)
+    {
+        if (allEntityDirectory.TryGetValue(position, out List<BaseGridEntity> entities))
+        {
+            bool removed = entities.Remove(entity);
+            
+            // Clean up empty lists
+            if (entities.Count == 0)
+            {
+                allEntityDirectory.Remove(position);
+            }
+            
+            return removed;
+        }
+        
+        return false;
+    }
     /// <summary>
     /// Finds all entities at the given position
     /// </summary>

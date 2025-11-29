@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Manages building placement and operations on the grid
@@ -85,6 +86,24 @@ public class BuildingManager : MonoBehaviour
         building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
         building.buildingPlacementEvent.Post(gameObject);
         return buildingPreview;
+    }
+
+    private GameObject PlaceQueuedBuilding(Building building, BaseKingdom owner, Vector3Int position)
+    {
+        GameObject buildingGO = Instantiate(building.buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(position), Quaternion.identity);
+        buildingGO.GetComponent<GridBuilding>().InitializeBase(owner);
+        foreach (SpriteRenderer sr in buildingGO.GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.color = Color.gray;
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
+        }
+        //find canvas among children and disable it
+        Canvas canvas = buildingGO.GetComponentInChildren<Canvas>();
+        if (canvas != null)
+        {
+            canvas.enabled = false;
+        }
+        return buildingGO;
     }
 
     /// <summary>
@@ -245,40 +264,33 @@ public class BuildingManager : MonoBehaviour
             return;
         }
         Building building = BuildingsDatas[buildingType];
-        if (!CanBuildingBePlaced(city, building, mousePosition))
-        {
-            Debug.LogError("Building cannot be placed at this position");
-            return;
-        }
-
-        Production production = new Production(mousePosition, ProductionType.Building, building.duration, building);
-
-        if (city.GetComponent<CityProductionQueue>() == null)
-        {
-            Debug.LogError("CityProductionQueue.Instance is null");
-            return;
-        }
-        building.buildingPlacementEvent.Post(gameObject);
-        city.GetComponent<CityProductionQueue>().AddToQueue(production);
+        QueueBuildingAtPosition(mousePosition, city, building);
 
     }
     public bool QueueBuildingAtPosition(Vector3Int position,GridCity city,GridBuilding gridBuilding )
     {
         Building building = gridBuilding.GetBuilding();
+        return QueueBuildingAtPosition(position, city, building);
+    }
+
+    private bool QueueBuildingAtPosition(Vector3Int position, GridCity city, Building building)
+    {
         if (!CanBuildingBePlaced(city, building, position))
         {
             Debug.LogError("Building cannot be placed at this position");
             return false;
         }
 
-        Production production = new Production(position, ProductionType.Building, building.duration, building);
-
         if (city.GetComponent<CityProductionQueue>() == null)
         {
             Debug.LogError("CityProductionQueue.Instance is null");
             return false;
         }
-        if(TurnManager.instance.GetCurrentActingKingdom() is PlayerKingdom)
+        CheckAndStartConstruction(city, building, position);
+        GameObject placedBuilding = PlaceQueuedBuilding(building, city.GetOwner(), position);
+
+        Production production = new Production(position, ProductionType.Building, building.duration, building, placedBuilding);
+        if (TurnManager.instance.GetCurrentActingKingdom() is PlayerKingdom)
         {
             building.buildingPlacementEvent.Post(gameObject);
         }
@@ -286,6 +298,8 @@ public class BuildingManager : MonoBehaviour
         city.GetComponent<CityProductionQueue>().AddToQueue(production);
         return true;
     }
+
+
 
     // set tile to available, and refund resources
     public void CancelConstruction(GridCity city, Building building, Vector3Int position)

@@ -44,7 +44,7 @@ public class CityProductionQueue : MonoBehaviour
         {
 
             currentProduction.EndProduction(GetComponent<GridCity>());
-            RemoveCurrentProduction();
+            RemoveProduction(currentProduction);
             //ProceedProductionQueue();
         }
     }
@@ -106,6 +106,7 @@ public class CityProductionQueue : MonoBehaviour
             return;
         }
         production.Cancel(GetComponent<GridCity>());
+        Destroy(production.placedObject);
         productionQueue.Remove(production);
         if (currentProduction == production)
         {

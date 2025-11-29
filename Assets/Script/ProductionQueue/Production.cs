@@ -9,15 +9,25 @@ public class Production
     public ProductionType productionType;
     public Building building;
     public GameObject prefab;
+    public GameObject placedObject;
 
-    public Production(Vector3Int position, ProductionType productionType, int duration, Building building=null, GameObject prefab=null)
+    public Production(Vector3Int position, ProductionType productionType, int duration, Building building=null)
     {
-        this.prefab = prefab;
         this.building = building;
         this.position = position;
         this.turnsRemaining = duration;
         this.productionType = productionType;
         this.isStarted = false;
+    }
+    public Production(Vector3Int position, ProductionType productionType, int duration, Building building = null, GameObject placedBuilding = null)
+    {
+        this.building = building;
+        this.position = position;
+        this.turnsRemaining = duration;
+        this.productionType = productionType;
+        this.isStarted = false;
+        this.placedObject = placedBuilding;
+
     }
     public Production(Vector3Int position, ProductionType productionType, int duration, GameObject prefab = null)
     {
@@ -27,16 +37,26 @@ public class Production
         this.productionType = productionType;
         this.isStarted = false;
     }
+
+    public Production(Vector3Int position, ProductionType productionType, int duration, GameObject prefab = null, GameObject placedUnit = null)
+    {
+        this.prefab = prefab;
+        this.position = position;
+        this.turnsRemaining = duration;
+        this.productionType = productionType;
+        this.isStarted = false;
+        this.placedObject = placedUnit;
+    }
     public bool StartProduction(GridCity city){
         if(isStarted)
         {
             Debug.Log("Continuing production of " + productionType + " at " + position);
         }
-        if(productionType == ProductionType.Building && BuildingManager.Instance.CheckAndStartConstruction(city, building, position))
+        if(productionType == ProductionType.Building)// && BuildingManager.Instance.CheckAndStartConstruction(city, building, position))
         {
             isStarted = true;
         }
-        else if(productionType == ProductionType.Unit && UnitSpawner.Instance.CheckAndStartUnitSpawn(city, prefab, position))
+        else if(productionType == ProductionType.Unit)// && UnitSpawner.Instance.CheckAndStartUnitSpawn(city, prefab, position))
         {
             isStarted = true;
         }

@@ -92,6 +92,10 @@ public class BaseGridEntity : MonoBehaviour
         }
         entityVision.Initialize(this);
     }
+
+    public virtual void InitializeBase(BaseKingdom owner)
+    {
+    }
     protected virtual void OnDisable()
     {
         GlobalEventManager.EndTurnEvent.RemoveListener(OnEndTurn);
