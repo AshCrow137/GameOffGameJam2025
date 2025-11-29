@@ -1,3 +1,6 @@
 Event	ID	Name			Wwise Object Path	Notes
 	202194903	music_play			\Default Work Unit\Music\music_play	
 
+Effect plug-ins	ID	Name	Type				Notes
+	1759944409	Cut_3dB_100Hz	Wwise Parametric EQ			
+

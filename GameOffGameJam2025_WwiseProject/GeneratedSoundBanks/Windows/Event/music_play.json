@@ -10,20 +10,11 @@
     "Type": "Event",
     "GUID": "{DB58C9FE-BD23-4C32-8027-4E7CB4E02DA5}",
     "Language": "SFX",
-    "Hash": "{EE341CD1-0222-5636-B9DF-97B25D2D814D}",
+    "Hash": "{49FB66C8-B0B2-E0C8-39FA-56611FCE7E71}",
     "ObjectPath": "music_play",
     "ShortName": "music_play",
     "Path": "Event/music_play.bnk",
     "Media": [
-     {
-      "Id": "459420146",
-      "Language": "SFX",
-      "Streaming": "false",
-      "Location": "Loose",
-      "ShortName": "Music\\deepwave calm with perc.wav",
-      "Path": "Media/459420146.wem",
-      "CachePath": "16/{162F4D94-0760-0688-C95D-708D9C80FB16}.wem"
-     },
      {
       "Id": "963382323",
       "Language": "SFX",
@@ -32,17 +23,20 @@
       "ShortName": "Music\\Deep Wave.wav",
       "Path": "Media/963382323.wem",
       "CachePath": "51/{51773EC0-6589-8E09-17A8-DD14812E0317}.wem"
-     },
-     {
-      "Id": "1003314151",
-      "Language": "SFX",
-      "Streaming": "false",
-      "Location": "Loose",
-      "ShortName": "Music\\deepwave calm NO PERC.wav",
-      "Path": "Media/1003314151.wem",
-      "CachePath": "6F/{6F6E1E0B-5229-36DB-62E1-116C9B7C7766}.wem"
      }
     ],
+    "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "1759944409",
+       "Name": "Cut_3dB_100Hz",
+       "ObjectPath": "\\Effects\\Factory Effects\\Parametric EQ\\Shelving EQ\\Low Shelf\\Cut_3dB_100Hz",
+       "GUID": "{67423B74-4F0A-4719-92FE-343347C717C7}",
+       "LibName": "Wwise Parametric EQ",
+       "LibId": "6881283"
+      }
+     ]
+    },
     "Events": [
      {
       "Id": "202194903",
@@ -52,19 +46,13 @@
       "DurationType": "Infinite",
       "MediaRefs": [
        {
-        "Id": "459420146"
-       },
-       {
         "Id": "963382323"
-       },
-       {
-        "Id": "1003314151"
        }
       ]
      }
     ]
    }
   ],
-  "FileHash": "{F37BE791-C1C2-7B5C-5234-2E20C77A30AF}"
+  "FileHash": "{269AA086-4B14-2D6A-7F65-B21CC597A949}"
  }
 }
