@@ -55,11 +55,11 @@ public class UnitSpawner : MonoBehaviour
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
         }
         //find canvas among children and disable it
-        Canvas canvas = unit.GetComponentInChildren<Canvas>();
-        if (canvas != null)
-        {
-            canvas.enabled = false;
-        }
+        // Canvas canvas = unit.GetComponentInChildren<Canvas>();
+        // if (canvas != null)
+        // {
+        //     canvas.enabled = false;
+        // }
         return unit;
     }
 
