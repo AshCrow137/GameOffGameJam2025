@@ -91,6 +91,13 @@ public class BaseGridEntity : MonoBehaviour
             entityVision = gameObject.AddComponent<EntityVision>();
         }
         entityVision.Initialize(this);
+        
+        // Add entity to directory
+        hTM.AddEntityToDirectory(gridPosition, this);
+    }
+
+    public virtual void InitializeBase(BaseKingdom owner)
+    {
     }
     protected virtual void OnDisable()
     {
@@ -150,8 +157,21 @@ public class BaseGridEntity : MonoBehaviour
     }
     public virtual void Death()
     {
-
+        // Remove entity from directory
+        if (hTM != null)
+        {
+            hTM.RemoveEntityFromDirectory(gridPosition, this);
+        }
     }
+    
+    /// <summary>
+    /// Updates the grid position of this entity (called when entity moves)
+    /// </summary>
+    public void UpdateGridPosition(Vector3Int newPosition)
+    {
+        gridPosition = newPosition;
+    }
+    
     public virtual void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack)
     {
 

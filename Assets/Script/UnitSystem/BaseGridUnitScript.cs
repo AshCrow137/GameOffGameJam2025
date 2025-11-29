@@ -149,6 +149,12 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         actualRetallitionAttackDamage = RetallitionAttackDamage;
         CanStandOnTiles = possibleSpawnTiles;
     }
+
+    public override void InitializeBase(BaseKingdom owner)
+    {
+        base.Initialize(owner);
+    }
+
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
@@ -170,11 +176,6 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
        
         baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
-
-
-
-
-
 
     }
    
@@ -480,6 +481,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
         Owner.RemoveUnitFromKingdom(this);
+        base.Death(); // Remove from entity directory
         gameObject.SetActive(false);
     }
 

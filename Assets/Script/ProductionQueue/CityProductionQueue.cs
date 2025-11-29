@@ -42,9 +42,9 @@ public class CityProductionQueue : MonoBehaviour
     {
         if (currentProduction.IsComplete())
         {
-
-            currentProduction.EndProduction(GetComponent<GridCity>());
-            RemoveCurrentProduction();
+            Production production = currentProduction;
+            RemoveProduction(currentProduction);
+            production.EndProduction(GetComponent<GridCity>());
             //ProceedProductionQueue();
         }
     }
@@ -105,7 +105,20 @@ public class CityProductionQueue : MonoBehaviour
             Debug.LogError("Cannot remove null Production");
             return;
         }
-        production.Cancel(GetComponent<GridCity>());
+        //production.Cancel(GetComponent<GridCity>());
+        
+        // Properly clean up the preview entity from the directory before destroying
+        if (production.placedObject != null)
+        {
+            BaseGridEntity entity = production.placedObject.GetComponent<BaseGridEntity>();
+            if (entity != null)
+            {
+                Vector3Int position = entity.GetCellPosition();
+                HexTilemapManager.Instance.RemoveEntityFromDirectory(position, entity);
+            }
+            Destroy(production.placedObject);
+        }
+
         productionQueue.Remove(production);
         if (currentProduction == production)
         {
