@@ -748,10 +748,22 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         return this.actualMaxHealth;
     }
+    public int GetRawMaxHealth()
+    {
+        return Health;
+    }
   
     public int GetMeleeDamage()
     {
         return this.actualMeleeAttackDamage;
+    }
+    public int GetRawMeleeDamage()
+    {
+        return MeleeAttackDamage;
+    }
+    public int GetRawRangedAttackDamage()
+    {
+        return RangeAttackDamage;
     }
 
     public int GetRangeAttackDamage()
@@ -763,7 +775,10 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         return this.actualRetallitionAttackDamage;
     }
-
+    public int GetRawRetallitionDamage()
+    {
+        return RetallitionAttackDamage;
+    }
     public int GetAtackDistance()
     {
         return this.AttackRange;
@@ -792,5 +807,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     public int GetTier()
     {
         return unitTier;
+    }
+    public int GetProductionTime()
+    {
+        return ProductionTime;
     }
 }
