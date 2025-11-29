@@ -143,7 +143,15 @@ public class UnitSpawner : MonoBehaviour
         var r = seeker.traversableTags;
 
         unit.GetComponent<BaseGridUnitScript>().Initialize(ownerKingdom);
-
+        if(ownerKingdom is AIKingdom)
+        {
+            AIKingdom aiownerKingdom = (AIKingdom) ownerKingdom;
+            if(aiownerKingdom.GetCurrentMadnessEffect().DecreaseSpeed)
+            {
+                unit.GetComponent<BaseGridUnitScript>().DecreaseSpeedForFirstTurn();
+            }
+           
+        }
         //unit.GetComponent<BaseGridUnitScript>().Initialize(playerKingdom);
 
         ownerKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());

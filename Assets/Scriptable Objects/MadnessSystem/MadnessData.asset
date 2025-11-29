@@ -18,23 +18,38 @@ MonoBehaviour:
     maxMadness: 24
     CreatureStatsModifier: 0
     DiplomacyModifier: 0
+    VisibleProduction: 0
+    DecreaseSpeed: 0
+    CanFight: 1
   - name: 25-49
     minMadness: 25
     maxMadness: 49
     CreatureStatsModifier: 10
     DiplomacyModifier: 0
+    VisibleProduction: 0
+    DecreaseSpeed: 0
+    CanFight: 1
   - name: 50-74
     minMadness: 50
     maxMadness: 74
     CreatureStatsModifier: 25
     DiplomacyModifier: 0
+    VisibleProduction: 1
+    DecreaseSpeed: 1
+    CanFight: 1
   - name: 75-99
     minMadness: 75
     maxMadness: 99
     CreatureStatsModifier: 35
     DiplomacyModifier: 0
+    VisibleProduction: 1
+    DecreaseSpeed: 1
+    CanFight: 1
   - name: 100
     minMadness: 100
     maxMadness: 100
     CreatureStatsModifier: 35
     DiplomacyModifier: 0
+    VisibleProduction: 1
+    DecreaseSpeed: 1
+    CanFight: 0

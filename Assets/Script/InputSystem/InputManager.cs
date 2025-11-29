@@ -33,6 +33,10 @@ public class InputManager : MonoBehaviour
     {
         bIsOnUIElement = value;
     }
+    public bool IsCursorOverUIElement()
+    {
+        return bIsOnUIElement;
+    }
     //Menu Inputs
     public void OnNavigate(CallbackContext value)
     {
@@ -210,13 +214,13 @@ public class InputManager : MonoBehaviour
     //End GameInputs
 
     //Tests
-    public void OnTestMadness(CallbackContext value)
-    {
-        if (value.performed)
-        {
-            Debug.Log(TurnManager.instance.GetCurrentActingKingdom().GetMadnessEffects());
-        }
-    }
+    //public void OnTestMadness(CallbackContext value)
+    //{
+    //    if (value.performed)
+    //    {
+    //        Debug.Log(TurnManager.instance.GetCurrentActingKingdom().GetMadnessEffects());
+    //    }
+    //}
     public Vector3 GetMousePosition()
     {
         return mousePos;

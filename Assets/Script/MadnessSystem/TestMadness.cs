@@ -29,8 +29,8 @@ public class TestMadness : MonoBehaviour
         kingdom.DecreaseMadness(value);
     }
 
-    public void GetEffect()
-    {
-        Debug.Log(kingdom.GetMadnessEffects());
-    }
+    //public void GetEffect()
+    //{
+    //    Debug.Log(kingdom.GetMadnessEffects());
+    //}
 }

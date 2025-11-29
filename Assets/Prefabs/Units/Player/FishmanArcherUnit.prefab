@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7829676371039699470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1370997925338277671}
+  m_Layer: 0
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1370997925338277671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7829676371039699470}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1727560545612876942}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1730829567217512274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11,6 +42,18 @@ PrefabInstance:
     - target: {fileID: 794239194931534683, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: traversableTags
       value: -53
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -92,6 +135,14 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4872316267927391669, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872316267927391669, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 717043553
+      objectReference: {fileID: 0}
     - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Name
       value: FishmanArcherUnit
@@ -123,7 +174,10 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1370997925338277671}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       insertIndex: -1
@@ -151,6 +205,11 @@ MonoBehaviour:
 --- !u!1 &1184091309905177122 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 606746352947840368, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 1730829567217512274}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1727560545612876942 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 1730829567217512274}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2295539708766403775 stripped
@@ -227,6 +286,7 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 296311217075061442}
   entityType: 0
+  bCanBeAttacked: 1
   CanStandOnTiles: 
   MeleeAttackDamage: 1
   RangeAttackDamage: 8
@@ -261,3 +321,6 @@ MonoBehaviour:
   duration: 3
   abilityImage: {fileID: 0}
   abilityDescription: 
+  projectilePrefab: {fileID: 6753759320730807998, guid: 96de450f42c87b84cb00753eaa4c2bc8, type: 3}
+  shootingPoint: {fileID: 1370997925338277671}
+  projectileSpeed: 15

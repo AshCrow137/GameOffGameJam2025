@@ -65,6 +65,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image LifeBar;
 
+    [SerializeField]
+    private GameObject UnitProductionButton;
+    [SerializeField]
+    private GameObject BuildingProductionButton;   
+    [SerializeField]
+    private GameObject UnitProductionPanel;  
+    [SerializeField]
+    private GameObject BuildingProductionPanel;
+
+    [SerializeField]
+    private GameObject ProductionPanel;
+    [SerializeField]
+    private GameObject ProductionFirstItemPanel;
     public TMP_Text currentturnText;
     public void Initialize()
     {
@@ -140,6 +153,32 @@ public class UIManager : MonoBehaviour
         CityPanel.sprite = UIElements.CityPanel;
         MadnessLavel.text = $"Madness: {city.GetOwner().madnessLevel}";
         madnessFillImage.fillAmount = (float)city.GetOwner().madnessLevel / city.GetOwner().maxMadnessLevel;
+        if(city.GetOwner() is AIKingdom)
+        {
+            AIKingdom ai = (AIKingdom) city.GetOwner();
+            if(ai.GetCurrentMadnessEffect().VisibleProduction)
+            {
+                ProductionFirstItemPanel?.SetActive(true);
+                ProductionPanel?.SetActive(true);
+            }
+            else
+            {
+                ProductionFirstItemPanel?.SetActive(false);
+                ProductionPanel?.SetActive(false);
+            }
+            UnitProductionButton?.SetActive(false);
+            BuildingProductionButton?.SetActive(false);
+            UnitProductionPanel?.SetActive(false);
+            BuildingProductionPanel?.SetActive(false);
+        }
+        else
+        {
+            UnitProductionButton?.SetActive(true);
+            BuildingProductionButton?.SetActive(true);
+            ProductionFirstItemPanel?.SetActive(true);
+            ProductionPanel?.SetActive(true);
+        }
+        CityUI.Instance.UpdateUnitButtonsInteractability();
     }
 
     public void UnitsInteractable(bool value)

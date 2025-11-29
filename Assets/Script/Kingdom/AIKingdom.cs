@@ -88,12 +88,16 @@ public class AIKingdom : BaseKingdom
     public override void DecreaseMadness(int amount)
     {
         base.DecreaseMadness(amount);
-        currentMadnessEffect = madnessData.GetMadnessEffects(amount);
+        currentMadnessEffect = madnessData.GetMadnessEffects(madnessLevel);
 
         foreach (BaseGridUnitScript unit in controlledUnits)
         {
             unit.ApplyMadnessEffect(currentMadnessEffect);
         }
+    }
+    public MadnessDataStruct GetCurrentMadnessEffect()
+    {
+        return madnessData.GetMadnessEffects(madnessLevel);
     }
     public bool IsBuildUnit { get;private set; }
     
