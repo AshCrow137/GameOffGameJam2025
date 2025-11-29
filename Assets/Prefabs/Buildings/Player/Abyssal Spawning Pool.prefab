@@ -949,6 +949,8 @@ MonoBehaviour:
   - {fileID: 1323219030096113610}
   rotatebleCanvas: {fileID: 8551652696335946812}
   entityType: 4
+  bCanBeAttacked: 1
+  CanStandOnTiles: 01000000
   HpForCity: 20
   buildingData: {fileID: 11400000, guid: 9de8263b40556954181bb0be7377070f, type: 2}
   unitName: Eldritch

@@ -53,5 +53,12 @@ public class GridBuilding : BaseGridEntity
         GetComponent<EntityVision>()?.OnDeath();
         gameObject.SetActive(false);
     }
+
+
+    public override void InitializeBase(BaseKingdom owner)
+    {
+        base.Initialize(owner);
+    }
+
 }
 

@@ -34,6 +34,8 @@ public class HexTilemapManager : MonoBehaviour
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
     private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
 
+    private Dictionary<Vector3Int, List<BaseGridEntity> > allEntityDirectory = new();
+
 
     // Singleton instance for easy access
     public static HexTilemapManager Instance { get; private set; }
@@ -404,6 +406,9 @@ public class HexTilemapManager : MonoBehaviour
                 gridUnits.Add(cellPosition, unit);
             }
             
+            // Update unit's grid position and add to entity directory
+            unit.UpdateGridPosition(cellPosition);
+            AddEntityToDirectory(cellPosition, unit);
         }
     }
     public void RemoveUnitFromTile(Vector3Int cellPosition)
@@ -411,6 +416,9 @@ public class HexTilemapManager : MonoBehaviour
         if (gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
         {
             gridUnits.Remove(cellPosition);
+            
+            // Remove unit from entity directory at this position
+            RemoveEntityFromDirectory(cellPosition, unitScript);
         }
     }
     public BaseGridUnitScript GetUnitOnTile(Vector3Int cellPosition)
@@ -442,7 +450,10 @@ public class HexTilemapManager : MonoBehaviour
             {
                 gridCities.Add(cellPosition, city);
             }
-
+            
+            // Update city's grid position and add to entity directory
+            city.UpdateGridPosition(cellPosition);
+            AddEntityToDirectory(cellPosition, city);
         }
     }
     public void RemoveCityOnTile(Vector3Int cellPosition)
@@ -450,6 +461,9 @@ public class HexTilemapManager : MonoBehaviour
         if (gridCities.TryGetValue(cellPosition, out GridCity cityScript))
         {
             gridCities.Remove(cellPosition);
+            
+            // Remove city from entity directory at this position
+            RemoveEntityFromDirectory(cellPosition, cityScript);
         }
     }
 
@@ -462,10 +476,44 @@ public class HexTilemapManager : MonoBehaviour
         return null;
     }
 
+    public void AddEntityToDirectory(Vector3Int position, BaseGridEntity entity)
+    {
+        if (!allEntityDirectory.TryGetValue(position, out List<BaseGridEntity> entities))
+        {
+            entities = new List<BaseGridEntity>();
+            allEntityDirectory.Add(position, entities);
+        }
+        
+        if (!entities.Contains(entity))
+        {
+            entities.Add(entity);
+        }
+    }
+    public bool RemoveEntityFromDirectory(Vector3Int position, BaseGridEntity entity)
+    {
+        if (allEntityDirectory.TryGetValue(position, out List<BaseGridEntity> entities))
+        {
+            bool removed = entities.Remove(entity);
+            
+            // Clean up empty lists
+            if (entities.Count == 0)
+            {
+                allEntityDirectory.Remove(position);
+            }
+            
+            return removed;
+        }
+        
+        return false;
+    }
     /// <summary>
     /// Finds all entities at the given position
     /// </summary>
     public List<BaseGridEntity> FindAllEntitiesAtPosition(Vector3Int position)
+    {
+        return allEntityDirectory.TryGetValue(position, out List<BaseGridEntity> entities) ? entities : new List<BaseGridEntity>();
+    }
+    public List<BaseGridEntity> FindAllEntitiesAtPositionOld(Vector3Int position)
     {
         List<BaseGridEntity> entities = new List<BaseGridEntity>();
 

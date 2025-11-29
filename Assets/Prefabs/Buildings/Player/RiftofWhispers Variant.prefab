@@ -390,6 +390,8 @@ MonoBehaviour:
   - {fileID: 7884187323099228737}
   rotatebleCanvas: {fileID: 8551652696335946812}
   entityType: 4
+  bCanBeAttacked: 1
+  CanStandOnTiles: 01000000
   HpForCity: 10
   buildingData: {fileID: 11400000, guid: a6420cfb96e5aea408c4351422405b35, type: 2}
   productGold: 0
