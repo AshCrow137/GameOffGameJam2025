@@ -122,6 +122,7 @@ public class CityUI : MonoBehaviour
 
     private void ClearCityMenuMode()
     {
+        UIManager.Instance.HideEntityProductionPanelInfo();
         cityMenuMode = CityMenuMode.None;
 
         // StartCoroutine(ClearCityMenuModeDelayed());
