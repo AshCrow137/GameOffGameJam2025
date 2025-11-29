@@ -106,7 +106,19 @@ public class CityProductionQueue : MonoBehaviour
             return;
         }
         production.Cancel(GetComponent<GridCity>());
-        Destroy(production.placedObject);
+        
+        // Properly clean up the preview entity from the directory before destroying
+        if (production.placedObject != null)
+        {
+            BaseGridEntity entity = production.placedObject.GetComponent<BaseGridEntity>();
+            if (entity != null)
+            {
+                Vector3Int position = entity.GetCellPosition();
+                HexTilemapManager.Instance.RemoveEntityFromDirectory(position, entity);
+            }
+            Destroy(production.placedObject);
+        }
+        
         productionQueue.Remove(production);
         if (currentProduction == production)
         {

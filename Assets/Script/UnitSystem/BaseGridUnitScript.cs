@@ -481,6 +481,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
         Owner.RemoveUnitFromKingdom(this);
+        base.Death(); // Remove from entity directory
         gameObject.SetActive(false);
     }
 

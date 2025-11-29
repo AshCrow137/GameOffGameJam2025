@@ -406,6 +406,9 @@ public class HexTilemapManager : MonoBehaviour
                 gridUnits.Add(cellPosition, unit);
             }
             
+            // Update unit's grid position and add to entity directory
+            unit.UpdateGridPosition(cellPosition);
+            AddEntityToDirectory(cellPosition, unit);
         }
     }
     public void RemoveUnitFromTile(Vector3Int cellPosition)
@@ -413,6 +416,9 @@ public class HexTilemapManager : MonoBehaviour
         if (gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
         {
             gridUnits.Remove(cellPosition);
+            
+            // Remove unit from entity directory at this position
+            RemoveEntityFromDirectory(cellPosition, unitScript);
         }
     }
     public BaseGridUnitScript GetUnitOnTile(Vector3Int cellPosition)
@@ -444,7 +450,10 @@ public class HexTilemapManager : MonoBehaviour
             {
                 gridCities.Add(cellPosition, city);
             }
-
+            
+            // Update city's grid position and add to entity directory
+            city.UpdateGridPosition(cellPosition);
+            AddEntityToDirectory(cellPosition, city);
         }
     }
     public void RemoveCityOnTile(Vector3Int cellPosition)
@@ -452,6 +461,9 @@ public class HexTilemapManager : MonoBehaviour
         if (gridCities.TryGetValue(cellPosition, out GridCity cityScript))
         {
             gridCities.Remove(cellPosition);
+            
+            // Remove city from entity directory at this position
+            RemoveEntityFromDirectory(cellPosition, cityScript);
         }
     }
 
@@ -498,6 +510,10 @@ public class HexTilemapManager : MonoBehaviour
     /// Finds all entities at the given position
     /// </summary>
     public List<BaseGridEntity> FindAllEntitiesAtPosition(Vector3Int position)
+    {
+        return allEntityDirectory.TryGetValue(position, out List<BaseGridEntity> entities) ? entities : new List<BaseGridEntity>();
+    }
+    public List<BaseGridEntity> FindAllEntitiesAtPositionOld(Vector3Int position)
     {
         List<BaseGridEntity> entities = new List<BaseGridEntity>();
 

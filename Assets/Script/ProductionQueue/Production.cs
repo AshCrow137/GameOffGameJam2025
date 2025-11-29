@@ -71,6 +71,16 @@ public class Production
         {
             UnitSpawner.Instance.PlaceUnit(prefab, position, city.GetOwner());
         }
+        
+        // Clean up the preview/queued object from the directory before it's destroyed
+        // if (placedObject != null)
+        // {
+        //     BaseGridEntity entity = placedObject.GetComponent<BaseGridEntity>();
+        //     if (entity != null)
+        //     {
+        //         HexTilemapManager.Instance.RemoveEntityFromDirectory(position, entity);
+        //     }
+        // }
     }
 
     public void UpdateProduction(){
