@@ -1,5 +1,6 @@
 using Pathfinding;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,7 +10,8 @@ public class GridCity : BaseGridEntity,IDamageable
     [Header("Production Data")]
     [SerializeField] private int productGold=5;
     [SerializeField] private int productMagic=5;
-    [SerializeField] private int productMaterial=1;
+    [SerializeField] private int productMaterial = 1;
+    [SerializeField] private GameObject destroyedCityPrefab;
     Dictionary<ResourceType, int> product = new Dictionary<ResourceType, int>();
 
     public Sprite sprite;
@@ -142,12 +144,30 @@ public class GridCity : BaseGridEntity,IDamageable
             return;
         }
     }
+
     public override void Death()
     {
+        foreach (KeyValuePair<Vector3Int, GridBuilding> pair in buildings)
+        {
+            pair.Value.Death();
+        }
+        List<Production> productions = productionQueue.GetTotalProduction();
+        foreach (Production production in productions)
+        {
+            productionQueue.RemoveProduction(production);
+        }    
         base.Death();
         hTM.RemoveCityOnTile(GetCellPosition());
+        CityManager.Instance.RemoveCity(GetCellPosition());
         GetComponent<EntityVision>().OnDeath();
         Owner.RemoveCityFromKingdom(this);
+        if(Owner is AIKingdom)
+        {
+            GameObject destroyedCity = Instantiate(destroyedCityPrefab, transform.position, Quaternion.identity);
+            DestroyedCity script = destroyedCity.GetComponent<DestroyedCity>();
+            script.Initialize(null);
+        }
+
         gameObject.SetActive(false);
     }
     /// <summary>

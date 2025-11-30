@@ -6,7 +6,7 @@ public class WavecallerUnit : BaseGridUnitScript
 {
     [SerializeField]
     private int transformProgress = 0;
-    private List<TileState> possibleTileStates = new List<TileState> { TileState.Land,TileState.OccupiedByUnit };
+    private List<TileState> possibleTileStates = new List<TileState> { TileState.Land,TileState.OccupiedByUnit,TileState.OccuppiedByBuilding,TileState.OccupiedByCity };
     private UnitMode unitMode = UnitMode.None;
     private Vector3Int transformingTile;
     private List<Vector3Int> possibleCellsInRange;
@@ -28,7 +28,7 @@ public class WavecallerUnit : BaseGridUnitScript
             GameplayCanvasManager.instance.DeactivateWavecallerButton();
         }
         
-        if (unitMode == UnitMode.Casting && transformProgress <= 2) { HPImage.color = Color.yellow; }
+        //if (unitMode == UnitMode.Casting && transformProgress <= 2) { HPImage.color = Color.yellow; }
     }
 
     protected override void OnStartTurn(BaseKingdom entity)
@@ -57,6 +57,8 @@ public class WavecallerUnit : BaseGridUnitScript
     public override void SpecialAbility()
     {
         base.SpecialAbility();
+        animator.SetBool("CastStart", false);
+        animator.SetBool("CastFinish", false);
         possibleCellsInRange = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
         if (possibleCellsInRange.Count == 0)
         {
@@ -121,6 +123,8 @@ public class WavecallerUnit : BaseGridUnitScript
         MovementDistance = 2;
         tilesRemain = MovementDistance;
         AttacksPerTurn = 1;
+        //animator.SetBool("CastStart", false);
+        //animator.SetBool("CastFinish", false);
     }
 
     private void StartTransformation(Vector3Int tile)
