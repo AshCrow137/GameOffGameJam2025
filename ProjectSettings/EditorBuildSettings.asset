@@ -12,13 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/ActualGameplayScenes/ActualMainMenu.unity
     guid: 1663dc7c7354d1349954221a2a9aa874
   - enabled: 0
-    path: Assets/Scenes/ActualGameplayScenes/MainMenu.unity
+    path: Assets/Scenes/ActualGameplayScenes/Archive/MainMenu.unity
     guid: 1e9e710a9097f664b9396f10b487dcae
   - enabled: 0
-    path: Assets/Scenes/ActualGameplayScenes/FirstGameplayScene.unity
+    path: Assets/Scenes/ActualGameplayScenes/Archive/FirstGameplayScene.unity
     guid: b0520e848032698469cfca69ee6b065b
   - enabled: 0
-    path: Assets/Scenes/ActualGameplayScenes/ActualGameplayScene2.unity
+    path: Assets/Scenes/ActualGameplayScenes/Archive/ActualGameplayScene2.unity
     guid: b69a19db7d6af06458550b33cf127bc4
   - enabled: 1
     path: Assets/Scenes/ActualGameplayScenes/ActualGameplayScene4.unity

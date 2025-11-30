@@ -5,6 +5,13 @@ using UnityEngine.UIElements;
 
 public class GridCity : BaseGridEntity,IDamageable
 {
+
+    [Header("Production Data")]
+    [SerializeField] private int productGold=5;
+    [SerializeField] private int productMagic=5;
+    [SerializeField] private int productMaterial=1;
+    Dictionary<ResourceType, int> product = new Dictionary<ResourceType, int>();
+
     public Sprite sprite;
     public Vector3Int position;
 
@@ -35,6 +42,9 @@ public class GridCity : BaseGridEntity,IDamageable
         productionQueue.Initialize(owner, this);
         hTM.PlaceCityOnTheTile(GetCellPosition(),this);
         owner.AddCityToKingdom(this);
+        if (productGold > 0) product.Add(ResourceType.Gold, productGold);
+        if (productMagic > 0) product.Add(ResourceType.Magic, productMagic);
+        if (productMaterial > 0) product.Add(ResourceType.Materials, productMaterial);
     }
     public void OnBuildingConstructed(GridBuilding building)
     {
@@ -56,8 +66,10 @@ public class GridCity : BaseGridEntity,IDamageable
     protected override void OnStartTurn(BaseKingdom entity)
     {
         base.OnStartTurn(entity);
+        if (entity != Owner) { return; }
 
 
+        Owner.Resources().AddAll(product);
     }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
