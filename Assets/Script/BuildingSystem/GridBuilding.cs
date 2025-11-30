@@ -11,14 +11,21 @@ public class GridBuilding : BaseGridEntity
 
     [SerializeField]
     private Building buildingData;
+    [SerializeField]
+    private string BuildingFunction;
 
+    [SerializeField]
+    private Sprite buildingUISprite;
+
+    public Sprite GetBuildingUISprite() { return buildingUISprite; }
+    protected bool bIsActive = false;
     /// <summary>
     /// Initialize the GridBuilding with a Building scriptable object
     /// </summary>
     public override  void Initialize( BaseKingdom owner)
     {
         base.Initialize(owner);
-
+        bIsActive = true;
         
         // Initialize building-specific fields
         //buildingName = building.buildingName;
@@ -52,6 +59,16 @@ public class GridBuilding : BaseGridEntity
         
         GetComponent<EntityVision>()?.OnDeath();
         gameObject.SetActive(false);
+    }
+
+
+    public override void InitializeBase(BaseKingdom owner)
+    {
+        base.Initialize(owner);
+    }
+    public virtual string GetBuildingFunction()
+    {
+        return BuildingFunction;
     }
 }
 

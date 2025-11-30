@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d861f251c2b71de4e96dfa12a423cc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Knight
   Health: 40
   CurrentHealth: 40
   Vision: 5
@@ -160,7 +161,11 @@ MonoBehaviour:
   bodySprite: {fileID: 7400716136940784872}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 9039692388002525845}
-  entityType: 0
+  entityType: 2
+  requiredBuildings: []
+  bCanBeAttacked: 1
+  EntityDescription: 
+  CanStandOnTiles: 
   MeleeAttackDamage: 15
   RangeAttackDamage: 1
   RetallitionAttackDamage: 13

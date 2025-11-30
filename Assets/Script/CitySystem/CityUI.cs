@@ -95,7 +95,7 @@ public class CityUI : MonoBehaviour
     private void ShowGreenTIles()
     {
         GridCity selectedCity = GameplayCanvasManager.instance.selectedCity;
-        List<Vector3Int> positions = HexTilemapManager.Instance.GetCellsInRange(selectedCity.GetCellPosition(), 1, new List<TileState> { TileState.Land, TileState.Water });
+        List<Vector3Int> positions = HexTilemapManager.Instance.GetCellsInRange(selectedCity.GetCellPosition(), selectedCity.unitSpawnRadius, new List<TileState> { TileState.Land, TileState.Water });
         foreach (Vector3Int pos in positions)
         {
             HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(pos, MarkerColor.Green);
@@ -103,11 +103,31 @@ public class CityUI : MonoBehaviour
     }
     public void SetSpawnUnitMode(GameObject unitPrefab)
     {
-        cityMenuMode = CityMenuMode.SpawnUnit;
-        isUsingCityMenu = true;
-        this.unitPrefab = unitPrefab;
-        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
-        ShowGreenTIles();
+        List<BaseGridUnitScript> unlockedUnits =  GameplayCanvasManager.instance.selectedCity.GetOwner().GetunlockedUnits();
+        BaseGridUnitScript prefabScript = unitPrefab.GetComponent<BaseGridUnitScript>();
+        bool bUnitUnlocked = false;
+        foreach(BaseGridUnitScript unit in unlockedUnits)
+        {
+            if(unit.GetType()==prefabScript.GetType())
+            {
+                bUnitUnlocked = true;
+                break;
+            }
+        }
+        if(bUnitUnlocked)
+        {
+            cityMenuMode = CityMenuMode.SpawnUnit;
+            isUsingCityMenu = true;
+            this.unitPrefab = unitPrefab;
+            GameplayCanvasManager.instance.selectedCity.UpdateUnitSpawnRadius();
+            AudioManager.Instance.ui_menumain_volume.Post(gameObject);
+            ShowGreenTIles();
+        }
+        else
+        {
+            GlobalEventManager.InvokeShowUIMessageEvent("You did not unlock this unit!");
+        }
+
     }
 
     public void SetSpawnBuildingMode(int BuildingType)
@@ -115,6 +135,7 @@ public class CityUI : MonoBehaviour
         cityMenuMode = CityMenuMode.SpawnBuilding;
         isUsingCityMenu = true;
         buildingType = BuildingType;
+        GameplayCanvasManager.instance.selectedCity.UpdateUnitSpawnRadius();
         AudioManager.Instance.ui_menumain_volume.Post(gameObject);
         ShowGreenTIles();
         //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition
@@ -122,6 +143,7 @@ public class CityUI : MonoBehaviour
 
     private void ClearCityMenuMode()
     {
+        UIManager.Instance.HideEntityProductionPanelInfo();
         cityMenuMode = CityMenuMode.None;
 
         // StartCoroutine(ClearCityMenuModeDelayed());

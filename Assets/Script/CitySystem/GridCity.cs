@@ -5,6 +5,13 @@ using UnityEngine.UIElements;
 
 public class GridCity : BaseGridEntity,IDamageable
 {
+
+    [Header("Production Data")]
+    [SerializeField] private int productGold=5;
+    [SerializeField] private int productMagic=5;
+    [SerializeField] private int productMaterial=1;
+    Dictionary<ResourceType, int> product = new Dictionary<ResourceType, int>();
+
     public Sprite sprite;
     public Vector3Int position;
 
@@ -35,6 +42,9 @@ public class GridCity : BaseGridEntity,IDamageable
         productionQueue.Initialize(owner, this);
         hTM.PlaceCityOnTheTile(GetCellPosition(),this);
         owner.AddCityToKingdom(this);
+        if (productGold > 0) product.Add(ResourceType.Gold, productGold);
+        if (productMagic > 0) product.Add(ResourceType.Magic, productMagic);
+        if (productMaterial > 0) product.Add(ResourceType.Materials, productMaterial);
     }
     public void OnBuildingConstructed(GridBuilding building)
     {
@@ -47,13 +57,19 @@ public class GridCity : BaseGridEntity,IDamageable
     {
         base.OnEndTurn(entity);
         bCanSpawnUnits = true;
-        GetComponent<CityProductionQueue>().OnTurnEnd();
+        if(entity==Owner)
+        {
+            GetComponent<CityProductionQueue>().OnTurnEnd();
+        }
+        
     }
     protected override void OnStartTurn(BaseKingdom entity)
     {
         base.OnStartTurn(entity);
+        if (entity != Owner) { return; }
 
 
+        Owner.Resources().AddAll(product);
     }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
@@ -133,6 +149,31 @@ public class GridCity : BaseGridEntity,IDamageable
         GetComponent<EntityVision>().OnDeath();
         Owner.RemoveCityFromKingdom(this);
         gameObject.SetActive(false);
+    }
+    /// <summary>
+    /// If all tiles in 1 unit radius is either occupied by building or city or unit then unitSpawn radius = 2, 
+    /// max unitSpawn radius is 5
+    /// </summary>
+    public void UpdateUnitSpawnRadius()
+    {
+        const int maxRadius = 5;
+        
+        // Keep expanding the radius until we find available tiles or reach max radius
+        for (int checkRadius = 1; checkRadius <= maxRadius; checkRadius++)
+        {
+            // GetCellsInRange already filters for Land and Water tiles by default
+            List<Vector3Int> cellsInRadius = HexTilemapManager.Instance.GetCellsInRange(gridPosition, checkRadius);
+            
+            // If we found available land/water tiles at this radius, set it and stop
+            if (cellsInRadius.Count > 0)
+            {
+                unitSpawnRadius = checkRadius;
+                return;
+            }
+        }
+        
+        // If no available tiles found even at max radius, set to max
+        unitSpawnRadius = maxRadius;
     }
 
 }

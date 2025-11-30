@@ -939,6 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8835fba7b5f8b74896fba208306bea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Abyssal spawning pool
   Health: 2
   CurrentHealth: 2
   Vision: 5
@@ -949,8 +950,14 @@ MonoBehaviour:
   - {fileID: 1323219030096113610}
   rotatebleCanvas: {fileID: 8551652696335946812}
   entityType: 4
+  requiredBuildings: []
+  bCanBeAttacked: 1
+  EntityDescription: A deep underwater building where the wavecaller trains
+  CanStandOnTiles: 01000000
   HpForCity: 20
   buildingData: {fileID: 11400000, guid: 9de8263b40556954181bb0be7377070f, type: 2}
+  BuildingFunction: Unlock Wavecallers
+  buildingUISprite: {fileID: 932184325, guid: f09834d4c45767044b70237fae6ee10f, type: 3}
   unitName: Eldritch
   unitToOpen: {fileID: -1984634656711234374, guid: 2d7052b9afcfa6c4cbb70f6ed886f64b, type: 3}
 --- !u!4 &7298259681629756016 stripped

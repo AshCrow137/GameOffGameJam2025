@@ -12,6 +12,8 @@ public class BaseGridEntity : MonoBehaviour
 {
     [Header("Grid entity variables")]
     [SerializeField]
+    private string EntityDisplayName;
+    [SerializeField]
     protected int Health = 2;
     [SerializeField]
     protected int CurrentHealth = 2;
@@ -28,7 +30,11 @@ public class BaseGridEntity : MonoBehaviour
     [SerializeField]
     public EntityType entityType;
     [SerializeField]
+    private List<GridBuilding> requiredBuildings = new List<GridBuilding>();
+    [SerializeField]
     protected bool bCanBeAttacked = true;
+    [SerializeField]
+    protected string EntityDescription;
     protected Transform CameraArm;
 
     protected EntityVision entityVision;
@@ -38,6 +44,7 @@ public class BaseGridEntity : MonoBehaviour
 
     protected BaseKingdom Owner;
     protected SpriteRenderer baseSprite;
+    
 
     protected static readonly float[,] AttackModifiers = {
                 /*C |  I  | A | S | B */
@@ -91,6 +98,13 @@ public class BaseGridEntity : MonoBehaviour
             entityVision = gameObject.AddComponent<EntityVision>();
         }
         entityVision.Initialize(this);
+        
+        // Add entity to directory
+        hTM.AddEntityToDirectory(gridPosition, this);
+    }
+
+    public virtual void InitializeBase(BaseKingdom owner)
+    {
     }
     protected virtual void OnDisable()
     {
@@ -150,8 +164,21 @@ public class BaseGridEntity : MonoBehaviour
     }
     public virtual void Death()
     {
-
+        // Remove entity from directory
+        if (hTM != null)
+        {
+            hTM.RemoveEntityFromDirectory(gridPosition, this);
+        }
     }
+    
+    /// <summary>
+    /// Updates the grid position of this entity (called when entity moves)
+    /// </summary>
+    public void UpdateGridPosition(Vector3Int newPosition)
+    {
+        gridPosition = newPosition;
+    }
+    
     public virtual void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack)
     {
 
@@ -186,4 +213,16 @@ public class BaseGridEntity : MonoBehaviour
         return bCanBeAttacked;
     }
     public List<TileState> GetCanStandOnTiles() { return CanStandOnTiles; }
+    public string GetEntityDisplayName()
+    {
+        return EntityDisplayName;
+    }
+    public List<GridBuilding> GetRequiredBuildings()
+    {
+        return requiredBuildings;
+    }
+    public string GetEntityDescription()
+    {
+        return EntityDescription;
+    }
 }

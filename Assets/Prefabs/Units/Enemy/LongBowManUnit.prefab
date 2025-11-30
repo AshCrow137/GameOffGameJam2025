@@ -222,20 +222,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7848d6e1a685e41b1781aa9618d550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Longbowman
   Health: 12
   CurrentHealth: 12
-  Vision: 8
+  Vision: 7
   HPImage: {fileID: 1479423447086613288}
   bodySprite: {fileID: 3191821091930545751}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 4002697416325505066}
   entityType: 0
+  requiredBuildings: []
   bCanBeAttacked: 1
+  EntityDescription: 
   CanStandOnTiles: 
-  MeleeAttackDamage: 1
-  RangeAttackDamage: 13
+  MeleeAttackDamage: 4
+  RangeAttackDamage: 10
   RetallitionAttackDamage: 4
-  AttackRange: 7
+  AttackRange: 6
   MovementDistance: 2
   ProductionTime: 2
   MovementSpeed: 3

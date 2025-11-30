@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860c70edb87bdd84ca6b8491eda43ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Wavecaller
   Health: 20
   CurrentHealth: 20
   Vision: 5
@@ -227,7 +228,11 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 4012846416483646836}
   entityType: 3
+  requiredBuildings:
+  - {fileID: 224768452701571168, guid: 64c33e0fa77d8c043bb0558b02262698, type: 3}
   bCanBeAttacked: 1
+  EntityDescription: Eldritch shaman, that call's giant waves to convert lands into
+    water.
   CanStandOnTiles: 
   MeleeAttackDamage: 2
   RangeAttackDamage: 1
@@ -258,7 +263,13 @@ MonoBehaviour:
   unitTier: 2
   remainMovementText: {fileID: 3861786582074820448}
   possibleSpawnTiles: 01000000
-  resourceRequirements: []
+  resourceRequirements:
+  - resourceType: 0
+    amount: 50
+  - resourceType: 1
+    amount: 10
+  - resourceType: 2
+    amount: 10
   duration: 1
   abilityImage: {fileID: 21300000, guid: bfb8722b63502a04ea8d0bf66a418d9b, type: 3}
   abilityDescription: Convert adjacent land tiles into water tiles
