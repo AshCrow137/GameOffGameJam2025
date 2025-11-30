@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{95D8F52A-A825-4FCC-AF1E-3F0A6BE0AB8F}",
     "Language": "SFX",
-    "Hash": "{48209B93-368D-8FB2-D3D7-E7C1B1C2EFC1}",
+    "Hash": "{0908889F-50CF-615E-384E-2367A9419E81}",
     "ObjectPath": "ui_moveunit_land",
     "ShortName": "ui_moveunit_land",
     "Path": "Event/ui_moveunit_land.bnk",
@@ -187,6 +187,6 @@
     ]
    }
   ],
-  "FileHash": "{71C4D88B-9D32-4030-FE88-B12EA4FD66E2}"
+  "FileHash": "{78454DF4-184F-D010-1442-E8540DD7F232}"
  }
 }
