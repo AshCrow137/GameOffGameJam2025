@@ -47,6 +47,7 @@ public class GridCity : BaseGridEntity,IDamageable
         if (productGold > 0) product.Add(ResourceType.Gold, productGold);
         if (productMagic > 0) product.Add(ResourceType.Magic, productMagic);
         if (productMaterial > 0) product.Add(ResourceType.Materials, productMaterial);
+        HPImage.fillAmount = (float)CurrentHealth / Health;
     }
     public void OnBuildingConstructed(GridBuilding building)
     {
@@ -109,7 +110,7 @@ public class GridCity : BaseGridEntity,IDamageable
             List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(gridPosition, 1,unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
             if(possiblePositions.Count <= 0)
             {
-                GlobalEventManager.InvokeShowUIMessageEvent($"This have no available tiles to spawn {unitPrefab.name}!");
+                GlobalEventManager.InvokeShowUIMessageEvent($"This have no available tiles to spawn {unitPrefab.GetComponent<BaseGridEntity>().GetEntityDisplayName()}!");
                 return;
             }
             Vector3Int randomPos = possiblePositions[Random.Range(0, possiblePositions.Count - 1)];
@@ -147,7 +148,8 @@ public class GridCity : BaseGridEntity,IDamageable
 
     public override void Death()
     {
-        foreach (KeyValuePair<Vector3Int, GridBuilding> pair in buildings)
+        Dictionary< Vector3Int, GridBuilding > buildingsToDestroy = new Dictionary< Vector3Int, GridBuilding >(buildings);
+        foreach (KeyValuePair<Vector3Int, GridBuilding> pair in buildingsToDestroy)
         {
             pair.Value.Death();
         }

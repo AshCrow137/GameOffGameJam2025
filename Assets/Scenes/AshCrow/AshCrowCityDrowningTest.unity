@@ -25349,6 +25349,10 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 0}
+  E_GiantWave:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 238873426dd71fc41822f227a8d0c875, type: 2}
   E_mainmenu_start:
     idInternal: 0
     valueGuidInternal: 

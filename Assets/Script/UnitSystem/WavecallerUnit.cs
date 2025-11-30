@@ -85,6 +85,7 @@ public class WavecallerUnit : BaseGridUnitScript
 
     private void PerformTransformation()
     {
+        AudioManager.Instance.E_GiantWave.Post(gameObject);
         animator.SetBool("CastStart", false);
         animator.SetBool("CastFinish", true);
         possibleCellsInRange = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);

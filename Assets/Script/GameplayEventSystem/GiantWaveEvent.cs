@@ -76,7 +76,7 @@ public class GiantWaveEvent : BaseGameplayEvent
         waveClone.SetActive(true);
         animator = waveClone.GetComponent<Animator>();
         animator.Play("WaveStart");
-        
+        AudioManager.Instance.E_GiantWave.Post(waveClone);
         while(!animator.GetCurrentAnimatorStateInfo(0).IsName("WaveFinish"))
         {
             CameraController.instance.SmoothMoveCameraToPosition(hexManager.CellToWorldPos(origin));

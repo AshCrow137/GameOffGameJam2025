@@ -1655,6 +1655,10 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 0}
+  E_GiantWave:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   E_mainmenu_start:
     idInternal: 0
     valueGuidInternal: 
@@ -3744,8 +3748,8 @@ MonoBehaviour:
   - {fileID: 449766991}
   - {fileID: 731934182}
   LevelsName:
-  - ActualGameplayScene4
-  - FirstGameplayScene
+  - S1_ActualGameplayScene
+  - S2_ActualGameplayScene
   - FirstGameplayScene
   - FirstGameplayScene
   ButtonStartLevel: {fileID: 97270670}

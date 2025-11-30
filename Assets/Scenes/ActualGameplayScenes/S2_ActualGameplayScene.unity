@@ -25202,6 +25202,10 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 0}
+  E_GiantWave:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   E_mainmenu_start:
     idInternal: 0
     valueGuidInternal: 
