@@ -98,6 +98,7 @@ public class UnitSpawner : MonoBehaviour
             return;
         }
         // Refund resources
+        HexTilemapManager.Instance.SetTileState(position, TileState.Water);//TODO: remove hardcoding
         city.GetOwner().Resources().AddAll(unit.GetComponent<BaseGridUnitScript>().resource);
     }
 
@@ -112,6 +113,12 @@ public class UnitSpawner : MonoBehaviour
         if (!possiblePositions.Contains(position))
         {
             Debug.LogWarning("Cannot place the unit at this position");
+            return false;
+        }
+
+        if (city.GetComponent<CityProductionQueue>().IsQueueFull())
+        {
+            Debug.LogError("Production queue is full");
             return false;
         }
         Dictionary<ResourceType, int> resourceRequirements = unitPrefab.GetComponent<BaseGridUnitScript>().resource;
