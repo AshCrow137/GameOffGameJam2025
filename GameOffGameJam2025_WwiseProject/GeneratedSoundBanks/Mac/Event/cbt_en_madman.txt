@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	21621053	cbt_en_madman			\Default Work Unit\Combat\cbt_en_madman	
+

@@ -65,6 +65,7 @@ public class BuildingManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        //GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
     }
 
     /// <summary>
@@ -79,8 +80,10 @@ public class BuildingManager : MonoBehaviour
             return null;
         }
         GameObject buildingPreview = Instantiate(building.buildingPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
-        buildingPreview.GetComponent<GridBuilding>().Initialize(building, playerKngdom);
+        buildingPreview.GetComponent<GridBuilding>().Initialize( playerKngdom);
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
+        building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
+        building.buildingPlacementEvent.Post(gameObject);
         return buildingPreview;
     }
 
@@ -204,7 +207,8 @@ public class BuildingManager : MonoBehaviour
         {
             foreach (var a in resultReqs)
             {
-                Debug.Log($"not enough {a.Key} - {a.Value}");
+                GlobalEventManager.InvokeShowUIMessageEvent($"not enough {a.Key} - {a.Value}");
+                //Debug.Log($"not enough {a.Key} - {a.Value}");
             }
         }
         return resultReqs == null;
@@ -252,7 +256,7 @@ public class BuildingManager : MonoBehaviour
             Debug.LogError("CityProductionQueue.Instance is null");
             return;
         }
-
+        building.buildingPlacementEvent.Post(gameObject);
         city.GetComponent<CityProductionQueue>().AddToQueue(production);
 
     }

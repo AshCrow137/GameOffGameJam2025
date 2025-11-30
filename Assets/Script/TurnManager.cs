@@ -13,6 +13,7 @@ public class TurnManager : MonoBehaviour
     [SerializeField]
     private TMP_Text turnText;
 
+
     //public TurnManager(List<GameObject> turnOrder)
     //{
     //    this.turnOrder = turnOrder;
@@ -22,18 +23,18 @@ public class TurnManager : MonoBehaviour
     {
         instance = this;
         currentOrderIndex = 0;
-        OnTurnStart(turnOrder[currentOrderIndex]);
+        StartTurn(turnOrder[currentOrderIndex]);
        
     }
 
-    public void OnTurnStart(BaseKingdom entity)
+    public void StartTurn(BaseKingdom entity)
     {
         //camera focus on the current Player/Unit
         //Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
         turnText.text = $"Current turn: {entity.name} N {currentTurnCount}";
-
+        UIManager.Instance?.ChangeTurn(currentTurnCount);
         //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
-        entity.GetComponent<EntityTurnHandler>()?.OnTurnStart();
+        //entity.GetComponent<EntityTurnHandler>()?.StartTurn();
         GlobalEventManager.InvokeStartTurnEvent(entity);
     }
     /// <summary>
@@ -48,29 +49,35 @@ public class TurnManager : MonoBehaviour
     public void OnTurnEnd()
     {
         //do something at the end of the turn
+        if (turnOrder[currentOrderIndex].GetType() == typeof(PlayerKingdom))
+        {
+            //AudioManager.Instance.ui_menumain_start.Post(gameObject);
+        }
         currentOrderIndex++;
         if (currentOrderIndex >= turnOrder.Count)
         {
             currentOrderIndex = 0;
-            NextTurn();
+            NextRound();
         }
 
         //Debug.Log($"Turn {currentTurnCount} End: {turnOrder[currentOrderIndex].name}'s turn.");
+        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
+        //when finish the turn, call NextRound
+        StartTurn(turnOrder[currentOrderIndex]);
 
-        //when finish the turn, call NextTurn
-        OnTurnStart(turnOrder[currentOrderIndex]);
+       
     }
 
-    private void NextTurn()
+    private void NextRound()
     {
         currentTurnCount++;
-        GlobalEventManager.InvokeEndTurnEvent(turnOrder[currentOrderIndex]);
+
         Debug.Log("Next Turn");
         //increment turn count
         
 
-        //call OnTurnStart to start the next turn
-        OnTurnStart(turnOrder[currentOrderIndex]);
+        //call StartTurn to start the next turn
+        //StartTurn(turnOrder[currentOrderIndex]);
     }
 
 }

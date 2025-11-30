@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using Pathfinding;
-using static UnityEditor.PlayerSettings;
 
 
 /// <summary>
@@ -17,7 +16,10 @@ public class HexTilemapManager : MonoBehaviour
 {
     [SerializeField] private Tilemap tilemap; 
     [SerializeField] private Tilemap markerTilemap;
-    [SerializeField] private TileBase markerTile;
+    [SerializeField] private TileBase redMarkerTile;
+    [SerializeField] private TileBase greenMarkerTile;
+    [SerializeField] private TileBase blueMarkerTile;
+    [SerializeField] private HexTile waterTile;
 
     [SerializeField] private Camera mainCamera;
 
@@ -26,6 +28,17 @@ public class HexTilemapManager : MonoBehaviour
     // Dictionary to store tile states per position (since Tile assets are shared)
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
+    private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
+
+    public readonly List<TileState> allStates = new List<TileState>
+        {
+            TileState.Land,
+            TileState.Water,
+            TileState.OccuppiedByBuilding,
+            TileState.OccupiedByUnit,
+            TileState.Unavailable,
+            TileState.Default
+        };
     // Singleton instance for easy access
     public static HexTilemapManager Instance { get; private set; }
 
@@ -80,17 +93,57 @@ public class HexTilemapManager : MonoBehaviour
     }
     public void PlaceMarkerOnTilePosition(Vector3Int cellPosition)
     {
-        markerTilemap.SetTile(cellPosition, markerTile);
-        markerTilemap.RefreshTile(cellPosition);
+        markerTilemap?.SetTile(cellPosition, redMarkerTile);
+        markerTilemap?.RefreshTile(cellPosition);
     }
     public void RemoveMarkerOnTilePosition(Vector3Int cellPosition)
     {
-        markerTilemap.SetTile(cellPosition, null);
-        markerTilemap.RefreshTile(cellPosition);
+        markerTilemap?.SetTile(cellPosition, null);
+        markerTilemap?.RefreshTile(cellPosition);
     }
     public void RemoveAllMarkers()
     {
-        markerTilemap.ClearAllTiles();
+        markerTilemap?.ClearAllTiles();
+    }
+    public void PlaceColoredMarkerOnPosition(Vector3Int cellPos, MarkerColor markerColor)
+    {
+        TileBase marker = null;
+        switch(markerColor)
+        {
+            case MarkerColor.Green:marker = greenMarkerTile; break;
+            case MarkerColor.Blue:marker = blueMarkerTile; break;
+            case MarkerColor.Red:marker = redMarkerTile; break;
+        }
+        markerTilemap?.SetTile(cellPos, marker);
+        markerTilemap?.RefreshTile(cellPos);
+    }
+    public void ShowMarkersForRangeAttack(BaseGridUnitScript unit,int attackRange)
+    {
+       List<Vector3Int> cells =  GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, allStates);
+        foreach (var cell in cells)
+        {
+            BaseGridEntity entityOnCell;
+            if (GetUnitOnTile(cell))
+            {
+                entityOnCell = GetUnitOnTile(cell);
+            }
+            else
+            {
+                entityOnCell =GetCityOnTile(cell);
+            }
+
+            if (entityOnCell&&entityOnCell!= unit)
+            {
+                if(entityOnCell.GetOwner() == unit.GetOwner())
+                {
+                    PlaceColoredMarkerOnPosition(cell, MarkerColor.Green);
+                }
+                else if(entityOnCell.GetOwner()!= unit.GetOwner())
+                {
+                    PlaceColoredMarkerOnPosition(cell, MarkerColor.Red);
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -236,6 +289,25 @@ public class HexTilemapManager : MonoBehaviour
             UpdateTileWalkability(cellPosition, newState);
         }
     }
+    public void ChangeTile(Vector3Int cellPosition, TileState newState)
+    {
+        TileBase tile = tilemap.GetTile(cellPosition);
+
+        if (tile is HexTile)
+        {
+            HexTile htile = (HexTile)tile;
+            
+            if (newState == TileState.Default)
+            {
+                newState = htile.defaultState;
+            }
+            tileStates[cellPosition] = newState;
+            htile.SetTileState(newState);
+            tilemap.SetTile(cellPosition, waterTile);
+            tilemap.RefreshTile(cellPosition);
+            UpdateTileWalkability(cellPosition, newState);
+        }
+    }
     public void PlaceUnitOnTile(Vector3Int cellPosition,BaseGridUnitScript unit)
     {
         TileBase tile = tilemap.GetTile(cellPosition);
@@ -261,9 +333,37 @@ public class HexTilemapManager : MonoBehaviour
     }
     public BaseGridUnitScript GetUnitOnTile(Vector3Int cellPosition)
     {
-        if(gridUnits.TryGetValue(cellPosition,out BaseGridUnitScript unitScript))
+        if (gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
         {
             return unitScript;
+        }
+        return null;
+    }
+    public void PlaceCityOnTheTile(Vector3Int cellPosition, GridCity city)
+    {
+        TileBase tile = tilemap.GetTile(cellPosition);
+        if (tile is HexTile)
+        {
+            if (!gridCities.TryGetValue(cellPosition, out GridCity cityScript))
+            {
+                gridCities.Add(cellPosition, city);
+            }
+
+        }
+    }
+    public void RemoveCityOnTile(Vector3Int cellPosition)
+    {
+        if (gridCities.TryGetValue(cellPosition, out GridCity cityScript))
+        {
+            gridCities.Remove(cellPosition);
+        }
+    }
+
+    public GridCity GetCityOnTile(Vector3Int cellPosition)
+    {
+        if (gridCities.TryGetValue(cellPosition, out GridCity cityScript))
+        {
+            return cityScript;
         }
         return null;
     }
@@ -339,12 +439,12 @@ public class HexTilemapManager : MonoBehaviour
             return Color.black;
         }
 
-        // color derived from tilestate
-        TileState state = GetTileState(position);
-        if (state == TileState.OccuppiedByBuilding)
-        {
-            return Color.blue;
-        }
+        //// color derived from tilestate
+        //TileState state = GetTileState(position);
+        //if (state == TileState.OccuppiedByBuilding)
+        //{
+        //    return Color.blue;
+        //}
 
         return Color.white;
 

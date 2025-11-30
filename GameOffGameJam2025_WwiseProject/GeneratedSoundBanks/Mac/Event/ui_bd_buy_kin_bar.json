@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1449682236",
+    "Type": "Event",
+    "GUID": "{7028113B-7D30-470E-8D87-7EF823A8A6A0}",
+    "Language": "SFX",
+    "Hash": "{BEE02A42-89CF-CBCC-5B72-9C8C8551D479}",
+    "ObjectPath": "ui_bd_buy_kin_bar",
+    "ShortName": "ui_bd_buy_kin_bar",
+    "Path": "Event/ui_bd_buy_kin_bar.bnk",
+    "Events": [
+     {
+      "Id": "1449682236",
+      "Name": "ui_bd_buy_kin_bar",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_bd_buy_kin_bar",
+      "GUID": "{7028113B-7D30-470E-8D87-7EF823A8A6A0}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{581EA271-2366-9DE8-5C04-80991E758DAF}"
+ }
+}

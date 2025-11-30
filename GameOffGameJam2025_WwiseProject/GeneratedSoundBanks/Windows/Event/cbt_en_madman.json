@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "21621053",
+    "Type": "Event",
+    "GUID": "{767A22DF-E234-4D5E-BA6E-917934C573F2}",
+    "Language": "SFX",
+    "Hash": "{B1BF4FC0-F884-91D3-906E-1D2684A43F53}",
+    "ObjectPath": "cbt_en_madman",
+    "ShortName": "cbt_en_madman",
+    "Path": "Event/cbt_en_madman.bnk",
+    "Media": [
+     {
+      "Id": "300902806",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_plr_madman_t03.wav",
+      "Path": "Media/300902806.wem",
+      "CachePath": "8B/{8BF16A5A-1847-3563-904C-6C1D22BB1AD7}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "21621053",
+      "Name": "cbt_en_madman",
+      "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_madman",
+      "GUID": "{767A22DF-E234-4D5E-BA6E-917934C573F2}",
+      "DurationType": "OneShot",
+      "DurationMin": "2",
+      "DurationMax": "2",
+      "MediaRefs": [
+       {
+        "Id": "300902806"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{10FFEF71-A379-6630-B13B-F5F2F18D74F0}"
+ }
+}

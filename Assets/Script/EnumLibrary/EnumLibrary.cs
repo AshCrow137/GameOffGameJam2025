@@ -1,7 +1,7 @@
 ﻿//This file is Enum holder
-    public enum TimerDirection
-    {
-        INCREASE,
+public enum TimerDirection
+{
+    INCREASE,
         DECREASE
     }
 
@@ -64,4 +64,44 @@ public enum ProductionType
     None,
     Unit,
     Building
+}
+
+public enum AIAction
+{
+    None,
+    Attack,
+    PreferredAttack,
+    BuildCity,
+    BuildUnit
+    
+}
+
+public enum AIAttackType
+{
+    None,
+    Attack,
+    AttackMiddleMadness,
+    AttackHighMadness
+}
+
+public enum MarkerColor
+{
+    Red,
+    Blue,
+    Green,
+    White
+}
+public enum UnitMode
+{
+    None,
+    Aiming,
+    Casting
+}
+
+public enum GamePlayEvent
+{
+    GainResource,
+    LostResource,
+    SpawnUnit,
+    SpecialEvent
 }

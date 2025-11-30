@@ -1,0 +1,33 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1554070556",
+    "Type": "Event",
+    "GUID": "{320BF717-45A6-48E1-8FA6-C0BB2BDE9097}",
+    "Language": "SFX",
+    "Hash": "{E95E68C0-5522-8111-3512-9BC01E750CEE}",
+    "ObjectPath": "ui_bd_buy_eld_asp",
+    "ShortName": "ui_bd_buy_eld_asp",
+    "Path": "Event/ui_bd_buy_eld_asp.bnk",
+    "Events": [
+     {
+      "Id": "1554070556",
+      "Name": "ui_bd_buy_eld_asp",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\InGame\\ui_bd_buy_eld_asp",
+      "GUID": "{320BF717-45A6-48E1-8FA6-C0BB2BDE9097}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{22429B29-A2A2-8CD8-2ECC-E867673AFFC5}"
+ }
+}
