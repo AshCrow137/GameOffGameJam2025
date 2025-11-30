@@ -236,7 +236,7 @@ public class UIManager : MonoBehaviour
             ProductionFirstItemPanel?.SetActive(true);
             ProductionPanel?.SetActive(true);
         }
-        CityUI.Instance.UpdateUnitButtonsInteractability();
+        //CityUI.Instance.UpdateUnitButtonsInteractability();
     }
 
     public void UnitsInteractable(bool value)
@@ -372,8 +372,11 @@ public class UIManager : MonoBehaviour
             List<GridBuilding> requredBuildings = unit.GetRequiredBuildings();
             if(requredBuildings.Count>0)
             {
-                PI_RequiredBuildingsPanel.transform.GetChild(0).gameObject.SetActive(true);
-                PI_RequiredBuildingsPanel.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = requredBuildings[0].gameObject.transform.Find("BodySprite").GetComponent<SpriteRenderer>().sprite; 
+
+                Transform child = PI_RequiredBuildingsPanel.transform.GetChild(0);
+                child.gameObject.SetActive(true);
+                Image image = child.gameObject.GetComponent<Image>();
+                image.sprite = requredBuildings[0].GetBuildingUISprite(); 
             }
             else
             {

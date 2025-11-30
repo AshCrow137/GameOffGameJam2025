@@ -292,7 +292,7 @@ MonoBehaviour:
   EntityDescription: Simple eldritch range unit
   CanStandOnTiles: 
   MeleeAttackDamage: 3
-  RangeAttackDamage: 8
+  RangeAttackDamage: 7
   RetallitionAttackDamage: 3
   AttackRange: 6
   MovementDistance: 3
