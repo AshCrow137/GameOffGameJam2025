@@ -47,7 +47,11 @@ public class GridCity : BaseGridEntity,IDamageable
     {
         base.OnEndTurn(entity);
         bCanSpawnUnits = true;
-        GetComponent<CityProductionQueue>().OnTurnEnd();
+        if(entity==Owner)
+        {
+            GetComponent<CityProductionQueue>().OnTurnEnd();
+        }
+        
     }
     protected override void OnStartTurn(BaseKingdom entity)
     {

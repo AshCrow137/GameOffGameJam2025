@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60682503db547f6468956a4da52eec26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Madman
   Health: 15
   CurrentHealth: 15
   Vision: 3
@@ -219,6 +220,10 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 941539317012512611}
   entityType: 0
+  requiredBuildings: []
+  bCanBeAttacked: 1
+  EntityDescription: Crazy human that should obey eldritch god
+  CanStandOnTiles: 
   MeleeAttackDamage: 6
   RangeAttackDamage: 1
   RetallitionAttackDamage: 2

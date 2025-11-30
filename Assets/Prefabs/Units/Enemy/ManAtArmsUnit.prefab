@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5fe7f322e444714a858febfc04a7330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Man-at-arms
   Health: 25
   CurrentHealth: 25
   Vision: 5

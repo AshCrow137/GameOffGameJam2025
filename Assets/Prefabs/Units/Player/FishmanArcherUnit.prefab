@@ -278,6 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d122fd7dc56c3314996113f840a98873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Fishman archer
   Health: 15
   CurrentHealth: 15
   Vision: 7
@@ -285,10 +286,12 @@ MonoBehaviour:
   bodySprite: {fileID: 2295539708766403775}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 296311217075061442}
-  entityType: 0
+  entityType: 1
+  requiredBuildings: []
   bCanBeAttacked: 1
+  EntityDescription: Simple eldritch range unit
   CanStandOnTiles: 
-  MeleeAttackDamage: 1
+  MeleeAttackDamage: 3
   RangeAttackDamage: 8
   RetallitionAttackDamage: 3
   AttackRange: 6
@@ -317,8 +320,14 @@ MonoBehaviour:
   unitTier: 1
   remainMovementText: {fileID: 448980740877416662}
   possibleSpawnTiles: 0000000001000000
-  resourceRequirements: []
-  duration: 3
+  resourceRequirements:
+  - resourceType: 0
+    amount: 20
+  - resourceType: 1
+    amount: 10
+  - resourceType: 2
+    amount: 0
+  duration: 2
   abilityImage: {fileID: 0}
   abilityDescription: 
   projectilePrefab: {fileID: 6753759320730807998, guid: 96de450f42c87b84cb00753eaa4c2bc8, type: 3}
