@@ -126,7 +126,9 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 7734926380769879274}
   entityType: 0
+  requiredBuildings: []
   bCanBeAttacked: 1
+  EntityDescription: 
   CanStandOnTiles: 
   MeleeAttackDamage: 8
   RangeAttackDamage: 1
