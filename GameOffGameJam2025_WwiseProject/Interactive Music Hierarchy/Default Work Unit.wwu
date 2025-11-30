@@ -5,9 +5,20 @@
 			<ChildrenList>
 				<MusicPlaylistContainer Name="Main" ID="{7048C2B6-824F-42A3-8312-C05236217FC2}" ShortID="530612360">
 					<PropertyList>
+						<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
 						<Property Name="MakeUpGain" Type="Real64">
 							<ValueList>
 								<Value>-5</Value>
+							</ValueList>
+						</Property>
+						<Property Name="MaxSoundPerInstance" Type="int16">
+							<ValueList>
+								<Value>1</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseMaxSoundPerInstance" Type="bool">
+							<ValueList>
+								<Value>True</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -16,7 +27,7 @@
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+							<ObjectRef Name="Music" ID="{E8EA9579-12C1-4603-A1CF-C32908767000}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 						</Reference>
 						<Reference Name="PlaylistRoot">
 							<Custom>
