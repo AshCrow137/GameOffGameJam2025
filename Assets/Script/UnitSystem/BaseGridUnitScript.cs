@@ -442,7 +442,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         if (CurrentHealth <= 0 ) 
         {
 
-            DropSystem.instance.DropTo(attacker.Owner);
+            //DropSystem.instance.DropTo(attacker.Owner);
             Death();
             return;
         }
