@@ -29,6 +29,10 @@ public class Resource
         foreach (var req in required)
         {
             resources[req.Key] += req.Value;
+            if (resources[req.Key] <0) 
+            {
+                resources[req.Key] = 0;
+            }
             Debug.Log($"Add {req.Key} - {req.Value}");
         }
         UpdateUI();

@@ -55,11 +55,11 @@ public class BaseKingdom : Entity
         // Initializing controlled units
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
-            unit.Initialize(this);
+            unit?.Initialize(this);
         }
         foreach ( GridCity city in controlledCities)
         {
-            city.Initialize(this);
+            city?.Initialize(this);
         }
     }
 

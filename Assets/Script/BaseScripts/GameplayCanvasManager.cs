@@ -16,7 +16,9 @@ public class GameplayCanvasManager : MonoBehaviour
     [SerializeField]
     private float showMessageTime = 3;
     [SerializeField]
-    private GameObject victoryPanel;
+    private GameObject victoryPanel;    
+    [SerializeField]
+    private GameObject losePanel;
     [SerializeField]
     private GameObject wavecallerButton;
     private BaseGridUnitScript selectedUnit;
@@ -40,6 +42,7 @@ public class GameplayCanvasManager : MonoBehaviour
         if (kingdom is PlayerKingdom)
         {
             //TODO add lose screen
+            losePanel.SetActive(true);
             StartCoroutine(winScreenCoroutine());
         }
         else

@@ -393,7 +393,7 @@ MonoBehaviour:
   entityType: 4
   requiredBuildings: []
   bCanBeAttacked: 1
-  EntityDescription: Forgotten place that produce magic.
+  EntityDescription: Forgotten place that produces magic
   CanStandOnTiles: 01000000
   HpForCity: 10
   buildingData: {fileID: 11400000, guid: a6420cfb96e5aea408c4351422405b35, type: 2}
