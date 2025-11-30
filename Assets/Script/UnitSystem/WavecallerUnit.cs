@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.VFX;
 
 public class WavecallerUnit : BaseGridUnitScript
 {
@@ -35,10 +36,11 @@ public class WavecallerUnit : BaseGridUnitScript
         base.OnStartTurn(entity);
         if (unitMode == UnitMode.Casting && transformProgress <= 4)
         {
-            HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(transformingTile, MarkerColor.Blue);
+            animator.SetBool("CastStart", true);
+            //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(transformingTile, MarkerColor.Blue);
             transformProgress++;
             MovementDistance = 0;
-            HPImage.color = Color.yellow;
+            //HPImage.color = Color.yellow;
         }
     }
 
@@ -81,7 +83,32 @@ public class WavecallerUnit : BaseGridUnitScript
 
     private void PerformTransformation()
     {
+        animator.SetBool("CastStart", false);
+        animator.SetBool("CastFinish", true);
         possibleCellsInRange = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
+        List<BaseGridEntity> entitiesToRemove = new List<BaseGridEntity>();
+        foreach (Vector3Int tilePos in possibleCellsInRange)
+        {
+            if (tilePos == new Vector3Int(-4, -4, 0))
+            {
+                Debug.Log("Hey");
+            }
+            // Check each entity and destroy if it cannot stand on water
+            foreach (BaseGridEntity entity in hTM.FindAllEntitiesAtPosition(tilePos))
+            {
+                if (!entity.GetCanStandOnTiles().Contains(TileState.Water))
+                {
+                    Debug.Log($"Giant Wave destroying {entity.gameObject.name} at {tilePos}");
+                    //entity.Death();
+                    entitiesToRemove.Add(entity);
+                }
+            }
+
+        }
+        foreach (BaseGridEntity entity in entitiesToRemove)
+        {
+            entity.Death();
+        }
         foreach (Vector3Int pos in possibleCellsInRange)
         {
             TransformTile(pos);
@@ -90,7 +117,7 @@ public class WavecallerUnit : BaseGridUnitScript
         HexTilemapManager.Instance.RemoveAllMarkers();
         transformProgress = 0;
         unitMode = UnitMode.None;
-        HPImage.color = Owner.GetKingdomColor();
+        //HPImage.color = Owner.GetKingdomColor();
         MovementDistance = 2;
         tilesRemain = MovementDistance;
         AttacksPerTurn = 1;
