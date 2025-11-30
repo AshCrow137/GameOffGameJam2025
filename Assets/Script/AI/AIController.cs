@@ -15,6 +15,7 @@ public class AIController : MonoBehaviour
     private Dictionary<BaseGridUnitScript, AIUnitTask> unitsToAct;
     private Dictionary<GridCity, AICityTask> citiesToAct;
     CancellationTokenSource cancellationTokenSource;
+    private List<Vector3Int> reservedPositions;
     public void Initialize()
     {
         Instance = this;
@@ -173,6 +174,7 @@ public class AIController : MonoBehaviour
                 }
                 
                 unitsToAct = new Dictionary<BaseGridUnitScript, AIUnitTask>();
+                reservedPositions = new List<Vector3Int>();
                 foreach (BaseGridUnitScript unit in kingdomUnits)
                 {
                     AIUnitAction unitAction = AssignAction(unit, kingdom);
@@ -530,9 +532,27 @@ public class AIController : MonoBehaviour
                         List<Vector3Int> closestAdjPos = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), adjPos);
                         if (closestAdjPos.Count > 0)
                         {
-                            targetPos = closestAdjPos[0];
-                            unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Move, targetPos));
-                            return AIUnitAction.Move;
+                            foreach(Vector3Int pos in closestAdjPos)
+                            {
+                                if(!reservedPositions.Contains(pos))
+                                {
+                                    reservedPositions.Add(pos);
+                                    targetPos = pos;
+                                    unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Move, targetPos));
+                                    return AIUnitAction.Move;
+                                }
+                            }
+                            foreach(Vector3Int pos in adjPos)
+                            {
+                                if (!reservedPositions.Contains(pos))
+                                {
+                                    reservedPositions.Add(pos);
+                                    targetPos = pos;
+                                    unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Move, targetPos));
+                                    return AIUnitAction.Move;
+                                }
+                            }
+                            
                         }
                     }
                     else

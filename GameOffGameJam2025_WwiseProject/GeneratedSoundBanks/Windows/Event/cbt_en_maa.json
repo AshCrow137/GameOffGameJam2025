@@ -10,19 +10,37 @@
     "Type": "Event",
     "GUID": "{D907E48A-2451-4C81-B094-0E371F867B39}",
     "Language": "SFX",
-    "Hash": "{8158E90C-6A1F-4FF3-EAA7-33D48E84D8FE}",
+    "Hash": "{15E36A52-934D-C338-06B0-B8542BB73ADF}",
     "ObjectPath": "cbt_en_maa",
     "ShortName": "cbt_en_maa",
     "Path": "Event/cbt_en_maa.bnk",
     "Media": [
      {
-      "Id": "923407363",
+      "Id": "117392409",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Loose",
-      "ShortName": "Combat\\cbt_en_maa_t02.wav",
-      "Path": "Media/923407363.wem",
-      "CachePath": "82/{82D5E246-7435-1EC2-0107-21FE698AE442}.wem"
+      "ShortName": "Combat\\cbt_en_maa_t2_01.wav",
+      "Path": "Media/117392409.wem",
+      "CachePath": "24/{24B61878-2031-452A-E688-45392B788F85}.wem"
+     },
+     {
+      "Id": "581361320",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_en_maa_t2_02.wav",
+      "Path": "Media/581361320.wem",
+      "CachePath": "03/{0365422A-F027-3BED-A634-C65E4F279E69}.wem"
+     },
+     {
+      "Id": "923290884",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Combat\\cbt_en_maa_t2_03.wav",
+      "Path": "Media/923290884.wem",
+      "CachePath": "66/{66F4CDB7-D858-7977-3260-4C8FEEB392E6}.wem"
      }
     ],
     "Events": [
@@ -32,17 +50,23 @@
       "ObjectPath": "\\Events\\Default Work Unit\\Combat\\cbt_en_maa",
       "GUID": "{D907E48A-2451-4C81-B094-0E371F867B39}",
       "DurationType": "OneShot",
-      "DurationMin": "2",
-      "DurationMax": "2",
+      "DurationMin": "1.977028",
+      "DurationMax": "2.023239",
       "MediaRefs": [
        {
-        "Id": "923407363"
+        "Id": "117392409"
+       },
+       {
+        "Id": "581361320"
+       },
+       {
+        "Id": "923290884"
        }
       ]
      }
     ]
    }
   ],
-  "FileHash": "{96EF177B-D708-1E58-CB9D-FBD70762A93E}"
+  "FileHash": "{0ACC9E72-F302-AD32-E9B6-2AF01472BBE3}"
  }
 }

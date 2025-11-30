@@ -39,5 +39,4 @@ public class OpenNewUnit : GridBuilding
         Owner.UnlockUnit(unitToOpen);
     }
 
-
 }

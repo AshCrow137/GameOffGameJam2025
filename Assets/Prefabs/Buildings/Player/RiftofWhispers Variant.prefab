@@ -381,6 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55954285150c7d24fa1f51f6c293741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Rift of wispers
   Health: 2
   CurrentHealth: 2
   Vision: 5
@@ -390,11 +391,16 @@ MonoBehaviour:
   - {fileID: 7884187323099228737}
   rotatebleCanvas: {fileID: 8551652696335946812}
   entityType: 4
+  requiredBuildings: []
+  bCanBeAttacked: 1
+  EntityDescription: Forgotten place that produce magic.
+  CanStandOnTiles: 01000000
   HpForCity: 10
   buildingData: {fileID: 11400000, guid: a6420cfb96e5aea408c4351422405b35, type: 2}
-  productGold: 0
-  productMagic: 10
-  productMaterial: 0
+  BuildingFunction: 
+  productGold: 5
+  productMagic: 15
+  productMaterial: 1
 --- !u!4 &6260741474477631231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}

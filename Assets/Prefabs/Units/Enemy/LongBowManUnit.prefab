@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5083775394022292626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 998769533507571614}
+  m_Layer: 0
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &998769533507571614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5083775394022292626}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2623701123767332454}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3140663974240161210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87,7 +118,10 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 998769533507571614}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       insertIndex: -1
@@ -121,6 +155,11 @@ MonoBehaviour:
 --- !u!1 &2593644204236982474 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 606746352947840368, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+  m_PrefabInstance: {fileID: 3140663974240161210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2623701123767332454 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1151975357562381276, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
   m_PrefabInstance: {fileID: 3140663974240161210}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3191821091930545751 stripped
@@ -183,18 +222,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7848d6e1a685e41b1781aa9618d550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: Longbowman
   Health: 12
   CurrentHealth: 12
-  Vision: 8
+  Vision: 7
   HPImage: {fileID: 1479423447086613288}
   bodySprite: {fileID: 3191821091930545751}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 4002697416325505066}
   entityType: 0
-  MeleeAttackDamage: 1
+  requiredBuildings: []
+  bCanBeAttacked: 1
+  EntityDescription: 
+  CanStandOnTiles: 
+  MeleeAttackDamage: 4
   RangeAttackDamage: 13
   RetallitionAttackDamage: 4
-  AttackRange: 7
+  AttackRange: 6
   MovementDistance: 2
   ProductionTime: 2
   MovementSpeed: 3
@@ -226,3 +270,6 @@ MonoBehaviour:
   duration: 4
   abilityImage: {fileID: 0}
   abilityDescription: 
+  projectilePrefab: {fileID: 6753759320730807998, guid: 4e0676c09c27d424a9c197ee4be8eb48, type: 3}
+  shootingPoint: {fileID: 998769533507571614}
+  projectileSpeed: 15

@@ -97,19 +97,19 @@ public class CityManager : MonoBehaviour
     /// Test function for city system.
     /// Places the assigned city at the mouse position
     /// </summary>
-    public void TestPlaceCity()
-    {
-        if(!ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement)) return;
-        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
-        if (mousePosition.x == int.MaxValue) return;
+    //public void TestPlaceCity()
+    //{
+    //    if(!ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement)) return;
+    //    Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+    //    if (mousePosition.x == int.MaxValue) return;
 
-        if (!CanCityBePlaced(mousePosition))
-            return;
+    //    if (!CanCityBePlaced(mousePosition))
+    //        return;
 
-        PlaceCity(cityData, mousePosition);
+    //    PlaceCity(cityData, mousePosition);
 
-        HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
-    }
+    //    HexTilemapManager.Instance.SetTileState(mousePosition, TileState.OccuppiedByBuilding);
+    //}
 
     public void PlaceCityAtMousePosition(BaseKingdom kingdom)
     {

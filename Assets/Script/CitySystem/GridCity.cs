@@ -47,7 +47,11 @@ public class GridCity : BaseGridEntity,IDamageable
     {
         base.OnEndTurn(entity);
         bCanSpawnUnits = true;
-        GetComponent<CityProductionQueue>().OnTurnEnd();
+        if(entity==Owner)
+        {
+            GetComponent<CityProductionQueue>().OnTurnEnd();
+        }
+        
     }
     protected override void OnStartTurn(BaseKingdom entity)
     {
@@ -133,6 +137,31 @@ public class GridCity : BaseGridEntity,IDamageable
         GetComponent<EntityVision>().OnDeath();
         Owner.RemoveCityFromKingdom(this);
         gameObject.SetActive(false);
+    }
+    /// <summary>
+    /// If all tiles in 1 unit radius is either occupied by building or city or unit then unitSpawn radius = 2, 
+    /// max unitSpawn radius is 5
+    /// </summary>
+    public void UpdateUnitSpawnRadius()
+    {
+        const int maxRadius = 5;
+        
+        // Keep expanding the radius until we find available tiles or reach max radius
+        for (int checkRadius = 1; checkRadius <= maxRadius; checkRadius++)
+        {
+            // GetCellsInRange already filters for Land and Water tiles by default
+            List<Vector3Int> cellsInRadius = HexTilemapManager.Instance.GetCellsInRange(gridPosition, checkRadius);
+            
+            // If we found available land/water tiles at this radius, set it and stop
+            if (cellsInRadius.Count > 0)
+            {
+                unitSpawnRadius = checkRadius;
+                return;
+            }
+        }
+        
+        // If no available tiles found even at max radius, set to max
+        unitSpawnRadius = maxRadius;
     }
 
 }

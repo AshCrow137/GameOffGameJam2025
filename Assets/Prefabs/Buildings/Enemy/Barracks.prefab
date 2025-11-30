@@ -12,13 +12,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barracks
       objectReference: {fileID: 0}
+    - target: {fileID: 1922668860728381344, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.947888
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.57108
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -52,25 +64,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6255468594231157193, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.332
+      objectReference: {fileID: 0}
     - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 0.70702624
       objectReference: {fileID: 0}
     - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5
+      value: 0.70702624
       objectReference: {fileID: 0}
     - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5
+      value: -0.010674924
       objectReference: {fileID: 0}
     - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5
+      value: -0.010674924
       objectReference: {fileID: 0}
     - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 88.27
       objectReference: {fileID: 0}
     - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -96,6 +116,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1724408627
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5265248503125170079, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
     m_RemovedGameObjects: []
@@ -111,7 +139,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 3713010119913143225}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -133,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8835fba7b5f8b74896fba208306bea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityDisplayName: 
   Health: 2
   CurrentHealth: 2
   Vision: 5
@@ -141,8 +170,13 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 8551652696335946812}
   entityType: 4
+  requiredBuildings: []
+  bCanBeAttacked: 1
+  EntityDescription: 
+  CanStandOnTiles: 00000000
   HpForCity: 35
   buildingData: {fileID: 11400000, guid: 9528b066d38da6f4b81f121c1496488f, type: 2}
+  BuildingFunction: 
   unitName: Kingdom Military
   unitToOpen: {fileID: 3182714646584768010, guid: f575349a19512e44986b544e1e216aba, type: 3}
 --- !u!1 &7884187323099228737 stripped
