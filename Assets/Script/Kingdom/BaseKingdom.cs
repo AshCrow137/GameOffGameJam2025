@@ -78,7 +78,7 @@ public class BaseKingdom : Entity
         int unitsCount = GetUnitsCountInRange(5);
         if (unitsCount != 0)
         {
-            IncreaseMadness(unitsCount * 3);
+            IncreaseMadness(unitsCount );
         }
         else
         {
@@ -133,7 +133,7 @@ public class BaseKingdom : Entity
         if(!unlockedUnits.Contains(unit))
         {
             unlockedUnits.Add(unit);
-            CityUI.Instance.UpdateUnitButtonsInteractability();
+            //CityUI.Instance.UpdateUnitButtonsInteractability();
 
         }
     }
@@ -142,7 +142,7 @@ public class BaseKingdom : Entity
         if(!unlockedBuildings.Contains(building))
         {
             unlockedBuildings.Add(building);
-            CityUI.Instance.UpdateUnitButtonsInteractability();
+            //CityUI.Instance.UpdateUnitButtonsInteractability();
 
         }
     }
