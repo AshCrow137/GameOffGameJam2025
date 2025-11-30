@@ -18,8 +18,8 @@ public class PauseController : MonoBehaviour
     void Start() => Initialize();
     private void OnEnable()
     {
-        var map = CustomInput.FindActionMap("InMenu");
-        moveAction = map.FindAction("Cancel");
+        var map = CustomInput.FindActionMap("InGame");
+        moveAction = map.FindAction("PauseGame");
         moveAction.performed += CloseOpenPuaseWithBind;
         moveAction.Enable();
     }
@@ -27,7 +27,6 @@ public class PauseController : MonoBehaviour
         moveAction.performed -= CloseOpenPuaseWithBind;
         moveAction.Disable(); 
     }
-    public void btn_QuitToMenu() => SceneManager.LoadSceneAsync("MainMenu");
     public void btn_QuitGame()
     {
         Application.Quit();
@@ -42,5 +41,8 @@ public class PauseController : MonoBehaviour
         PausePanel.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
     }
-    
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadSceneAsync(sceneName);
+    }
 }

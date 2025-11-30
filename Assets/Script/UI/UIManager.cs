@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
     float timer = 0;
 
     [SerializeField]
+    private Canvas mainCanvas;
+
+    [SerializeField]
     private Image CityPanel;
     [SerializeField] 
     private TextMeshProUGUI MadnessLavel;
@@ -394,6 +397,15 @@ public class UIManager : MonoBehaviour
     {
         CityProductionInfoPanel.SetActive(false);
     }
-
+    public void DisableMainCanvas()
+    {
+        CanvasGroup group = mainCanvas.GetComponent<CanvasGroup>();
+        group.interactable = false;
+    }
+    public void EnableMainCanvas()
+    {
+        CanvasGroup group = mainCanvas.GetComponent<CanvasGroup>();
+        group.interactable = true;
+    }
 
 }
