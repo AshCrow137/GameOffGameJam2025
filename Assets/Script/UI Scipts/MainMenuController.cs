@@ -81,9 +81,9 @@ public class MainMenuController : MonoBehaviour
     public void btn_QuitGame()
     {
         Application.Quit();
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+//#if UNITY_EDITOR
+//        UnityEditor.EditorApplication.isPlaying = false;
+//#endif
     }
     void Update()
     {

@@ -151,11 +151,11 @@ public class InputManager : MonoBehaviour
         if (!value.performed || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
         UIManager.Instance?.HasUnitSelected(false);
         UIManager.Instance?.HasCitySelected(false);
-        if (ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement))
-        {
-            CityManager.Instance.TestPlaceCity();
-        }
-        else
+        //if (ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement))
+        //{
+        //    CityManager.Instance.TestPlaceCity();
+        //}
+        //else
         {
             
             TileState state = HexTilemapManager.Instance.GetTileState(HexTilemapManager.Instance.GetCellAtMousePosition());
@@ -222,6 +222,10 @@ public class InputManager : MonoBehaviour
     //    }
     //}
     public Vector3 GetMousePosition()
+    {
+        return mousePos;
+    }
+    public Vector2 GetMousePosVector2()
     {
         return mousePos;
     }

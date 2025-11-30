@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,7 +45,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI TurnCount;
 
-    [Header("Status Texts")]
+    [Header("Stats Texts")]
+    [SerializeField]
+    private TextMeshProUGUI unitName;
+    [SerializeField]
+    private TextMeshProUGUI unitHealthText;
     [SerializeField]
     private TextMeshProUGUI meleeAtack;
     [SerializeField]
@@ -79,6 +84,52 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject ProductionFirstItemPanel;
     public TMP_Text currentturnText;
+
+    [SerializeField]
+    private GameObject HintObject;
+
+    [Header("ProductionInfo")]
+    [SerializeField]
+    private GameObject CityProductionInfoPanel;
+    [SerializeField]
+    private TMP_Text PI_EntityDescription;
+    [SerializeField]
+    private TMP_Text PI_EntityName;
+    [SerializeField]
+    private TMP_Text PI_EntityMagicCost;
+    [SerializeField]
+    private TMP_Text PI_EntityGoldCost;
+    [SerializeField]
+    private TMP_Text PI_EntityMaterialsCost;
+    [SerializeField]
+    private TMP_Text PI_BuildingDuration;
+    [SerializeField]
+    private RectTransform PI_RequiredBuildingsPanel;
+    [SerializeField]
+    private GameObject PI_RequiredBuildingImagePrefab;
+    [SerializeField]
+    private GameObject PI_UnitStatsPanel;
+    [SerializeField]
+    private GameObject PI_BuildingStatsPanel;
+    [SerializeField]
+    private TMP_Text PI_UnitHealth;
+    [SerializeField]
+    private TMP_Text PI_UnitMeleeAttack;
+    [SerializeField]
+    private TMP_Text PI_UnitRangeAttack;
+    [SerializeField]
+    private TMP_Text PI_UnitRetallitionAttack;
+    [SerializeField]
+    private TMP_Text PI_UnitAttackRange;
+    [SerializeField]
+    private TMP_Text PI_UnitMovementDistance;
+    [SerializeField]
+    private TMP_Text PI_BuildingAddHPToCity;
+    [SerializeField]
+    private TMP_Text PI_BuildingFunction;
+
+
+    private UIElementHints currentHints;
     public void Initialize()
     {
         UIElements = GetComponent<UIElements>();
@@ -100,6 +151,7 @@ public class UIManager : MonoBehaviour
 
     public void SelectedUnit(BaseGridUnitScript unit)
     {
+        CityProductionInfoPanel.SetActive(false);
         if (unit == null) return;
         HasUnitSelected(true);
 
@@ -118,7 +170,9 @@ public class UIManager : MonoBehaviour
             infantaryType.sprite = UIElements.EnemyType;
         }
         infantaryImg.sprite = unit.gameObject.transform.Find("BodySprite").GetComponent<SpriteRenderer>().sprite;
-
+        
+        unitName.text = unit.GetEntityDisplayName();
+        unitHealthText.text = $"{unit.GetCurrentHealth()}/{unit.GetMaxHealth()}";
         meleeAtack.text = unit.GetMeleeDamage().ToString();
         rangedAtack.text = unit.GetRangeAttackDamage().ToString();
         retaliationAtack.text = unit.GetRetaliationDamage().ToString();
@@ -147,7 +201,8 @@ public class UIManager : MonoBehaviour
 
     public void SelectedCity(GridCity city)
     {
-        if(city == null) return;
+        CityProductionInfoPanel.SetActive(false);
+        if (city == null) return;
         HasCitySelected(true);
 
         CityPanel.sprite = UIElements.CityPanel;
@@ -283,4 +338,62 @@ public class UIManager : MonoBehaviour
 
         GamePlayEvents.SetActive(false);
     }
+
+    public GameObject GetHintObject()
+    {
+        return HintObject;
+    }
+
+    public void ShowCityProductionEntityInfo(BaseGridEntity entity)
+    {
+        CityProductionInfoPanel.SetActive(true);
+        PI_EntityName.text = entity.GetEntityDisplayName();
+        PI_EntityDescription.text = entity.GetEntityDescription();
+
+        if(entity is BaseGridUnitScript)
+        {
+            BaseGridUnitScript unit = (BaseGridUnitScript)entity;
+            PI_EntityMagicCost.text = unit.resource.TryGetValue(ResourceType.Magic, out int mvalue) ? mvalue.ToString() : "0";
+            PI_EntityGoldCost.text = unit.resource.TryGetValue(ResourceType.Gold, out int gvalue) ? gvalue.ToString() : "0";
+            PI_EntityMaterialsCost.text = unit.resource.TryGetValue(ResourceType.Materials, out int matvalue) ? matvalue.ToString() : "0";
+            PI_BuildingDuration.text = unit.GetProductionTime().ToString();
+            PI_UnitStatsPanel.SetActive(true);
+            PI_BuildingStatsPanel.SetActive(false);
+            PI_UnitHealth.text = unit.GetRawMaxHealth().ToString();
+            PI_UnitMeleeAttack.text = unit.GetRawMeleeDamage().ToString();
+            PI_UnitRangeAttack.text = unit.GetRawRangedAttackDamage().ToString();
+            PI_UnitRetallitionAttack.text = unit.GetRawRetallitionDamage().ToString();
+            PI_UnitAttackRange.text = unit.GetAtackDistance().ToString();
+            PI_UnitMovementDistance.text = unit.GetMovementDistance().ToString();
+
+            List<GridBuilding> requredBuildings = unit.GetRequiredBuildings();
+            if(requredBuildings.Count>0)
+            {
+                PI_RequiredBuildingsPanel.transform.GetChild(0).gameObject.SetActive(true);
+                PI_RequiredBuildingsPanel.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = requredBuildings[0].gameObject.transform.Find("BodySprite").GetComponent<SpriteRenderer>().sprite; 
+            }
+            else
+            {
+                PI_RequiredBuildingsPanel.transform.GetChild(0).gameObject.SetActive(false);
+                PI_RequiredBuildingImagePrefab.SetActive(false);
+            }
+        }
+        else if(entity is GridBuilding)
+        {
+            PI_UnitStatsPanel.SetActive(false);
+            PI_BuildingStatsPanel.SetActive(true);
+            GridBuilding building = (GridBuilding)entity;
+            PI_EntityMagicCost.text = building.GetBuilding().resource.TryGetValue(ResourceType.Magic, out int mvalue) ? mvalue.ToString() : "0";
+            PI_EntityGoldCost.text = building.GetBuilding().resource.TryGetValue(ResourceType.Gold, out int gvalue) ? gvalue.ToString() : "0";
+            PI_EntityMaterialsCost.text = building.GetBuilding().resource.TryGetValue(ResourceType.Materials, out int matvalue) ? matvalue.ToString():"0" ;
+            PI_BuildingFunction.text = building.GetBuildingFunction();
+
+        }
+    }
+    public void HideEntityProductionPanelInfo()
+    {
+        CityProductionInfoPanel.SetActive(false);
+    }
+
+
 }

@@ -243,6 +243,8 @@ MonoBehaviour:
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 8551652696335946812}
   entityType: 4
+  bCanBeAttacked: 1
+  CanStandOnTiles: 00000000
   HpForCity: 20
   buildingData: {fileID: 11400000, guid: f9272fbad5721e84397692ed845db65e, type: 2}
   unitName: Special

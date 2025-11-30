@@ -10,7 +10,8 @@ public class CityProductionQueue : MonoBehaviour
 
     private GridCity ownerCity;
     private BaseKingdom ownerKingdom;
-
+    [SerializeField] 
+    private int maxQueueSize = 5;
     public void Initialize(BaseKingdom kingdom, GridCity city)
     {
         ownerCity = city;
@@ -42,9 +43,9 @@ public class CityProductionQueue : MonoBehaviour
     {
         if (currentProduction.IsComplete())
         {
-
-            currentProduction.EndProduction(GetComponent<GridCity>());
-            RemoveCurrentProduction();
+            Production production = currentProduction;
+            RemoveProduction(currentProduction);
+            production.EndProduction(GetComponent<GridCity>());
             //ProceedProductionQueue();
         }
     }
@@ -105,7 +106,20 @@ public class CityProductionQueue : MonoBehaviour
             Debug.LogError("Cannot remove null Production");
             return;
         }
-        production.Cancel(GetComponent<GridCity>());
+        //production.Cancel(GetComponent<GridCity>());
+        
+        // Properly clean up the preview entity from the directory before destroying
+        if (production.placedObject != null)
+        {
+            BaseGridEntity entity = production.placedObject.GetComponent<BaseGridEntity>();
+            if (entity != null)
+            {
+                Vector3Int position = entity.GetCellPosition();
+                HexTilemapManager.Instance.RemoveEntityFromDirectory(position, entity);
+            }
+            Destroy(production.placedObject);
+        }
+
         productionQueue.Remove(production);
         if (currentProduction == production)
         {
@@ -131,6 +145,11 @@ public class CityProductionQueue : MonoBehaviour
         currentProduction = null;
 
         ProceedProductionQueue();
+    }
+
+    public bool IsQueueFull()
+    {
+        return productionQueue.Count >= maxQueueSize;
     }
 
     /// <summary>

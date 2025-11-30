@@ -95,7 +95,7 @@ public class CityUI : MonoBehaviour
     private void ShowGreenTIles()
     {
         GridCity selectedCity = GameplayCanvasManager.instance.selectedCity;
-        List<Vector3Int> positions = HexTilemapManager.Instance.GetCellsInRange(selectedCity.GetCellPosition(), 1, new List<TileState> { TileState.Land, TileState.Water });
+        List<Vector3Int> positions = HexTilemapManager.Instance.GetCellsInRange(selectedCity.GetCellPosition(), selectedCity.unitSpawnRadius, new List<TileState> { TileState.Land, TileState.Water });
         foreach (Vector3Int pos in positions)
         {
             HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(pos, MarkerColor.Green);
@@ -106,6 +106,7 @@ public class CityUI : MonoBehaviour
         cityMenuMode = CityMenuMode.SpawnUnit;
         isUsingCityMenu = true;
         this.unitPrefab = unitPrefab;
+        GameplayCanvasManager.instance.selectedCity.UpdateUnitSpawnRadius();
         AudioManager.Instance.ui_menumain_volume.Post(gameObject);
         ShowGreenTIles();
     }
@@ -115,6 +116,7 @@ public class CityUI : MonoBehaviour
         cityMenuMode = CityMenuMode.SpawnBuilding;
         isUsingCityMenu = true;
         buildingType = BuildingType;
+        GameplayCanvasManager.instance.selectedCity.UpdateUnitSpawnRadius();
         AudioManager.Instance.ui_menumain_volume.Post(gameObject);
         ShowGreenTIles();
         //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition
@@ -122,6 +124,7 @@ public class CityUI : MonoBehaviour
 
     private void ClearCityMenuMode()
     {
+        UIManager.Instance.HideEntityProductionPanelInfo();
         cityMenuMode = CityMenuMode.None;
 
         // StartCoroutine(ClearCityMenuModeDelayed());

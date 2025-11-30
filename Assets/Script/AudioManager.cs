@@ -88,7 +88,7 @@ public class AudioManager : MonoBehaviour
     {
         SetWwiseGameState(WwiseGameState.GameNone);
         SetWwiseMusicState(WwiseMusicState.MusicMainMenu);
-
+        ui_menumain_ambienceMusic.Post(gameObject);
         //PlayMusic.Post(gameObject);
     }
 
@@ -138,7 +138,7 @@ public class AudioManager : MonoBehaviour
 
         else
         {
-            Debug.LogError("Soundbanks list is empty! Are the banks assigned to the AudioManager?");
+            //Debug.LogError("Soundbanks list is empty! Are the banks assigned to the AudioManager?");
         }
 
     }

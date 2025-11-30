@@ -40,26 +40,42 @@ public class UnitSpawner : MonoBehaviour
             Debug.LogError("Invalid mouse position");
             return;
         }
-        if (!CanUnitBePlaced(city, unitPrefab, mousePosition))
+
+        QueueUnitAtPosition(mousePosition, city, unitPrefab.GetComponent<BaseGridUnitScript>());
+
+    }
+
+    private GameObject PlaceQueuedUnit(GameObject unitPrefab, BaseKingdom owner, Vector3Int position)
+    {
+        GameObject unit = Instantiate(unitPrefab, HexTilemapManager.Instance.CellToWorldPos(position), Quaternion.identity);
+        unit.GetComponent<BaseGridUnitScript>().InitializeBase(owner);
+        foreach (SpriteRenderer sr in unit.GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.color = Color.gray;
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.5f);
+        }
+        //HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByUnit);
+
+        //find canvas among children and disable it
+        // Canvas canvas = unit.GetComponentInChildren<Canvas>();
+        // if (canvas != null)
+        // {
+        //     canvas.enabled = false;
+        // }
+        return unit;
+    }
+
+
+    public void QueueUnitAtPosition(Vector3Int position,GridCity city,BaseGridUnitScript unitPrefab)
+    {
+        if (!CanUnitBePlaced(city, unitPrefab.gameObject, position))
         {
             Debug.LogError("Unit cannot be placed at this position");
             return;
         }
-        
-
-        Production production = new Production(mousePosition, ProductionType.Unit, unitPrefab.GetComponent<BaseGridUnitScript>().duration, unitPrefab);
-
-        if (city.GetComponent<CityProductionQueue>() == null)
-        {
-            Debug.LogError("CityProductionQueue is null");
-            return;
-        }
-
-        city.GetComponent<CityProductionQueue>().AddToQueue(production);
-    }
-    public void QueueUnitAtPosition(Vector3Int position,GridCity city,BaseGridUnitScript unitPrefab)
-    {
-        Production production = new Production(position, ProductionType.Unit, unitPrefab.GetComponent<BaseGridUnitScript>().duration, unitPrefab.gameObject);
+        CheckAndStartUnitSpawn(city, unitPrefab.gameObject, position);
+        GameObject placedUnit = PlaceQueuedUnit(unitPrefab.gameObject, city.GetOwner(), position);
+        Production production = new Production(position, ProductionType.Unit, unitPrefab.GetComponent<BaseGridUnitScript>().duration, unitPrefab.gameObject, placedUnit);
 
         if (city.GetComponent<CityProductionQueue>() == null)
         {
@@ -68,6 +84,7 @@ public class UnitSpawner : MonoBehaviour
         }
 
         city.GetComponent<CityProductionQueue>().AddToQueue(production);
+
     }
 
     /// <summary>
@@ -81,6 +98,7 @@ public class UnitSpawner : MonoBehaviour
             return;
         }
         // Refund resources
+        HexTilemapManager.Instance.SetTileState(position, TileState.Water);//TODO: remove hardcoding
         city.GetOwner().Resources().AddAll(unit.GetComponent<BaseGridUnitScript>().resource);
     }
 
@@ -95,6 +113,12 @@ public class UnitSpawner : MonoBehaviour
         if (!possiblePositions.Contains(position))
         {
             Debug.LogWarning("Cannot place the unit at this position");
+            return false;
+        }
+
+        if (city.GetComponent<CityProductionQueue>().IsQueueFull())
+        {
+            Debug.LogError("Production queue is full");
             return false;
         }
         Dictionary<ResourceType, int> resourceRequirements = unitPrefab.GetComponent<BaseGridUnitScript>().resource;
@@ -156,6 +180,7 @@ public class UnitSpawner : MonoBehaviour
 
         ownerKingdom.AddUnitToKingdom(unit.GetComponent<BaseGridUnitScript>());
         UIManager.Instance.UnitsInteractable(false);
+        HexTilemapManager.Instance.SetTileState(gridPosition, TileState.OccupiedByUnit);
 
         // Initialize unit if it has a GridUnit component
         // unitObject.GetComponent<GridUnit>().Initialize(unit, playerKingdom);

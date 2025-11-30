@@ -113,21 +113,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934c249baa9ca7340bd723cd90082029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 25
-  CurrentHealth: 25
+  EntityDisplayName: Fishman
+  Health: 20
+  CurrentHealth: 20
   Vision: 5
   HPImage: {fileID: 8975526795753575141}
   bodySprite: {fileID: 4918825275124453274}
   rotatebleObjects: []
   rotatebleCanvas: {fileID: 6882905193284612583}
   entityType: 0
+  requiredBuildings: []
+  bCanBeAttacked: 1
+  EntityDescription: Simple eldritch melee unit
   CanStandOnTiles: 
   MeleeAttackDamage: 8
   RangeAttackDamage: 1
   RetallitionAttackDamage: 6
   AttackRange: 1
   MovementDistance: 3
-  ProductionTime: 1
+  ProductionTime: 2
   MovementSpeed: 3
   AttacksPerTurn: 1
   CanMoveAfterattack: 0
@@ -151,7 +155,13 @@ MonoBehaviour:
   unitTier: 1
   remainMovementText: {fileID: 6747325932697013235}
   possibleSpawnTiles: 0000000001000000
-  resourceRequirements: []
+  resourceRequirements:
+  - resourceType: 0
+    amount: 10
+  - resourceType: 1
+    amount: 5
+  - resourceType: 2
+    amount: 0
   duration: 2
   abilityImage: {fileID: 0}
   abilityDescription: 

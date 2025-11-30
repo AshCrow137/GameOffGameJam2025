@@ -37,13 +37,22 @@ public class GameplayCanvasManager : MonoBehaviour
     }
     public void OnVictory(BaseKingdom kingdom)
     {
-        victoryPanel.SetActive(true);
-        StartCoroutine(winScreenCoroutine());
+        if (kingdom is PlayerKingdom)
+        {
+            //TODO add lose screen
+            StartCoroutine(winScreenCoroutine());
+        }
+        else
+        {
+            victoryPanel.SetActive(true);
+            StartCoroutine(winScreenCoroutine());
+        }
+        
     }
     private IEnumerator winScreenCoroutine()
     {
         yield return new WaitForSeconds(showMessageTime);
-        SceneManager.LoadSceneAsync("MainMenu");
+        SceneManager.LoadSceneAsync("ActualMainMenu");
     }
     public void ActivateUnitProductionPanel(GridCity city)
     {
