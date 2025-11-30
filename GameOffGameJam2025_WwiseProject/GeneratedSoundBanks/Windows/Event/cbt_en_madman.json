@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{767A22DF-E234-4D5E-BA6E-917934C573F2}",
     "Language": "SFX",
-    "Hash": "{B1BF4FC0-F884-91D3-906E-1D2684A43F53}",
+    "Hash": "{05E6A5A9-2CBE-A2C6-6B45-091D51B62747}",
     "ObjectPath": "cbt_en_madman",
     "ShortName": "cbt_en_madman",
     "Path": "Event/cbt_en_madman.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{10FFEF71-A379-6630-B13B-F5F2F18D74F0}"
+  "FileHash": "{D8850C3C-03B0-D719-69F0-50C13CF1E7A4}"
  }
 }

@@ -8,37 +8,17 @@ using UnityEngine;
 public class VisionManager : MonoBehaviour
 {
     // private Dictionary<Vector3Int, Fog> visionDictionary = new Dictionary<Vector3Int, Fog>();
-    private Dictionary<Vector3Int, int> NotGreyFog = new Dictionary<Vector3Int, int>();
-    private Dictionary<Vector3Int, bool> notBlackFog = new Dictionary<Vector3Int, bool>();
+    public Dictionary<Vector3Int, int> NotGreyFog { get; private set; } = new Dictionary<Vector3Int, int>();
+    public Dictionary<Vector3Int, bool> notBlackFog { get; private set; } = new Dictionary<Vector3Int, bool>();
 
-    /// <summary>
-    /// Finds all entities at the given position
-    /// </summary>
-    public List<BaseGridEntity> FindAllEntitiesAtPosition(Vector3Int position)
+
+    public void Initialize()
     {
-        List<BaseGridEntity> entities = new List<BaseGridEntity>();
-
-        // Find unit at position
-        BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(position);
-        if (unit != null)
+        List<Vector3Int> allTiles = HexTilemapManager.Instance.GetAllTilePositions();
+        foreach (var tile in allTiles)
         {
-            entities.Add(unit);
+            notBlackFog[tile] = false;
         }
-
-        // Find city at position
-        GridCity city = CityManager.Instance.GetCity(position);
-        if (city != null)
-        {
-            entities.Add(city);
-
-            // Find building at position
-            if (city.buildings.TryGetValue(position, out GridBuilding building))
-            {
-                entities.Add(building);
-            }
-        }
-
-        return entities;
     }
 
     /// <summary>
@@ -46,7 +26,7 @@ public class VisionManager : MonoBehaviour
     /// </summary>
     public void UpdateEntitiesAtPosition(Vector3Int position, Fog fogState)
     {
-        List<BaseGridEntity> entities = FindAllEntitiesAtPosition(position);
+        List<BaseGridEntity> entities = HexTilemapManager.Instance.FindAllEntitiesAtPosition(position);
 
         foreach (BaseGridEntity entity in entities)
         {

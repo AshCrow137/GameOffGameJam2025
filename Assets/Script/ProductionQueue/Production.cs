@@ -43,13 +43,13 @@ public class Production
             return isStarted;
     }
 
-    public void EndProduction(){
+    public void EndProduction(GridCity city){
         if(productionType == ProductionType.Building){
             BuildingManager.Instance.PlaceBuilding(building, position);
         }
         else if (productionType == ProductionType.Unit)
         {
-            UnitSpawner.Instance.PlaceUnit(prefab, position);
+            UnitSpawner.Instance.PlaceUnit(prefab, position, city.GetOwner());
         }
     }
 

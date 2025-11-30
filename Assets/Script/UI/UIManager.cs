@@ -39,7 +39,8 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI materialsResourceText;
     [SerializeField]
     private GameObject GamePlayEvents;
-
+    [SerializeField]
+    private Image NextTurnImg;
     [SerializeField]
     private TextMeshProUGUI TurnCount;
 
@@ -64,7 +65,20 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image LifeBar;
 
+    [SerializeField]
+    private GameObject UnitProductionButton;
+    [SerializeField]
+    private GameObject BuildingProductionButton;   
+    [SerializeField]
+    private GameObject UnitProductionPanel;  
+    [SerializeField]
+    private GameObject BuildingProductionPanel;
 
+    [SerializeField]
+    private GameObject ProductionPanel;
+    [SerializeField]
+    private GameObject ProductionFirstItemPanel;
+    public TMP_Text currentturnText;
     public void Initialize()
     {
         UIElements = GetComponent<UIElements>();
@@ -76,6 +90,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         
         panelStats.gameObject.SetActive(false);
+        NextTurnImg.sprite = UIElements.EnemyTurn;
     }
 
     public void HasUnitSelected(bool value)
@@ -138,6 +153,32 @@ public class UIManager : MonoBehaviour
         CityPanel.sprite = UIElements.CityPanel;
         MadnessLavel.text = $"Madness: {city.GetOwner().madnessLevel}";
         madnessFillImage.fillAmount = (float)city.GetOwner().madnessLevel / city.GetOwner().maxMadnessLevel;
+        if(city.GetOwner() is AIKingdom)
+        {
+            AIKingdom ai = (AIKingdom) city.GetOwner();
+            if(ai.GetCurrentMadnessEffect().VisibleProduction)
+            {
+                ProductionFirstItemPanel?.SetActive(true);
+                ProductionPanel?.SetActive(true);
+            }
+            else
+            {
+                ProductionFirstItemPanel?.SetActive(false);
+                ProductionPanel?.SetActive(false);
+            }
+            UnitProductionButton?.SetActive(false);
+            BuildingProductionButton?.SetActive(false);
+            UnitProductionPanel?.SetActive(false);
+            BuildingProductionPanel?.SetActive(false);
+        }
+        else
+        {
+            UnitProductionButton?.SetActive(true);
+            BuildingProductionButton?.SetActive(true);
+            ProductionFirstItemPanel?.SetActive(true);
+            ProductionPanel?.SetActive(true);
+        }
+        CityUI.Instance.UpdateUnitButtonsInteractability();
     }
 
     public void UnitsInteractable(bool value)
@@ -151,7 +192,14 @@ public class UIManager : MonoBehaviour
     public void ChangeTurn(int currentTurn)
     {
         TurnCount.text = (currentTurn).ToString() ;
+        ChangeNextTurnImg();
+        currentturnText.text = $"current turn: {TurnManager.instance.GetCurrentActingKingdom()}";
         UnitsInteractable(true);
+    }
+
+    private void ChangeNextTurnImg()
+    {
+        NextTurnImg.sprite = NextTurnImg.sprite == UIElements.PlayerTurn ? UIElements.EnemyTurn : UIElements.PlayerTurn;
     }
 
     public void UpdateLife(BaseGridUnitScript unit)

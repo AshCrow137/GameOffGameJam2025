@@ -7,7 +7,7 @@
 					<PropertyList>
 						<Property Name="FrequencyBand1" Type="Real32" Value="98"/>
 						<Property Name="FrequencyBand2" Type="Real32" Value="801"/>
-						<Property Name="GainBand1" Type="Real32" Value="3.5"/>
+						<Property Name="GainBand1" Type="Real32" Value="2.5"/>
 						<Property Name="GainBand2" Type="Real32" Value="-1"/>
 					</PropertyList>
 				</Effect>

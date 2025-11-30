@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{2675998C-7AEB-45ED-897F-84C85886EE17}",
     "Language": "SFX",
-    "Hash": "{D797117E-2F9B-A636-D8FB-E8CF9D6AC808}",
+    "Hash": "{57668FEC-9474-24E6-1A31-9219F7C0FF96}",
     "ObjectPath": "cbt_plr_infilt",
     "ShortName": "cbt_plr_infilt",
     "Path": "Event/cbt_plr_infilt.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{CF7E74BD-A1AC-D4A1-8D0D-FAEE767AC64C}"
+  "FileHash": "{406BE6AF-1F17-E4E1-4B92-4C79F60B53EF}"
  }
 }

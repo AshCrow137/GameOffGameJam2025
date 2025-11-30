@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{40D6309C-88AC-4224-A4F2-D667C8B2D10B}",
     "Language": "SFX",
-    "Hash": "{AA7D3ED8-008A-4CD2-62D6-6F18C7709760}",
+    "Hash": "{A8379851-6872-AF62-DAE2-3725E7D77081}",
     "ObjectPath": "cbt_plr_wavecaller",
     "ShortName": "cbt_plr_wavecaller",
     "Path": "Event/cbt_plr_wavecaller.bnk",
@@ -55,6 +55,6 @@
     ]
    }
   ],
-  "FileHash": "{703D199E-8B5A-8CBB-5791-0BBC6C6976E7}"
+  "FileHash": "{FEEBA59B-05FC-03CE-CA3F-CE5A7BD473A7}"
  }
 }

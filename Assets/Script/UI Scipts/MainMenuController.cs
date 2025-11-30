@@ -2,40 +2,64 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System;
+using Unity.VisualScripting;
 public class MainMenuController : MonoBehaviour
 {
     private bool PanelOpenSounds = false;
     private bool PanelOpenSettings = false;
+    private bool PanelOpenLevels = false;
     [SerializeField] private InputActionAsset CustomInput;
     private InputAction moveAction;
     [SerializeField] private GameObject PanelSounds;
     [SerializeField] private GameObject PanelSettings;
+    [SerializeField] private GameObject PanelLevels;
+    [SerializeField] private GameObject PanelMain;
     [SerializeField] private Button[] Buttons;
-    private int selectBut;
+    [SerializeField] private string[] LevelsName;
+    private string currentLevel="";
+    [SerializeField] private Button ButtonStartLevel;
     public void Initialize()
     {
-        selectBut = 0;
         PanelSounds.SetActive(false);
         PanelSettings.SetActive(false);
         Buttons[0].Select();
+        PanelLevels.SetActive(PanelOpenLevels);
+        PanelMain.SetActive(!PanelOpenLevels);
     }
     void Start()
     {
         Initialize();
+        
     }
     private void OnEnable()
     {
         var map = CustomInput.FindActionMap("InMenu");
         moveAction = map.FindAction("Navigate");
         moveAction.Enable();
+        
     }
     private void OnDisable() {
         moveAction.Disable(); 
         }
-    public void btn_StartGame(string Scene)
+    public void btn_StartGame()
+    {
+        SceneManager.LoadSceneAsync(currentLevel);
+    }
+    public void tgl_Level(int level)
+    {
+        currentLevel=LevelsName[level];
+        ButtonStartLevel.interactable=true;
+    }
+    public void btn_OpenLevels()
     {
         SceneManager.LoadSceneAsync(Scene);
         AudioManager.Instance.ui_menumain_start.Post(gameObject);
+        currentLevel="";
+        ButtonStartLevel.interactable=false;
+        PanelOpenLevels = !PanelOpenLevels;
+        PanelLevels.SetActive(PanelOpenLevels);
+        PanelMain.SetActive(!PanelOpenLevels);
     }
     public void btn_SwitchSounds()
     {
@@ -48,6 +72,7 @@ public class MainMenuController : MonoBehaviour
         PanelOpenSettings = !PanelOpenSettings;
         PanelSettings.SetActive(PanelOpenSettings);
         AudioManager.Instance.ui_menumain_settings.Post(gameObject);
+        AudioManager.Instance.ui_menumain_ambienceMusic.Post(gameObject);
     }
     public void TESTPlaySound()
     {

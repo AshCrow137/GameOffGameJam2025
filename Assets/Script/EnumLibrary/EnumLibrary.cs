@@ -1,4 +1,19 @@
 ﻿//This file is Enum holder
+using System.Collections.Generic;
+
+public static class EnumLibrary
+{
+    public static List<TileState> AllTileStates = new List<TileState>()
+        {
+            TileState.Land,
+            TileState.Water,
+            TileState.OccuppiedByBuilding,
+            TileState.OccupiedByUnit,
+            TileState.OccupiedByCity,
+            TileState.Unavailable,
+            TileState.Default
+        };
+}
 public enum TimerDirection
 {
     INCREASE,
@@ -8,12 +23,14 @@ public enum TimerDirection
     public enum TileState
     {
         Land,
-        OccuppiedByBuilding,
-        OccupiedByUnit,
         Water,
+        OccupiedByUnit,
+        OccuppiedByBuilding,
+        OccupiedByCity,
         Unavailable,
         Default
     }
+
 
     public enum ToggleUseCase
     {
@@ -44,12 +61,14 @@ public enum SelectionType
         SpawnUnit,
         SpawnBuilding
     }
-public enum UnitType
+public enum EntityType
 {
     Infantry,
     Archer,
     Cavalry,
-    Special
+    Special,
+    Building,
+    None
 }
 
 public enum Fog
@@ -66,23 +85,33 @@ public enum ProductionType
     Building
 }
 
-public enum AIAction
+public enum AIUnitAction
 {
     None,
     Attack,
-    PreferredAttack,
-    BuildCity,
-    BuildUnit
+    Move,
+    UseAbility,
+    Explore
     
 }
-
-public enum AIAttackType
+public enum AIMacroAction
 {
     None,
-    Attack,
-    AttackMiddleMadness,
-    AttackHighMadness
+    Combat,
+    Build,
+    Explore
 }
+public enum AICityAction
+{
+    BuildProductionBuilding,
+    BuildUnitTechBuilding,
+    BuildHighTirUnit,
+    BuildRangeUnit,
+    BuildMeleeUnit,
+    None
+}
+
+
 
 public enum MarkerColor
 {

@@ -22,7 +22,7 @@ public class MadnessData : ScriptableObject
     {
         foreach(MadnessDataStruct mstruct in madnessEffectsList)
         {
-            if(currentMadness>=mstruct.minMadness&&currentMadness<=mstruct.maxMadness)
+            if(currentMadness >= mstruct.minMadness && currentMadness <= mstruct.maxMadness)
             {
                 return mstruct;
             }
@@ -39,6 +39,9 @@ public struct MadnessDataStruct
     public int maxMadness;
     public int CreatureStatsModifier;
     public int DiplomacyModifier;
+    public bool VisibleProduction;
+    public bool DecreaseSpeed;
+    public bool CanFight;
     //TODO add madness special effets
 
 }
