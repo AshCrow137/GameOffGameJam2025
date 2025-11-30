@@ -257,8 +257,8 @@ MonoBehaviour:
         guid: 8ae407d95124814cb0940e371f867b39
       Path: Events\Default Work Unit\Combat\cbt_en_maa
       maxAttenuation: 0
-      maxDuration: 2
-      minDuration: 2
+      maxDuration: 2.023239
+      minDuration: 1.977028
     - name: cbt_en_madman
       guid: df227a7634e25e4dba6e917934c573f2
       id: 21621053
