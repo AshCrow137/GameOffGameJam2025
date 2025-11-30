@@ -401,6 +401,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: destroyedCityPrefab
+      value: 
+      objectReference: {fileID: 7159996995794098670, guid: 25f5af579401d944a87faead740142e1, type: 3}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: CanStandOnTiles.Array.size
       value: 1
       objectReference: {fileID: 0}

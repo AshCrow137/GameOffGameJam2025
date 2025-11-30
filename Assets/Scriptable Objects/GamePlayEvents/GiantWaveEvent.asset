@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f800c38c7e15b574c8dbcf828553b650, type: 3}
   m_Name: GiantWaveEvent
   m_EditorClassIdentifier: 
-  EventChance: 100
+  EventChance: 25
   waveSprite: {fileID: 3986588845003993371, guid: 10d48033058a2634fa1c1173af0d6318, type: 3}
