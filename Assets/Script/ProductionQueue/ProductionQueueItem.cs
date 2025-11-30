@@ -39,8 +39,9 @@ public class ProductionQueueItem : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             CityProductionQueue queue = GameplayCanvasManager.instance.selectedCity.GetComponent<CityProductionQueue>();
-            queue.RemoveProduction(production);
-            production.Cancel(queue.GetComponent<GridCity>());
+            Production deleteProduction = production;
+            queue.RemoveProduction(deleteProduction);
+            deleteProduction.Cancel(queue.GetComponent<GridCity>());
 
         }
     }

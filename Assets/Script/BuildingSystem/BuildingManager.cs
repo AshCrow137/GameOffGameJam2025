@@ -211,6 +211,11 @@ public class BuildingManager : MonoBehaviour
             Debug.LogWarning($"Cannot place building outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
             return false;
         }
+        if(city.GetComponent<CityProductionQueue>().IsQueueFull())
+        {
+            Debug.LogError("Production queue is full");
+            return false;
+        }
 
         return CanBuildingBePlaced(building, position, city.GetOwner());
     }
