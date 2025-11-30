@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{320BF717-45A6-48E1-8FA6-C0BB2BDE9097}",
     "Language": "SFX",
-    "Hash": "{1BC0CE44-80E6-14A7-8BC2-36F7E7E9D0EF}",
+    "Hash": "{3E037D23-280A-5178-EB02-11877E2C58FB}",
     "ObjectPath": "ui_bd_buy_eld_asp",
     "ShortName": "ui_bd_buy_eld_asp",
     "Path": "Event/ui_bd_buy_eld_asp.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{1AFE0D6F-32CA-3E85-2834-1088B14224AC}"
+  "FileHash": "{7D4CEA9C-EB77-741B-9067-6966F0C97160}"
  }
 }

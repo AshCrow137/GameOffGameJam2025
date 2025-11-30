@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{DB58C9FE-BD23-4C32-8027-4E7CB4E02DA5}",
     "Language": "SFX",
-    "Hash": "{49FB66C8-B0B2-E0C8-39FA-56611FCE7E71}",
+    "Hash": "{CB06A841-2DDC-928A-1C5B-C8ED689DC161}",
     "ObjectPath": "music_play",
     "ShortName": "music_play",
     "Path": "Event/music_play.bnk",
@@ -53,6 +53,6 @@
     ]
    }
   ],
-  "FileHash": "{269AA086-4B14-2D6A-7F65-B21CC597A949}"
+  "FileHash": "{0B84C83F-ABEA-F957-20AC-7A9B8E54CDC3}"
  }
 }
