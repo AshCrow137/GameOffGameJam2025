@@ -288,28 +288,28 @@ public class UIManager : MonoBehaviour
         text.text = resourceValue.ToString();
         switch (resourceValue)
         {
-            case < 12:
+            case < 50:
                 index = 0;
                 break;
-            case < 24:
+            case < 100:
                 index = 1;
                 break;
-            case < 35:
+            case < 150:
                 index = 2; 
                 break;
-            case < 50:
+            case < 200:
                 index = 3;
                 break;
-            case < 65:
+            case < 250:
                 index = 4;
                 break;
-            case < 75:
+            case < 300:
                 index = 5;
                 break;
-            case < 85:
+            case < 350:
                 index = 6;
                 break;
-            case >= 85:
+            case >= 400:
                 index = 7;
                 break;
         }

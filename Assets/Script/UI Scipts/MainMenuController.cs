@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour
     {
         PanelSounds.SetActive(false);
         PanelSettings.SetActive(false);
-        Buttons[0].Select();
+        //Buttons[0].Select();
         PanelLevels.SetActive(PanelOpenLevels);
         PanelMain.SetActive(!PanelOpenLevels);
     }
@@ -72,7 +72,7 @@ public class MainMenuController : MonoBehaviour
         PanelOpenSettings = !PanelOpenSettings;
         PanelSettings.SetActive(PanelOpenSettings);
         AudioManager.Instance.ui_menumain_settings.Post(gameObject);
-        AudioManager.Instance.ui_menumain_ambienceMusic.Post(gameObject);
+
     }
     public void TESTPlaySound()
     {
