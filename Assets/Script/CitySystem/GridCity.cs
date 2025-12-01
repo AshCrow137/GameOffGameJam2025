@@ -1,10 +1,19 @@
 using Pathfinding;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class GridCity : BaseGridEntity,IDamageable
 {
+
+    [Header("Production Data")]
+    [SerializeField] private int productGold=5;
+    [SerializeField] private int productMagic=5;
+    [SerializeField] private int productMaterial = 1;
+    [SerializeField] private GameObject destroyedCityPrefab;
+    Dictionary<ResourceType, int> product = new Dictionary<ResourceType, int>();
+
     public Sprite sprite;
     public Vector3Int position;
 
@@ -35,6 +44,10 @@ public class GridCity : BaseGridEntity,IDamageable
         productionQueue.Initialize(owner, this);
         hTM.PlaceCityOnTheTile(GetCellPosition(),this);
         owner.AddCityToKingdom(this);
+        if (productGold > 0) product.Add(ResourceType.Gold, productGold);
+        if (productMagic > 0) product.Add(ResourceType.Magic, productMagic);
+        if (productMaterial > 0) product.Add(ResourceType.Materials, productMaterial);
+        HPImage.fillAmount = (float)CurrentHealth / Health;
     }
     public void OnBuildingConstructed(GridBuilding building)
     {
@@ -56,8 +69,10 @@ public class GridCity : BaseGridEntity,IDamageable
     protected override void OnStartTurn(BaseKingdom entity)
     {
         base.OnStartTurn(entity);
+        if (entity != Owner) { return; }
 
 
+        Owner.Resources().AddAll(product);
     }
 
     public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
@@ -95,7 +110,7 @@ public class GridCity : BaseGridEntity,IDamageable
             List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(gridPosition, 1,unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
             if(possiblePositions.Count <= 0)
             {
-                GlobalEventManager.InvokeShowUIMessageEvent($"This have no available tiles to spawn {unitPrefab.name}!");
+                GlobalEventManager.InvokeShowUIMessageEvent($"This have no available tiles to spawn {unitPrefab.GetComponent<BaseGridEntity>().GetEntityDisplayName()}!");
                 return;
             }
             Vector3Int randomPos = possiblePositions[Random.Range(0, possiblePositions.Count - 1)];
@@ -130,12 +145,31 @@ public class GridCity : BaseGridEntity,IDamageable
             return;
         }
     }
+
     public override void Death()
     {
+        Dictionary< Vector3Int, GridBuilding > buildingsToDestroy = new Dictionary< Vector3Int, GridBuilding >(buildings);
+        foreach (KeyValuePair<Vector3Int, GridBuilding> pair in buildingsToDestroy)
+        {
+            pair.Value.Death();
+        }
+        List<Production> productions = productionQueue.GetTotalProduction();
+        foreach (Production production in productions)
+        {
+            productionQueue.RemoveProduction(production);
+        }    
         base.Death();
         hTM.RemoveCityOnTile(GetCellPosition());
+        CityManager.Instance.RemoveCity(GetCellPosition());
         GetComponent<EntityVision>().OnDeath();
         Owner.RemoveCityFromKingdom(this);
+        if(Owner is AIKingdom)
+        {
+            GameObject destroyedCity = Instantiate(destroyedCityPrefab, transform.position, Quaternion.identity);
+            DestroyedCity script = destroyedCity.GetComponent<DestroyedCity>();
+            script.Initialize(null);
+        }
+
         gameObject.SetActive(false);
     }
     /// <summary>

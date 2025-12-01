@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.VFX;
 
 public class WavecallerUnit : BaseGridUnitScript
 {
     [SerializeField]
     private int transformProgress = 0;
-    private List<TileState> possibleTileStates = new List<TileState> { TileState.Land,TileState.OccupiedByUnit };
+    private List<TileState> possibleTileStates = new List<TileState> { TileState.Land,TileState.OccupiedByUnit,TileState.OccuppiedByBuilding,TileState.OccupiedByCity };
     private UnitMode unitMode = UnitMode.None;
     private Vector3Int transformingTile;
     private List<Vector3Int> possibleCellsInRange;
@@ -27,7 +28,7 @@ public class WavecallerUnit : BaseGridUnitScript
             GameplayCanvasManager.instance.DeactivateWavecallerButton();
         }
         
-        if (unitMode == UnitMode.Casting && transformProgress <= 2) { HPImage.color = Color.yellow; }
+        //if (unitMode == UnitMode.Casting && transformProgress <= 2) { HPImage.color = Color.yellow; }
     }
 
     protected override void OnStartTurn(BaseKingdom entity)
@@ -35,10 +36,11 @@ public class WavecallerUnit : BaseGridUnitScript
         base.OnStartTurn(entity);
         if (unitMode == UnitMode.Casting && transformProgress <= 4)
         {
-            HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(transformingTile, MarkerColor.Blue);
+            animator.SetBool("CastStart", true);
+            //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(transformingTile, MarkerColor.Blue);
             transformProgress++;
             MovementDistance = 0;
-            HPImage.color = Color.yellow;
+            //HPImage.color = Color.yellow;
         }
     }
 
@@ -55,6 +57,8 @@ public class WavecallerUnit : BaseGridUnitScript
     public override void SpecialAbility()
     {
         base.SpecialAbility();
+        animator.SetBool("CastStart", false);
+        animator.SetBool("CastFinish", false);
         possibleCellsInRange = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
         if (possibleCellsInRange.Count == 0)
         {
@@ -81,7 +85,33 @@ public class WavecallerUnit : BaseGridUnitScript
 
     private void PerformTransformation()
     {
+        AudioManager.Instance.E_GiantWave.Post(gameObject);
+        animator.SetBool("CastStart", false);
+        animator.SetBool("CastFinish", true);
         possibleCellsInRange = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
+        List<BaseGridEntity> entitiesToRemove = new List<BaseGridEntity>();
+        foreach (Vector3Int tilePos in possibleCellsInRange)
+        {
+            if (tilePos == new Vector3Int(-4, -4, 0))
+            {
+                Debug.Log("Hey");
+            }
+            // Check each entity and destroy if it cannot stand on water
+            foreach (BaseGridEntity entity in hTM.FindAllEntitiesAtPosition(tilePos))
+            {
+                if (!entity.GetCanStandOnTiles().Contains(TileState.Water))
+                {
+                    Debug.Log($"Giant Wave destroying {entity.gameObject.name} at {tilePos}");
+                    //entity.Death();
+                    entitiesToRemove.Add(entity);
+                }
+            }
+
+        }
+        foreach (BaseGridEntity entity in entitiesToRemove)
+        {
+            entity.Death();
+        }
         foreach (Vector3Int pos in possibleCellsInRange)
         {
             TransformTile(pos);
@@ -90,10 +120,12 @@ public class WavecallerUnit : BaseGridUnitScript
         HexTilemapManager.Instance.RemoveAllMarkers();
         transformProgress = 0;
         unitMode = UnitMode.None;
-        HPImage.color = Owner.GetKingdomColor();
+        //HPImage.color = Owner.GetKingdomColor();
         MovementDistance = 2;
         tilesRemain = MovementDistance;
         AttacksPerTurn = 1;
+        //animator.SetBool("CastStart", false);
+        //animator.SetBool("CastFinish", false);
     }
 
     private void StartTransformation(Vector3Int tile)

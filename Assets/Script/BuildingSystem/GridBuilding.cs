@@ -14,6 +14,10 @@ public class GridBuilding : BaseGridEntity
     [SerializeField]
     private string BuildingFunction;
 
+    [SerializeField]
+    private Sprite buildingUISprite;
+
+    public Sprite GetBuildingUISprite() { return buildingUISprite; }
     protected bool bIsActive = false;
     /// <summary>
     /// Initialize the GridBuilding with a Building scriptable object

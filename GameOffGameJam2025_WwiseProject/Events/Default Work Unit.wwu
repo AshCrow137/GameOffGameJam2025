@@ -189,6 +189,21 @@
 								</Event>
 							</ChildrenList>
 						</Folder>
+						<Folder Name="WorldEvents" ID="{E37221CB-B934-45AA-8D7E-EBBE416F66AB}" ShortID="114021095">
+							<ChildrenList>
+								<Event Name="wave" ID="{A85B39FA-7F42-42A4-8643-ED359F3A9ADD}">
+									<ChildrenList>
+										<Action Name="" ID="{21647C22-91B5-4DDA-A9B1-38B1234731D8}" ShortID="868804039">
+											<ReferenceList>
+												<Reference Name="Target">
+													<ObjectRef Name="Wave" ID="{D99575D0-1FD2-4028-8B68-E97A3D5DE5F8}" WorkUnitID="{AEEA7B31-8A0C-49BD-91E1-DB943B8E08FE}"/>
+												</Reference>
+											</ReferenceList>
+										</Action>
+									</ChildrenList>
+								</Event>
+							</ChildrenList>
+						</Folder>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Combat" ID="{5F3C2B2B-A1BB-43DA-9470-64D48C35CADE}" ShortID="996725028">

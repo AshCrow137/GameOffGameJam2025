@@ -236,7 +236,7 @@ MonoBehaviour:
   EntityDescription: 
   CanStandOnTiles: 
   MeleeAttackDamage: 4
-  RangeAttackDamage: 13
+  RangeAttackDamage: 10
   RetallitionAttackDamage: 4
   AttackRange: 6
   MovementDistance: 2
