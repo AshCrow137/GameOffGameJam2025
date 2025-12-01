@@ -33,6 +33,7 @@ public class HexTilemapManager : MonoBehaviour
     private Dictionary<Vector3Int, TileState> tileStates = new Dictionary<Vector3Int, TileState>();
     private Dictionary<Vector3Int, BaseGridUnitScript> gridUnits = new Dictionary<Vector3Int, BaseGridUnitScript>();
     private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
+    private Dictionary<Vector3Int, TreasureChest> gridTreasureChests = new Dictionary<Vector3Int, TreasureChest>();
 
     private Dictionary<Vector3Int, List<BaseGridEntity> > allEntityDirectory = new();
 
@@ -138,9 +139,13 @@ public class HexTilemapManager : MonoBehaviour
         {
             entityOnCell = GetUnitOnTile(pos);
         }
-        else
+        else if (GetCityOnTile(pos))
         {
             entityOnCell = GetCityOnTile(pos);
+        }
+        else
+        {
+            entityOnCell = GetTreasureChestOnTile(pos);
         }
         return entityOnCell;
     }
@@ -398,6 +403,13 @@ public class HexTilemapManager : MonoBehaviour
 
         if (tile is HexTile)
         {
+            // Check if there's a treasure chest at this position and collect it
+            TreasureChest chest = GetTreasureChestOnTile(cellPosition);
+            if (chest != null)
+            {
+                chest.Collect(unit.GetOwner());
+            }
+            
             tileStates[cellPosition] = TileState.OccupiedByUnit;
             tilemap.RefreshTile(cellPosition);
             UpdateTileWalkability(cellPosition, TileState.OccupiedByUnit);
@@ -472,6 +484,36 @@ public class HexTilemapManager : MonoBehaviour
         if (gridCities.TryGetValue(cellPosition, out GridCity cityScript))
         {
             return cityScript;
+        }
+        return null;
+    }
+
+    // Treasure Chest Management Methods
+    public void AddTreasureChestToTile(Vector3Int cellPosition, TreasureChest chest)
+    {
+        if (!gridTreasureChests.ContainsKey(cellPosition))
+        {
+            gridTreasureChests.Add(cellPosition, chest);
+            // Add treasure chest to entity directory
+            AddEntityToDirectory(cellPosition, chest);
+        }
+    }
+
+    public void RemoveTreasureChestFromTile(Vector3Int cellPosition)
+    {
+        if (gridTreasureChests.TryGetValue(cellPosition, out TreasureChest chest))
+        {
+            gridTreasureChests.Remove(cellPosition);
+            // Remove treasure chest from entity directory
+            RemoveEntityFromDirectory(cellPosition, chest);
+        }
+    }
+
+    public TreasureChest GetTreasureChestOnTile(Vector3Int cellPosition)
+    {
+        if (gridTreasureChests.TryGetValue(cellPosition, out TreasureChest chest))
+        {
+            return chest;
         }
         return null;
     }
