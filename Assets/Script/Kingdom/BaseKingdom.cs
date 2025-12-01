@@ -11,6 +11,9 @@ public class BaseKingdom : Entity
     [SerializeField]
     protected List<GridCity> controlledCities = new();
     [SerializeField]
+    protected List<TreasureChest> chests = new();
+
+    [SerializeField]
     protected List<BaseGridUnitScript> unlockedUnits = new List<BaseGridUnitScript> ();
     [SerializeField]
     protected List<GridBuilding> unlockedBuildings= new List<GridBuilding> ();
@@ -60,6 +63,10 @@ public class BaseKingdom : Entity
         foreach ( GridCity city in controlledCities)
         {
             city?.Initialize(this);
+        }
+        foreach (TreasureChest chest in chests)
+        {
+            chest.Initialize(this);
         }
     }
 
