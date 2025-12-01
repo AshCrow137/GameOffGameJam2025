@@ -79,7 +79,7 @@ public class CameraController : MonoBehaviour
 
     }
     public Transform GetCameraArm() { return CameraArm; }
-    void FixedUpdate()
+    void LateUpdate()
     {
         if(!bCameraPosFixed)
         {
