@@ -163,7 +163,7 @@ PrefabInstance:
     - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d892480370202214986bc37e39a0ae00, type: 3}
+      objectReference: {fileID: 1209129971, guid: 2da60f154ebe08b4ebedcd34f13476d5, type: 3}
     - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -229,7 +229,9 @@ MonoBehaviour:
   bCanBeAttacked: 1
   EntityDescription: 
   CanStandOnTiles: 
-  treasureEvent: {fileID: 11400000, guid: 1c597d2ec6da43d48ba064c783992c32, type: 2}
+  treasureEvent: {fileID: 0}
+  spawnAroundChest: 0
+  specificPosToSpawn: {x: 0, y: 0, z: 0}
 --- !u!114 &7280769662470096156 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2967569089052790877, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
