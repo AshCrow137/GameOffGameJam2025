@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
-
+using UnityEngine.Rendering.Universal;
 
 public class BootManager : MonoBehaviour
 {
-        ////In this example, you have to put value in testScript directly from Inspector in Unity
-        //[SerializeField] 
-        //private TestScript testScript;
+    ////In this example, you have to put value in testScript directly from Inspector in Unity
+    //[SerializeField] 
+    //private TestScript testScript;
+    [SerializeField]
+    private CameraController cameraController;
         [SerializeField]
         private HexTilemapManager hexTilemapManager;
     [SerializeField]
@@ -52,6 +54,7 @@ public class BootManager : MonoBehaviour
     void Start()
     {
         // testScript.Initialize();
+        cameraController?.Initialize();
         productionQueueUI?.Instantiate();
         globalVisionManager?.Initialize();
         hexTilemapManager?.Initialize();
