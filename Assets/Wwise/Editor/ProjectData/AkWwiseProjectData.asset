@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 9900479ee2cf8e479c24c462e98c193e
     GuidInternal: 
-    m_lastTime: -8584373390635586900
+    m_lastTime: -8584370738965539455
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -54,6 +54,40 @@ MonoBehaviour:
         ObjectType: 2
         guid: d8a41415a61d2a41a17e75ca0c2149f3
       Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
+    - name: Music
+      guid: 7995eae8c1120346a1cfc32908767000
+      id: 3991942870
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 9900479ee2cf8e479c24c462e98c193e
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: Music
+        ObjectType: 2
+        guid: 7995eae8c1120346a1cfc32908767000
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music
+    - name: SFX
+      guid: a4f781e4b72c944187e2e896d15bcd4c
+      id: 393239870
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 9900479ee2cf8e479c24c462e98c193e
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: SFX
+        ObjectType: 2
+        guid: a4f781e4b72c944187e2e896d15bcd4c
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\SFX
   BankWwu:
   - PhysicalPath: SoundBanks\Default Work Unit.wwu
     PathAndIcons:
@@ -80,7 +114,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: b53265490cd0ba49a1a7c90456f9f526
     GuidInternal: 
-    m_lastTime: -8584373390647084952
+    m_lastTime: -8584370738965716058
     List:
     - name: amb_01
       guid: 0638705d3959a24c979693886d62154b
@@ -878,6 +912,49 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.9378017
       minDuration: 0.8164039
+    - name: wave
+      guid: fa395ba8427fa4428643ed359f3a9add
+      id: 1941003890
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: WorldEvents
+        ObjectType: 4
+        guid: cb2172e334b9aa458d7eebbe416f66ab
+      - ElementName: wave
+        ObjectType: 3
+        guid: fa395ba8427fa4428643ed359f3a9add
+      Path: Events\Default Work Unit\UI\WorldEvents\wave
+      maxAttenuation: 0
+      maxDuration: 3.8625
+      minDuration: 3.8625
+    - name: WorldEvents
+      guid: cb2172e334b9aa458d7eebbe416f66ab
+      id: 3371647684
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: b53265490cd0ba49a1a7c90456f9f526
+      - ElementName: UI
+        ObjectType: 4
+        guid: b48d6d813e807341baa07322f8c3feaa
+      - ElementName: WorldEvents
+        ObjectType: 4
+        guid: cb2172e334b9aa458d7eebbe416f66ab
+      Path: Events\Default Work Unit\UI\WorldEvents
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
