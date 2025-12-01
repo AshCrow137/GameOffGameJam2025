@@ -404,11 +404,7 @@ public class HexTilemapManager : MonoBehaviour
         if (tile is HexTile)
         {
             // Check if there's a treasure chest at this position and collect it
-            TreasureChest chest = GetTreasureChestOnTile(cellPosition);
-            if (chest != null)
-            {
-                chest.Collect(unit.GetOwner());
-            }
+
             
             tileStates[cellPosition] = TileState.OccupiedByUnit;
             tilemap.RefreshTile(cellPosition);

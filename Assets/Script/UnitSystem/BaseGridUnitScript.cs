@@ -650,7 +650,11 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// </summary>
     private void OnEndOfPathReached()
     {
-       
+        TreasureChest chest = hTM.GetTreasureChestOnTile(GetCellPosition());
+        if (chest != null)
+        {
+            chest.Collect(Owner);
+        }
         hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position),this);
         bIsMoving = false;
         MovementFinishEvent.Invoke();
