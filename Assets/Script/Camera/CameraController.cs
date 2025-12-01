@@ -35,6 +35,14 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Slider cameraSpeedEdgeScreenSlider;
 
+    [SerializeField]
+    private float CameraXBordedMax = 15;  
+    [SerializeField]
+    private float CameraXBordedMin = -15;
+    [SerializeField]
+    private float CameraYBordedMax = 15;    
+    [SerializeField]
+    private float CameraYBordedMin = -15;
     public Camera GetMainCamera()
     {
         return mainCamera;
@@ -96,9 +104,11 @@ public class CameraController : MonoBehaviour
             Vector3 movement = new Vector3(movementInput.x*CameraSpeed, movementInput.y*CameraSpeed, 0f);
             transform.Translate(Time.deltaTime * (move + movement) * moveSpeed);
             transform.Rotate(Vector3.forward * rotateValue * CameraRotationSpeed);
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, CameraXBordedMin, CameraXBordedMax), Mathf.Clamp(transform.position.y, CameraYBordedMin, CameraYBordedMax), transform.position.z);
             var orbital = vcam.GetComponent<CinemachineOrbitalFollow>();
-            orbital.VerticalAxis.Value = Mathf.Clamp(orbital.VerticalAxis.Value + (-1)*moveCameraZoom.ReadValue<float>() * 2f, 200, 250);
-            
+            if(!GameplayCanvasManager.instance.isOnCanvas) orbital.VerticalAxis.Value = Mathf.Clamp(orbital.VerticalAxis.Value + (-1) * moveCameraZoom.ReadValue<float>() * 2f, 200, 250);
+
+
         }
 
     }

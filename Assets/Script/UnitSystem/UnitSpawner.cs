@@ -112,13 +112,13 @@ public class UnitSpawner : MonoBehaviour
         List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(city.position, city.unitSpawnRadius, unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
         if (!possiblePositions.Contains(position))
         {
-            Debug.LogWarning("Cannot place the unit at this position");
+            GlobalEventManager.InvokeShowUIMessageEvent("Cannot place the unit at this position");
             return false;
         }
 
         if (city.GetComponent<CityProductionQueue>().IsQueueFull())
         {
-            Debug.LogError("Production queue is full");
+            GlobalEventManager.InvokeShowUIMessageEvent("Production queue is full");
             return false;
         }
         Dictionary<ResourceType, int> resourceRequirements = unitPrefab.GetComponent<BaseGridUnitScript>().resource;

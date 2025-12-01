@@ -11003,8 +11003,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Example message
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 92da6513c2fc49f43aa16443072a07ab, type: 2}
+  m_sharedMaterial: {fileID: 4768605478109297890, guid: 92da6513c2fc49f43aa16443072a07ab, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11161,7 +11161,7 @@ Transform:
   m_GameObject: {fileID: 152301479}
   serializedVersion: 2
   m_LocalRotation: {x: -0.46909568, y: -0.17305855, z: 0.29974622, w: 0.81249756}
-  m_LocalPosition: {x: -4.6797285, y: 4.5236206, z: -2.747861}
+  m_LocalPosition: {x: -4.7597284, y: 5.6936207, z: -2.747861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21515,7 +21515,7 @@ Transform:
   m_GameObject: {fileID: 932776239}
   serializedVersion: 2
   m_LocalRotation: {x: -0.46909568, y: -0.17305855, z: 0.29974622, w: 0.81249756}
-  m_LocalPosition: {x: -4.6797285, y: 4.5236206, z: -2.747861}
+  m_LocalPosition: {x: -4.7597284, y: 5.6936207, z: -2.747861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32042,7 +32042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1617745762
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34052,6 +34052,10 @@ MonoBehaviour:
   cameraRotationSlider: {fileID: 1112969478}
   cameraSpeedSlider: {fileID: 985206624}
   cameraSpeedEdgeScreenSlider: {fileID: 637250921}
+  CameraXBordedMax: 2
+  CameraXBordedMin: -15
+  CameraYBordedMax: 15
+  CameraYBordedMin: -10
 --- !u!4 &1736380835
 Transform:
   m_ObjectHideFlags: 0
@@ -34061,7 +34065,7 @@ Transform:
   m_GameObject: {fileID: 1736380833}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.34611708, w: 0.93819135}
-  m_LocalPosition: {x: -10.82, y: 8.99, z: 0}
+  m_LocalPosition: {x: -10.9, y: 10.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34852,7 +34856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1804920343
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39753,6 +39757,38 @@ PrefabInstance:
     - target: {fileID: 5703218835810740337, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016367117159179012, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 363294321}
+    - target: {fileID: 6016367117159179012, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 363294321}
+    - target: {fileID: 6016367117159179012, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnMouseEnterCanvasElement
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016367117159179012, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnMouseExitCanvasElement
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016367117159179012, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameplayCanvasManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016367117159179012, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameplayCanvasManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016367117159179012, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016367117159179012, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6712157685600094941, guid: dca553317bd57bf45b5a2aed77673fe9, type: 3}
       propertyPath: m_Name
