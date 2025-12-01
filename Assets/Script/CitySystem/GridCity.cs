@@ -153,21 +153,26 @@ public class GridCity : BaseGridEntity,IDamageable
         {
             pair.Value.Death();
         }
-        List<Production> productions = productionQueue.GetTotalProduction();
-        foreach (Production production in productions)
+        List<Production> productions = productionQueue?.GetTotalProduction();
+        if(productions!=null)
         {
-            productionQueue.RemoveProduction(production);
-        }    
+            foreach (Production production in productions)
+            {
+                productionQueue.RemoveProduction(production);
+            }
+
+        }
+  
         base.Death();
         hTM.RemoveCityOnTile(GetCellPosition());
         CityManager.Instance.RemoveCity(GetCellPosition());
-        GetComponent<EntityVision>().OnDeath();
+        GetComponent<EntityVision>()?.OnDeath();
         Owner.RemoveCityFromKingdom(this);
         if(Owner is AIKingdom)
         {
             GameObject destroyedCity = Instantiate(destroyedCityPrefab, transform.position, Quaternion.identity);
             DestroyedCity script = destroyedCity.GetComponent<DestroyedCity>();
-            script.Initialize(null);
+            script.Initialize(NeitralKingdom.Instance);
         }
 
         gameObject.SetActive(false);

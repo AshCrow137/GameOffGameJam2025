@@ -27,6 +27,14 @@ public class CameraController : MonoBehaviour
     private bool bCameraPosFixed = false;
     [SerializeField]
     private Camera mainCamera;
+
+    [SerializeField]
+    private Slider cameraRotationSlider;
+    [SerializeField]
+    private Slider cameraSpeedSlider;
+    [SerializeField]
+    private Slider cameraSpeedEdgeScreenSlider;
+
     public Camera GetMainCamera()
     {
         return mainCamera;
@@ -38,11 +46,17 @@ public class CameraController : MonoBehaviour
 
     public void Initialize()
     {
+        CameraRotationSpeed = PlayerPrefs.HasKey("CameraRotationSpeed") ? PlayerPrefs.GetFloat("CameraRotationSpeed") : CameraRotationSpeed;
+        CameraSpeedEdgeScreen = PlayerPrefs.HasKey("CameraSpeedEdgeScreen") ? PlayerPrefs.GetFloat("CameraSpeedEdgeScreen") : CameraSpeedEdgeScreen;
+        CameraSpeed = PlayerPrefs.HasKey("CameraSpeed") ? PlayerPrefs.GetFloat("CameraSpeed") : CameraSpeed;
         if(instance!=null)
         {
             Destroy(this);
         }
         instance = this;
+        cameraRotationSlider.value = CameraRotationSpeed;
+        cameraSpeedSlider.value = CameraSpeed;
+        cameraSpeedEdgeScreenSlider.value = CameraSpeedEdgeScreen;
     }
     private void OnEnable()
     {
@@ -56,6 +70,13 @@ public class CameraController : MonoBehaviour
     private void OnDisable()
     {
         moveAction.Disable();
+    }
+    private void OnDestroy()
+    {
+        PlayerPrefs.SetFloat("CameraRotationSpeed", CameraRotationSpeed);
+        PlayerPrefs.SetFloat("CameraSpeedEdgeScreen", CameraSpeedEdgeScreen);
+        PlayerPrefs.SetFloat("CameraSpeed", CameraSpeed);
+
     }
     public Transform GetCameraArm() { return CameraArm; }
     void FixedUpdate()

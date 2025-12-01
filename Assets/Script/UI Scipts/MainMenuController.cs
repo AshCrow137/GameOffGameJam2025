@@ -19,6 +19,17 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private string[] LevelsName;
     private string currentLevel="";
     [SerializeField] private Button ButtonStartLevel;
+    [SerializeField]
+    private Slider cameraRotationSlider; 
+    [SerializeField]
+    private Slider cameraSpeedSlider;  
+    [SerializeField]
+    private Slider cameraSpeedEdgeScreenSlider;
+
+
+    private float CameraRotationSpeed = 1;
+    private float CameraSpeed = 1;
+    private float CameraSpeedEdgeScreen = 1;
     public void Initialize()
     {
         PanelSounds.SetActive(false);
@@ -26,6 +37,12 @@ public class MainMenuController : MonoBehaviour
         //Buttons[0].Select();
         PanelLevels.SetActive(PanelOpenLevels);
         PanelMain.SetActive(!PanelOpenLevels);
+        CameraRotationSpeed = PlayerPrefs.HasKey("CameraRotationSpeed") ? PlayerPrefs.GetFloat("CameraRotationSpeed") : CameraRotationSpeed;
+        CameraSpeedEdgeScreen = PlayerPrefs.HasKey("CameraSpeedEdgeScreen") ? PlayerPrefs.GetFloat("CameraSpeedEdgeScreen") : CameraSpeedEdgeScreen;
+        CameraSpeed = PlayerPrefs.HasKey("CameraSpeed") ? PlayerPrefs.GetFloat("CameraSpeed") : CameraSpeed;
+        cameraRotationSlider.value = CameraRotationSpeed;
+        cameraSpeedSlider.value = CameraSpeed;
+        cameraSpeedEdgeScreenSlider.value = CameraSpeedEdgeScreen;
     }
     void Start()
     {
@@ -74,6 +91,16 @@ public class MainMenuController : MonoBehaviour
         AudioManager.Instance.ui_menumain_settings.Post(gameObject);
 
     }
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("CameraRotationSpeed", CameraRotationSpeed);
+        PlayerPrefs.SetFloat("CameraSpeedEdgeScreen", CameraSpeedEdgeScreen);
+        PlayerPrefs.SetFloat("CameraSpeed", CameraSpeed);
+    }
+
+    public void sldr_SetRotateSpeed(Slider sld) => CameraRotationSpeed = sld.value;
+    public void sldr_SetCameraSpeedEdgeScreen(Slider sld) => CameraSpeedEdgeScreen = sld.value;
+    public void sldr_SetCameraSpeed(Slider sld) => CameraSpeed = sld.value;
     public void TESTPlaySound()
     {
         AudioManager.Instance.ui_menumain_settings.Post(gameObject);
