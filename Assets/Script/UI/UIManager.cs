@@ -257,7 +257,7 @@ public class UIManager : MonoBehaviour
 
     private void ChangeNextTurnImg()
     {
-        NextTurnImg.sprite = NextTurnImg.sprite == UIElements.PlayerTurn ? UIElements.EnemyTurn : UIElements.PlayerTurn;
+        NextTurnImg.sprite = TurnManager.instance.GetCurrentActingKingdom() == PlayerKingdom.Instance ? UIElements.EnemyTurn : UIElements.PlayerTurn;
     }
 
     public void UpdateLife(BaseGridUnitScript unit)

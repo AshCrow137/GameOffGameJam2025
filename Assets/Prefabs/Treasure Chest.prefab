@@ -163,7 +163,7 @@ PrefabInstance:
     - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1209129971, guid: 2da60f154ebe08b4ebedcd34f13476d5, type: 3}
+      objectReference: {fileID: 988519392, guid: 7256f04e32571ff4a848c1b6084d247b, type: 3}
     - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -228,6 +228,7 @@ MonoBehaviour:
   requiredBuildings: []
   bCanBeAttacked: 1
   EntityDescription: 
+  CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 
   treasureEvent: {fileID: 0}
   spawnAroundChest: 0

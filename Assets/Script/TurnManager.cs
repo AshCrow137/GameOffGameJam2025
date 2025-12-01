@@ -13,7 +13,10 @@ public class TurnManager : MonoBehaviour
     [SerializeField]
     private TMP_Text turnText;
 
-
+    public List<BaseKingdom> GetActingKingdoms()
+    {
+        return turnOrder;
+    }
     //public TurnManager(List<GameObject> turnOrder)
     //{
     //    this.turnOrder = turnOrder;
@@ -25,6 +28,14 @@ public class TurnManager : MonoBehaviour
         currentOrderIndex = 0;
         StartTurn(turnOrder[currentOrderIndex]);
        
+    }
+    public void RemoveKingdomFromTurnOrder(BaseKingdom kingdom)
+    {
+        int index = turnOrder.IndexOf(kingdom);
+        if (index != -1)
+        {
+            turnOrder.RemoveAt(index);
+        }
     }
 
     public void StartTurn(BaseKingdom entity)

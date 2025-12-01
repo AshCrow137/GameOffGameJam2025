@@ -61,6 +61,7 @@ public class MainMenuController : MonoBehaviour
         }
     public void btn_StartGame()
     {
+        AudioManager.Instance.ui_menumain_start.Post(gameObject);
         SceneManager.LoadSceneAsync(currentLevel);
     }
     public void tgl_Level(int level)
@@ -71,7 +72,7 @@ public class MainMenuController : MonoBehaviour
     public void btn_OpenLevels()
     {
         //SceneManager.LoadSceneAsync(Scene);
-        AudioManager.Instance.ui_menumain_start.Post(gameObject);
+        AudioManager.Instance.ui_menumain_continue.Post(gameObject);
         currentLevel="";
         ButtonStartLevel.interactable=false;
         PanelOpenLevels = !PanelOpenLevels;
@@ -86,8 +87,8 @@ public class MainMenuController : MonoBehaviour
     }
     public void btn_SwitchSettings()
     {
-        PanelOpenSettings = !PanelOpenSettings;
-        PanelSettings.SetActive(PanelOpenSettings);
+        //PanelOpenSettings = !PanelOpenSettings;
+        //PanelSettings.SetActive(PanelOpenSettings);
         AudioManager.Instance.ui_menumain_settings.Post(gameObject);
 
     }
