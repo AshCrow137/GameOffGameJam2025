@@ -129,35 +129,64 @@ public class BaseGridEntity : MonoBehaviour
     {
         
     }
+    private void RotateObject(GameObject obj)
+    {
+        Vector3 dir = CameraController.instance.GetMainCamera().transform.position - transform.position;
+        dir.z = 0;
+        if (dir.sqrMagnitude > 0.0001f)
+        {
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            if (angle > 180f) angle -= 360f;
+            if (angle < -180f) angle += 360f;
 
+            obj.transform.rotation = Quaternion.Euler(angle, -90, -90);
+
+        }
+    }
     protected virtual void FixedUpdate()
     {
         //rotating entity body sprite and canvas facing camera 
         if (CameraArm == null) return;
 
         //bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
-        //foreach(GameObject obj in rotatebleObjects)
-        //{
-        //    var objeu = obj.transform.localRotation.eulerAngles;
-        //    obj.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
-        //}
+
         //rotatebleCanvas.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z+90, -90, -90));
-        Vector3 dir = CameraController.instance.GetMainCamera().transform.position - bodySprite.transform.position;
-        dir.z = 0;
-        if (dir.sqrMagnitude > 0.0001f)
+        //Vector3 dir = CameraController.instance.GetMainCamera().transform.position - transform.position;
+        //dir.z = 0;
+        //if (dir.sqrMagnitude > 0.0001f)
+        //{
+        //    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        //    if (angle > 180f) angle -= 360f;
+        //    if (angle < -180f) angle += 360f;
+
+        //    bodySprite.transform.rotation = Quaternion.Euler(angle , -90,-90);
+
+        //}
+        RotateObject(bodySprite);
+        RotateObject(rotatebleCanvas.gameObject);
+        foreach (GameObject obj in rotatebleObjects)
+
         {
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
-            // Clamp rotation so it never passes 180° or -180°
-            if (angle > 180f) angle -= 360f;
-            if (angle < -180f) angle += 360f;
-
-            transform.rotation = Quaternion.Euler(0, 0,angle-90);
-            //Quaternion desired = Quaternion.LookRotation(dir) * Quaternion.Euler(0, 0, -90);
-            //bodySprite.transform.rotation = Quaternion.RotateTowards(bodySprite.transform.rotation, desired, 360f * Time.deltaTime);
-            //bodySprite.transform.rotation = Quaternion.LookRotation(dir);
-            //bodySprite.transform.rotation *= Quaternion.Euler(new Vector3(0, 0, -90));
+            RotateObject(obj);
         }
+        //{
+        //    Vector3 objdir = CameraController.instance.GetMainCamera().transform.position - obj.transform.position;
+        //    objdir.z = 0;
+        //    if (objdir.sqrMagnitude > 0.0001f)
+        //    {
+        //        float angle = Mathf.Atan2(objdir.y, objdir.x) * Mathf.Rad2Deg;
+
+            //        // Clamp rotation so it never passes 180° or -180°
+            //        if (angle > 180f) angle -= 360f;
+            //        if (angle < -180f) angle += 360f;
+
+            //        obj.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+            //        //Quaternion desired = Quaternion.LookRotation(dir) * Quaternion.Euler(0, 0, -90);
+            //        //bodySprite.transform.rotation = Quaternion.RotateTowards(bodySprite.transform.rotation, desired, 360f * Time.deltaTime);
+            //        //bodySprite.transform.rotation = Quaternion.LookRotation(dir);
+            //        //bodySprite.transform.rotation *= Quaternion.Euler(new Vector3(0, 0, -90));
+            //    }
+            //}
     }
     /// <summary>
     /// invokes when kingdom select grid entity

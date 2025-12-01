@@ -97,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2024809114169191824, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2024809114169191824, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_SortingLayerID
@@ -113,7 +113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_SortingLayerID
@@ -290,6 +290,7 @@ MonoBehaviour:
   requiredBuildings: []
   bCanBeAttacked: 1
   EntityDescription: Simple eldritch range unit
+  CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 
   MeleeAttackDamage: 3
   RangeAttackDamage: 7

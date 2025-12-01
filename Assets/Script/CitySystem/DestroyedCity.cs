@@ -12,14 +12,23 @@ public class DestroyedCity : GridCity
     }
     public override void Initialize(BaseKingdom owner)
     {
+        Owner = owner;
+        hTM = HexTilemapManager.Instance;
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
         gridPosition = HexTilemapManager.Instance.WorldToCellPos(transform.position);
         transform.position = hTM.CellToWorldPos(gridPosition);
-        if (Camera.main != null && Camera.main.transform.parent != null)
+        hTM.PlaceCityOnTheTile(GetCellPosition(), this);
+        if (CameraController.instance)
         {
-            CameraArm = Camera.main.transform.parent;
+            CameraArm = CameraController.instance.gameObject.transform;
         }
+        entityVision = GetComponent<EntityVision>();
+        if (entityVision == null)
+        {
+            entityVision = gameObject.AddComponent<EntityVision>();
+        }
+        entityVision.Initialize(this);
     }
     protected override void OnStartTurn(BaseKingdom entity)
     {
@@ -37,6 +46,15 @@ public class DestroyedCity : GridCity
             GameObject newCity = Instantiate(playerCityPrefab, transform.position, Quaternion.identity);
             GridCity gridCity = newCity.GetComponent<GridCity>();
             gridCity.Initialize(PlayerKingdom.Instance);
+        hTM.RemoveCityOnTile(GetCellPosition());
         gameObject.SetActive(false);
+    }
+    public override void OnEntitySelect(BaseKingdom selector)
+    {
+        
+    }
+    public override void OnEntityDeselect()
+    {
+        
     }
 }

@@ -32,7 +32,7 @@ public class BaseKingdom : Entity
     {
         cities.Add(city.position, city);
     }
-    private void DefeatCheck()
+    protected virtual void DefeatCheck()
     {
         if(controlledCities.Count<=0 &&controlledUnits.Count<=0)
         {

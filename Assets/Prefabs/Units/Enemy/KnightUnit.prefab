@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2024809114169191824, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_FlipX
       value: 0
@@ -75,6 +79,14 @@ PrefabInstance:
     - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1724408627
       objectReference: {fileID: 0}
     - target: {fileID: 4872316267927391669, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Color.b
@@ -165,6 +177,7 @@ MonoBehaviour:
   requiredBuildings: []
   bCanBeAttacked: 1
   EntityDescription: 
+  CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 
   MeleeAttackDamage: 15
   RangeAttackDamage: 1
