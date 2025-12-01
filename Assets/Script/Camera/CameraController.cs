@@ -25,12 +25,18 @@ public class CameraController : MonoBehaviour
     private Transform CameraArm;
     public CinemachineCamera vcam;
     private bool bCameraPosFixed = false;
+    [SerializeField]
+    private Camera mainCamera;
+    public Camera GetMainCamera()
+    {
+        return mainCamera;
+    }    
     public Transform GetCameraArmTransform()
     { return CameraArm; }
 
     public static CameraController instance { get; private set; }
 
-    private void Awake()
+    public void Initialize()
     {
         if(instance!=null)
         {
@@ -52,7 +58,7 @@ public class CameraController : MonoBehaviour
         moveAction.Disable();
     }
     public Transform GetCameraArm() { return CameraArm; }
-    void LateUpdate()
+    void FixedUpdate()
     {
         if(!bCameraPosFixed)
         {

@@ -14138,7 +14138,7 @@ MonoBehaviour:
   m_MinValue: 0.1
   m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 0.428
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -24776,6 +24776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fba29868af4a3797a93b2f222f182f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraController: {fileID: 1212674900}
   hexTilemapManager: {fileID: 1758301929}
   inputManager: {fileID: 687573196}
   turnManager: {fileID: 924946557}
@@ -27481,15 +27482,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28286cdd656a4b24bba7dd23d8575808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraRotationSpeed: 0.3
+  CameraRotationSpeed: 1
   CameraSpeed: 1
   CameraSpeedEdgeScreen: 1
   Camera: {fileID: 1894823610}
   CustomInput: {fileID: -944628639613478452, guid: 9e920cdde5fdd2448831077a6fe5c55c, type: 3}
-  EDGE_THRESHOLD: 0.3
+  EDGE_THRESHOLD: 0.48
   moveSpeed: 3
   CameraArm: {fileID: 1212674899}
   vcam: {fileID: 2138236646}
+  mainCamera: {fileID: 1894823609}
 --- !u!1 &1219227816
 GameObject:
   m_ObjectHideFlags: 0
@@ -28682,7 +28684,7 @@ MonoBehaviour:
   m_MinValue: 0.1
   m_MaxValue: 3
   m_WholeNumbers: 0
-  m_Value: 0.1
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -34401,7 +34403,7 @@ MonoBehaviour:
   m_MinValue: 0.1
   m_MaxValue: 3
   m_WholeNumbers: 0
-  m_Value: 0.1
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -36432,7 +36434,7 @@ Transform:
   m_GameObject: {fileID: 1894823607}
   serializedVersion: 2
   m_LocalRotation: {x: -0.46909568, y: -0.17305855, z: 0.29974622, w: 0.81249756}
-  m_LocalPosition: {x: 10.94027, y: 1.9136208, z: -1.3378611}
+  m_LocalPosition: {x: 10.94027, y: 1.9136208, z: -2.747861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40255,7 +40257,7 @@ Transform:
   m_GameObject: {fileID: 2138236645}
   serializedVersion: 2
   m_LocalRotation: {x: -0.46909568, y: -0.17305855, z: 0.29974622, w: 0.81249756}
-  m_LocalPosition: {x: 10.94027, y: 1.9136208, z: -1.3378611}
+  m_LocalPosition: {x: 10.94027, y: 1.9136208, z: -2.747861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40273,7 +40275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetOffset: {x: 1.86, y: -4.96, z: -5.71}
+  TargetOffset: {x: 1.86, y: -4.96, z: -7.12}
   TrackerSettings:
     BindingMode: 3
     PositionDamping: {x: 0, y: 0, z: 0}
