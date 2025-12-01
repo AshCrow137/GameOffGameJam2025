@@ -228,7 +228,7 @@ MonoBehaviour:
   RangeAttackDamage: 1
   RetallitionAttackDamage: 2
   AttackRange: 1
-  MovementDistance: 5
+  MovementDistance: 3
   ProductionTime: 0
   MovementSpeed: 3
   AttacksPerTurn: 1

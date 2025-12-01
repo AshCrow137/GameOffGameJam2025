@@ -1,10 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TreasureChest : BaseGridEntity
 {
     [Header("Treasure Chest Settings")]
     [SerializeField]
-    private BaseGameplayEvent treasureEvent;
+    private BaseTreasureChestEvent treasureEvent;
+    [SerializeField]
+    private bool spawnAroundChest = false;
+    [SerializeField]
+    private Vector3Int specificPosToSpawn = Vector3Int.zero; 
     
     private bool hasBeenCollected = false;
 
@@ -33,9 +38,13 @@ public class TreasureChest : BaseGridEntity
             return;
 
         hasBeenCollected = true;
-
+        if(spawnAroundChest)
+        {
+            List<Vector3Int> adjPos = hTM.GetCellsInRange(GetCellPosition(), 1);
+            specificPosToSpawn = adjPos[Random.Range(0, adjPos.Count)];
+        }
         // Execute the treasure event for the collecting kingdom
-        treasureEvent.ExecuteEvent(collector);
+        treasureEvent.ExecuteEvent(collector,specificPosToSpawn);
         
         // Show additional UI message for player
         //if (collector is PlayerKingdom)
