@@ -47,8 +47,19 @@ public class GameplayCanvasManager : MonoBehaviour
         }
         else
         {
-            victoryPanel.SetActive(true);
-            StartCoroutine(winScreenCoroutine());
+            TurnManager.instance.RemoveKingdomFromTurnOrder(kingdom);
+            int kingdomsRemain = 0;
+            foreach (BaseKingdom actingKingdom in TurnManager.instance.GetActingKingdoms())
+            {
+                if (actingKingdom is PlayerKingdom || actingKingdom is NeitralKingdom) continue;
+                kingdomsRemain++;
+            }
+            if(kingdomsRemain==0)
+            {
+                victoryPanel.SetActive(true);
+                StartCoroutine(winScreenCoroutine());
+            }
+
         }
         
     }

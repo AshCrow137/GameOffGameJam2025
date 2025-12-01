@@ -328,15 +328,15 @@ public class AIController : MonoBehaviour
             }
             #endregion
             kingdom.EndTurn();
-            cancellationTokenSource.Cancel();
+            cancellationTokenSource?.Cancel();
         }
         catch (Exception ex)
         {
             Debug.LogException(ex);
-            cancellationTokenSource.Cancel();
+            cancellationTokenSource?.Cancel();
         }
         finally { 
-            cancellationTokenSource.Dispose(); 
+            cancellationTokenSource?.Dispose(); 
             cancellationTokenSource = null;
         }
     }
