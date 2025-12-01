@@ -16307,6 +16307,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2418462404444536988, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: treasureEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: da9f9339021f79f49920a63e3dfb2337, type: 2}
     - target: {fileID: 3081356599625051260, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
       propertyPath: m_Sprite
       value: 
