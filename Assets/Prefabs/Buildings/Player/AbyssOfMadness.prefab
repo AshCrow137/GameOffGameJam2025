@@ -642,7 +642,7 @@ MonoBehaviour:
   entityType: 4
   requiredBuildings: []
   bCanBeAttacked: 1
-  EntityDescription: Infiltrator's nests
+  EntityDescription: A place where infiltrators nest
   CanStandOnTiles: 0000000001000000
   HpForCity: 10
   buildingData: {fileID: 11400000, guid: d6bbbb6b9ddc3a748b59883ca71f85da, type: 2}

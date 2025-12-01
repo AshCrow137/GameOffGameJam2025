@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1941003890",
+    "Type": "Event",
+    "GUID": "{A85B39FA-7F42-42A4-8643-ED359F3A9ADD}",
+    "Language": "SFX",
+    "Hash": "{3F9AB072-32D4-6E79-E1D2-41B903D91B5E}",
+    "ObjectPath": "wave",
+    "ShortName": "wave",
+    "Path": "Event/wave.bnk",
+    "Media": [
+     {
+      "Id": "888551483",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "UI InGame\\WorldEvents\\wave_t_01.wav",
+      "Path": "Media/888551483.wem",
+      "CachePath": "A7/{A7023A10-EA1A-3CA8-28F1-71B7A95C0003}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1941003890",
+      "Name": "wave",
+      "ObjectPath": "\\Events\\Default Work Unit\\UI\\WorldEvents\\wave",
+      "GUID": "{A85B39FA-7F42-42A4-8643-ED359F3A9ADD}",
+      "DurationType": "OneShot",
+      "DurationMin": "3.8625",
+      "DurationMax": "3.8625",
+      "MediaRefs": [
+       {
+        "Id": "888551483"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{96184FEC-AC03-F1A8-A0F6-5EE46A8EB590}"
+ }
+}

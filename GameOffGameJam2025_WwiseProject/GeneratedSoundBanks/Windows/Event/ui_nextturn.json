@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{7C5C8177-4169-42DD-AD7A-F5020BA6F758}",
     "Language": "SFX",
-    "Hash": "{1BA653EF-D4F9-E385-7B94-603EF98D7F02}",
+    "Hash": "{56FBAC57-25ED-4C98-14E0-6F013431FBE4}",
     "ObjectPath": "ui_nextturn",
     "ShortName": "ui_nextturn",
     "Path": "Event/ui_nextturn.bnk",
@@ -43,6 +43,6 @@
     ]
    }
   ],
-  "FileHash": "{B5759A14-E5B7-D310-CED3-4F3A74AEC35E}"
+  "FileHash": "{E768A24C-0DBD-5533-7BA9-008393DC8F32}"
  }
 }

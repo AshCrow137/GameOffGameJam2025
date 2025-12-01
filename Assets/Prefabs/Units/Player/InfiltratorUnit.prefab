@@ -203,7 +203,7 @@ MonoBehaviour:
   requiredBuildings:
   - {fileID: 6023460372539411072, guid: 1f2e2bc2d4f8bab4797b77a9bda01331, type: 3}
   bCanBeAttacked: 0
-  EntityDescription: Can enter enemy cities and increace kingdoom madness
+  EntityDescription: Can enter enemy cities and increases the kingdom's madness
   CanStandOnTiles: 
   MeleeAttackDamage: 0
   RangeAttackDamage: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   ProductionTime: 2
   MovementSpeed: 3
   AttacksPerTurn: 1
-  CanMoveAfterattack: 0
+  CanMoveAfterattack: 1
   movementPointsPanel: {fileID: 2425597009697533532}
   movementPointsImage: {fileID: 34461746476226409}
   animator: {fileID: 4659992261949162002}
