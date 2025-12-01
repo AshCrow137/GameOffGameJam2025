@@ -1802,9 +1802,12 @@
 							</ReferenceList>
 							<ChildrenList>
 								<Sound Name="ui_menumain_volume_t01" ID="{9C148C41-FCD0-46CA-AA12-39C06A7A62CE}" ShortID="52101965">
+									<PropertyList>
+										<Property Name="OverrideConversion" Type="bool" Value="True"/>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+											<ObjectRef Name="Mono" ID="{FF359CF8-6443-4A89-ADD7-E243CA707752}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
 										</Reference>
 										<Reference Name="OutputBus">
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>

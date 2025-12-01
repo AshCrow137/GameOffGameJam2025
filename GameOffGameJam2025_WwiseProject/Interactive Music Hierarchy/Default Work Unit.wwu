@@ -16,6 +16,7 @@
 								<Value>1</Value>
 							</ValueList>
 						</Property>
+						<Property Name="Tempo" Type="Real64" Value="95"/>
 						<Property Name="UseMaxSoundPerInstance" Type="bool">
 							<ValueList>
 								<Value>True</Value>
@@ -110,6 +111,8 @@
 											<PropertyList>
 												<Property Name="EnableDestinationFadeIn" Type="bool" Value="True"/>
 												<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
+												<Property Name="PlayDestinationPreEntry" Type="bool" Value="False"/>
+												<Property Name="PlaySourcePostExit" Type="bool" Value="False"/>
 											</PropertyList>
 											<TransitionInfo>
 												<SourceFadeOut>
@@ -228,7 +231,7 @@
 						</MusicSegment>
 						<MusicSegment Name="Deep Wave Calm NO PERC" ID="{2849CC58-A97E-4EC9-9BB8-1924ED080B71}" ShortID="112852796">
 							<PropertyList>
-								<Property Name="EndPosition" Type="Real64" Value="160013.015873016"/>
+								<Property Name="EndPosition" Type="Real64" Value="202000"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -240,13 +243,6 @@
 							</ReferenceList>
 							<ChildrenList>
 								<MusicTrack Name="deepwave calm NO PERC" ID="{1EB4E187-B1D2-4689-B2A2-8A7D1928D444}" ShortID="481184430">
-									<PropertyList>
-										<Property Name="Inclusion" Type="bool">
-											<ValueList>
-												<Value>False</Value>
-											</ValueList>
-										</Property>
-									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -314,7 +310,7 @@
 											<MusicCue Name="Exit Cue" ID="{3923F025-6E15-4B1A-A2CA-45E3BC001C9B}">
 												<PropertyList>
 													<Property Name="CueType" Type="int16" Value="1"/>
-													<Property Name="TimeMs" Type="Real64" Value="1000"/>
+													<Property Name="TimeMs" Type="Real64" Value="160000"/>
 												</PropertyList>
 											</MusicCue>
 										</Local>
@@ -324,7 +320,7 @@
 						</MusicSegment>
 						<MusicSegment Name="Deep Wave Calm WITH PERC" ID="{40CD810B-AFD7-43F9-AAC9-E5F361FDDA86}" ShortID="756953291">
 							<PropertyList>
-								<Property Name="EndPosition" Type="Real64" Value="160013.015873016"/>
+								<Property Name="EndPosition" Type="Real64" Value="167389.955482332"/>
 								<Property Name="OverrideEffect" Type="bool" Value="True"/>
 							</PropertyList>
 							<ReferenceList>
@@ -337,13 +333,6 @@
 							</ReferenceList>
 							<ChildrenList>
 								<MusicTrack Name="deepwave calm with perc" ID="{8135E69B-D1A2-402E-B33F-89628C6A1416}" ShortID="3753394">
-									<PropertyList>
-										<Property Name="Inclusion" Type="bool">
-											<ValueList>
-												<Value>False</Value>
-											</ValueList>
-										</Property>
-									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -411,7 +400,7 @@
 											<MusicCue Name="Exit Cue" ID="{B9BB85BA-A3AF-48D0-8E5B-FADD74E33C42}">
 												<PropertyList>
 													<Property Name="CueType" Type="int16" Value="1"/>
-													<Property Name="TimeMs" Type="Real64" Value="1000"/>
+													<Property Name="TimeMs" Type="Real64" Value="160000"/>
 												</PropertyList>
 											</MusicCue>
 										</Local>
