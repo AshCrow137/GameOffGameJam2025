@@ -232,7 +232,7 @@ MonoBehaviour:
   - {fileID: 224768452701571168, guid: 64c33e0fa77d8c043bb0558b02262698, type: 3}
   bCanBeAttacked: 1
   EntityDescription: Eldritch shaman, that call's giant waves to convert lands into
-    water.
+    water. Can move only on water tiles.
   CanStandOnTiles: 
   MeleeAttackDamage: 2
   RangeAttackDamage: 1
