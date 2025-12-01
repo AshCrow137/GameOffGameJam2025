@@ -328,15 +328,15 @@ public class AIController : MonoBehaviour
             }
             #endregion
             kingdom.EndTurn();
-            cancellationTokenSource.Cancel();
+            cancellationTokenSource?.Cancel();
         }
         catch (Exception ex)
         {
             Debug.LogException(ex);
-            cancellationTokenSource.Cancel();
+            cancellationTokenSource?.Cancel();
         }
         finally { 
-            cancellationTokenSource.Dispose(); 
+            cancellationTokenSource?.Dispose(); 
             cancellationTokenSource = null;
         }
     }
@@ -581,9 +581,26 @@ public class AIController : MonoBehaviour
                         List<Vector3Int> closestAdjPos = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), adjPos);
                         if(closestAdjPos.Count>0)
                         {
-                            targetPos = closestAdjPos[0];
-                            unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Move, targetPos));
-                            return AIUnitAction.Move;
+                            foreach (Vector3Int pos in closestAdjPos)
+                            {
+                                if (!reservedPositions.Contains(pos))
+                                {
+                                    reservedPositions.Add(pos);
+                                    targetPos = pos;
+                                    unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Move, targetPos));
+                                    return AIUnitAction.Move;
+                                }
+                            }
+                            foreach (Vector3Int pos in adjPos)
+                            {
+                                if (!reservedPositions.Contains(pos))
+                                {
+                                    reservedPositions.Add(pos);
+                                    targetPos = pos;
+                                    unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Move, targetPos));
+                                    return AIUnitAction.Move;
+                                }
+                            }
                         }
                         
                     }

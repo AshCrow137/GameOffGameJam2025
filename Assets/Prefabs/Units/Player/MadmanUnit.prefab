@@ -52,10 +52,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2024809114169191824, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e061bce18a712bd47ad8d7b31428501a, type: 3}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1724408627
+      objectReference: {fileID: 0}
     - target: {fileID: 5526448285735481666, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: Health
       value: 15
@@ -223,12 +239,13 @@ MonoBehaviour:
   requiredBuildings: []
   bCanBeAttacked: 1
   EntityDescription: Crazy human that should obey eldritch god
+  CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 
   MeleeAttackDamage: 6
   RangeAttackDamage: 1
   RetallitionAttackDamage: 2
   AttackRange: 1
-  MovementDistance: 5
+  MovementDistance: 3
   ProductionTime: 0
   MovementSpeed: 3
   AttacksPerTurn: 1

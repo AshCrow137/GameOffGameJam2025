@@ -56,6 +56,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d379bafa4a771614f9d8651ddf15b3f3, type: 3}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1724408627
+      objectReference: {fileID: 0}
     - target: {fileID: 4689709536294287077, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -129,6 +137,7 @@ MonoBehaviour:
   requiredBuildings: []
   bCanBeAttacked: 1
   EntityDescription: 
+  CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 
   MeleeAttackDamage: 8
   RangeAttackDamage: 1

@@ -84,9 +84,13 @@ public class BuildingManager : MonoBehaviour
         buildingPreview.GetComponent<GridBuilding>().Initialize(building.ownerCity.GetOwner());
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
-        building.buildingPlacementEvent.Post(gameObject);
+        
         HexTilemapManager.Instance.SetTileState(gridPosition, TileState.OccuppiedByBuilding);
 
+        if(playerKngdom.GetVisionManager().IsInNoFog(gridPosition))
+        {
+            building.buildingPlacementEvent.Post(gameObject);
+        }
         return buildingPreview;
     }
 

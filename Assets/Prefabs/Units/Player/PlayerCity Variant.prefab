@@ -28,6 +28,14 @@ PrefabInstance:
       propertyPath: productMaterial
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: CanStandOnTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: 'CanStandOnTiles.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4086409141070172977, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: visionRadius
       value: 5
@@ -76,9 +84,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7875668201489860421, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8365702993013301938, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_SortingLayer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365702993013301938, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8365702993013301938, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_SortingLayerID

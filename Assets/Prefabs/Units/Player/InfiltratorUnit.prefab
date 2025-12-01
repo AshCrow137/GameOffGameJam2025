@@ -56,10 +56,26 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2024809114169191824, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0da4c2c32216599458bf3c6764cd867e, type: 3}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743967027556582008, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1724408627
+      objectReference: {fileID: 0}
     - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Name
       value: InfiltratorUnit
@@ -203,7 +219,8 @@ MonoBehaviour:
   requiredBuildings:
   - {fileID: 6023460372539411072, guid: 1f2e2bc2d4f8bab4797b77a9bda01331, type: 3}
   bCanBeAttacked: 0
-  EntityDescription: Can enter enemy cities and increace kingdoom madness
+  EntityDescription: Can enter enemy cities and increases the kingdom's madness
+  CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 
   MeleeAttackDamage: 0
   RangeAttackDamage: 0
@@ -213,7 +230,7 @@ MonoBehaviour:
   ProductionTime: 2
   MovementSpeed: 3
   AttacksPerTurn: 1
-  CanMoveAfterattack: 0
+  CanMoveAfterattack: 1
   movementPointsPanel: {fileID: 2425597009697533532}
   movementPointsImage: {fileID: 34461746476226409}
   animator: {fileID: 4659992261949162002}
@@ -245,3 +262,6 @@ MonoBehaviour:
   abilityImage: {fileID: 0}
   abilityDescription: Infiltrates enemy cities to rise madness amongst them
   madnessAmount: 3
+  chanceToBeDetected: 5
+  minMadnessInreace: 10
+  maxMadnessIncreace: 25

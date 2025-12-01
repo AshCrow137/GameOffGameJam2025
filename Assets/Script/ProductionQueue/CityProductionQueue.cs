@@ -17,7 +17,15 @@ public class CityProductionQueue : MonoBehaviour
         ownerCity = city;
         ownerKingdom = kingdom;
     }
-
+    public List<Production> GetTotalProduction()
+    {
+        List<Production> totalProduction = new List<Production>(productionQueue);
+        if (currentProduction != null&&!totalProduction.Contains(currentProduction))
+        {
+            totalProduction.Add(currentProduction);
+        }
+        return totalProduction;
+    }
     public void OnTurnEnd()
     {
         ProcessProduction();
@@ -116,6 +124,7 @@ public class CityProductionQueue : MonoBehaviour
             {
                 Vector3Int position = entity.GetCellPosition();
                 HexTilemapManager.Instance.RemoveEntityFromDirectory(position, entity);
+                HexTilemapManager.Instance.SetTileState(position, TileState.Default);
             }
             Destroy(production.placedObject);
         }

@@ -35,6 +35,7 @@ public class GiantWaveEvent : BaseGameplayEvent
             TileState.Land,
             TileState.OccuppiedByBuilding,
             TileState.OccupiedByUnit,
+            TileState.OccupiedByCity
         };
         
         // Step 4: Get all tiles within radius 3 from origin
@@ -75,7 +76,7 @@ public class GiantWaveEvent : BaseGameplayEvent
         waveClone.SetActive(true);
         animator = waveClone.GetComponent<Animator>();
         animator.Play("WaveStart");
-        
+        AudioManager.Instance.E_GiantWave.Post(waveClone);
         while(!animator.GetCurrentAnimatorStateInfo(0).IsName("WaveFinish"))
         {
             CameraController.instance.SmoothMoveCameraToPosition(hexManager.CellToWorldPos(origin));
@@ -87,13 +88,16 @@ public class GiantWaveEvent : BaseGameplayEvent
         List<BaseGridEntity> entitiesToRemove = new List<BaseGridEntity>();
         foreach (Vector3Int tilePos in affectedTiles)
         {
-            if (tilePos == new Vector3Int(-4, -4, 0))
+            if (tilePos == new Vector3Int(6, 12, 0))
             {
                 Debug.Log("Hey");
             }
             // Check each entity and destroy if it cannot stand on water
-            foreach (BaseGridEntity entity in hexManager.FindAllEntitiesAtPosition(tilePos))
+            List<BaseGridEntity> entities = hexManager.FindAllEntitiesAtPosition(tilePos);
+
+            foreach (BaseGridEntity entity in entities)
             {
+
                 if (!entity.GetCanStandOnTiles().Contains(TileState.Water))
                 {
                     Debug.Log($"Giant Wave destroying {entity.gameObject.name} at {tilePos}");
@@ -129,6 +133,9 @@ public class GiantWaveEvent : BaseGameplayEvent
         
 
         // Step 5: Process each tile in radius
+
+            // Check each entity and destroy if it cannot stand on water
+        List<BaseGridEntity> entitiesToRemove = new List<BaseGridEntity>();
         foreach (Vector3Int tilePos in affectedTiles)
         {
             if (tilePos == new Vector3Int(-4, -4, 0))
@@ -141,13 +148,22 @@ public class GiantWaveEvent : BaseGameplayEvent
                 if (!entity.GetCanStandOnTiles().Contains(TileState.Water))
                 {
                     Debug.Log($"Giant Wave destroying {entity.gameObject.name} at {tilePos}");
-                    entity.Death();
+                    //entity.Death();
+                    entitiesToRemove.Add(entity);
                 }
             }
 
             // Convert tile to water
             hexManager.ChangeTile(tilePos, TileState.Water);
         }
+        foreach(BaseGridEntity entity in entitiesToRemove)
+        {
+            entity.Death();
+        }
+
+            // Convert tile to water
+
+        
 
         // Step 6: Show UI message for player kingdom\
         UIManager.Instance.ShowGamePlayEvent("A Giant Wave has struck!");

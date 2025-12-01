@@ -11353,6 +11353,86 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HintText: Infiltrator
+--- !u!1 &62519941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 62519942}
+  - component: {fileID: 62519945}
+  - component: {fileID: 62519944}
+  - component: {fileID: 62519943}
+  m_Layer: 0
+  m_Name: env
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &62519942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62519941}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1587635840}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &62519943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62519941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae710e1e3b187141bcb0411c485c618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlledUnits: []
+  controlledCities: []
+  chests:
+  - {fileID: 2139894818}
+  unlockedUnits: []
+  unlockedBuildings: []
+  StartingMagic: 50
+  StartingGold: 20
+  StartingMaterials: 30
+  kingdomColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &62519944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62519941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44a1a44d872f2334eb8055fe95f59614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &62519945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62519941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879a14fc36a9aca4f980474ca9024d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &72229707
 GameObject:
   m_ObjectHideFlags: 0
@@ -14623,6 +14703,7 @@ MonoBehaviour:
   messageText: {fileID: 151617130}
   showMessageTime: 3
   victoryPanel: {fileID: 1458594886}
+  losePanel: {fileID: 0}
   wavecallerButton: {fileID: 0}
   isOnCanvas: 0
 --- !u!225 &363294322
@@ -16178,6 +16259,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491259132}
   m_CullTransparentMesh: 1
+--- !u!1001 &531903222
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939770203396240520, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2418462404444536988, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: treasureEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: da9f9339021f79f49920a63e3dfb2337, type: 2}
+    - target: {fileID: 3081356599625051260, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081356599625051260, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081356599625051260, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5373882607488098178, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+      propertyPath: m_Name
+      value: Treasure Chest
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 8543647371263227959, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+    - {fileID: 7645486730864958343, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
 --- !u!1 &537744249
 GameObject:
   m_ObjectHideFlags: 0
@@ -19966,6 +20122,7 @@ MonoBehaviour:
   - {fileID: 1841548088}
   controlledCities:
   - {fileID: 867405373}
+  chests: []
   unlockedUnits:
   - {fileID: 6177816509522111356, guid: db609474c7d29344d8029ccc95058d9a, type: 3}
   - {fileID: 8529587581568595625, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}
@@ -24145,6 +24302,7 @@ MonoBehaviour:
   kingdoms:
   - {fileID: 1507932131}
   - {fileID: 788129472}
+  - {fileID: 62519943}
   selectionManager: {fileID: 0}
   gameplayCanvasManager: {fileID: 363294321}
   cityUI: {fileID: 28648849}
@@ -25199,6 +25357,10 @@ MonoBehaviour:
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 0}
   E_player_sliding:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  E_GiantWave:
     idInternal: 0
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 0}
@@ -26810,7 +26972,37 @@ Tilemap:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219227816}
   m_Enabled: 1
-  m_Tiles: {}
+  m_Tiles:
+  - first: {x: 3, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 3
+      m_TileSpriteIndex: 4294967295
+      m_TileMatrixIndex: 65535
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741824
+  - first: {x: 3, y: 6, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 3
+      m_TileSpriteIndex: 4294967295
+      m_TileMatrixIndex: 65535
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741824
+  - first: {x: 4, y: 6, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 3
+      m_TileSpriteIndex: 4294967295
+      m_TileMatrixIndex: 65535
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741824
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 0
@@ -26821,46 +27013,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  m_TileSpriteArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  m_TileMatrixArray:
-  - m_RefCount: 0
-    m_Data:
-      e00: 2.35e-43
-      e01: 0
-      e02: 1e-45
-      e03: 2.5749843e-19
-      e10: 0
-      e11: 0
-      e12: 0
-      e13: 7.86e-43
-      e20: 1.13971055e-11
-      e21: 2.5749843e-19
-      e22: -4.3725206e-29
-      e23: -2.450624e-19
-      e30: 4.5908e-41
-      e31: 7.86e-43
-      e32: 7.89e-43
-      e33: 7.86e-43
+  m_TileSpriteArray: []
+  m_TileMatrixArray: []
   m_TileColorArray:
-  - m_RefCount: 0
-    m_Data: {r: 4.5e-44, g: 4.5e-44, b: 4.5e-44, a: 4.5e-44}
-  - m_RefCount: 0
-    m_Data: {r: 4.5e-44, g: 4.5e-44, b: 4.5e-44, a: 4.5e-44}
-  - m_RefCount: 0
-    m_Data: {r: 4.5e-44, g: 4.5e-44, b: 4.5e-44, a: 4.5e-44}
-  - m_RefCount: 0
-    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
-  - m_RefCount: 0
+  - m_RefCount: 3
     m_Data: {r: 1.11081e-40, g: 1.11081e-40, b: 1.11081e-40, a: 1.11081e-40}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -30711,6 +30867,7 @@ MonoBehaviour:
   - {fileID: 271373352}
   controlledCities:
   - {fileID: 196379772}
+  chests: []
   unlockedUnits:
   - {fileID: 6424647364731713714, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
   - {fileID: -1304465443759730138, guid: e8f6eb35501c2a84080e6d512d0aa3e3, type: 3}
@@ -31621,6 +31778,7 @@ Transform:
   m_Children:
   - {fileID: 788129468}
   - {fileID: 1507932128}
+  - {fileID: 62519942}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1587759284
@@ -38322,6 +38480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlledUnits: []
   controlledCities: []
+  chests: []
   unlockedUnits: []
   unlockedBuildings: []
   StartingMagic: 50
@@ -38565,6 +38724,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HintText: Rift of Wispers
+--- !u!114 &2139894818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2418462404444536988, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
+  m_PrefabInstance: {fileID: 531903222}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5be95865b4145c47ab46e3940563dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2141499859
 GameObject:
   m_ObjectHideFlags: 0
@@ -38838,3 +39008,4 @@ SceneRoots:
   - {fileID: 1990792142}
   - {fileID: 271373351}
   - {fileID: 4907092023082715285}
+  - {fileID: 531903222}

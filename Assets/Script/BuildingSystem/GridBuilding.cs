@@ -26,13 +26,15 @@ public class GridBuilding : BaseGridEntity
     {
         base.Initialize(owner);
         bIsActive = true;
-        
+        if (!baseSprite) baseSprite = GetComponent<SpriteRenderer>();
+        Color ownerColor = Owner.GetKingdomColor();
+        baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, 0);
         // Initialize building-specific fields
         //buildingName = building.buildingName;
         ////bodySprite.GetComponent<SpriteRenderer>().sprite = building.sprite;
         //duration = building.duration;
         //resources = new Dictionary<ResourceType, int>(building.resource);
-        
+
     }
     public Building GetBuilding()
     {
