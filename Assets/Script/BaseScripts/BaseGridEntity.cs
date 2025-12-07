@@ -35,6 +35,8 @@ public class BaseGridEntity : MonoBehaviour
     protected bool bCanBeAttacked = true;
     [SerializeField]
     protected string EntityDescription;
+    [SerializeField]
+    protected Vector3 CameraRotationOffset = new Vector3(90, -90, -90);
     protected Transform CameraArm;
 
     protected EntityVision entityVision;
@@ -80,9 +82,9 @@ public class BaseGridEntity : MonoBehaviour
         {
             Debug.LogError($"{this.gameObject} has no owner!");
         }
-        if (Camera.main != null && Camera.main.transform.parent != null)
+        if (CameraController.instance)
         {
-            CameraArm = Camera.main.transform.parent;
+            CameraArm = CameraController.instance.gameObject.transform;
         }
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
@@ -127,19 +129,64 @@ public class BaseGridEntity : MonoBehaviour
     {
         
     }
+    private void RotateObject(GameObject obj)
+    {
+        Vector3 dir = CameraController.instance.GetMainCamera().transform.position - transform.position;
+        dir.z = 0;
+        if (dir.sqrMagnitude > 0.0001f)
+        {
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            if (angle > 180f) angle -= 360f;
+            if (angle < -180f) angle += 360f;
 
-    protected virtual void LateUpdate()
+            obj.transform.rotation = Quaternion.Euler(angle, -90, -90);
+
+        }
+    }
+    protected virtual void FixedUpdate()
     {
         //rotating entity body sprite and canvas facing camera 
         if (CameraArm == null) return;
 
-        bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
-        foreach(GameObject obj in rotatebleObjects)
+        //bodySprite.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
+
+        //rotatebleCanvas.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z+90, -90, -90));
+        //Vector3 dir = CameraController.instance.GetMainCamera().transform.position - transform.position;
+        //dir.z = 0;
+        //if (dir.sqrMagnitude > 0.0001f)
+        //{
+        //    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        //    if (angle > 180f) angle -= 360f;
+        //    if (angle < -180f) angle += 360f;
+
+        //    bodySprite.transform.rotation = Quaternion.Euler(angle , -90,-90);
+
+        //}
+        RotateObject(bodySprite);
+        RotateObject(rotatebleCanvas.gameObject);
+        foreach (GameObject obj in rotatebleObjects)
+
         {
-            var objeu = obj.transform.localRotation.eulerAngles;
-            obj.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z + 90, -90, -90));
+            RotateObject(obj);
         }
-        rotatebleCanvas.transform.localRotation = Quaternion.Euler(new Vector3(CameraArm.transform.rotation.eulerAngles.z+90, -90, -90));
+        //{
+        //    Vector3 objdir = CameraController.instance.GetMainCamera().transform.position - obj.transform.position;
+        //    objdir.z = 0;
+        //    if (objdir.sqrMagnitude > 0.0001f)
+        //    {
+        //        float angle = Mathf.Atan2(objdir.y, objdir.x) * Mathf.Rad2Deg;
+
+            //        // Clamp rotation so it never passes 180° or -180°
+            //        if (angle > 180f) angle -= 360f;
+            //        if (angle < -180f) angle += 360f;
+
+            //        obj.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+            //        //Quaternion desired = Quaternion.LookRotation(dir) * Quaternion.Euler(0, 0, -90);
+            //        //bodySprite.transform.rotation = Quaternion.RotateTowards(bodySprite.transform.rotation, desired, 360f * Time.deltaTime);
+            //        //bodySprite.transform.rotation = Quaternion.LookRotation(dir);
+            //        //bodySprite.transform.rotation *= Quaternion.Euler(new Vector3(0, 0, -90));
+            //    }
+            //}
     }
     /// <summary>
     /// invokes when kingdom select grid entity

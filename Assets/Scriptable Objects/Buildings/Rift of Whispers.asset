@@ -17,6 +17,10 @@ MonoBehaviour:
   resourceRequirements:
   - resourceType: 0
     amount: 40
+  - resourceType: 1
+    amount: 20
+  - resourceType: 2
+    amount: 10
   duration: 2
   owner: {fileID: 0}
   buildingPrefab: {fileID: 3832580847944561018, guid: 69fb587d480c39f4c859483f9528ce6b, type: 3}

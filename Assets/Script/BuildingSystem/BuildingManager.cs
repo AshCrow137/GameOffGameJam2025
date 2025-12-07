@@ -84,9 +84,13 @@ public class BuildingManager : MonoBehaviour
         buildingPreview.GetComponent<GridBuilding>().Initialize(building.ownerCity.GetOwner());
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
-        building.buildingPlacementEvent.Post(gameObject);
+        
         HexTilemapManager.Instance.SetTileState(gridPosition, TileState.OccuppiedByBuilding);
 
+        if(playerKngdom.GetVisionManager().IsInNoFog(gridPosition))
+        {
+            building.buildingPlacementEvent.Post(gameObject);
+        }
         return buildingPreview;
     }
 
@@ -208,12 +212,12 @@ public class BuildingManager : MonoBehaviour
         int distanceToCity = HexTilemapManager.Instance.GetDistanceInCells(city.position, position);
         if (distanceToCity > city.unitSpawnRadius)
         {
-            Debug.LogWarning($"Cannot place building outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
+            GlobalEventManager.InvokeShowUIMessageEvent($"Cannot place entity outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
             return false;
         }
         if(city.GetComponent<CityProductionQueue>().IsQueueFull())
         {
-            Debug.LogError("Production queue is full");
+            GlobalEventManager.InvokeShowUIMessageEvent("Production queue is full");
             return false;
         }
 

@@ -10,7 +10,7 @@
     "Type": "Event",
     "GUID": "{08EA2378-B14D-48FB-A6F5-24CA462B2F5F}",
     "Language": "SFX",
-    "Hash": "{88EEF6D0-C9B3-EF4E-7166-449681F635A2}",
+    "Hash": "{5FAAE306-AA77-310D-9610-06A3288884E7}",
     "ObjectPath": "ui_bd_buy_kin_cap",
     "ShortName": "ui_bd_buy_kin_cap",
     "Path": "Event/ui_bd_buy_kin_cap.bnk",
@@ -27,6 +27,6 @@
     ]
    }
   ],
-  "FileHash": "{336956A5-423C-0A45-6F84-E542C6A97312}"
+  "FileHash": "{00F03FB1-5899-0F87-51BD-CD4044F23C05}"
  }
 }

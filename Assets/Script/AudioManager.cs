@@ -65,6 +65,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AK.Wwise.Event E_player_sliding;
 
     [Header("SFX UI InGame")]
+    [SerializeField]
+    public AK.Wwise.Event E_GiantWave;
 
     [Header("SFX UI Menu")]
 

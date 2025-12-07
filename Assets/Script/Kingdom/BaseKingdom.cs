@@ -11,6 +11,9 @@ public class BaseKingdom : Entity
     [SerializeField]
     protected List<GridCity> controlledCities = new();
     [SerializeField]
+    protected List<TreasureChest> chests = new();
+
+    [SerializeField]
     protected List<BaseGridUnitScript> unlockedUnits = new List<BaseGridUnitScript> ();
     [SerializeField]
     protected List<GridBuilding> unlockedBuildings= new List<GridBuilding> ();
@@ -29,7 +32,7 @@ public class BaseKingdom : Entity
     {
         cities.Add(city.position, city);
     }
-    private void DefeatCheck()
+    protected virtual void DefeatCheck()
     {
         if(controlledCities.Count<=0 &&controlledUnits.Count<=0)
         {
@@ -55,11 +58,15 @@ public class BaseKingdom : Entity
         // Initializing controlled units
         foreach ( BaseGridUnitScript unit in controlledUnits)
         {
-            unit.Initialize(this);
+            unit?.Initialize(this);
         }
         foreach ( GridCity city in controlledCities)
         {
-            city.Initialize(this);
+            city?.Initialize(this);
+        }
+        foreach (TreasureChest chest in chests)
+        {
+            chest.Initialize(this);
         }
     }
 
@@ -78,7 +85,7 @@ public class BaseKingdom : Entity
         int unitsCount = GetUnitsCountInRange(5);
         if (unitsCount != 0)
         {
-            IncreaseMadness(unitsCount * 3);
+            IncreaseMadness(unitsCount );
         }
         else
         {
@@ -133,7 +140,7 @@ public class BaseKingdom : Entity
         if(!unlockedUnits.Contains(unit))
         {
             unlockedUnits.Add(unit);
-            CityUI.Instance.UpdateUnitButtonsInteractability();
+            //CityUI.Instance.UpdateUnitButtonsInteractability();
 
         }
     }
@@ -142,7 +149,7 @@ public class BaseKingdom : Entity
         if(!unlockedBuildings.Contains(building))
         {
             unlockedBuildings.Add(building);
-            CityUI.Instance.UpdateUnitButtonsInteractability();
+            //CityUI.Instance.UpdateUnitButtonsInteractability();
 
         }
     }

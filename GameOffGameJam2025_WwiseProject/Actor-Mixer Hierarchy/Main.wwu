@@ -16,7 +16,7 @@
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+							<ObjectRef Name="SFX" ID="{E481F7A4-2CB7-4194-87E2-E896D15BCD4C}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
@@ -526,12 +526,19 @@
 					</ChildrenList>
 				</ActorMixer>
 				<ActorMixer Name="UI_InGame" ID="{D9FEE277-65AA-43FA-AD6D-6A75C677F97A}" ShortID="130957395">
+					<PropertyList>
+						<Property Name="MakeUpGain" Type="Real64">
+							<ValueList>
+								<Value>-2</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+							<ObjectRef Name="SFX" ID="{E481F7A4-2CB7-4194-87E2-E896D15BCD4C}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
@@ -1423,6 +1430,13 @@
 							</ReferenceList>
 							<ChildrenList>
 								<Sound Name="ui_menumain_mainmenu_t01" ID="{0CB4578F-F32D-4C95-88E1-2D568946E78B}" ShortID="737185911">
+									<PropertyList>
+										<Property Name="MakeUpGain" Type="Real64">
+											<ValueList>
+												<Value>-3</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -1533,13 +1547,54 @@
 								</RandomSequenceContainer>
 							</ChildrenList>
 						</ActorMixer>
+						<RandomSequenceContainer Name="Wave" ID="{D99575D0-1FD2-4028-8B68-E97A3D5DE5F8}" ShortID="260789669">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="wave_t_01" ID="{0B9CF093-39EB-4BCF-8821-241438D07CA6}" ShortID="933894310">
+									<PropertyList>
+										<Property Name="MakeUpGain" Type="Real64">
+											<ValueList>
+												<Value>-1</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="wave_t_01" ID="{5B06698D-5F79-4DA0-B394-9EEDC9068E81}">
+											<Language>SFX</Language>
+											<AudioFile>UI InGame\WorldEvents\wave_t_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="888551483"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="wave_t_01" ID="{5B06698D-5F79-4DA0-B394-9EEDC9068E81}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
 					</ChildrenList>
 				</ActorMixer>
 				<ActorMixer Name="UI_Menu" ID="{3A898615-967C-400C-B4E5-B50F9FE3DCEC}" ShortID="705882705">
 					<PropertyList>
 						<Property Name="MakeUpGain" Type="Real64">
 							<ValueList>
-								<Value>-1</Value>
+								<Value>-4.5</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -1548,7 +1603,7 @@
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
+							<ObjectRef Name="SFX" ID="{E481F7A4-2CB7-4194-87E2-E896D15BCD4C}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
@@ -1730,6 +1785,13 @@
 							</ChildrenList>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="UI_MainMenu_Volume" ID="{E91BDA39-962E-4C81-A7FD-7D3F5A43D5AE}" ShortID="206208993">
+							<PropertyList>
+								<Property Name="MakeUpGain" Type="Real64">
+									<ValueList>
+										<Value>-5</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
@@ -1740,9 +1802,12 @@
 							</ReferenceList>
 							<ChildrenList>
 								<Sound Name="ui_menumain_volume_t01" ID="{9C148C41-FCD0-46CA-AA12-39C06A7A62CE}" ShortID="52101965">
+									<PropertyList>
+										<Property Name="OverrideConversion" Type="bool" Value="True"/>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
+											<ObjectRef Name="Mono" ID="{FF359CF8-6443-4A89-ADD7-E243CA707752}" WorkUnitID="{B768ED51-E387-40A8-A7B7-5EB7295C2B02}"/>
 										</Reference>
 										<Reference Name="OutputBus">
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E470099-CFE2-478E-9C24-C462E98C193E}"/>

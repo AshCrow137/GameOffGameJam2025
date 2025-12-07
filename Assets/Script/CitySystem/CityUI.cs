@@ -103,12 +103,31 @@ public class CityUI : MonoBehaviour
     }
     public void SetSpawnUnitMode(GameObject unitPrefab)
     {
-        cityMenuMode = CityMenuMode.SpawnUnit;
-        isUsingCityMenu = true;
-        this.unitPrefab = unitPrefab;
-        GameplayCanvasManager.instance.selectedCity.UpdateUnitSpawnRadius();
-        AudioManager.Instance.ui_menumain_volume.Post(gameObject);
-        ShowGreenTIles();
+        List<BaseGridUnitScript> unlockedUnits =  GameplayCanvasManager.instance.selectedCity.GetOwner().GetunlockedUnits();
+        BaseGridUnitScript prefabScript = unitPrefab.GetComponent<BaseGridUnitScript>();
+        bool bUnitUnlocked = false;
+        foreach(BaseGridUnitScript unit in unlockedUnits)
+        {
+            if(unit.GetType()==prefabScript.GetType())
+            {
+                bUnitUnlocked = true;
+                break;
+            }
+        }
+        if(bUnitUnlocked)
+        {
+            cityMenuMode = CityMenuMode.SpawnUnit;
+            isUsingCityMenu = true;
+            this.unitPrefab = unitPrefab;
+            GameplayCanvasManager.instance.selectedCity.UpdateUnitSpawnRadius();
+            AudioManager.Instance.ui_menumain_volume.Post(gameObject);
+            ShowGreenTIles();
+        }
+        else
+        {
+            GlobalEventManager.InvokeShowUIMessageEvent("You did not unlock this unit!");
+        }
+
     }
 
     public void SetSpawnBuildingMode(int BuildingType)

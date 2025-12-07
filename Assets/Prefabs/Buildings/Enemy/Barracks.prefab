@@ -69,8 +69,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.332
+      value: -0.119
       objectReference: {fileID: 0}
     - target: {fileID: 7306488117984304454, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -119,6 +123,10 @@ PrefabInstance:
     - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_SortingLayer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7693976496885055597, guid: 7df9d006f74c2fc42b0391feaaa6fb1c, type: 3}
       propertyPath: m_SortingLayerID
@@ -173,10 +181,12 @@ MonoBehaviour:
   requiredBuildings: []
   bCanBeAttacked: 1
   EntityDescription: 
+  CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 00000000
   HpForCity: 35
   buildingData: {fileID: 11400000, guid: 9528b066d38da6f4b81f121c1496488f, type: 2}
   BuildingFunction: 
+  buildingUISprite: {fileID: 0}
   unitName: Kingdom Military
   unitToOpen: {fileID: 3182714646584768010, guid: f575349a19512e44986b544e1e216aba, type: 3}
 --- !u!1 &7884187323099228737 stripped

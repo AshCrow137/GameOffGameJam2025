@@ -12,9 +12,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCity Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2159988687530188638, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.353
+      objectReference: {fileID: 0}
     - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: entityType
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: productGold
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: productMagic
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: productMaterial
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: CanStandOnTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357804771333511084, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: 'CanStandOnTiles.Array.data[0]'
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4086409141070172977, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: visionRadius
@@ -24,13 +48,21 @@ PrefabInstance:
       propertyPath: visibleUnderGreyFog
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4530174971258948279, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.304
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530174971258948279, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.205
+      objectReference: {fileID: 0}
     - target: {fileID: 5193054833253384982, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.4774203
+      value: 11.256
       objectReference: {fileID: 0}
     - target: {fileID: 5193054833253384982, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.293129
+      value: 8.184
       objectReference: {fileID: 0}
     - target: {fileID: 5193054833253384982, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -63,6 +95,26 @@ PrefabInstance:
     - target: {fileID: 5193054833253384982, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896437552676568858, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.746
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875668201489860421, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365702993013301938, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365702993013301938, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365702993013301938, guid: 8c17dbcd463f6304eb4de2df473415fc, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1724408627
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

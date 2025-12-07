@@ -5,24 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/ActualGameplayScenes/ActualMainMenu.unity
     guid: 1663dc7c7354d1349954221a2a9aa874
-  - enabled: 0
-    path: Assets/Scenes/ActualGameplayScenes/MainMenu.unity
-    guid: 1e9e710a9097f664b9396f10b487dcae
-  - enabled: 0
-    path: Assets/Scenes/ActualGameplayScenes/FirstGameplayScene.unity
-    guid: b0520e848032698469cfca69ee6b065b
-  - enabled: 0
-    path: Assets/Scenes/ActualGameplayScenes/ActualGameplayScene2.unity
-    guid: b69a19db7d6af06458550b33cf127bc4
   - enabled: 1
-    path: Assets/Scenes/ActualGameplayScenes/ActualGameplayScene4.unity
-    guid: 0b7277b13c2dc49469d5c544a937c397
+    path: Assets/Scenes/ActualGameplayScenes/S1_ActualGameplayScene.unity
+    guid: 4b8a8da2491440f4d9421cbb31742461
+  - enabled: 1
+    path: Assets/Scenes/ActualGameplayScenes/S2_ActualGameplayScene.unity
+    guid: c5e630a22ef907140ac556fb7ed7b5c4
+  - enabled: 1
+    path: Assets/Scenes/ActualGameplayScenes/S3_ActualGameplayScene.unity
+    guid: bb3e0d54687b038428ef37f77b3a8c7b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
