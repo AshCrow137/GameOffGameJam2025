@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.VFX;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+
 
 [CreateAssetMenu(fileName = "GiantWaveEvent", menuName = "BaseGameplayEvent/GiantWaveEvent")]
 public class GiantWaveEvent : BaseGameplayEvent
@@ -12,6 +10,7 @@ public class GiantWaveEvent : BaseGameplayEvent
     [SerializeField]
     private GameObject waveSprite;
     private Animator animator;
+    private CancellationTokenSource cancellationTokenSource;
     public override void ExecuteEvent(BaseKingdom kingdom)
     {
         
@@ -42,7 +41,19 @@ public class GiantWaveEvent : BaseGameplayEvent
         List<Vector3Int> affectedTiles = hexManager.GetCellsInRange(origin, 3, allStates);
         if(kingdom.GetVisionManager().IsInGreyFog(origin) || kingdom.GetVisionManager().IsInNoFog(origin))
         {
-            VisibleWaveAsync(affectedTiles, origin);
+            cancellationTokenSource = new CancellationTokenSource();
+            try
+            {
+                UIManager.Instance.DisableMainCanvas();
+                VisibleWaveAsync(affectedTiles, origin);
+            }
+            catch
+            {
+                CameraController.instance.UnlockCameraMovement();
+                UIManager.Instance.EnableMainCanvas();
+            }
+           
+            cancellationTokenSource.Cancel();
         }
         else
         {
@@ -73,6 +84,7 @@ public class GiantWaveEvent : BaseGameplayEvent
             await Task.Yield();
         }
         // Step 5: Process each tile in radius
+        List<BaseGridEntity> entitiesToRemove = new List<BaseGridEntity>();
         foreach (Vector3Int tilePos in affectedTiles)
         {
             if (tilePos == new Vector3Int(-4, -4, 0))
@@ -85,12 +97,17 @@ public class GiantWaveEvent : BaseGameplayEvent
                 if (!entity.GetCanStandOnTiles().Contains(TileState.Water))
                 {
                     Debug.Log($"Giant Wave destroying {entity.gameObject.name} at {tilePos}");
-                    entity.Death();
+                    //entity.Death();
+                    entitiesToRemove.Add(entity);
                 }
             }
 
             // Convert tile to water
             hexManager.ChangeTile(tilePos, TileState.Water);
+        }
+        foreach(BaseGridEntity entity in entitiesToRemove)
+        {
+            entity.Death();
         }
 
         // Step 6: Show UI message for player kingdom\
@@ -104,7 +121,7 @@ public class GiantWaveEvent : BaseGameplayEvent
         Debug.Log($"Giant Wave event completed. Affected {affectedTiles.Count} tiles.");
         Destroy(waveClone);
         CameraController.instance.UnlockCameraMovement();
-
+        UIManager.Instance.EnableMainCanvas();
     }
     private  void InvisibleWave(List<Vector3Int> affectedTiles,Vector3Int origin)
     {
