@@ -10599,6 +10599,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1011269897}
   - {fileID: 687573197}
   - {fileID: 141420213}
   - {fileID: 1758301930}
@@ -10606,9 +10607,7 @@ Transform:
   - {fileID: 924946558}
   - {fileID: 991753256}
   - {fileID: 28648845}
-  - {fileID: 2119146655}
   - {fileID: 1225955600}
-  - {fileID: 2116678395}
   - {fileID: 1437429910}
   - {fileID: 1075506211}
   - {fileID: 1089584157}
@@ -10644,9 +10643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5115313e2018c734b88e98209ba323e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players:
-  - {fileID: 1507932127}
-  - {fileID: 788129467}
 --- !u!4 &141420213
 Transform:
   m_ObjectHideFlags: 0
@@ -13395,6 +13391,7 @@ RectTransform:
   - {fileID: 1949323433}
   - {fileID: 1123376504}
   - {fileID: 894876761}
+  - {fileID: 2116678395}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -15815,7 +15812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_ActionId
@@ -15838,6 +15835,10 @@ PrefabInstance:
       value: b5cdf80e-334b-4bb8-922a-188eeec83b99
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionId
+      value: 1d4e5baa-2cc9-42e0-b20f-d4e63d49a5cc
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_ActionName
       value: 'InGame/MoveUnitToTile[/Mouse/rightButton]'
       objectReference: {fileID: 0}
@@ -15856,6 +15857,10 @@ PrefabInstance:
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[15].m_ActionName
       value: 'InGame/TestMadness[/Keyboard/r]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionName
+      value: 'InGame/CameraZoom[/Mouse/scroll/y]'
       objectReference: {fileID: 0}
     - target: {fileID: 892526313348887677, guid: 25ad381cb2164d649b953707503d4d84, type: 3}
       propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.size
@@ -21331,7 +21336,6 @@ MonoBehaviour:
   turnOrder:
   - {fileID: 1507932131}
   - {fileID: 788129472}
-  turnText: {fileID: 284602317}
 --- !u!4 &924946558
 Transform:
   m_ObjectHideFlags: 0
@@ -22798,21 +22802,18 @@ MonoBehaviour:
   turnManager: {fileID: 924946557}
   buildingManager: {fileID: 991753255}
   cityManager: {fileID: 28648848}
-  toggleManager: {fileID: 2119146657}
   kingdoms:
   - {fileID: 1507932131}
   - {fileID: 788129472}
   - {fileID: 1286288817}
-  selectionManager: {fileID: 0}
   gameplayCanvasManager: {fileID: 363294321}
   cityUI: {fileID: 28648849}
-  kingdomUI: {fileID: 0}
-  addVisibleTiles: {fileID: 0}
   globalVisionManager: {fileID: 1225955601}
   productionQueueUI: {fileID: 28648850}
   UIManager: {fileID: 2116678396}
   unitSpawner: {fileID: 1437429911}
   gameplayEventManager: {fileID: 1447804456}
+  gameManager: {fileID: 141420212}
   AIController: {fileID: 1089584158}
 --- !u!4 &1011269897
 Transform:
@@ -22822,12 +22823,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011269895}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6102212, y: -0.37660027, z: 0.49183175}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.1746019, y: -0.32125828, z: -0.07011542}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 140203639}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1015092750
 GameObject:
@@ -31649,7 +31650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ec7228c9b6a7e42a9f0b32d8bfb566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionText: {fileID: 103221738}
 --- !u!4 &1587759286
 Transform:
   m_ObjectHideFlags: 0
@@ -39024,6 +39024,7 @@ GameObject:
   - component: {fileID: 2116678397}
   - component: {fileID: 2116678396}
   - component: {fileID: 2116678398}
+  - component: {fileID: 2116678399}
   m_Layer: 5
   m_Name: UIManager
   m_TagString: Untagged
@@ -39043,7 +39044,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 140203639}
+  m_Father: {fileID: 363294320}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -39095,7 +39096,6 @@ MonoBehaviour:
   BuildingProductionPanel: {fileID: 1617745761}
   ProductionPanel: {fileID: 1181669563}
   ProductionFirstItemPanel: {fileID: 898319321}
-  currentturnText: {fileID: 284602317}
   HintObject: {fileID: 1949323432}
   CityProductionInfoPanel: {fileID: 280991296}
   PI_EntityDescription: {fileID: 1523005284}
@@ -39159,77 +39159,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PausePanel: {fileID: 402182876}
   CustomInput: {fileID: -944628639613478452, guid: 9e920cdde5fdd2448831077a6fe5c55c, type: 3}
---- !u!1 &2119146654
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2119146655}
-  - component: {fileID: 2119146657}
-  - component: {fileID: 2119146656}
-  m_Layer: 0
-  m_Name: ToggleManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2119146655
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119146654}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 140203639}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2119146656
+--- !u!114 &2116678399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119146654}
+  m_GameObject: {fileID: 2116678394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fae710e1e3b187141bcb0411c485c618, type: 3}
+  m_Script: {fileID: 11500000, guid: 8dccbf5599017554a90e2a281f5a0b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlledUnits: []
-  controlledCities: []
-  chests: []
-  unlockedUnits: []
-  unlockedBuildings: []
-  StartingMagic: 50
-  StartingGold: 20
-  StartingMaterials: 30
-  kingdomColor: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &2119146657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119146654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bf168a8db689c14282f97eebe8b8675, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toggles:
-  - {fileID: 590793234}
-  - {fileID: 587104330}
-  - {fileID: 1903177653}
-  toggleState: {fileID: 2027280814}
+  currentProductionDisplay: {fileID: 566884735}
+  queueLayoutGroup: {fileID: 663723602}
+  productionItemPrefab: {fileID: 8414904744397869905, guid: 68330a6de6d01e94cb379dd48f29b8a6, type: 3}
 --- !u!1 &2121089130
 GameObject:
   m_ObjectHideFlags: 0
@@ -39985,7 +39929,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 40453844}
   - {fileID: 674328683}
-  - {fileID: 1011269897}
   - {fileID: 1022659816}
   - {fileID: 363294320}
   - {fileID: 1786701267}

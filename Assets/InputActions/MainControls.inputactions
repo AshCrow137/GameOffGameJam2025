@@ -52,16 +52,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "SelectUnitWithMouse",
-                    "type": "Button",
-                    "id": "698db6d9-4f8d-4482-8401-b529e5d1f337",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MoveUnitToTile",
+                    "name": "RightClick",
                     "type": "Button",
                     "id": "f6eb3eb5-9664-4ab9-8e9b-72ae4ef249a2",
                     "expectedControlType": "",
@@ -70,7 +61,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Left Click",
+                    "name": "LeftClick",
                     "type": "Button",
                     "id": "5e67b6bd-b2ab-4a62-94d2-46d1408f6608",
                     "expectedControlType": "",
@@ -86,24 +77,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Liftleft click",
-                    "type": "Button",
-                    "id": "24ee7c2b-6b74-44b5-8207-1ca427676ae7",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "TestMadness",
-                    "type": "Button",
-                    "id": "b5cdf80e-334b-4bb8-922a-188eeec83b99",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "CameraZoom",
@@ -261,23 +234,12 @@
                 },
                 {
                     "name": "",
-                    "id": "aedc5729-5121-4b8e-b00a-bb1a0cccaf12",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SelectUnitWithMouse",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "bb4696fc-a36e-4eb0-8d96-7b4d125f8113",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUnitToTile",
+                    "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -288,7 +250,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Left Click",
+                    "action": "LeftClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -346,28 +308,6 @@
                     "action": "RotateCamera",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "c23ee7a5-3c07-436f-a4e6-649ac92fc45f",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Liftleft click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7b627e97-d381-438c-8c39-c4f8296dd534",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TestMadness",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

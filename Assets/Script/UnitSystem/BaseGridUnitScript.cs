@@ -169,11 +169,11 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         if (selector!= Owner)
         {
-            GlobalEventManager.InvokeShowUIMessageEvent($"This is not your unit!");
+            UIManager.Instance.ShowMessageText($"This is not your unit!");
             return;
         }
         Debug.Log($"Select {this.name} unit");
-        GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
+        //GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
        
         baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
 
@@ -185,7 +185,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         hTM.RemoveAllMarkers();
         base.OnEntityDeselect();
         Debug.Log($"Deselect {this.name} unit");
-        GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
+        //GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
         Color ownerColor = Owner.GetKingdomColor();
         baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
         
@@ -239,7 +239,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// </summary>
     /// <param name="tile">clicked tile</param>
     /// <param name="cellPos">position of clicked tile</param>
-    protected virtual void  OnTileClicked(HexTile tile,Vector3Int cellPos)
+    public virtual void  OnTileClicked(Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
         GridCity city = hTM.GetCityOnTile(cellPos);
@@ -256,11 +256,6 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         {
             TryToMoveUnitToTile( cellPos);
         }
-        
-
-        
-
-        
     }
     /// <summary>
     /// determinate can we attack unit or not
@@ -276,7 +271,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         if (targetUnit.GetOwner() == Owner)
         {
-            GlobalEventManager.InvokeShowUIMessageEvent($"You try to attack your kingdom unit!");
+            UIManager.Instance.ShowMessageText($"You try to attack your kingdom unit!");
             AttackFinishEvent.Invoke();
             return false;
         }
@@ -295,7 +290,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
             }
             else
             {
-                GlobalEventManager.InvokeShowUIMessageEvent($"This unit has not enough attacks!");
+                UIManager.Instance.ShowMessageText($"This unit has not enough attacks!");
                 AttackFinishEvent.Invoke();
                 bTryToAttack = false;
                 return false;
@@ -339,7 +334,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 }
 
             }
-            if(Owner is PlayerKingdom) GlobalEventManager.InvokeShowUIMessageEvent($"Target unit too far!");
+            if(Owner is PlayerKingdom) UIManager.Instance.ShowMessageText($"Target unit too far!");
             AttackFinishEvent.Invoke();
             return false;
         }
@@ -349,7 +344,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     private void OnMouseEnter()
     {
         // added InputManager.instance.selectedUnit != null cause could be city selection
-        if (InputManager.instance.bHasSelectedEntity && InputManager.instance.selectedUnit != null && InputManager.instance.selectedUnit != this && InputManager.instance.selectedUnit.GetOwner() != Owner && InputManager.instance.selectedUnit.AttackRange == 1)
+        if (UIUtility.bHasSelectedEntity && UIUtility.selectedUnit != null && UIUtility.selectedUnit != this && UIUtility.selectedUnit.GetOwner() != Owner && UIUtility.selectedUnit.AttackRange == 1)
         {
             InputManager.instance.SetAttackCursor();
         }
@@ -358,7 +353,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     void OnMouseOver()
     {
         
-        if (InputManager.instance.bHasSelectedEntity&& InputManager.instance.selectedUnit != null&&InputManager.instance.selectedUnit!=this&& InputManager.instance.selectedUnit.GetOwner()!=Owner&& InputManager.instance.selectedUnit.AttackRange==1)
+        if (UIUtility.bHasSelectedEntity&& UIUtility.selectedUnit != null&&UIUtility.selectedUnit!=this&& UIUtility.selectedUnit.GetOwner()!=Owner&& UIUtility.selectedUnit.AttackRange==1)
         {
 
             Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
@@ -515,7 +510,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         else
         {
-            if(Owner is PlayerKingdom) GlobalEventManager.InvokeShowUIMessageEvent($"Not enough movement points remain!");
+            if(Owner is PlayerKingdom) UIManager.Instance.ShowMessageText($"Not enough movement points remain!");
             MovementFinishEvent.Invoke();
             return false;
         }
@@ -561,7 +556,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 //
                 PathFinishEvent.Invoke(false);
                 hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
-                GlobalEventManager.InvokeShowUIMessageEvent($"Unavailable tile for {this.gameObject.name} unit!");
+                UIManager.Instance.ShowMessageText($"Unavailable tile for {this.gameObject.name} unit!");
             }
             
             

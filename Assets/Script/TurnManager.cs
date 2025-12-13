@@ -10,8 +10,6 @@ public class TurnManager : MonoBehaviour
     private int currentOrderIndex; //player
     public static TurnManager instance { get; private set; }
 
-    [SerializeField]
-    private TMP_Text turnText;
 
     public List<BaseKingdom> GetActingKingdoms()
     {
@@ -42,7 +40,7 @@ public class TurnManager : MonoBehaviour
     {
         //camera focus on the current Player/Unit
         //Debug.Log($"Turn {currentTurnCount} Start: {entity.name}'s turn.");
-        turnText.text = $"Current turn: {entity.name} N {currentTurnCount}";
+
         UIManager.Instance?.ChangeTurn(currentTurnCount);
         //Every object whose turn needs to be handled should have a EntityTurnHandler's subclass component.
         //entity.GetComponent<EntityTurnHandler>()?.StartTurn();

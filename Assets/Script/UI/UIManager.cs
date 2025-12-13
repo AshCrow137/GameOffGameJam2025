@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -15,7 +16,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Image CityPanel;
-    [SerializeField] 
+    [SerializeField]
     private TextMeshProUGUI MadnessLavel;
     [SerializeField]
     private Image madnessFillImage;
@@ -76,9 +77,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject UnitProductionButton;
     [SerializeField]
-    private GameObject BuildingProductionButton;   
+    private GameObject BuildingProductionButton;
     [SerializeField]
-    private GameObject UnitProductionPanel;  
+    private GameObject UnitProductionPanel;
     [SerializeField]
     private GameObject BuildingProductionPanel;
 
@@ -86,7 +87,7 @@ public class UIManager : MonoBehaviour
     private GameObject ProductionPanel;
     [SerializeField]
     private GameObject ProductionFirstItemPanel;
-    public TMP_Text currentturnText;
+
 
     [SerializeField]
     private GameObject HintObject;
@@ -130,21 +131,33 @@ public class UIManager : MonoBehaviour
     private TMP_Text PI_BuildingAddHPToCity;
     [SerializeField]
     private TMP_Text PI_BuildingFunction;
-
+    [SerializeField]
+    private GameObject productionPanel;
 
     private UIElementHints currentHints;
+    [SerializeField]
+    private TMP_Text messageText;
+    [SerializeField]
+    private float showMessageTime = 3;
+    [SerializeField]
+    private GameObject victoryPanel;
+    [SerializeField]
+    private GameObject losePanel;
+    private IEnumerator showMessageCoroutine;
+    public bool isOnCanvas { get; private set; } = false;
     public void Initialize()
     {
         UIElements = GetComponent<UIElements>();
 
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(Instance);
         }
         Instance = this;
-        
+
         panelStats.gameObject.SetActive(false);
         NextTurnImg.sprite = UIElements.EnemyTurn;
+        //GlobalEventManager.ShowUIMessageEvent.AddListener(ShowMessageText);
     }
 
     public void HasUnitSelected(bool value)
@@ -152,16 +165,16 @@ public class UIManager : MonoBehaviour
         panelStats.gameObject.SetActive(value);
     }
 
-    public void SelectedUnit(BaseGridUnitScript unit)
+    public void OnUnitSelect(BaseGridUnitScript unit)
     {
         CityProductionInfoPanel.SetActive(false);
         if (unit == null) return;
         HasUnitSelected(true);
 
-        if(unit.GetOwner() == null) return;
+        if (unit.GetOwner() == null) return;
 
         PlayerKingdom pk = unit.GetOwner().gameObject.GetComponent<PlayerKingdom>();
-        
+
         if (pk != null)
         {
             panelStats.sprite = UIElements.PlayerPannel;
@@ -173,7 +186,7 @@ public class UIManager : MonoBehaviour
             infantaryType.sprite = UIElements.EnemyType;
         }
         infantaryImg.sprite = unit.gameObject.transform.Find("BodySprite").GetComponent<SpriteRenderer>().sprite;
-        
+
         unitName.text = unit.GetEntityDisplayName();
         unitHealthText.text = $"{unit.GetCurrentHealth()}/{unit.GetMaxHealth()}";
         meleeAtack.text = unit.GetMeleeDamage().ToString();
@@ -182,7 +195,7 @@ public class UIManager : MonoBehaviour
         atackDistance.text = unit.GetAtackDistance().ToString();
         Sprite unitAbilityImage = unit.GetAbilityImage();
         string unitAbilityDescription = unit.GetAbilityDescription();
-        if(unitAbilityImage != null&& unitAbilityDescription != null) 
+        if (unitAbilityImage != null && unitAbilityDescription != null)
         {
             AbilitiesPanel.SetActive(true);
             abilityImage.sprite = unitAbilityImage;
@@ -196,13 +209,26 @@ public class UIManager : MonoBehaviour
 
         UpdateLife(unit);
     }
-
+    public void ActivateUnitAbility(int abilityIndex)
+    {
+        UIUtility.selectedUnit?.SpecialAbility();
+    }
+    public void OnMouseEnterCanvasElement()
+    {
+        InputManager.instance.SetOnUiElement(true);
+        isOnCanvas = true;
+    }
+    public void OnMouseExitCanvasElement()
+    {
+        InputManager.instance.SetOnUiElement(false);
+        isOnCanvas = false;
+    }
     public void HasCitySelected(bool value)
     {
         CityPanel.gameObject.SetActive(value);
     }
 
-    public void SelectedCity(GridCity city)
+    public void OnCitySelect(GridCity city)
     {
         CityProductionInfoPanel.SetActive(false);
         if (city == null) return;
@@ -211,10 +237,10 @@ public class UIManager : MonoBehaviour
         CityPanel.sprite = UIElements.CityPanel;
         MadnessLavel.text = $"Madness: {city.GetOwner().madnessLevel}";
         madnessFillImage.fillAmount = (float)city.GetOwner().madnessLevel / city.GetOwner().maxMadnessLevel;
-        if(city.GetOwner() is AIKingdom)
+        if (city.GetOwner() is AIKingdom)
         {
-            AIKingdom ai = (AIKingdom) city.GetOwner();
-            if(ai.GetCurrentMadnessEffect().VisibleProduction)
+            AIKingdom ai = (AIKingdom)city.GetOwner();
+            if (ai.GetCurrentMadnessEffect().VisibleProduction)
             {
                 ProductionFirstItemPanel?.SetActive(true);
                 ProductionPanel?.SetActive(true);
@@ -249,9 +275,8 @@ public class UIManager : MonoBehaviour
 
     public void ChangeTurn(int currentTurn)
     {
-        TurnCount.text = (currentTurn).ToString() ;
+        TurnCount.text = (currentTurn).ToString();
         ChangeNextTurnImg();
-        currentturnText.text = $"current turn: {TurnManager.instance.GetCurrentActingKingdom()}";
         UnitsInteractable(true);
     }
 
@@ -265,7 +290,7 @@ public class UIManager : MonoBehaviour
         LifeBar.fillAmount = (float)unit.GetCurrentHealth() / (float)unit.GetMaxHealth();
     }
 
-    public void UpdateResourceImages(int resourceValue,ResourceType resourceType)
+    public void UpdateResourceImages(int resourceValue, ResourceType resourceType)
     {
         Image resource = null;
         TextMeshProUGUI text = null;
@@ -275,12 +300,12 @@ public class UIManager : MonoBehaviour
                 resource = magicResourceImg;
                 text = magicResourceText;
                 break;
-            case ResourceType.Gold: 
+            case ResourceType.Gold:
                 resource = goldResourceImg;
                 text = goldResourceText;
                 break;
-            case ResourceType.Materials: 
-                resource = materialsResourceImg; 
+            case ResourceType.Materials:
+                resource = materialsResourceImg;
                 text = materialsResourceText;
                 break;
         }
@@ -295,7 +320,7 @@ public class UIManager : MonoBehaviour
                 index = 1;
                 break;
             case < 150:
-                index = 2; 
+                index = 2;
                 break;
             case < 200:
                 index = 3;
@@ -320,7 +345,7 @@ public class UIManager : MonoBehaviour
         UIElement.SetActive(!UIElement.activeSelf);
         AudioManager.Instance.ui_menumain_volume.Post(gameObject);
     }
-  
+
     public void ShowEntityDescription(BaseGridEntity entity)
     {
 
@@ -353,7 +378,7 @@ public class UIManager : MonoBehaviour
         PI_EntityName.text = entity.GetEntityDisplayName();
         PI_EntityDescription.text = entity.GetEntityDescription();
 
-        if(entity is BaseGridUnitScript)
+        if (entity is BaseGridUnitScript)
         {
             BaseGridUnitScript unit = (BaseGridUnitScript)entity;
             PI_EntityMagicCost.text = unit.resource.TryGetValue(ResourceType.Magic, out int mvalue) ? mvalue.ToString() : "0";
@@ -370,13 +395,13 @@ public class UIManager : MonoBehaviour
             PI_UnitMovementDistance.text = unit.GetMovementDistance().ToString();
 
             List<GridBuilding> requredBuildings = unit.GetRequiredBuildings();
-            if(requredBuildings.Count>0)
+            if (requredBuildings.Count > 0)
             {
 
                 Transform child = PI_RequiredBuildingsPanel.transform.GetChild(0);
                 child.gameObject.SetActive(true);
                 Image image = child.gameObject.GetComponent<Image>();
-                image.sprite = requredBuildings[0].GetBuildingUISprite(); 
+                image.sprite = requredBuildings[0].GetBuildingUISprite();
             }
             else
             {
@@ -384,14 +409,14 @@ public class UIManager : MonoBehaviour
                 PI_RequiredBuildingImagePrefab.SetActive(false);
             }
         }
-        else if(entity is GridBuilding)
+        else if (entity is GridBuilding)
         {
             PI_UnitStatsPanel.SetActive(false);
             PI_BuildingStatsPanel.SetActive(true);
             GridBuilding building = (GridBuilding)entity;
             PI_EntityMagicCost.text = building.GetBuilding().resource.TryGetValue(ResourceType.Magic, out int mvalue) ? mvalue.ToString() : "0";
             PI_EntityGoldCost.text = building.GetBuilding().resource.TryGetValue(ResourceType.Gold, out int gvalue) ? gvalue.ToString() : "0";
-            PI_EntityMaterialsCost.text = building.GetBuilding().resource.TryGetValue(ResourceType.Materials, out int matvalue) ? matvalue.ToString():"0" ;
+            PI_EntityMaterialsCost.text = building.GetBuilding().resource.TryGetValue(ResourceType.Materials, out int matvalue) ? matvalue.ToString() : "0";
             PI_BuildingFunction.text = building.GetBuildingFunction();
 
         }
@@ -410,5 +435,57 @@ public class UIManager : MonoBehaviour
         CanvasGroup group = mainCanvas.GetComponent<CanvasGroup>();
         group.interactable = true;
     }
+    public void ActivateUnitProductionPanel(GridCity city)
+    {
+        productionPanel.SetActive(true);
 
+    }
+    public void DeactivateUnitProductionPanel()
+    {
+        productionPanel.SetActive(false);
+
+    }
+    public void ShowMessageText(string message)
+    {
+        messageText.text = message;
+        if (showMessageCoroutine != null)
+        {
+            StopCoroutine(showMessageCoroutine);
+            showMessageCoroutine = null;
+        }
+        showMessageCoroutine = ShowMessageCoroutine();
+        StartCoroutine(showMessageCoroutine);
+    }
+    private IEnumerator ShowMessageCoroutine()
+    {
+        messageText.gameObject.SetActive(true);
+        float t = showMessageTime;
+        while (t > 0)
+        {
+            t -= Time.deltaTime;
+            yield return null;
+        }
+        messageText.gameObject.SetActive(false);
+
+    }
+    public void ShowWinScreen()
+    {
+        victoryPanel.SetActive(true);
+        StartCoroutine(winScreenCoroutine());
+    }
+    public void ShowLoseScreen()
+    {
+        losePanel.SetActive(true);
+        StartCoroutine(winScreenCoroutine());
+    }
+    private IEnumerator winScreenCoroutine()
+    {
+        float t = showMessageTime;
+        while (t > 0)
+        {
+            t -= Time.deltaTime;
+            yield return null;
+        }
+        SceneManager.LoadSceneAsync("ActualMainMenu");
+    }
 }

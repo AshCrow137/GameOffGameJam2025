@@ -24,8 +24,8 @@ public class GameplayCanvasManager : MonoBehaviour
     private BaseGridUnitScript selectedUnit;
     public bool isOnCanvas = false;
 
-    [HideInInspector]
-    public GridCity selectedCity { get; private set; } = null;
+    //[HideInInspector]
+    //public GridCity selectedCity { get; private set; } = null;
     private IEnumerator showMessageCoroutine;
     public void Initialize()
     {
@@ -34,7 +34,7 @@ public class GameplayCanvasManager : MonoBehaviour
             Destroy(this);
         }
         instance = this;
-        GlobalEventManager.ShowUIMessageEvent.AddListener(ShowMessageText);
+        //GlobalEventManager.ShowUIMessageEvent.AddListener(ShowMessageText);
         GlobalEventManager.KingdomDefeatEvent.AddListener(OnVictory);
     }
     public void OnVictory(BaseKingdom kingdom)
@@ -68,83 +68,51 @@ public class GameplayCanvasManager : MonoBehaviour
         yield return new WaitForSeconds(showMessageTime);
         SceneManager.LoadSceneAsync("ActualMainMenu");
     }
-    public void ActivateUnitProductionPanel(GridCity city)
-    {
-        productionPanel.SetActive(true);
-        selectedCity = city;
-    }
-    public void DeactivateUnitProductionPanel()
-    {
-        productionPanel.SetActive(false);
-        selectedCity = null;
-    }
-    public void ShowMessageText(string message)
-    {
-        messageText.text = message;
-        if (showMessageCoroutine != null)
-        {
-            StopCoroutine(showMessageCoroutine);
-            showMessageCoroutine = null;
-        }
-        showMessageCoroutine = ShowMessageCoroutine();
-        StartCoroutine(showMessageCoroutine);
-    }
-    private IEnumerator ShowMessageCoroutine()
-    {
-        messageText.gameObject.SetActive(true);
-        float t = showMessageTime;
-        while (t > 0)
-        {
-            t -= Time.deltaTime;
-            yield return null;
-        }
-        messageText.gameObject.SetActive(false);
+    //public void ActivateUnitProductionPanel(GridCity city)
+    //{
+    //    productionPanel.SetActive(true);
 
-    }
-    public void TryToSpawnUnit(GameObject unitPrefab)
-    {
-        selectedCity?.TryToSpawnUnitInCity(unitPrefab);
-    }
-    public void TryToSpawnUnit(GridCity selectedOutsideCity,GameObject unitPrefab)
-    {
-        selectedOutsideCity?.TryToSpawnUnitInCity(unitPrefab);
-    }
-    public void OnMouseEnterCanvasElement()
-    {
-        InputManager.instance.SetOnUiElement(true);
-        isOnCanvas = true;
-    }
-    public void OnMouseExitCanvasElement()
-    {
-        InputManager.instance.SetOnUiElement(false);
-        isOnCanvas = false;
-    }
-    public void ActivateWavecallerButton(BaseGridUnitScript unit)
-    {
-        //wavecallerButton.SetActive(true);
-        selectedUnit = unit;
-    }
-    public void DeactivateWavecallerButton()
-    {
-        //wavecallerButton.SetActive(false);
-        selectedUnit = null;
-    }
-    public void CallSpecialAbility()
-    {
-        if (selectedUnit != null)
-        {
-            selectedUnit.SpecialAbility();
-        }
-    }
-    public void OnTileChosen(CallbackContext context)
-    {
-        if (!context.performed) return;
-        if (selectedUnit == null) return;
-        Debug.Log(selectedUnit.entityType);
-        Debug.Log(selectedUnit.aiming);
-        if (selectedUnit.entityType == EntityType.Special && selectedUnit.aiming == true && isOnCanvas == false)
-        {
-            selectedUnit.OnChosingTile();
-        }
-    }
+    //}
+    //public void DeactivateUnitProductionPanel()
+    //{
+    //    productionPanel.SetActive(false);
+
+    //}
+    //public void ShowMessageText(string message)
+    //{
+    //    messageText.text = message;
+    //    if (showMessageCoroutine != null)
+    //    {
+    //        StopCoroutine(showMessageCoroutine);
+    //        showMessageCoroutine = null;
+    //    }
+    //    showMessageCoroutine = ShowMessageCoroutine();
+    //    StartCoroutine(showMessageCoroutine);
+    //}
+    //private IEnumerator ShowMessageCoroutine()
+    //{
+    //    messageText.gameObject.SetActive(true);
+    //    float t = showMessageTime;
+    //    while (t > 0)
+    //    {
+    //        t -= Time.deltaTime;
+    //        yield return null;
+    //    }
+    //    messageText.gameObject.SetActive(false);
+
+    //}
+
+
+
+    //public void OnTileChosen(CallbackContext context)
+    //{
+    //    if (!context.performed) return;
+    //    if (selectedUnit == null) return;
+    //    Debug.Log(selectedUnit.entityType);
+    //    Debug.Log(selectedUnit.aiming);
+    //    if (selectedUnit.entityType == EntityType.Special && selectedUnit.aiming == true && isOnCanvas == false)
+    //    {
+    //        selectedUnit.OnChosingTile();
+    //    }
+    //}
 }

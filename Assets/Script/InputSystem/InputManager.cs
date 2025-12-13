@@ -11,9 +11,9 @@ public class InputManager : MonoBehaviour
     public static InputManager instance { get; private set; }
     private Vector2 mousePos;
 
-    public BaseGridUnitScript selectedUnit { get; private set; }
-    private GridCity selectedCity;
+    //public BaseGridUnitScript selectedUnit { get; private set; }
 
+    private PlayerInput playerInput;
 
     [SerializeField]
     private PlayerKingdom playerKngdom;
@@ -21,14 +21,33 @@ public class InputManager : MonoBehaviour
     private bool bIsOnUIElement = false;
     public bool bHasSelectedEntity { get; private set; } = false;
 
+
+    public Vector2 CameraKeyMovementDirection { get; private set; }
+    public Vector2 CameraMouseMovementDirection { get; private set; }
+
     public void Initialize()
     {
-        if(instance != null)
+        if (instance != null)
         {
-            Destroy(instance); 
+            Destroy(instance);
         }
         instance = this;
+        playerInput = GetComponent<PlayerInput>();
+
     }
+    private void OnEnable()
+    {
+        if (playerInput == null)
+        {
+            playerInput = GetComponent<PlayerInput>();
+        }
+        playerInput.ActivateInput();
+    }
+    private void OnDisable()
+    {
+        playerInput.DeactivateInput();
+    }
+
     public void SetOnUiElement(bool value)
     {
         bIsOnUIElement = value;
@@ -37,50 +56,9 @@ public class InputManager : MonoBehaviour
     {
         return bIsOnUIElement;
     }
-    //Menu Inputs
-    public void OnNavigate(CallbackContext value)
-    {
-        Vector2 directionInput = value.ReadValue<Vector2>();
-        //Debug.Log("OnNavigate: " + directionInput);
-
-    }
-
-    public void OnSubmit(CallbackContext value)
-    {
-        if (value.performed)
-        {
-            Debug.Log("OnSubmit");
-        }
-        //select the current option in Menu Controller
-    }
-
-    public void OnCancel(CallbackContext value)
-    {
-        if (value.performed)
-        {
-            Debug.Log("OnCancel");
-            //GetComponent<PlayerInput>().SwitchCurrentActionMap("InGame");
-        }
-        //go back to previous menu in Menu Controller
-    }
-
-    public void OnPoint(CallbackContext value)
-    {
-        mousePos = value.ReadValue<Vector2>();
-        //store the mouse position for other menu inputs
-    }
-
-    public void OnClickMenu(CallbackContext value)
-    {
-        if (value.performed)
-        {
-        }
-        //send a position to Menu Controller
-    }
-
     public void SetAttackCursor()
     {
-        if(cursorTexture)
+        if (cursorTexture)
         {
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
         }
@@ -89,52 +67,91 @@ public class InputManager : MonoBehaviour
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
-    //End MenuInputs
-
-    //GameInputs
-
-    //Keyboard Inputs
-    public void OnMoveCamera(CallbackContext value)
+    #region MenuInput
+    public void OnCancel(InputValue value)
     {
-        Vector2 directionInput = value.ReadValue<Vector2>();
+
+        Debug.Log("OnCancel");
+        //GetComponent<PlayerInput>().SwitchCurrentActionMap("InGame");
+
+        //go back to previous menu in Menu Controller
+    }
+    public void OnClickMenu(InputValue value)
+    {
+
+        //send a position to Menu Controller
+    }
+    public void OnNavigate(InputValue value)
+    {
+        Vector2 directionInput = value.Get<Vector2>();
+        //Debug.Log("OnNavigate: " + directionInput);
 
     }
 
-    public void OnEndTurn(CallbackContext value)
+
+
+
+
+    public void OnPoint(InputValue value)
     {
-        if (value.performed)
-        {
-            Debug.Log("OnEndTurn");
-            TurnManager.instance.OnTurnEnd();
-            //sent to BootManager -> TurnManager (if not have any Unit to move) end turn.
-        }
+        mousePos = value.Get<Vector2>();
+        //store the mouse position for other menu inputs
     }
 
-    public void OnNextUnit(CallbackContext value)
+    public void OnSubmit(InputValue value)
     {
-        if (value.performed)
-        {
-            Debug.Log("OnNextUnit");
 
-            //sent to change selected unit.
-        }
+        Debug.Log("OnSubmit");
+
+        //select the current option in Menu Controller
+    }
+    #endregion
+
+
+    #region KeyboardInput
+    public void OnCameraZoom(InputValue value)
+    {
+        Debug.Log("CameraZoom");
+    }
+    public void OnMoveCamera(InputValue value)
+    {
+        CameraKeyMovementDirection = value.Get<Vector2>();
+
     }
 
-    public void OnPauseGame(CallbackContext value)
+
+    public void OnEndTurn(InputValue value)
     {
-        if (value.performed)
-        {
-            Debug.Log("OnPauseGame");
-            //sent to GameManager to pause the game.
-            //change to Menu Input Action Map
-            //GetComponent<PlayerInput>().SwitchCurrentActionMap("InMenu");
-        }
+
+        Debug.Log("OnEndTurn");
+        TurnManager.instance.OnTurnEnd();
+        //sent to BootManager -> TurnManager (if not have any Unit to move) end turn.
+
+    }
+
+    public void OnNextUnit(InputValue value)
+    {
+
+        Debug.Log("OnNextUnit");
+
+        //sent to change selected unit.
+
+    }
+
+    public void OnPauseGame(InputValue value)
+    {
+
+        Debug.Log("OnPauseGame");
+        //sent to GameManager to pause the game.
+        //change to Menu Input Action Map
+        //GetComponent<PlayerInput>().SwitchCurrentActionMap("InMenu");
+
     }
 
     //Mouse Inputs
-    public void OnMoveCameraWithMouse(CallbackContext value)
+    public void OnMoveCameraWithMouse(InputValue value)
     {
-        mousePos = value.ReadValue<Vector2>();
+        mousePos = value.Get<Vector2>();
         //Debug.Log("OnMoveCameraWithMouse: " + mousePos);
         //send a position to Camera Controller
         //I need a method that tracks the mouse's position on the screen
@@ -144,83 +161,91 @@ public class InputManager : MonoBehaviour
     }
 
     //method to any sort of tile interactions
-    public void OnTileInteraction(CallbackContext value)
+    public void OnLeftClick(InputValue value)
     {
-        if (bIsOnUIElement) { return; }
-        if (CityUI.Instance && CityUI.Instance.cityMenuMode != CityMenuMode.None) return; // if we are trying to place a building on the tile then don't do tile interaction from here.
-        if (!value.performed || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
-        UIManager.Instance?.HasUnitSelected(false);
-        UIManager.Instance?.HasCitySelected(false);
-        //if (ToggleManager.Instance.GetToggleState(ToggleUseCase.CityPlacement))
-        //{
-        //    CityManager.Instance.TestPlaceCity();
-        //}
-        //else
+        if (bIsOnUIElement || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
+
+        if (CityUI.Instance && CityUI.Instance.cityMenuMode != CityMenuMode.None)
         {
-            
-            TileState state = HexTilemapManager.Instance.GetTileState(HexTilemapManager.Instance.GetCellAtMousePosition());
-            Debug.Log($"clicked tile type: {state}");
-            if (selectedUnit)
+            CityUI.Instance.PlaceEntity();
+        }
+        else
+        {
+
+            UIManager.Instance?.HasUnitSelected(false);
+            UIManager.Instance?.HasCitySelected(false);
             {
-                selectedUnit.OnEntityDeselect();
-                selectedUnit = null;
-                bHasSelectedEntity = false;
-            }
-            if(selectedCity)
-            {
-                selectedCity.OnEntityDeselect();
-                selectedCity = null;
-                bHasSelectedEntity = false;
-            }
-            BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
-            GridCity city = CityManager.Instance.GetCity(HexTilemapManager.Instance.GetCellAtMousePosition());
-            if (unit)
-            {
-                unit.OnEntitySelect(playerKngdom);
-                //if(unit.GetOwner()==playerKngdom)
-                //{
-                    selectedUnit = unit;
-                    bHasSelectedEntity = true;
-                //}
-                UIManager.Instance.SelectedUnit(unit);
-            }
-            else if(city)
-            {
-                //if(city.GetOwner()!=playerKngdom){
-                //    return;
-                //}
-                selectedCity = city;
-                selectedCity.OnEntitySelect(playerKngdom);
-                bHasSelectedEntity= true;
-                UIManager.Instance?.SelectedCity(city);
+
+                TileState state = HexTilemapManager.Instance.GetTileState(HexTilemapManager.Instance.GetCellAtMousePosition());
+                Debug.Log($"clicked tile type: {state}");
+                BaseGridUnitScript selectedUnit = UIUtility.selectedUnit;
+                if (selectedUnit)
+                {
+                    if (selectedUnit.aiming == true)
+                    {
+                        selectedUnit.OnChosingTile();
+                        return;
+                    }
+                    //selectedUnit.OnEntityDeselect();
+                    //selectedUnit = null;
+                    //bHasSelectedEntity = false;
+                    UIUtility.DeselectUnit();
+                }
+                GridCity selectedCity = UIUtility.selectedCity;
+                if (selectedCity)
+                {
+                    //selectedCity.OnEntityDeselect();
+                    //selectedCity = null;
+                    //bHasSelectedEntity = false;
+                    UIUtility.DeselectCity();
+                }
+                BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(HexTilemapManager.Instance.GetCellAtMousePosition());
+                GridCity city = CityManager.Instance.GetCity(HexTilemapManager.Instance.GetCellAtMousePosition());
+                if (unit)
+                {
+                    //unit.OnEntitySelect(playerKngdom);
+                    ////if(unit.GetOwner()==playerKngdom)
+                    ////{
+                    //selectedUnit = unit;
+                    //bHasSelectedEntity = true;
+                    ////}
+                    //UIManager.Instance.OnUnitSelect(unit);
+                    UIUtility.SelectUnit(unit);
+                }
+                else if (city)
+                {
+                    ////if(city.GetOwner()!=playerKngdom){
+                    ////    return;
+                    ////}
+                    //selectedCity = city;
+                    //selectedCity.OnEntitySelect(playerKngdom);
+                    //bHasSelectedEntity = true;
+                    //UIManager.Instance?.OnCitySelect(city);
+                    UIUtility.SelectCity(city);
+                }
             }
         }
-       
-            //send a position to Selection Manager
-            //I need a mathod that receives a screen position (Vector2)
-            //and converts it to a raycast in the world,
+
+        //send a position to Selection Manager
+        //I need a mathod that receives a screen position (Vector2)
+        //and converts it to a raycast in the world,
 
     }
-    public void OnAlternativeTileInteraction(CallbackContext value)
+    public void OnRightClick(InputValue value)
     {
-        if (value.performed)
-        {
-            GlobalEventManager.InvokeMouseClickedEvent(mousePos);
-            //send a position to Selection Manager
-            //I need a mathod that receives a screen position (Vector2)
-            //and converts it to a raycast in the world,
-        }
-    }
-    //End GameInputs
 
-    //Tests
-    //public void OnTestMadness(CallbackContext value)
-    //{
-    //    if (value.performed)
-    //    {
-    //        Debug.Log(TurnManager.instance.GetCurrentActingKingdom().GetMadnessEffects());
-    //    }
-    //}
+        //GlobalEventManager.InvokeMouseClickedEvent(mousePos);
+        if (UIUtility.selectedUnit)
+        {
+            UIUtility.selectedUnit.OnTileClicked(HexTilemapManager.Instance.GetCellAtMousePosition());
+        }
+        //send a position to Selection Manager
+        //I need a mathod that receives a screen position (Vector2)
+        //and converts it to a raycast in the world,
+
+    }
+    #endregion
+
     public Vector3 GetMousePosition()
     {
         return mousePos;
