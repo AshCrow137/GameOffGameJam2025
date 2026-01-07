@@ -138,16 +138,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""SelectUnitWithMouse"",
-                    ""type"": ""Button"",
-                    ""id"": ""698db6d9-4f8d-4482-8401-b529e5d1f337"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveUnitToTile"",
+                    ""name"": ""RightClick"",
                     ""type"": ""Button"",
                     ""id"": ""f6eb3eb5-9664-4ab9-8e9b-72ae4ef249a2"",
                     ""expectedControlType"": """",
@@ -156,7 +147,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Left Click"",
+                    ""name"": ""LeftClick"",
                     ""type"": ""Button"",
                     ""id"": ""5e67b6bd-b2ab-4a62-94d2-46d1408f6608"",
                     ""expectedControlType"": """",
@@ -172,24 +163,6 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Liftleft click"",
-                    ""type"": ""Button"",
-                    ""id"": ""24ee7c2b-6b74-44b5-8207-1ca427676ae7"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""TestMadness"",
-                    ""type"": ""Button"",
-                    ""id"": ""b5cdf80e-334b-4bb8-922a-188eeec83b99"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""CameraZoom"",
@@ -347,23 +320,12 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""aedc5729-5121-4b8e-b00a-bb1a0cccaf12"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectUnitWithMouse"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""bb4696fc-a36e-4eb0-8d96-7b4d125f8113"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveUnitToTile"",
+                    ""action"": ""RightClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -374,7 +336,7 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Left Click"",
+                    ""action"": ""LeftClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -432,28 +394,6 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
                     ""action"": ""RotateCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c23ee7a5-3c07-436f-a4e6-649ac92fc45f"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press(behavior=1)"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Liftleft click"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7b627e97-d381-438c-8c39-c4f8296dd534"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TestMadness"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -674,12 +614,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         m_InGame_NextUnit = m_InGame.FindAction("NextUnit", throwIfNotFound: true);
         m_InGame_PauseGame = m_InGame.FindAction("PauseGame", throwIfNotFound: true);
         m_InGame_MoveCameraWithMouse = m_InGame.FindAction("MoveCameraWithMouse", throwIfNotFound: true);
-        m_InGame_SelectUnitWithMouse = m_InGame.FindAction("SelectUnitWithMouse", throwIfNotFound: true);
-        m_InGame_MoveUnitToTile = m_InGame.FindAction("MoveUnitToTile", throwIfNotFound: true);
-        m_InGame_LeftClick = m_InGame.FindAction("Left Click", throwIfNotFound: true);
+        m_InGame_RightClick = m_InGame.FindAction("RightClick", throwIfNotFound: true);
+        m_InGame_LeftClick = m_InGame.FindAction("LeftClick", throwIfNotFound: true);
         m_InGame_RotateCamera = m_InGame.FindAction("RotateCamera", throwIfNotFound: true);
-        m_InGame_Liftleftclick = m_InGame.FindAction("Liftleft click", throwIfNotFound: true);
-        m_InGame_TestMadness = m_InGame.FindAction("TestMadness", throwIfNotFound: true);
         m_InGame_CameraZoom = m_InGame.FindAction("CameraZoom", throwIfNotFound: true);
         // InMenu
         m_InMenu = asset.FindActionMap("InMenu", throwIfNotFound: true);
@@ -774,12 +711,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_NextUnit;
     private readonly InputAction m_InGame_PauseGame;
     private readonly InputAction m_InGame_MoveCameraWithMouse;
-    private readonly InputAction m_InGame_SelectUnitWithMouse;
-    private readonly InputAction m_InGame_MoveUnitToTile;
+    private readonly InputAction m_InGame_RightClick;
     private readonly InputAction m_InGame_LeftClick;
     private readonly InputAction m_InGame_RotateCamera;
-    private readonly InputAction m_InGame_Liftleftclick;
-    private readonly InputAction m_InGame_TestMadness;
     private readonly InputAction m_InGame_CameraZoom;
     /// <summary>
     /// Provides access to input actions defined in input action map "InGame".
@@ -813,13 +747,9 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @MoveCameraWithMouse => m_Wrapper.m_InGame_MoveCameraWithMouse;
         /// <summary>
-        /// Provides access to the underlying input action "InGame/SelectUnitWithMouse".
+        /// Provides access to the underlying input action "InGame/RightClick".
         /// </summary>
-        public InputAction @SelectUnitWithMouse => m_Wrapper.m_InGame_SelectUnitWithMouse;
-        /// <summary>
-        /// Provides access to the underlying input action "InGame/MoveUnitToTile".
-        /// </summary>
-        public InputAction @MoveUnitToTile => m_Wrapper.m_InGame_MoveUnitToTile;
+        public InputAction @RightClick => m_Wrapper.m_InGame_RightClick;
         /// <summary>
         /// Provides access to the underlying input action "InGame/LeftClick".
         /// </summary>
@@ -828,14 +758,6 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "InGame/RotateCamera".
         /// </summary>
         public InputAction @RotateCamera => m_Wrapper.m_InGame_RotateCamera;
-        /// <summary>
-        /// Provides access to the underlying input action "InGame/Liftleftclick".
-        /// </summary>
-        public InputAction @Liftleftclick => m_Wrapper.m_InGame_Liftleftclick;
-        /// <summary>
-        /// Provides access to the underlying input action "InGame/TestMadness".
-        /// </summary>
-        public InputAction @TestMadness => m_Wrapper.m_InGame_TestMadness;
         /// <summary>
         /// Provides access to the underlying input action "InGame/CameraZoom".
         /// </summary>
@@ -881,24 +803,15 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @MoveCameraWithMouse.started += instance.OnMoveCameraWithMouse;
             @MoveCameraWithMouse.performed += instance.OnMoveCameraWithMouse;
             @MoveCameraWithMouse.canceled += instance.OnMoveCameraWithMouse;
-            @SelectUnitWithMouse.started += instance.OnSelectUnitWithMouse;
-            @SelectUnitWithMouse.performed += instance.OnSelectUnitWithMouse;
-            @SelectUnitWithMouse.canceled += instance.OnSelectUnitWithMouse;
-            @MoveUnitToTile.started += instance.OnMoveUnitToTile;
-            @MoveUnitToTile.performed += instance.OnMoveUnitToTile;
-            @MoveUnitToTile.canceled += instance.OnMoveUnitToTile;
+            @RightClick.started += instance.OnRightClick;
+            @RightClick.performed += instance.OnRightClick;
+            @RightClick.canceled += instance.OnRightClick;
             @LeftClick.started += instance.OnLeftClick;
             @LeftClick.performed += instance.OnLeftClick;
             @LeftClick.canceled += instance.OnLeftClick;
             @RotateCamera.started += instance.OnRotateCamera;
             @RotateCamera.performed += instance.OnRotateCamera;
             @RotateCamera.canceled += instance.OnRotateCamera;
-            @Liftleftclick.started += instance.OnLiftleftclick;
-            @Liftleftclick.performed += instance.OnLiftleftclick;
-            @Liftleftclick.canceled += instance.OnLiftleftclick;
-            @TestMadness.started += instance.OnTestMadness;
-            @TestMadness.performed += instance.OnTestMadness;
-            @TestMadness.canceled += instance.OnTestMadness;
             @CameraZoom.started += instance.OnCameraZoom;
             @CameraZoom.performed += instance.OnCameraZoom;
             @CameraZoom.canceled += instance.OnCameraZoom;
@@ -928,24 +841,15 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
             @MoveCameraWithMouse.started -= instance.OnMoveCameraWithMouse;
             @MoveCameraWithMouse.performed -= instance.OnMoveCameraWithMouse;
             @MoveCameraWithMouse.canceled -= instance.OnMoveCameraWithMouse;
-            @SelectUnitWithMouse.started -= instance.OnSelectUnitWithMouse;
-            @SelectUnitWithMouse.performed -= instance.OnSelectUnitWithMouse;
-            @SelectUnitWithMouse.canceled -= instance.OnSelectUnitWithMouse;
-            @MoveUnitToTile.started -= instance.OnMoveUnitToTile;
-            @MoveUnitToTile.performed -= instance.OnMoveUnitToTile;
-            @MoveUnitToTile.canceled -= instance.OnMoveUnitToTile;
+            @RightClick.started -= instance.OnRightClick;
+            @RightClick.performed -= instance.OnRightClick;
+            @RightClick.canceled -= instance.OnRightClick;
             @LeftClick.started -= instance.OnLeftClick;
             @LeftClick.performed -= instance.OnLeftClick;
             @LeftClick.canceled -= instance.OnLeftClick;
             @RotateCamera.started -= instance.OnRotateCamera;
             @RotateCamera.performed -= instance.OnRotateCamera;
             @RotateCamera.canceled -= instance.OnRotateCamera;
-            @Liftleftclick.started -= instance.OnLiftleftclick;
-            @Liftleftclick.performed -= instance.OnLiftleftclick;
-            @Liftleftclick.canceled -= instance.OnLiftleftclick;
-            @TestMadness.started -= instance.OnTestMadness;
-            @TestMadness.performed -= instance.OnTestMadness;
-            @TestMadness.canceled -= instance.OnTestMadness;
             @CameraZoom.started -= instance.OnCameraZoom;
             @CameraZoom.performed -= instance.OnCameraZoom;
             @CameraZoom.canceled -= instance.OnCameraZoom;
@@ -1165,21 +1069,14 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveCameraWithMouse(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "SelectUnitWithMouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "RightClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectUnitWithMouse(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "MoveUnitToTile" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMoveUnitToTile(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Left Click" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "LeftClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
@@ -1192,20 +1089,6 @@ public partial class @MainControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRotateCamera(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Liftleft click" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLiftleftclick(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "TestMadness" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnTestMadness(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "CameraZoom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

@@ -27,11 +27,7 @@ public class CityUI : MonoBehaviour
     [SerializeField]
     private List<PlayerEntityPair> unitButtons = new List<PlayerEntityPair>();
     
-    // [SerializeField]
-    // private Button spawnUnitButton;
-    // [SerializeField]
-    // private Button spawnBuildingButton;
-    //get; set;
+
     public CityMenuMode cityMenuMode { get; private set; } = CityMenuMode.None;
 
     public bool isUsingCityMenu { get; private set; } = false;
@@ -94,7 +90,7 @@ public class CityUI : MonoBehaviour
     }
     private void ShowGreenTIles()
     {
-        GridCity selectedCity = GameplayCanvasManager.instance.selectedCity;
+        GridCity selectedCity = UIUtility.selectedCity;
         List<Vector3Int> positions = HexTilemapManager.Instance.GetCellsInRange(selectedCity.GetCellPosition(), selectedCity.unitSpawnRadius, new List<TileState> { TileState.Land, TileState.Water });
         foreach (Vector3Int pos in positions)
         {
@@ -103,7 +99,7 @@ public class CityUI : MonoBehaviour
     }
     public void SetSpawnUnitMode(GameObject unitPrefab)
     {
-        List<BaseGridUnitScript> unlockedUnits =  GameplayCanvasManager.instance.selectedCity.GetOwner().GetunlockedUnits();
+        List<BaseGridUnitScript> unlockedUnits =  UIUtility.selectedCity.GetOwner().GetunlockedUnits();
         BaseGridUnitScript prefabScript = unitPrefab.GetComponent<BaseGridUnitScript>();
         bool bUnitUnlocked = false;
         foreach(BaseGridUnitScript unit in unlockedUnits)
@@ -119,13 +115,13 @@ public class CityUI : MonoBehaviour
             cityMenuMode = CityMenuMode.SpawnUnit;
             isUsingCityMenu = true;
             this.unitPrefab = unitPrefab;
-            GameplayCanvasManager.instance.selectedCity.UpdateUnitSpawnRadius();
+            UIUtility.selectedCity.UpdateUnitSpawnRadius();
             AudioManager.Instance.ui_menumain_volume.Post(gameObject);
             ShowGreenTIles();
         }
         else
         {
-            GlobalEventManager.InvokeShowUIMessageEvent("You did not unlock this unit!");
+            UIManager.Instance.ShowMessageText("You did not unlock this unit!");
         }
 
     }
@@ -135,10 +131,10 @@ public class CityUI : MonoBehaviour
         cityMenuMode = CityMenuMode.SpawnBuilding;
         isUsingCityMenu = true;
         buildingType = BuildingType;
-        GameplayCanvasManager.instance.selectedCity.UpdateUnitSpawnRadius();
+        UIUtility.selectedCity.UpdateUnitSpawnRadius();
         AudioManager.Instance.ui_menumain_volume.Post(gameObject);
         ShowGreenTIles();
-        //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition
+
     }
 
     private void ClearCityMenuMode()
@@ -146,14 +142,8 @@ public class CityUI : MonoBehaviour
         UIManager.Instance.HideEntityProductionPanelInfo();
         cityMenuMode = CityMenuMode.None;
 
-        // StartCoroutine(ClearCityMenuModeDelayed());
     }
 
-    // private IEnumerator ClearCityMenuModeDelayed()
-    // {
-    //     yield return new WaitForSeconds(5f);
-    //     isUsingCityMenu = false;
-    // }
     private City selectedCity;
     public void OnCitySelected(City city)
     {
@@ -174,28 +164,26 @@ public class CityUI : MonoBehaviour
 
     }
 
-    public void OnClick(CallbackContext context)
+    public void PlaceEntity()
     {
-        if (!context.performed) return;
-        if (InputManager.instance.IsCursorOverUIElement()) return;
         if (cityMenuMode == CityMenuMode.SpawnUnit)
         {
-            UnitSpawner.Instance.QueueUnitAtMousePosition(GameplayCanvasManager.instance.selectedCity, unitPrefab);
+            UnitSpawner.Instance.QueueUnitAtMousePosition(UIUtility.selectedCity, unitPrefab);
             //TODO replace with actual sound
             AudioManager.Instance.ui_menumain_exit.Post(gameObject);
             HexTilemapManager.Instance.RemoveAllMarkers();
         }
         else if (cityMenuMode == CityMenuMode.SpawnBuilding)
         {
-            BuildingManager.Instance.QueueBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity, buildingType);
+            BuildingManager.Instance.QueueBuildingAtMousePosition(UIUtility.selectedCity, buildingType);
             //TODO replace with actual sound
             AudioManager.Instance.ui_menumain_exit.Post(gameObject);
             HexTilemapManager.Instance.RemoveAllMarkers();
             // BuildingManager.Instance.PlaceBuildingAtMousePosition(GameplayCanvasManager.instance.selectedCity);
         }
         ClearCityMenuMode();
-
     }
+
 
 
 

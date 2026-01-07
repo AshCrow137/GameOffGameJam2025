@@ -92,7 +92,7 @@ public class GridCity : BaseGridEntity,IDamageable
     {
         base.OnEntitySelect(selector);
         Debug.Log($"Select {this.name} city");
-        GameplayCanvasManager.instance.ActivateUnitProductionPanel(this);
+        UIManager.Instance.ActivateUnitProductionPanel(this);
         ProductionQueueUI.Instance.UpdateUI(productionQueue);
         
     }
@@ -100,7 +100,7 @@ public class GridCity : BaseGridEntity,IDamageable
     {
         base.OnEntityDeselect();
         Debug.Log($"Deselect {this.name} city");
-        GameplayCanvasManager.instance.DeactivateUnitProductionPanel();
+        UIManager.Instance.DeactivateUnitProductionPanel();
     }
 
     public void TryToSpawnUnitInCity(GameObject unitPrefab)
@@ -110,7 +110,7 @@ public class GridCity : BaseGridEntity,IDamageable
             List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(gridPosition, 1,unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
             if(possiblePositions.Count <= 0)
             {
-                GlobalEventManager.InvokeShowUIMessageEvent($"This have no available tiles to spawn {unitPrefab.GetComponent<BaseGridEntity>().GetEntityDisplayName()}!");
+                UIManager.Instance.ShowMessageText($"This have no available tiles to spawn {unitPrefab.GetComponent<BaseGridEntity>().GetEntityDisplayName()}!");
                 return;
             }
             Vector3Int randomPos = possiblePositions[Random.Range(0, possiblePositions.Count - 1)];
@@ -127,7 +127,7 @@ public class GridCity : BaseGridEntity,IDamageable
         }
         else
         {
-            GlobalEventManager.InvokeShowUIMessageEvent($"This city already placed a unit this turn!");
+            UIManager.Instance.ShowMessageText($"This city already placed a unit this turn!");
         }
        
     }

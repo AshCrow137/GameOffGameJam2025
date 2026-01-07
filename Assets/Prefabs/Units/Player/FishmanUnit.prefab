@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1724408627
       objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitMovementDistance.MovementDistance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Name
       value: FishmanUnit
@@ -143,18 +147,11 @@ MonoBehaviour:
   EntityDescription: Simple eldritch melee unit
   CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 
-  MeleeAttackDamage: 8
-  RangeAttackDamage: 1
-  RetallitionAttackDamage: 6
-  AttackRange: 1
-  MovementDistance: 3
-  ProductionTime: 2
-  MovementSpeed: 3
-  AttacksPerTurn: 1
   CanMoveAfterattack: 0
   movementPointsPanel: {fileID: 5473831162953914631}
   movementPointsImage: {fileID: 7648775829066850354}
   animator: {fileID: 2035925211370938469}
+  MovementSpeed: 3
   specialAbilityRange: 1
   aiming: 0
   unitAttackSoundEvent:

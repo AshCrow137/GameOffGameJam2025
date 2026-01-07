@@ -435,21 +435,21 @@ public class AIController : MonoBehaviour
             {
 
                 int distanceBetween = HexTilemapManager.Instance.GetDistanceInCells(unit.GetCellPosition(), target.GetCellPosition());
-                if (distanceBetween <= unit.GetAtackDistance()&&unit.GetFinalDamageWithModifiers(unit,target)>=target.GetCurrentHealth()) 
+                if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange&&unit.GetFinalDamageWithModifiers(unit,target)>=target.GetCurrentHealth()) 
                 {
                     potentialTargetWithWeight.Add(target,new AIAttackWeight(6,false));
                 }
-                else if (distanceBetween <= unit.GetAtackDistance()+unit.GetMovementDistance() && unit.GetFinalDamageWithModifiers(unit, target) >= target.GetCurrentHealth()&&unit.tilesRemain>0)
+                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange+unit.unitStats.UnitMovementDistance.FinalMovementDistance && unit.GetFinalDamageWithModifiers(unit, target) >= target.GetCurrentHealth()&&unit.tilesRemain>0)
                 {
                     potentialTargetWithWeight.Add(target, new AIAttackWeight(5, true));
                 }
                 //TODO SpecialAbility
-                else if(distanceBetween <= unit.GetAtackDistance()&&target.entityType==unit.getVulnerableEntityType(unit.entityType))
+                else if(distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange &&target.entityType==unit.getVulnerableEntityType(unit.entityType))
                 {
                     if(target is BaseGridUnitScript)
                     {
                         BaseGridUnitScript unitTarget = (BaseGridUnitScript)target; 
-                        if(unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage() ) 
+                        if(unit.GetCurrentHealth() > unitTarget.unitStats.UnitCounterAttack.FinalCounterattack) 
                         {
                             potentialTargetWithWeight.Add(target, new AIAttackWeight(4, false));
                         }
@@ -457,23 +457,23 @@ public class AIController : MonoBehaviour
                    
                 }
                 //TODO else if target close than 6 tiles from one of kingdom cities
-                else if (distanceBetween <= unit.GetAtackDistance() + unit.GetMovementDistance() && target.entityType == unit.getVulnerableEntityType(unit.entityType)&&unit.tilesRemain>0)
+                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange + unit.unitStats.UnitMovementDistance.FinalMovementDistance && target.entityType == unit.getVulnerableEntityType(unit.entityType)&&unit.tilesRemain>0)
                 {
                     if (target is BaseGridUnitScript)
                     {
                         BaseGridUnitScript unitTarget = (BaseGridUnitScript)target;
-                        if (unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage())
+                        if (unit.GetCurrentHealth() > unitTarget.unitStats.UnitCounterAttack.FinalCounterattack)
                         {
                             potentialTargetWithWeight.Add(target, new AIAttackWeight(3, true));
                         }
                     }
                 }
-                else if(distanceBetween <= unit.GetAtackDistance())
+                else if(distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange)
                 {
                     if (target is BaseGridUnitScript)
                     {
                         BaseGridUnitScript unitTarget = (BaseGridUnitScript)target;
-                        if (unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage()||unit.GetAtackDistance()>1)
+                        if (unit.GetCurrentHealth() > unitTarget.unitStats.UnitCounterAttack.FinalCounterattack||unit.unitStats.UnitAttackRange.FinalAttackRange >1)
                         {
                             potentialTargetWithWeight.Add(target, new AIAttackWeight(2, false));
                         }
@@ -483,12 +483,12 @@ public class AIController : MonoBehaviour
                         potentialTargetWithWeight.Add(target, new AIAttackWeight(2, false));
                     }
                 }
-                else if(distanceBetween <= unit.GetAtackDistance() + unit.GetMovementDistance()&&unit.tilesRemain>0)
+                else if(distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange + unit.unitStats.UnitMovementDistance.FinalMovementDistance &&unit.tilesRemain>0)
                 {
                     if (target is BaseGridUnitScript)
                     {
                         BaseGridUnitScript unitTarget = (BaseGridUnitScript)target;
-                        if (unit.GetCurrentHealth() > unitTarget.GetRetaliationDamage() || unit.GetAtackDistance() > 1)
+                        if (unit.GetCurrentHealth() > unitTarget.unitStats.UnitCounterAttack.FinalCounterattack || unit.unitStats.UnitAttackRange.FinalAttackRange > 1)
                         {
                             potentialTargetWithWeight.Add(target, new AIAttackWeight(1, true));
                         }
@@ -528,7 +528,7 @@ public class AIController : MonoBehaviour
                     targetPos = potentialTarget.GetCellPosition();
                     if(bNeedToMove)
                     {
-                        List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(targetPos, unit.GetAtackDistance(), unit.GetWalkableTiles());
+                        List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(targetPos, unit.unitStats.UnitAttackRange.FinalAttackRange, unit.GetWalkableTiles());
                         List<Vector3Int> closestAdjPos = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), adjPos);
                         if (closestAdjPos.Count > 0)
                         {

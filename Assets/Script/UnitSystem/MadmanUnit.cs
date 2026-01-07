@@ -8,13 +8,14 @@ public class MadmanUnit : BaseGridUnitScript
     public override void Initialize(BaseKingdom owner)
     {
         base.Initialize(owner);
-        baseDamage = MeleeAttackDamage;
+        //baseDamage = MeleeAttackDamage;
     }
 
     protected override void Attack(BaseGridEntity targetEntity)
     {
-        MeleeAttackDamage += (int)Mathf.Round(6 * (0.1f * targetEntity.GetOwner().GetMadnessLevel()));
+        //TODO replace to effect system
+        //MeleeAttackDamage += (int)Mathf.Round(6 * (0.1f * targetEntity.GetOwner().GetMadnessLevel()));
         base.Attack(targetEntity);
-        MeleeAttackDamage = baseDamage;
+        //MeleeAttackDamage = baseDamage;
     }
 }

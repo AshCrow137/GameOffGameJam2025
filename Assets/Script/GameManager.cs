@@ -1,16 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField]
-    private List<GameObject> players;
 
-    public TurnManager turnManager { get; private set; }
-
-    private void Awake()
+    public void Initialize()
     {
         if (instance == null)
         {
@@ -22,5 +20,30 @@ public class GameManager : MonoBehaviour
         }
         //turnManager = new TurnManager(players);
         //turnManager.Initialize();
+        GlobalEventManager.KingdomDefeatEvent.AddListener(OnVictory);
     }
+    public void OnVictory(BaseKingdom kingdom)
+    {
+        if (kingdom is PlayerKingdom)
+        {
+            UIManager.Instance.ShowLoseScreen();
+        }
+        else
+        {
+            TurnManager.instance.RemoveKingdomFromTurnOrder(kingdom);
+            int kingdomsRemain = 0;
+            foreach (BaseKingdom actingKingdom in TurnManager.instance.GetActingKingdoms())
+            {
+                if (actingKingdom is PlayerKingdom || actingKingdom is NeitralKingdom) continue;
+                kingdomsRemain++;
+            }
+            if (kingdomsRemain == 0)
+            {
+                UIManager.Instance.ShowWinScreen();
+            }
+
+        }
+
+    }
+
 }
