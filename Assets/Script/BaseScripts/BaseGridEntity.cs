@@ -13,6 +13,7 @@ public class BaseGridEntity : MonoBehaviour
     [Header("Grid entity variables")]
     [SerializeField]
     private string EntityDisplayName;
+    //TODO Replace to city and units sseparately
     [SerializeField]
     protected int Health = 2;
     [SerializeField]

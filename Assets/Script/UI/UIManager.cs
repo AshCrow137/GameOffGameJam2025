@@ -144,6 +144,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject losePanel;
     private IEnumerator showMessageCoroutine;
+    private ProductionQueueUI queueUI;
     public bool isOnCanvas { get; private set; } = false;
     public void Initialize()
     {
@@ -157,6 +158,8 @@ public class UIManager : MonoBehaviour
 
         panelStats.gameObject.SetActive(false);
         NextTurnImg.sprite = UIElements.EnemyTurn;
+        queueUI = GetComponent<ProductionQueueUI>();
+        queueUI.Instantiate();
         //GlobalEventManager.ShowUIMessageEvent.AddListener(ShowMessageText);
     }
 

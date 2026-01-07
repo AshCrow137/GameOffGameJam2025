@@ -10926,6 +10926,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 788129472}
     - target: {fileID: 6630524666620089037, guid: 285aea841eb649a418abe34282c95eb7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630524666620089037, guid: 285aea841eb649a418abe34282c95eb7, type: 3}
       propertyPath: queueLayoutGroup
       value: 
       objectReference: {fileID: 663723602}
@@ -10965,7 +10969,8 @@ PrefabInstance:
       propertyPath: unitButtons.Array.data[5].button
       value: 
       objectReference: {fileID: 61723301}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6630524666620089037, guid: 285aea841eb649a418abe34282c95eb7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -24,8 +24,8 @@ public class BootManager : MonoBehaviour
     private CityUI cityUI;
     [SerializeField]
     private GlobalVisionManager globalVisionManager;
-    [SerializeField]
-    private ProductionQueueUI productionQueueUI;
+    //[SerializeField]
+    //private ProductionQueueUI productionQueueUI;
     [SerializeField]
     private UIManager UIManager;
     [SerializeField]
@@ -43,9 +43,7 @@ public class BootManager : MonoBehaviour
 
     void Start()
     {
-        // testScript.Initialize();
         cameraController?.Initialize();
-        productionQueueUI?.Instantiate();
         globalVisionManager?.Initialize();
         hexTilemapManager?.Initialize();
 
@@ -55,13 +53,14 @@ public class BootManager : MonoBehaviour
         cityManager?.Instantiate();
         gameManager?.Initialize();
 
-        inputManager?.Initialize();
+        
         //grid units and kingdoms should initialize after hexTilemapManager
         foreach (BaseKingdom kingdom in kingdoms)
         {
             kingdom.Initialize();
         }
-
+        //input manager should be initialized after kingdoms
+        inputManager?.Initialize();
         cityUI?.Instantiate();
         unitSpawner?.Instantiate();
         //GamePlayEventManager must be initialize first of TurnManager

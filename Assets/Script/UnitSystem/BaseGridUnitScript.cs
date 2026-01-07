@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Seeker))]
+[RequireComponent(typeof(Seeker),typeof(UnitStats))]
 public class BaseGridUnitScript : BaseGridEntity, IDamageable
 {
     [Header("Unit stats")]
@@ -95,6 +95,8 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     public UnityEvent MovementFinishEvent {  get; protected set; } = new UnityEvent();
     public UnityEvent AttackFinishEvent {  get; protected set; } = new UnityEvent();
     public UnityEvent<bool> PathFinishEvent {  get; protected set; } = new UnityEvent<bool>();
+
+    protected UnitStats unitStats;
     public Dictionary<ResourceType, int> resource
     {
         get
@@ -148,6 +150,10 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         actualRangeAttackDamage = RangeAttackDamage;
         actualRetallitionAttackDamage = RetallitionAttackDamage;
         CanStandOnTiles = possibleSpawnTiles;
+        unitStats = GetComponent<UnitStats>();
+        unitStats.Initialize();
+        StatHealth health = unitStats.GetUnitStat<StatHealth>();
+        print(health);
     }
 
     public override void InitializeBase(BaseKingdom owner)

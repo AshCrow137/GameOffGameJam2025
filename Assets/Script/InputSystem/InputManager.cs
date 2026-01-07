@@ -15,7 +15,6 @@ public class InputManager : MonoBehaviour
 
     private PlayerInput playerInput;
 
-    [SerializeField]
     private PlayerKingdom playerKngdom;
 
     private bool bIsOnUIElement = false;
@@ -33,7 +32,7 @@ public class InputManager : MonoBehaviour
         }
         instance = this;
         playerInput = GetComponent<PlayerInput>();
-
+        playerKngdom = PlayerKingdom.Instance;
     }
     private void OnEnable()
     {
@@ -233,7 +232,7 @@ public class InputManager : MonoBehaviour
     }
     public void OnRightClick(InputValue value)
     {
-
+        if (bIsOnUIElement || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
         //GlobalEventManager.InvokeMouseClickedEvent(mousePos);
         if (UIUtility.selectedUnit)
         {
