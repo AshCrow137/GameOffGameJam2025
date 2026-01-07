@@ -191,11 +191,11 @@ public class UIManager : MonoBehaviour
         infantaryImg.sprite = unit.gameObject.transform.Find("BodySprite").GetComponent<SpriteRenderer>().sprite;
 
         unitName.text = unit.GetEntityDisplayName();
-        unitHealthText.text = $"{unit.GetCurrentHealth()}/{unit.GetMaxHealth()}";
-        meleeAtack.text = unit.GetMeleeDamage().ToString();
-        rangedAtack.text = unit.GetRangeAttackDamage().ToString();
-        retaliationAtack.text = unit.GetRetaliationDamage().ToString();
-        atackDistance.text = unit.GetAtackDistance().ToString();
+        unitHealthText.text = $"{unit.unitStats.UnitHealth.CurrentHealth}/{unit.unitStats.UnitHealth.FinalMaxHealth}";
+        meleeAtack.text = unit.unitStats.UnitMeleeDamage.FinalMeleeDamage.ToString();
+        rangedAtack.text = unit.unitStats.UnitRangedDamage.FinalRangedDamage.ToString();
+        retaliationAtack.text = unit.unitStats.UnitCounterAttack.FinalCounterattack.ToString();
+        atackDistance.text = unit.unitStats.UnitAttackRange.FinalAttackRange.ToString();
         Sprite unitAbilityImage = unit.GetAbilityImage();
         string unitAbilityDescription = unit.GetAbilityDescription();
         if (unitAbilityImage != null && unitAbilityDescription != null)
@@ -290,7 +290,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLife(BaseGridUnitScript unit)
     {
-        LifeBar.fillAmount = (float)unit.GetCurrentHealth() / (float)unit.GetMaxHealth();
+        LifeBar.fillAmount = (float)unit.unitStats.UnitHealth.CurrentHealth / (float)unit.unitStats.UnitHealth.FinalMaxHealth;
     }
 
     public void UpdateResourceImages(int resourceValue, ResourceType resourceType)
@@ -387,15 +387,15 @@ public class UIManager : MonoBehaviour
             PI_EntityMagicCost.text = unit.resource.TryGetValue(ResourceType.Magic, out int mvalue) ? mvalue.ToString() : "0";
             PI_EntityGoldCost.text = unit.resource.TryGetValue(ResourceType.Gold, out int gvalue) ? gvalue.ToString() : "0";
             PI_EntityMaterialsCost.text = unit.resource.TryGetValue(ResourceType.Materials, out int matvalue) ? matvalue.ToString() : "0";
-            PI_BuildingDuration.text = unit.GetProductionTime().ToString();
+            PI_BuildingDuration.text = unit.unitStats.ProductionTime.ToString();
             PI_UnitStatsPanel.SetActive(true);
             PI_BuildingStatsPanel.SetActive(false);
-            PI_UnitHealth.text = unit.GetRawMaxHealth().ToString();
-            PI_UnitMeleeAttack.text = unit.GetRawMeleeDamage().ToString();
-            PI_UnitRangeAttack.text = unit.GetRawRangedAttackDamage().ToString();
-            PI_UnitRetallitionAttack.text = unit.GetRawRetallitionDamage().ToString();
-            PI_UnitAttackRange.text = unit.GetAtackDistance().ToString();
-            PI_UnitMovementDistance.text = unit.GetMovementDistance().ToString();
+            PI_UnitHealth.text = unit.unitStats.UnitHealth.MaxHealth.ToString();
+            PI_UnitMeleeAttack.text = unit.unitStats.UnitMeleeDamage.MeleeDamage.ToString();
+            PI_UnitRangeAttack.text = unit.unitStats.UnitRangedDamage.RangedDamage.ToString();
+            PI_UnitRetallitionAttack.text = unit.unitStats.UnitCounterAttack.Counterattack.ToString();
+            PI_UnitAttackRange.text = unit.unitStats.UnitAttackRange.AttackRange.ToString();
+            PI_UnitMovementDistance.text = unit.unitStats.UnitMovementDistance.MovementDistance.ToString();
 
             List<GridBuilding> requredBuildings = unit.GetRequiredBuildings();
             if (requredBuildings.Count > 0)

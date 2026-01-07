@@ -78,22 +78,22 @@ public class AIKingdom : BaseKingdom
     {
         base.IncreaseMadness(amount);
         currentMadnessEffect = madnessData.GetMadnessEffects(madnessLevel);
-        
-        foreach(BaseGridUnitScript unit in controlledUnits)
-        {
-            unit.ApplyMadnessEffect(currentMadnessEffect);
-        }
+        //TODO update madness system
+        //foreach(BaseGridUnitScript unit in controlledUnits)
+        //{
+        //    unit.ApplyMadnessEffect(currentMadnessEffect);
+        //}
         
     }
     public override void DecreaseMadness(int amount)
     {
         base.DecreaseMadness(amount);
         currentMadnessEffect = madnessData.GetMadnessEffects(madnessLevel);
-
-        foreach (BaseGridUnitScript unit in controlledUnits)
-        {
-            unit.ApplyMadnessEffect(currentMadnessEffect);
-        }
+        //TODO update mandess 
+        //foreach (BaseGridUnitScript unit in controlledUnits)
+        //{
+        //    unit.ApplyMadnessEffect(currentMadnessEffect);
+        //}
     }
     public MadnessDataStruct GetCurrentMadnessEffect()
     {

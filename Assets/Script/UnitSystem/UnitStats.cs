@@ -6,41 +6,40 @@ using UnityEngine;
 
     public class UnitStats : MonoBehaviour
     {
-
+    
     [Header("Unit stats")]
     [SerializeField]
-    protected StatExp UnitExp;
+    protected StatExp unitExp; public StatExp UnitExp { get { return unitExp; } private set { unitExp = value; } }
     [SerializeField]
-    protected StatHealth UnitHealth;
+    protected StatHealth unitHealth; public StatHealth UnitHealth { get {  return unitHealth; } private set { unitHealth = value; } }
     [SerializeField]
-    protected StatVision UnitVision;
+    protected StatVision unitVision; public StatVision UnitVision { get {  return unitVision; } private set { unitVision = value; } }   
     [SerializeField]
-    protected StatMeleeDamage UnitMeleeDamage;
+    protected StatMeleeDamage unitMeleeDamage; public StatMeleeDamage UnitMeleeDamage {  get { return unitMeleeDamage; } private set { unitMeleeDamage = value;} }
     [SerializeField]
-    protected StatRangedDamage UnitRangedDamage;
+    protected StatRangedDamage unitRangedDamage; public StatRangedDamage UnitRangedDamage { get { return unitRangedDamage; } private set { unitRangedDamage = value; } }
     [SerializeField]
-    protected StatCounterattack UnitCounterAttack;
+    protected StatCounterattack unitCounterAttack; public StatCounterattack UnitCounterAttack { get {  return unitCounterAttack; } private set { unitCounterAttack = value; } }
     [SerializeField]
-    protected StatAttackRange UnitAttackRange;
+    protected StatAttackRange unitAttackRange; public StatAttackRange UnitAttackRange { get {  return unitAttackRange; } private set { unitAttackRange = value; } }
     [SerializeField]
-    protected StatMeleeDefence UnitMeleeDefence;
+    protected StatMeleeDefence unitMeleeDefence; public StatMeleeDefence UnitMeleeDefence { get {  return unitMeleeDefence; } private set { unitMeleeDefence = value; } }
     [SerializeField]
-    protected StatRangedDefence UnitRangedDefence;
+    protected StatRangedDefence unitRangedDefence; public StatRangedDefence UnitRangedDefence { get { return unitRangedDefence; }private set {  unitRangedDefence = value; } }
     [SerializeField]
-    protected StatMagicDefence UnitMagicDefence;
+    protected StatMagicDefence unitMagicDefence; public StatMagicDefence UnitMagicDefence { get { return unitMagicDefence; } private set { unitMagicDefence = value; } }
     [SerializeField]
-    protected StatMovementDistance UnitMovementDistance;
-
+    protected StatMovementDistance unitMovementDistance; public StatMovementDistance UnitMovementDistance { get {  return unitMovementDistance; } private set { unitMovementDistance = value; } }
     [SerializeField]
-    protected StatStamina UnitStamina;
+    protected StatStamina unitStamina; public StatStamina UnitStamina { get {  return unitStamina; } private set { unitStamina = value; } }
     [SerializeField]
-    protected StatMana UnitMana;
+    protected StatMana unitMana; public StatMana UnitMana { get {  return unitMana; } private set { unitMana = value; } }
     [SerializeField]
-    protected StatAttacksPerTurn UnitAttacksPerTurn;
+    protected StatAttacksPerTurn unitAttacksPerTurn; public StatAttacksPerTurn UnitAttacksPerTurn { get {  return unitAttacksPerTurn; } private set { unitAttacksPerTurn = value; } }
     [SerializeField]
-    protected int LocalMadness = 0;
+    protected int localMadness = 0; public int LocalMadness { get {  return localMadness; } private set {  localMadness = value; } }
     [SerializeField]
-    protected int ProductionTime = 1;
+    protected int productionTime = 1; public int ProductionTime {  get { return productionTime; } private set { productionTime = value; } }
 
 
 
@@ -50,7 +49,13 @@ using UnityEngine;
 
     public void Initialize()
     {
-        unitStats = new List<StatBase>() { UnitHealth};
+        unitStats = new List<StatBase>() { unitExp,unitHealth,unitVision,unitMeleeDamage,
+            unitRangedDamage,unitCounterAttack,unitAttackRange, unitMeleeDefence,unitRangedDefence,unitMagicDefence,
+            unitMovementDistance,unitStamina,unitMana,unitAttacksPerTurn};
+        foreach (StatBase unitStat in unitStats)
+        {
+            unitStat.Initialize();
+        }
     }
     public T GetUnitStat<T>() where T:StatBase
     {
@@ -69,8 +74,8 @@ using UnityEngine;
     /// <param name="amount"></param>
     public void ChangeMadness(int amount)
     {
-        LocalMadness += amount;
-        LocalMadness = Mathf.Clamp(LocalMadness, 0, 100);
+        localMadness += amount;
+        localMadness = Mathf.Clamp(localMadness, 0, 100);
         CheckMadnessValue();
     }
     private void CheckMadnessValue()
@@ -78,22 +83,7 @@ using UnityEngine;
         //TODO CHeck and aply madness effects;
     }
 }
-public enum UnitStatsEnum
-{
-    Health,
-    Vision,
-    MeleeDamage,
-    RangeDamage,
-    Counterattack,
-    AttackRange,
-    MeleeDefence,
-    RangedDefence,
-    MagicDefence,
-    MovementDistance,
-    Stamina,
-    Mana,
-    AttacksPerTurn
-}
+
 [Serializable]
 public abstract class StatBase
 {
@@ -113,10 +103,9 @@ public abstract class StatBase
 [Serializable]
 public sealed class StatHealth:StatBase
 {
-    [SerializeField]
-    private int MaxHealth = 10;
-    [SerializeField]
-    private int CurrentHealth = 10;
+
+    public int MaxHealth = 10;
+    public int CurrentHealth = 10;
     // Actual max health after all effects and modificators
     public int FinalMaxHealth { get; private set; }
 

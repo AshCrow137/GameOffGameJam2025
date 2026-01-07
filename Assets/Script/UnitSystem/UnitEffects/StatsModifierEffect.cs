@@ -7,8 +7,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StatsModifierEffect", menuName = "UnitEffects/StatsModifierEffect")]
 public class StatsModifierEffect : BaseUnitEffect
 {
-    public List<StatToModifyStruct> StatsToModify = new List<StatToModifyStruct>();
-    public StatsModifierEffect(BaseGridUnitScript ownerUnit,List<StatToModifyStruct> statsToModify) : base(ownerUnit)
+    public List<StatBase> StatsToModify = new List<StatBase>();
+    public StatsModifierEffect(BaseGridUnitScript ownerUnit,List<StatBase> statsToModify) : base(ownerUnit)
     {
         StatsToModify = statsToModify;
     }
@@ -19,9 +19,4 @@ public class StatsModifierEffect : BaseUnitEffect
     }
 
 }
-[Serializable]
-public struct StatToModifyStruct
-{
-    public UnitStatsEnum StatName;
-    public int Value;
-}
+

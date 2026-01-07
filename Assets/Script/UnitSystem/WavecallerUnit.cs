@@ -35,7 +35,8 @@ public class WavecallerUnit : BaseGridUnitScript
             animator.SetBool("CastStart", true);
             //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(transformingTile, MarkerColor.Blue);
             transformProgress++;
-            MovementDistance = 0;
+            //set unit speed to 0
+            unitStats.UnitMovementDistance.ChangeStat(-unitStats.UnitMovementDistance.FinalMovementDistance);
             //HPImage.color = Color.yellow;
         }
     }
@@ -117,18 +118,16 @@ public class WavecallerUnit : BaseGridUnitScript
         transformProgress = 0;
         unitMode = UnitMode.None;
         //HPImage.color = Owner.GetKingdomColor();
-        MovementDistance = 2;
-        tilesRemain = MovementDistance;
-        AttacksPerTurn = 1;
+        RefreshUnit();
         //animator.SetBool("CastStart", false);
         //animator.SetBool("CastFinish", false);
     }
 
     private void StartTransformation(Vector3Int tile)
     {
-        MovementDistance = 0;
-        AttacksPerTurn = 0;
-        tilesRemain = MovementDistance;
+        unitStats.UnitMovementDistance.ChangeStat(-unitStats.UnitMovementDistance.FinalMovementDistance);
+        unitStats.UnitAttacksPerTurn.ChangeStat(-unitStats.UnitAttacksPerTurn.FinalAttacksPerTurn);
+        tilesRemain = unitStats.UnitMovementDistance.FinalMovementDistance;
         remainMovementText.text = tilesRemain.ToString();
         transformingTile = tile;
         transformProgress = 1;

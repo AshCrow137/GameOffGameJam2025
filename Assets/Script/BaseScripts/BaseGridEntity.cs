@@ -252,6 +252,7 @@ public class BaseGridEntity : MonoBehaviour
 
     public Sprite GetSprite() { return bodySprite.GetComponent<SpriteRenderer>().sprite; }
     public int GetVision() { return Vision; }
+    //TODO replace health from entity to units and citiess
     public int GetCurrentHealth()
     {
         return CurrentHealth;
