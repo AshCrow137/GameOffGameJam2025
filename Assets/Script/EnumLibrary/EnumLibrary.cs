@@ -63,6 +63,10 @@ public enum SelectionType
     }
 public enum EntityType
 {
+    Melee,
+    Ranged,
+    Spellcaster,
+
     Infantry,
     Archer,
     Cavalry,

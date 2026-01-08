@@ -6,7 +6,12 @@ using UnityEngine;
 
     public class UnitStats : MonoBehaviour
     {
-    
+    //Nekrols changes start here
+    //I need this for checking unit type in experience calculations
+    public EntityType entityType;
+
+    //Nekrols changes end here
+
     [Header("Unit stats")]
     [SerializeField]
     protected StatExp unitExp; public StatExp UnitExp { get { return unitExp; } private set { unitExp = value; } }
