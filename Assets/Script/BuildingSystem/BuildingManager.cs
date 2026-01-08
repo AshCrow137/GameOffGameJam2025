@@ -212,12 +212,12 @@ public class BuildingManager : MonoBehaviour
         int distanceToCity = HexTilemapManager.Instance.GetDistanceInCells(city.position, position);
         if (distanceToCity > city.unitSpawnRadius)
         {
-            GlobalEventManager.InvokeShowUIMessageEvent($"Cannot place entity outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
+            UIManager.Instance.ShowMessageText($"Cannot place entity outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
             return false;
         }
         if(city.GetComponent<CityProductionQueue>().IsQueueFull())
         {
-            GlobalEventManager.InvokeShowUIMessageEvent("Production queue is full");
+            UIManager.Instance.ShowMessageText("Production queue is full");
             return false;
         }
 
@@ -241,7 +241,7 @@ public class BuildingManager : MonoBehaviour
         {
             foreach (var a in resultReqs)
             {
-                GlobalEventManager.InvokeShowUIMessageEvent($"not enough {a.Key} - {a.Value}");
+                UIManager.Instance.ShowMessageText($"not enough {a.Key} - {a.Value}");
                 //Debug.Log($"not enough {a.Key} - {a.Value}");
             }
         }

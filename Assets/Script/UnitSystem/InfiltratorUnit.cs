@@ -23,7 +23,7 @@ public class InfiltratorUnit : BaseGridUnitScript
             infiltratedCity.GetOwner().IncreaseMadness(madnessAmount);
             if (Random.Range(0, 100) < chanceToBeDetected)
             {
-                GlobalEventManager.InvokeShowUIMessageEvent($"Your infiltrator was detected and killed!");
+                UIManager.Instance.ShowMessageText($"Your infiltrator was detected and killed!");
                 infiltratedCity.GetOwner().DecreaseMadness(Random.Range(minMadnessInreace, maxMadnessIncreace));
                 Death();
         }
@@ -31,13 +31,13 @@ public class InfiltratorUnit : BaseGridUnitScript
         
     }
 
-    protected override void OnTileClicked(HexTile tile, Vector3Int cellPos)
+    public override void OnTileClicked(Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
         GridCity city = hTM.GetCityOnTile(cellPos);
         if (targetedUnit != null)
         {
-            GlobalEventManager.InvokeShowUIMessageEvent($"Infiltrator cannot attack!");
+            UIManager.Instance.ShowMessageText($"Infiltrator cannot attack!");
         }
         else if (city != null)
         {

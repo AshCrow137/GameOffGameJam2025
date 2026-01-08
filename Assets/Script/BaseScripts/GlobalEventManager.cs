@@ -10,16 +10,16 @@ using UnityEngine.Events;
     public static UnityEvent<BaseKingdom> EndTurnEvent { get; private set; } = new UnityEvent<BaseKingdom>();
     public static UnityEvent<BaseKingdom> StartTurnEvent { get; private set; } = new UnityEvent<BaseKingdom> { };
     public static UnityEvent<Vector3> MouseClickedEvent { get; private set; } = new UnityEvent<Vector3>();
-    public static UnityEvent<string> ShowUIMessageEvent { get; private set; } = new UnityEvent<string> ();
+    //public static UnityEvent<string> ShowUIMessageEvent { get; private set; } = new UnityEvent<string> ();
     public static UnityEvent<BaseKingdom> KingdomDefeatEvent { get; private set; } = new UnityEvent<BaseKingdom>();
     public static void InvokeKingdomDefeat(BaseKingdom kingdom)
     {
         KingdomDefeatEvent.Invoke(kingdom);
     }
-    public static void InvokeShowUIMessageEvent(string message)
-    {
-        ShowUIMessageEvent.Invoke(message);
-    }
+    //public static void InvokeShowUIMessageEvent(string message)
+    //{
+    //    ShowUIMessageEvent.Invoke(message);
+    //}
     public static void InvokeMouseClickedEvent(Vector3 clickedPos)
     {
         MouseClickedEvent.Invoke(clickedPos);

@@ -69,15 +69,13 @@ public class CameraController : MonoBehaviour
     private void OnEnable()
     {
         var map = CustomInput.FindActionMap("InGame");
-        moveAction = map.FindAction("MoveCamera");
-        moveActionMouse = map.FindAction("MoveCameraWithMouse");
         moveCameraZoom = map.FindAction("CameraZoom");
         rotateAction = map.FindAction("RotateCamera");
-        moveAction.Enable();
+
     }
     private void OnDisable()
     {
-        moveAction.Disable();
+
     }
     private void OnDestroy()
     {
@@ -91,7 +89,7 @@ public class CameraController : MonoBehaviour
     {
         if(!bCameraPosFixed)
         {
-            Vector2 mousepos = moveActionMouse.ReadValue<Vector2>();
+            Vector2 mousepos = InputManager.instance.GetMousePosVector2();
             Vector2 screenUV = new Vector2(mousepos.x / Screen.width - .5f, mousepos.y / Screen.height - .5f);
             float rotateValue = rotateAction.ReadValue<float>();
             Vector3 move = Vector3.zero;
@@ -99,14 +97,14 @@ public class CameraController : MonoBehaviour
             if (screenUV.x > EDGE_THRESHOLD) move.x = CameraSpeedEdgeScreen;
             if (screenUV.y < -EDGE_THRESHOLD) move.y = -CameraSpeedEdgeScreen;
             if (screenUV.y > EDGE_THRESHOLD) move.y = CameraSpeedEdgeScreen;
-            Vector2 movementInput = moveAction.ReadValue<Vector2>();
+            Vector2 movementInput = InputManager.instance.CameraKeyMovementDirection;
             // the final calculation of the movement vector and the movement itself
             Vector3 movement = new Vector3(movementInput.x*CameraSpeed, movementInput.y*CameraSpeed, 0f);
             transform.Translate(Time.deltaTime * (move + movement) * moveSpeed);
             transform.Rotate(Vector3.forward * rotateValue * CameraRotationSpeed);
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, CameraXBordedMin, CameraXBordedMax), Mathf.Clamp(transform.position.y, CameraYBordedMin, CameraYBordedMax), transform.position.z);
             var orbital = vcam.GetComponent<CinemachineOrbitalFollow>();
-            if(!GameplayCanvasManager.instance.isOnCanvas) orbital.VerticalAxis.Value = Mathf.Clamp(orbital.VerticalAxis.Value + (-1) * moveCameraZoom.ReadValue<float>() * 2f, 200, 250);
+            if(!UIManager.Instance.isOnCanvas) orbital.VerticalAxis.Value = Mathf.Clamp(orbital.VerticalAxis.Value + (-1) * moveCameraZoom.ReadValue<float>() * 2f, 200, 250);
 
 
         }

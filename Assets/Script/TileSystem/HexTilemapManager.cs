@@ -50,7 +50,7 @@ public class HexTilemapManager : MonoBehaviour
         InitializeTileStates();
         tilemap.RefreshAllTiles();
         SetupWaterEffectTiles();
-        GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
+        //GlobalEventManager.MouseClickedEvent.AddListener(HandleTileClick);
     }
 
     private void Instantiate()
@@ -308,38 +308,25 @@ public class HexTilemapManager : MonoBehaviour
     /// <summary>
     /// Handles mouse click on the tilemap using 3D raycasting
     /// </summary>
-    private void HandleTileClick(Vector3 clickedPos)
-    {
-        Vector3Int cellPosition = GetCellAtMousePosition();
-        // if cellposition is infinite, return
-        if (cellPosition.x == int.MaxValue) return;
+    //public void HandleTileClick(Vector3 clickedPos)
+    //{
+    //    Vector3Int cellPosition = GetCellAtMousePosition();
+    //    // if cellposition is infinite, return
+    //    if (cellPosition.x == int.MaxValue) return;
 
-            // Get the tile at the clicked position
-        TileBase clickedTile = tilemap.GetTile(cellPosition);
+    //        // Get the tile at the clicked position
+    //    TileBase clickedTile = tilemap.GetTile(cellPosition);
         
-            if (clickedTile is HexTile)
-            {
-            HexTile hexTile = (HexTile)clickedTile;
-            
-                GlobalEventManager.InvokeOnTileClickEvent(hexTile, cellPosition);
-                // Get current state (default to Land if not in dictionary)
-                TileState currentState = GetTileState(cellPosition);
-            //Debug.Log($"clicked tile type: {currentState}");
-            // Check if tile can be clicked (is available)
-            if (currentState == TileState.Land)
-                {
-                    // Change state from Land to Occupied
-                    //SetTileState(cellPosition, TileState.Occupied);
-                    
-                    //Debug.Log($"Tile at {cellPosition} changed from Land to Occupied");
-                }
-                else
-                {
-                    //Debug.Log($"Tile at {cellPosition} is {currentState} and cannot be clicked");
-                }
-            }
+    //        if (clickedTile is HexTile)
+    //        {
+    //        HexTile hexTile = (HexTile)clickedTile;
+    //        GlobalEventManager.InvokeOnTileClickEvent(hexTile, cellPosition);
+    //        // Get current state (default to Land if not in dictionary)
+    //        TileState currentState = GetTileState(cellPosition);
+
+    //        }
         
-    }
+    //}
     public TileState GetHoweredTileState()
     {
         Vector3Int cellPosition = GetCellAtMousePosition();

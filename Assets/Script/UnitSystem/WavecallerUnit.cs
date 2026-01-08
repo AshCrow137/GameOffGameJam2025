@@ -6,7 +6,7 @@ public class WavecallerUnit : BaseGridUnitScript
 {
     [SerializeField]
     private int transformProgress = 0;
-    private List<TileState> possibleTileStates = new List<TileState> { TileState.Land,TileState.OccupiedByUnit,TileState.OccuppiedByBuilding,TileState.OccupiedByCity };
+    private List<TileState> possibleTileStates = new List<TileState> { TileState.Land, TileState.OccupiedByUnit, TileState.OccuppiedByBuilding, TileState.OccupiedByCity };
     private UnitMode unitMode = UnitMode.None;
     private Vector3Int transformingTile;
     private List<Vector3Int> possibleCellsInRange;
@@ -14,20 +14,16 @@ public class WavecallerUnit : BaseGridUnitScript
     public override void OnEntitySelect(BaseKingdom selector)
     {
         base.OnEntitySelect(selector);
-        GameplayCanvasManager.instance.ActivateWavecallerButton(this);
         if (unitMode == UnitMode.Casting)
         {
-            GlobalEventManager.InvokeShowUIMessageEvent($"Unit is casting and cannot move or attack");
+            UIManager.Instance.ShowMessageText($"Unit is casting and cannot move or attack");
         }
     }
     public override void OnEntityDeselect()
     {
         base.OnEntityDeselect();
-        if(unitMode !=UnitMode.Aiming)
-        {
-            GameplayCanvasManager.instance.DeactivateWavecallerButton();
-        }
-        
+
+
         //if (unitMode == UnitMode.Casting && transformProgress <= 2) { HPImage.color = Color.yellow; }
     }
 
@@ -39,7 +35,8 @@ public class WavecallerUnit : BaseGridUnitScript
             animator.SetBool("CastStart", true);
             //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(transformingTile, MarkerColor.Blue);
             transformProgress++;
-            MovementDistance = 0;
+            //set unit speed to 0
+            unitStats.UnitMovementDistance.ChangeStat(-unitStats.UnitMovementDistance.FinalMovementDistance);
             //HPImage.color = Color.yellow;
         }
     }
@@ -62,7 +59,7 @@ public class WavecallerUnit : BaseGridUnitScript
         possibleCellsInRange = HexTilemapManager.Instance.GetCellsInRange(GetCellPosition(), specialAbilityRange, possibleTileStates);
         if (possibleCellsInRange.Count == 0)
         {
-            GlobalEventManager.InvokeShowUIMessageEvent($"No land tiles in range!");
+            UIManager.Instance.ShowMessageText($"No land tiles in range!");
             return;
         }
         else
@@ -116,23 +113,21 @@ public class WavecallerUnit : BaseGridUnitScript
         {
             TransformTile(pos);
         }
-        
+
         HexTilemapManager.Instance.RemoveAllMarkers();
         transformProgress = 0;
         unitMode = UnitMode.None;
         //HPImage.color = Owner.GetKingdomColor();
-        MovementDistance = 2;
-        tilesRemain = MovementDistance;
-        AttacksPerTurn = 1;
+        RefreshUnit();
         //animator.SetBool("CastStart", false);
         //animator.SetBool("CastFinish", false);
     }
 
     private void StartTransformation(Vector3Int tile)
     {
-        MovementDistance = 0;
-        AttacksPerTurn = 0;
-        tilesRemain = MovementDistance;
+        unitStats.UnitMovementDistance.ChangeStat(-unitStats.UnitMovementDistance.FinalMovementDistance);
+        unitStats.UnitAttacksPerTurn.ChangeStat(-unitStats.UnitAttacksPerTurn.FinalAttacksPerTurn);
+        tilesRemain = unitStats.UnitMovementDistance.FinalMovementDistance;
         remainMovementText.text = tilesRemain.ToString();
         transformingTile = tile;
         transformProgress = 1;
@@ -144,19 +139,19 @@ public class WavecallerUnit : BaseGridUnitScript
     {
         base.OnChosingTile();
         //GlobalEventManager.InvokeShowUIMessageEvent($"test " + unitMode);
-        
-            Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
-            if ((HexTilemapManager.Instance.GetTileState(mousePosition) != TileState.Land) || !possibleCellsInRange.Contains(mousePosition))
-            {
-                GlobalEventManager.InvokeShowUIMessageEvent($"Wrong tile!");
-                return;
-            }
-        foreach (var cell in possibleCellsInRange) 
+
+        Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
+        if ((HexTilemapManager.Instance.GetTileState(mousePosition) != TileState.Land) || !possibleCellsInRange.Contains(mousePosition))
+        {
+            UIManager.Instance.ShowMessageText($"Wrong tile!");
+            return;
+        }
+        foreach (var cell in possibleCellsInRange)
         {
             StartTransformation(cell);
         }
-            
+
         aiming = false;
-        
+
     }
 }

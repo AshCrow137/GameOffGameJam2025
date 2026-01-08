@@ -10,14 +10,15 @@ public class KnightUnit : BaseGridUnitScript
 
     protected override void Attack(BaseGridEntity targetEntity)
 	{
+		//TODO replace to effect system
 		// Adding +2 damage if distance travelled >= 3 tiles
-		if (chargeActive && (int)Mathf.Round(distanceTravelled) >= 3)
-		{
-			MeleeAttackDamage += chargeDamage;
-		}
+		//if (chargeActive && (int)Mathf.Round(distanceTravelled) >= 3)
+		//{
+		//	MeleeAttackDamage += chargeDamage;
+		//}
 
 		base.Attack(targetEntity);
-		MeleeAttackDamage = 15;
+		//MeleeAttackDamage = 15;
 	}
 
 }
