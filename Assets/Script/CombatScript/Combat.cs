@@ -16,13 +16,14 @@ public class Combat
 
     //This method adds the damage caused by an attacker to the attacked unit.
     //if the unit has not yet attacked, it creates a new combatData.
-    public void AddDamage(UnitStats unitAtacker, float damageDealt, bool hasKilled, int currentTurn)
+    public void AddDamage(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, float counterAtack, int currentTurn)
     {
         CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
         if (existingData != null)
         {
-            existingData.DamageDealt += damageDealt;
+            existingData.DamageDealtByType[damageType] += damageDealt;
             existingData.HasKilled = existingData.HasKilled || hasKilled;
+            existingData.DamageTaken += counterAtack;
             existingData.LastInteractTurn = currentTurn;
             if(hasKilled)
             {
@@ -31,7 +32,7 @@ public class Combat
         }
         else
         {
-            CombatData newData = new CombatData(unitAtacker, damageDealt, hasKilled, currentTurn);
+            CombatData newData = new CombatData(unitAtacker, damageType, damageDealt, hasKilled, counterAtack, currentTurn);
             combatDataList.Add(newData);
         }
     }
@@ -42,6 +43,21 @@ public class Combat
         {
             ExperienceSystem.Instance.DistributeExperience(this);
         }
+    }
+
+    public List<CombatData> GetContributorsAvailable(List<CombatData> combatDataFull)
+    {
+        List<CombatData> contributorsAvailable = new List<CombatData>();
+        foreach (CombatData data in combatDataList)
+        {
+            if(data.LastInteractTurn >= TurnManager.instance.currentTurnCount - 4)
+            {
+                contributorsAvailable.Add(data);
+            }
+        }
+
+        return contributorsAvailable;
+
     }
 
     private List<CombatData> SortCombatData(List<CombatData> dataList)

@@ -7,7 +7,7 @@ public class ExperienceSystem
 
     private float expGain;
 
-    private Dictionary<UnitStats, float> Contributions;
+    private Dictionary<UnitStats, float> contributions;
 
     public void Initialize()
     {
@@ -25,7 +25,9 @@ public class ExperienceSystem
     {
         expGain = TotalExperience(combat.unitAtacked);
 
+        CalculateContributions(combat);
 
+        DistributionExp(contributions);
     }
 
     private float TotalExperience(UnitStats unitKilled)
@@ -37,9 +39,34 @@ public class ExperienceSystem
     {
         float killerTypeBonus = CalculateKilledTypeBonus(combat.combatDataList[0]);
 
-        Contributions = new Dictionary<UnitStats, float>();
+        contributions = new Dictionary<UnitStats, float>();
 
-        
+        List<CombatData> contributorsAvailable = combat.GetContributorsAvailable(combat.combatDataList);
+
+        foreach (CombatData data in contributorsAvailable)
+        {
+            contributions.Add
+                (
+                    data.UnitAtacker, 
+                        killerTypeBonus + 2 * data.DamageDealtByType[DamageType.Melee] +
+                        data.DamageDealtByType[DamageType.Ranged] + data.DamageDealtByType[DamageType.Magic] +
+                        data.DamageTaken + 1
+                );
+        }
+    }
+
+    private void DistributionExp(Dictionary<UnitStats, float> contributors)
+    {
+        float totalContribution = 0;
+        foreach (float individualContribution in contributions.Values)
+        {
+            totalContribution += individualContribution;
+        }
+
+        foreach(UnitStats unit in contributors.Keys)
+        {
+            unit.UnitExp.AddExp(Mathf.FloorToInt(expGain * (contributions[unit] / totalContribution)));
+        }
     }
 
     private float CalculateKilledTypeBonus(CombatData data)
@@ -52,5 +79,14 @@ public class ExperienceSystem
         {
             return 10;
         }
+    }
+
+    public float ExpToNextLevel(UnitStats unit)
+    {
+        int level = unit.UnitExp.Level;
+        int expMod = unit.UnitExp.ExpModifier;
+
+        int expToNextLevel = 10 * (level + 1) * expMod / 100;
+        return expToNextLevel;
     }
 }

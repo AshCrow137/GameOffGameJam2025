@@ -75,6 +75,13 @@ public enum EntityType
     None
 }
 
+public enum DamageType
+{
+    Melee,
+    Ranged,
+    Magic
+}
+
 public enum Fog
 {
     None,   // No fog - entity fully visible
