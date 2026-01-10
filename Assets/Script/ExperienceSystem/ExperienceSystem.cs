@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExperienceSystem
+public class ExperienceSystem : MonoBehaviour
 {
     public static ExperienceSystem Instance;
 
@@ -23,7 +23,9 @@ public class ExperienceSystem
 
     public void DistributeExperience(Combat combat)
     {
+        Debug.Log("Total Experience to distribute calculated.");
         expGain = TotalExperience(combat.unitAtacked);
+        Debug.Log("Experience to distribute: " + expGain);
 
         CalculateContributions(combat);
 
@@ -37,7 +39,11 @@ public class ExperienceSystem
 
     private void CalculateContributions(Combat combat)
     {
-        float killerTypeBonus = CalculateKilledTypeBonus(combat.combatDataList[0]);
+        float killerTypeBonus = 0;
+        if(killerTypeBonus == 0)
+        {
+            killerTypeBonus = CalculateKilledTypeBonus(combat.combatDataList[0]);
+        }
 
         contributions = new Dictionary<UnitStats, float>();
 
@@ -45,13 +51,18 @@ public class ExperienceSystem
 
         foreach (CombatData data in contributorsAvailable)
         {
-            contributions.Add
-                (
-                    data.UnitAtacker, 
-                        killerTypeBonus + 2 * data.DamageDealtByType[DamageType.Melee] +
-                        data.DamageDealtByType[DamageType.Ranged] + data.DamageDealtByType[DamageType.Magic] +
-                        data.DamageTaken + 1
-                );
+            if(!contributions.ContainsKey(data.UnitAtacker))
+            {
+                contributions[data.UnitAtacker] = 0;
+            }
+            contributions[data.UnitAtacker] +=
+                killerTypeBonus + 2 *
+                data.DamageDealtByType.GetValueOrDefault(DamageType.Melee, 0f) +
+                data.DamageDealtByType.GetValueOrDefault(DamageType.Ranged, 0f) +
+                data.DamageDealtByType.GetValueOrDefault(DamageType.Magic, 0f) +
+                data.DamageTaken + 2 * data.EffectsApplied.Count + 1;
+
+            Debug.Log("Contributor: " + data.UnitAtacker.name + " Contribution: " + contributions[data.UnitAtacker]);
         }
     }
 
@@ -65,6 +76,7 @@ public class ExperienceSystem
 
         foreach(UnitStats unit in contributors.Keys)
         {
+            Debug.Log("Unit: " + unit.name + " gained " + Mathf.FloorToInt(expGain * (contributions[unit] / totalContribution)) + " EXP.");
             unit.UnitExp.AddExp(Mathf.FloorToInt(expGain * (contributions[unit] / totalContribution)));
         }
     }

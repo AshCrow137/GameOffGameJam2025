@@ -82,6 +82,13 @@ public enum DamageType
     Magic
 }
 
+public enum EffectsType
+{
+    Curse,
+    Debuff,
+    Buff
+}
+
 public enum Fog
 {
     None,   // No fog - entity fully visible

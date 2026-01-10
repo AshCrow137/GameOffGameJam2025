@@ -8,7 +8,7 @@ public class Combat
     public UnitStats unitAtacked { get; private set; }
     public List<CombatData> combatDataList { get; private set; }
 
-    public void Initialize(UnitStats unitAtacked)
+    public Combat(UnitStats unitAtacked)
     {
         this.unitAtacked = unitAtacked;
         combatDataList = new List<CombatData>();
@@ -16,7 +16,7 @@ public class Combat
 
     //This method adds the damage caused by an attacker to the attacked unit.
     //if the unit has not yet attacked, it creates a new combatData.
-    public void AddDamage(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, float counterAtack, int currentTurn)
+    public void AddDamageToAtacker(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, float counterAtack, EffectsType effectApply, int currentTurn)
     {
         CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
         if (existingData != null)
@@ -24,6 +24,7 @@ public class Combat
             existingData.DamageDealtByType[damageType] += damageDealt;
             existingData.HasKilled = existingData.HasKilled || hasKilled;
             existingData.DamageTaken += counterAtack;
+            existingData.AddEffect(existingData, effectApply);
             existingData.LastInteractTurn = currentTurn;
             if(hasKilled)
             {
@@ -32,7 +33,7 @@ public class Combat
         }
         else
         {
-            CombatData newData = new CombatData(unitAtacker, damageType, damageDealt, hasKilled, counterAtack, currentTurn);
+            CombatData newData = new CombatData(unitAtacker, damageType, damageDealt, hasKilled, counterAtack, effectApply, currentTurn);
             combatDataList.Add(newData);
         }
     }
@@ -41,6 +42,7 @@ public class Combat
     {
         if(unitAtacked == this.unitAtacked)
         {
+            Debug.Log("Distributing Experience");
             ExperienceSystem.Instance.DistributeExperience(this);
         }
     }
@@ -50,10 +52,16 @@ public class Combat
         List<CombatData> contributorsAvailable = new List<CombatData>();
         foreach (CombatData data in combatDataList)
         {
-            if(data.LastInteractTurn >= TurnManager.instance.currentTurnCount - 4)
+            //Test Version
+            if(data.LastInteractTurn > 5 - 4)
             {
                 contributorsAvailable.Add(data);
             }
+            ////Production Version
+            //if (data.LastInteractTurn > TurnManager.instance.currentTurnCount - 4)
+            //{
+            //    contributorsAvailable.Add(data);
+            //}
         }
 
         return contributorsAvailable;
