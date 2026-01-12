@@ -442,20 +442,20 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// </summary>
     /// <param name="amount">amount of taken damage before calculation</param>
     /// <param name="attacker">unit that attack this unit</param>
-    /// <param name="retallitionAttack">bool if this damage was retallition damage or not</param>
-    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
+    /// <param name="bIsCounterattack">bool if this damage was counterattack damage or not</param>
+    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool bIsCounterattack)
     {
         animator.Play("TakeDamage", 0, 0);
         int resultDamage = amount;
-        if(!retallitionAttack)
+        if(!bIsCounterattack)
         {
             //if not retallition  damage calculate result damage using matrix of units
             resultDamage = (int)Mathf.Round( resultDamage * GetDamageModifier(attacker.entityType, entityType));
         }
-        CurrentHealth -= resultDamage;
+        unitStats.UnitHealth.CurrentHealth -= resultDamage;
         Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
-        HPImage.fillAmount = (float)CurrentHealth / Health;
-        if (CurrentHealth <= 0 ) 
+        HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / Health;
+        if (unitStats.UnitHealth.CurrentHealth <= 0 ) 
         {
 
             //DropSystem.instance.DropTo(attacker.Owner);
@@ -463,17 +463,17 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
             return;
         }
         //if attack is not retallition attack and this unit survives, this unit try to do retallition attack to it's attacker
-        if(!retallitionAttack)
+        if(!bIsCounterattack)
         {
             
-            RetallitionAttack(attacker);
+            Counterattack(attacker);
         }
     }
     /// <summary>
     /// base retallition attack
     /// </summary>
     /// <param name="attacker"></param>
-    public virtual void RetallitionAttack(BaseGridUnitScript attacker)
+    public virtual void Counterattack(BaseGridUnitScript attacker)
     {
         if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
         {

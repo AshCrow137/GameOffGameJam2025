@@ -14,6 +14,8 @@ using UnityEngine;
 
     [Header("Unit stats")]
     [SerializeField]
+    private int unitTier = 1;
+    [SerializeField]
     protected StatExp unitExp; public StatExp UnitExp { get { return unitExp; } private set { unitExp = value; } }
     [SerializeField]
     protected StatHealth unitHealth; public StatHealth UnitHealth { get {  return unitHealth; } private set { unitHealth = value; } }
