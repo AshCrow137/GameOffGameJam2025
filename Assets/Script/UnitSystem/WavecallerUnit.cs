@@ -122,7 +122,6 @@ public class WavecallerUnit : BaseGridUnitScript
         //animator.SetBool("CastStart", false);
         //animator.SetBool("CastFinish", false);
     }
-
     private void StartTransformation(Vector3Int tile)
     {
         unitStats.UnitMovementDistance.ChangeStat(-unitStats.UnitMovementDistance.FinalMovementDistance);
