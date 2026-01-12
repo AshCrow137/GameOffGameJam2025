@@ -176,7 +176,7 @@ public class InputManager : MonoBehaviour
             {
 
                 TileState state = HexTilemapManager.Instance.GetTileState(HexTilemapManager.Instance.GetCellAtMousePosition());
-                Debug.Log($"clicked tile type: {state}");
+                //Debug.Log($"clicked tile type: {state}");
                 BaseGridUnitScript selectedUnit = UIUtility.selectedUnit;
                 if (selectedUnit)
                 {
