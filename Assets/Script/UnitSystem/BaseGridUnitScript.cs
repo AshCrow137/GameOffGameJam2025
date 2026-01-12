@@ -76,6 +76,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
 
     public UnitStats unitStats { get;private set; }
     private int attacksRemain;
+    public List<BaseEffect> activeEffects { get; private set; } = new List<BaseEffect> ();
     public Dictionary<ResourceType, int> resource
     {
         get
@@ -135,7 +136,46 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         base.Initialize(owner);
     }
-
+    public virtual void AddEffect(BaseEffect effect)
+    {
+        if(!activeEffects.Contains(effect))
+        {
+            activeEffects.Add(effect);
+            effect.ApplyEffect(this);
+        }
+    }
+    public virtual void RemoveEffect(BaseEffect effect)
+    {
+        if(activeEffects.Contains(effect))
+        {
+            activeEffects.Remove(effect);
+            effect.RemoveEffect();
+        }
+    }
+    private void ManageEffects()
+    {
+        List<BaseEffect> effectsToRemove = new List<BaseEffect>();
+        foreach(BaseEffect effect in activeEffects)
+        {
+            switch(effect.ProcRate)
+            {
+                case ProcRate.Once:
+                    break;
+                case ProcRate.EveryTurn:
+                    effect.ApplyEffect(this);
+                    break;
+            }
+            effect.DecreaseDuration();
+            if(effect.RemainDuration<=0)
+            {
+                effectsToRemove.Add(effect);
+            }
+        }
+        foreach(BaseEffect effectToRemove in effectsToRemove)
+        {
+            RemoveEffect(effectToRemove);
+        }
+    }
     //Override this method to add UI message
     public override void OnEntitySelect(BaseKingdom selector)
     {
@@ -181,7 +221,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         base.OnStartTurn(entity);
         if (entity != Owner) return;
-        
+        ManageEffects();
 
     }
     public virtual void RefreshUnit()

@@ -73,6 +73,18 @@ using UnityEngine;
         }
         return null;
     }
+    public StatBase GetUnitStat(InspectableType<StatBase> statBase)
+    {
+        Debug.Log(statBase.storedType);
+        foreach (StatBase stat in unitStats)
+        {
+            if(stat.GetType() == statBase.storedType)
+            {
+                return stat;
+            }
+        }
+        return null;
+    }
     /// <summary>
     /// Changing Madness. + to add; - to remove. Value clamped 0-100
     /// </summary>
