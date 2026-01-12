@@ -76,6 +76,7 @@ public class BaseEffect
         switch (effectType)
         {
             case EffectType.Positive:
+                RemainDuration = duration;
                 break;
             case EffectType.Negative:
                 if(AffectedByMagicDefence)
@@ -102,7 +103,7 @@ public class BaseEffect
     {
         TargetUnit = targetUnit;
         Debug.Log($"aplly {this} effect to {TargetUnit.name}");
-        RemainDuration = Duration;
+        //RemainDuration = Duration;
     }
     public virtual void RemoveEffect()
     {

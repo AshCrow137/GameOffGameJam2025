@@ -8,7 +8,8 @@ using UnityEngine;
 public class StatsModifierEffectData : BaseUnitEffectData
 {
     //[SerializeReference]
-    public List<StatToModifyTypeAndValue> StatsToModify;
+    [SerializeField]
+    protected List<StatToModifyTypeAndValue> StatsToModify;
 
     public override BaseEffect InstantiateEffect(BaseKingdom owner, BaseGridUnitScript target)
     {
@@ -19,6 +20,7 @@ public class StatsModifierEffectData : BaseUnitEffectData
 [Serializable]
 public class StatsModifierEffect : BaseEffect
 {
+   
     public List<StatToModifyTypeAndValue> StatsToModify { get; private set; }
     public StatsModifierEffect(int duration, BaseKingdom OwnerKingdom, BaseGridUnitScript targetUnit,ProcRate procRate ,EffectType effectType,MagicDefenceEffectModifier effectModifier, bool affectedByMagicDefence, List<StatToModifyTypeAndValue> statsToModify) : base(duration, OwnerKingdom, targetUnit,procRate,effectType, effectModifier, affectedByMagicDefence)
     {
@@ -59,7 +61,7 @@ public class StatsModifierEffect : BaseEffect
 [Serializable]
 public class StatToModifyTypeAndValue
 {
-    [SerializeField]
+    //[SerializeField]
     public InspectableType<StatBase> Type = typeof(StatBase);
     public int Value;
 }
