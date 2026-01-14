@@ -406,6 +406,12 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         InputManager.instance.SetDefaultCursor();
     }
 
+    //GetDistance between this unit and target unit in cells
+    public int GetDistanceToTargetUnit(BaseGridEntity targetEntity)
+    {
+        return hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position));
+    }
+
     /// <summary>
     /// Base attack function, controls what kind of attack is used, ranged or melee
     /// </summary>
@@ -413,7 +419,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     protected virtual void Attack(BaseGridEntity targetEntity)
     {
         animator.Play("Attack", 0, 0);
-        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position)) == 1)
+        if (GetDistanceToTargetUnit(targetEntity) == 1)
         {
             targetEntity.TakeDamage(unitStats.UnitMeleeDamage.FinalMeleeDamage, this, false);
             
@@ -437,6 +443,14 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         AttackFinishEvent.Invoke();
     }
 
+    private void AddDamageToBattleSystem(BaseGridUnitScript defender, BaseGridUnitScript attacker, int damageAmount, int distance)
+    {
+        Debug.Log($"Defender: {defender.name}/// Atacker: {attacker.name}");
+        BattleSystem.AddDamage(defender.unitStats, attacker.unitStats,
+            distance > 1 ? DamageType.Ranged : DamageType.Melee, damageAmount,
+            defender.unitStats.UnitHealth.CurrentHealth <= 0);
+    }
+
     /// <summary>
     /// calculate and apply final damage to unit
     /// </summary>
@@ -454,6 +468,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         unitStats.UnitHealth.CurrentHealth -= resultDamage;
         Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
+        AddDamageToBattleSystem(attacker, this, resultDamage, GetDistanceToTargetUnit(attacker));
         HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / Health;
         //Insert to Combat
 
@@ -495,6 +510,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         GetComponent<EntityVision>().OnDeath();
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
+        BattleSystem.UnitKilled(this.unitStats);
         Owner.RemoveUnitFromKingdom(this);
         base.Death(); // Remove from entity directory
         gameObject.SetActive(false);

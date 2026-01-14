@@ -12,18 +12,18 @@ public class Combat
     {
         this.unitAtacked = unitAtacked;
         combatDataList = new List<CombatData>();
+        Debug.Log("New Combat created for unit: " + unitAtacked.name);
     }
 
     //This method adds the damage caused by an attacker to the attacked unit.
     //if the unit has not yet attacked, it creates a new combatData.
-    public void AddDamageToAtacker(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, EffectType effectApply, int currentTurn)
+    public void AddDamageToAtacker(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, int currentTurn)
     {
         CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
         if (existingData != null)
         {
             existingData.DamageDealtByType[damageType] += damageDealt;
             existingData.HasKilled = existingData.HasKilled || hasKilled;
-            existingData.AddEffect(existingData, effectApply);
             existingData.LastInteractTurn = currentTurn;
             if(hasKilled)
             {
@@ -32,17 +32,8 @@ public class Combat
         }
         else
         {
-            CombatData newData = new CombatData(unitAtacker, damageType, damageDealt, hasKilled, effectApply, currentTurn);
+            CombatData newData = new CombatData(unitAtacker, damageType, damageDealt, hasKilled, currentTurn);
             combatDataList.Add(newData);
-        }
-    }
-
-    public void UnitKilled(UnitStats unitAtacked)
-    {
-        if(unitAtacked == this.unitAtacked)
-        {
-            Debug.Log("Distributing Experience");
-            ExperienceSystem.DistributeExperience(this);
         }
     }
 
@@ -51,16 +42,16 @@ public class Combat
         List<CombatData> contributorsAvailable = new List<CombatData>();
         foreach (CombatData data in combatDataList)
         {
-            //Test Version
-            if(data.LastInteractTurn > 5 - 4)
-            {
-                contributorsAvailable.Add(data);
-            }
-            ////Production Version
-            //if (data.LastInteractTurn > TurnManager.instance.currentTurnCount - 4)
+            ////Test Version
+            //if(data.LastInteractTurn > 5 - 4)
             //{
             //    contributorsAvailable.Add(data);
             //}
+            //Production Version
+            if (data.LastInteractTurn > TurnManager.instance.currentTurnCount - 4)
+            {
+                contributorsAvailable.Add(data);
+            }
         }
 
         return contributorsAvailable;
@@ -82,5 +73,14 @@ public class Combat
         }
 
         return dataList;
+    }
+
+    public void AddEffectToAtacker(UnitStats unitAtacker, EffectType effect)
+    {
+        CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
+        if (existingData != null)
+        {
+            existingData.AddEffect(existingData, effect);
+        }
     }
 }

@@ -12,7 +12,7 @@ public class CombatData
     List<EffectType> effectsApplied = new List<EffectType>();
     int lastInteractTurn;
 
-    public CombatData(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, EffectType effectType, int lastInteractTurn)
+    public CombatData(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, int lastInteractTurn)
     {
         this.unitAtacker = unitAtacker;
         if(damageDealtByType == null)
@@ -30,11 +30,8 @@ public class CombatData
         {
             this.killedTypeDamage = damageType;
         }
-        if (!effectsApplied.Contains(effectType))
-        {
-            effectsApplied.Add(effectType);
-        }
         this.lastInteractTurn = lastInteractTurn;
+        Debug.Log("CombatData created for attacker: " + unitAtacker.name);
     }
 
     public UnitStats UnitAtacker { get => unitAtacker; set => unitAtacker = value; }
@@ -44,6 +41,7 @@ public class CombatData
     public int LastInteractTurn { get => lastInteractTurn; set => lastInteractTurn = value; }
     public List<EffectType> EffectsApplied { get => effectsApplied; set => effectsApplied = value; }
     public DamageType KilledTypeDamage { get => killedTypeDamage; set => killedTypeDamage = value; }
+    
     public void RemoveEffect(CombatData data, EffectType effect)
     {
         if(data.effectsApplied.Contains(effect))
