@@ -455,17 +455,16 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         unitStats.UnitHealth.CurrentHealth -= resultDamage;
         Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
         HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / Health;
+        //Insert to Combat
+
         if (unitStats.UnitHealth.CurrentHealth <= 0 ) 
         {
-
-            //DropSystem.instance.DropTo(attacker.Owner);
             Death();
             return;
         }
         //if attack is not retallition attack and this unit survives, this unit try to do retallition attack to it's attacker
         if(!bIsCounterattack)
         {
-            
             Counterattack(attacker);
         }
     }

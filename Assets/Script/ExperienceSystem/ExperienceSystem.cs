@@ -1,27 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExperienceSystem : MonoBehaviour
+public static class ExperienceSystem
 {
-    public static ExperienceSystem Instance;
+    private static float expGain;
 
-    private float expGain;
+    private static Dictionary<UnitStats, float> contributions;
 
-    private Dictionary<UnitStats, float> contributions;
-
-    public void Initialize()
-    {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Debug.LogWarning("Multiple instances of ExperienceSystem detected. There should only be one instance.");
-        }
-    }
-
-    public void DistributeExperience(Combat combat)
+    public static void DistributeExperience(Combat combat)
     {
         Debug.Log("Total Experience to distribute calculated.");
         expGain = TotalExperience(combat.unitAtacked);
@@ -32,12 +18,12 @@ public class ExperienceSystem : MonoBehaviour
         DistributionExp(contributions);
     }
 
-    private float TotalExperience(UnitStats unitKilled)
+    private static float TotalExperience(UnitStats unitKilled)
     {
         return unitKilled.UnitExp.ExpModifier * (1 + 0.1f * unitKilled.UnitExp.Level);
     }
 
-    private void CalculateContributions(Combat combat)
+    private static void CalculateContributions(Combat combat)
     {
         float killerTypeBonus = 0;
         if(killerTypeBonus == 0)
@@ -66,7 +52,7 @@ public class ExperienceSystem : MonoBehaviour
         }
     }
 
-    private void DistributionExp(Dictionary<UnitStats, float> contributors)
+    private static void DistributionExp(Dictionary<UnitStats, float> contributors)
     {
         float totalContribution = 0;
         foreach (float individualContribution in contributions.Values)
@@ -81,9 +67,9 @@ public class ExperienceSystem : MonoBehaviour
         }
     }
 
-    private float CalculateKilledTypeBonus(CombatData data)
+    private static float CalculateKilledTypeBonus(CombatData data)
     {
-        if(data.UnitAtacker.entityType == EntityType.Melee)
+        if(data.KilledTypeDamage == DamageType.Melee)
         {
             return 20;
         }
@@ -93,12 +79,13 @@ public class ExperienceSystem : MonoBehaviour
         }
     }
 
-    public float ExpToNextLevel(UnitStats unit)
+    public static int ExpToNextLevel(UnitStats unit)
     {
         int level = unit.UnitExp.Level;
         int expMod = unit.UnitExp.ExpModifier;
 
         int expToNextLevel = 10 * (level + 1) * expMod / 100;
+        Debug.Log($"Experience of {unit.name} is: {expToNextLevel}");
         return expToNextLevel;
     }
 }

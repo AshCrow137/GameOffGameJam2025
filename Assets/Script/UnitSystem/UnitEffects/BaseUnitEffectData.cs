@@ -58,7 +58,6 @@ public class BaseEffect
     public BaseGridUnitScript TargetUnit { get; private set; }
     public int RemainDuration { get; private set; }
     public EffectType EffectType { get; private set; }
-
     public bool AffectedByMagicDefence { get; private set; }
     public MagicDefenceEffectModifier EffectModifier { get; private set; }
    

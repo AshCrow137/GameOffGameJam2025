@@ -6,12 +6,13 @@ public class CombatData
 {
     UnitStats unitAtacker;
     Dictionary<DamageType, float> damageDealtByType;
+    DamageType killedTypeDamage;
     bool hasKilled;
     float damageTaken;
-    List<EffectsType> effectsApplied = new List<EffectsType>();
+    List<EffectType> effectsApplied = new List<EffectType>();
     int lastInteractTurn;
 
-    public CombatData(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, float damageTaken, EffectsType effectApply, int lastInteractTurn)
+    public CombatData(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, EffectType effectType, int lastInteractTurn)
     {
         this.unitAtacker = unitAtacker;
         if(damageDealtByType == null)
@@ -25,10 +26,13 @@ public class CombatData
         }
         this.damageDealtByType[damageType] += damageDealt;
         this.hasKilled = hasKilled;
-        this.damageTaken = damageTaken;
-        if (!effectsApplied.Contains(effectApply))
+        if (this.hasKilled)
         {
-            effectsApplied.Add(effectApply);
+            this.killedTypeDamage = damageType;
+        }
+        if (!effectsApplied.Contains(effectType))
+        {
+            effectsApplied.Add(effectType);
         }
         this.lastInteractTurn = lastInteractTurn;
     }
@@ -38,9 +42,9 @@ public class CombatData
     public bool HasKilled { get => hasKilled; set => hasKilled = value; }
     public float DamageTaken { get => damageTaken; set => damageTaken = value; }
     public int LastInteractTurn { get => lastInteractTurn; set => lastInteractTurn = value; }
-    public List<EffectsType> EffectsApplied { get => effectsApplied; set => effectsApplied = value; }
-
-    public void RemoveEffect(CombatData data, EffectsType effect)
+    public List<EffectType> EffectsApplied { get => effectsApplied; set => effectsApplied = value; }
+    public DamageType KilledTypeDamage { get => killedTypeDamage; set => killedTypeDamage = value; }
+    public void RemoveEffect(CombatData data, EffectType effect)
     {
         if(data.effectsApplied.Contains(effect))
         {
@@ -48,7 +52,7 @@ public class CombatData
         }
     }
 
-    public void AddEffect(CombatData data, EffectsType effect)
+    public void AddEffect(CombatData data, EffectType effect)
     {
         if(!data.effectsApplied.Contains(effect))
         {

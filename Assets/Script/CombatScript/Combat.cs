@@ -16,14 +16,13 @@ public class Combat
 
     //This method adds the damage caused by an attacker to the attacked unit.
     //if the unit has not yet attacked, it creates a new combatData.
-    public void AddDamageToAtacker(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, float counterAtack, EffectsType effectApply, int currentTurn)
+    public void AddDamageToAtacker(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, EffectType effectApply, int currentTurn)
     {
         CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
         if (existingData != null)
         {
             existingData.DamageDealtByType[damageType] += damageDealt;
             existingData.HasKilled = existingData.HasKilled || hasKilled;
-            existingData.DamageTaken += counterAtack;
             existingData.AddEffect(existingData, effectApply);
             existingData.LastInteractTurn = currentTurn;
             if(hasKilled)
@@ -33,7 +32,7 @@ public class Combat
         }
         else
         {
-            CombatData newData = new CombatData(unitAtacker, damageType, damageDealt, hasKilled, counterAtack, effectApply, currentTurn);
+            CombatData newData = new CombatData(unitAtacker, damageType, damageDealt, hasKilled, effectApply, currentTurn);
             combatDataList.Add(newData);
         }
     }
@@ -43,7 +42,7 @@ public class Combat
         if(unitAtacked == this.unitAtacked)
         {
             Debug.Log("Distributing Experience");
-            ExperienceSystem.Instance.DistributeExperience(this);
+            ExperienceSystem.DistributeExperience(this);
         }
     }
 

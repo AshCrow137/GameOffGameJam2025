@@ -6,12 +6,6 @@ using UnityEngine;
 
     public class UnitStats : MonoBehaviour
     {
-    //Nekrols changes start here
-    //I need this for checking unit type in experience calculations
-    public EntityType entityType;
-
-    //Nekrols changes end here
-
     [Header("Unit stats")]
     [SerializeField]
     private int unitTier = 1;
@@ -63,6 +57,8 @@ using UnityEngine;
         {
             unitStat.Initialize();
         }
+
+        unitExp.ExpToNextLvl = ExperienceSystem.ExpToNextLevel(this);
     }
     public T GetUnitStat<T>() where T:StatBase
     {
