@@ -52,4 +52,77 @@ public static class BattleSystem
         }
     }
 
+    public static Combat GetCombat(UnitStats atacked)
+    {
+        return combats.Find(c => c.unitAtacked == atacked);
+    }
+
+    private static float CalculateDamageOf(Combat combat, UnitStats attacker)
+    {
+        CombatData data = combat.combatDataList.Find(d => d.UnitAtacker == attacker);
+        if(data != null)
+        {
+            float totalDamage = 0f;
+            foreach(float damage in data.DamageDealtByType.Values)
+            {
+                totalDamage += damage;
+            }
+            return totalDamage;
+        }
+        return 0f;
+    }
+
+    public static float DamageTakingTo(UnitStats attacker, UnitStats attacked)
+    {
+        Combat combat = GetCombat(attacker);
+        if(combat != null)
+        {
+            return CalculateDamageOf(combat, attacked);
+        }
+        return 0f;
+    }
+
+    public static void AddEffect(UnitStats atacked, UnitStats atacker, BaseEffect effect)
+    {
+        Combat combat = combats.Find(c => c.unitAtacked == atacked);
+        if (combat != null)
+        {
+            combat.AddEffectFromAtacker(atacker, effect);
+        }
+    }
+
+    public static void RemoveEffect(UnitStats atacked, UnitStats atacker, BaseEffect effect)
+    {
+        Combat combat = combats.Find(c => c.unitAtacked == atacked);
+        if (combat != null)
+        {
+            combat.RemoveEffectFromAtacker(atacker, effect);
+        }
+    }
+
+    public static int ActiveEffectsCountByAtacker(UnitStats atacked, CombatData atackerData)
+    {
+        Combat combat = combats.Find(c => c.unitAtacked == atacked);
+        if (combat != null)
+        {
+            CombatData data = combat.combatDataList.Find(d => d == atackerData);
+            if(data != null)
+            {
+                int count = 0;
+                foreach (BaseEffect effect in atacked.GetOwner().activeEffects)
+                {
+                    for(int i = 0; i< data.EffectsApplied.Count; i++)
+                    {
+                        if(effect.Name == data.EffectsApplied[i])
+                        {
+                            count++;
+                        }
+                    }
+
+                }
+            }
+        }
+        return 0;
+    }
+
 }

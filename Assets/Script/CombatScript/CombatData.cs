@@ -8,8 +8,7 @@ public class CombatData
     Dictionary<DamageType, float> damageDealtByType;
     DamageType killedTypeDamage;
     bool hasKilled;
-    float damageTaken;
-    List<EffectType> effectsApplied = new List<EffectType>();
+    List<string> str_EffectsApplied = new List<string>();
     int lastInteractTurn;
 
     public CombatData(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, int lastInteractTurn)
@@ -37,24 +36,23 @@ public class CombatData
     public UnitStats UnitAtacker { get => unitAtacker; set => unitAtacker = value; }
     public Dictionary<DamageType, float> DamageDealtByType { get => damageDealtByType; set => damageDealtByType = value; }
     public bool HasKilled { get => hasKilled; set => hasKilled = value; }
-    public float DamageTaken { get => damageTaken; set => damageTaken = value; }
     public int LastInteractTurn { get => lastInteractTurn; set => lastInteractTurn = value; }
-    public List<EffectType> EffectsApplied { get => effectsApplied; set => effectsApplied = value; }
+    public List<string> EffectsApplied { get => str_EffectsApplied; set => str_EffectsApplied = value; }
     public DamageType KilledTypeDamage { get => killedTypeDamage; set => killedTypeDamage = value; }
     
-    public void RemoveEffect(CombatData data, EffectType effect)
+    public void RemoveEffect(CombatData data, BaseEffect effect)
     {
-        if(data.effectsApplied.Contains(effect))
+        if(data.str_EffectsApplied.Contains(effect.Name))
         {
-            data.effectsApplied.Remove(effect);
+            data.str_EffectsApplied.Remove(effect.Name);
         }
     }
 
-    public void AddEffect(CombatData data, EffectType effect)
+    public void AddEffect(CombatData data, BaseEffect effect)
     {
-        if(!data.effectsApplied.Contains(effect))
+        if(!data.str_EffectsApplied.Contains(effect.Name))
         {
-            data.effectsApplied.Add(effect);
+            data.str_EffectsApplied.Add(effect.Name);
         }
     }
 }

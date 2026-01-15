@@ -45,7 +45,6 @@ using UnityEngine;
 
 
     private BaseGridUnitScript owner;
-
     private List<StatBase> unitStats;
 
     public void Initialize()
@@ -96,6 +95,15 @@ using UnityEngine;
     private void CheckMadnessValue()
     {
         //TODO CHeck and aply madness effects;
+    }
+
+    public BaseGridUnitScript GetOwner()
+    {
+        if(owner == null)
+        {
+            owner = GetComponent<BaseGridUnitScript>();
+        }
+        return owner;
     }
 }
 

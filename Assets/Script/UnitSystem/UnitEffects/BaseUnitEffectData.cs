@@ -9,6 +9,8 @@ public class BaseUnitEffectData:ScriptableObject
     /// -1 is infinite effect duration
     /// </summary>
     [SerializeField]
+    protected string effectName;
+    [SerializeField]
     protected int duration = 3;
     [SerializeField]
     protected ProcRate procRate;
@@ -24,7 +26,7 @@ public class BaseUnitEffectData:ScriptableObject
 
     public virtual BaseEffect InstantiateEffect(BaseKingdom owner,BaseGridUnitScript target)
     {
-        return new BaseEffect(duration, owner, target, procRate, effectType,effectModifier, AffectedByMagicDefence);
+        return new BaseEffect(effectName, duration, owner, target, procRate, effectType,effectModifier, AffectedByMagicDefence);
     }
 }
 /// <summary>
@@ -52,6 +54,7 @@ public enum MagicDefenceEffectModifier
 [Serializable]
 public class BaseEffect
 {
+    public string Name { get; private set; }
     public int Duration { get; private set; }
     public ProcRate ProcRate { get; private set; } 
     public BaseKingdom OwnerKingdom {  get; private set; }
@@ -61,9 +64,9 @@ public class BaseEffect
     public bool AffectedByMagicDefence { get; private set; }
     public MagicDefenceEffectModifier EffectModifier { get; private set; }
    
-    public BaseEffect(int duration, BaseKingdom ownerKingdom, BaseGridUnitScript targetUnit,ProcRate procRate,EffectType effectType,MagicDefenceEffectModifier effectModifier,bool affectedByMagicDefence)
+    public BaseEffect(string effectName, int duration, BaseKingdom ownerKingdom, BaseGridUnitScript targetUnit,ProcRate procRate,EffectType effectType,MagicDefenceEffectModifier effectModifier,bool affectedByMagicDefence)
     {
-        
+        Name = effectName;
         Duration = duration;
         OwnerKingdom = ownerKingdom;
         TargetUnit = targetUnit;
@@ -111,6 +114,5 @@ public class BaseEffect
     public virtual void DecreaseDuration()
     {
         RemainDuration--;
-
     }
 }

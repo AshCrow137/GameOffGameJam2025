@@ -468,7 +468,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         unitStats.UnitHealth.CurrentHealth -= resultDamage;
         Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
-        AddDamageToBattleSystem(attacker, this, resultDamage, GetDistanceToTargetUnit(attacker));
+        AddDamageToBattleSystem(this, attacker, resultDamage, GetDistanceToTargetUnit(attacker));
         HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / Health;
         //Insert to Combat
 

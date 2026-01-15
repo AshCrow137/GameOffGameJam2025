@@ -22,6 +22,10 @@ public class Combat
         CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
         if (existingData != null)
         {
+            if(!existingData.DamageDealtByType.ContainsKey(damageType))
+            {
+                existingData.DamageDealtByType[damageType] = 0;
+            }
             existingData.DamageDealtByType[damageType] += damageDealt;
             existingData.HasKilled = existingData.HasKilled || hasKilled;
             existingData.LastInteractTurn = currentTurn;
@@ -75,12 +79,21 @@ public class Combat
         return dataList;
     }
 
-    public void AddEffectToAtacker(UnitStats unitAtacker, EffectType effect)
+    public void AddEffectFromAtacker(UnitStats unitAtacker, BaseEffect effect)
     {
         CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
         if (existingData != null)
         {
             existingData.AddEffect(existingData, effect);
+        }
+    }
+
+    public void RemoveEffectFromAtacker(UnitStats unitAtacker, BaseEffect effect)
+    {
+        CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
+        if (existingData != null)
+        {
+            existingData.RemoveEffect(existingData, effect);
         }
     }
 }

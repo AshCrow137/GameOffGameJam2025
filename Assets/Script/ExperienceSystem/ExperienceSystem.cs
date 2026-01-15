@@ -41,12 +41,14 @@ public static class ExperienceSystem
             {
                 contributions[data.UnitAtacker] = 0;
             }
-            contributions[data.UnitAtacker] +=
-                killerTypeBonus + 2 *
-                data.DamageDealtByType.GetValueOrDefault(DamageType.Melee, 0f) +
-                data.DamageDealtByType.GetValueOrDefault(DamageType.Ranged, 0f) +
-                data.DamageDealtByType.GetValueOrDefault(DamageType.Magic, 0f) +
-                data.DamageTaken + 2 * data.EffectsApplied.Count + 1;
+            float meleeDamage = data.DamageDealtByType.GetValueOrDefault(DamageType.Melee, 0f);
+            float rangedDamage = data.DamageDealtByType.GetValueOrDefault(DamageType.Ranged, 0f);
+            float damageTaken = BattleSystem.DamageTakingTo(data.UnitAtacker, combat.unitAtacked);
+            Debug.Log("Damage Taken by " + data.UnitAtacker.name + ": " + damageTaken);
+            int EffectsApplied = data.UnitAtacker.GetOwner().activeEffects.Count;
+
+            contributions[data.UnitAtacker] += killerTypeBonus + 2 * 
+                meleeDamage + rangedDamage + damageTaken + 2 * EffectsApplied + 1;
 
             Debug.Log("Contributor: " + data.UnitAtacker.name + " Contribution: " + contributions[data.UnitAtacker]);
         }
