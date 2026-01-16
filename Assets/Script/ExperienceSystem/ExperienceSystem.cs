@@ -16,6 +16,8 @@ public static class ExperienceSystem
         CalculateContributions(combat);
 
         DistributionExp(contributions);
+
+        BattleSystem.EndCombat(combat);
     }
 
     private static float TotalExperience(UnitStats unitKilled)
@@ -44,11 +46,10 @@ public static class ExperienceSystem
             float meleeDamage = data.DamageDealtByType.GetValueOrDefault(DamageType.Melee, 0f);
             float rangedDamage = data.DamageDealtByType.GetValueOrDefault(DamageType.Ranged, 0f);
             float damageTaken = BattleSystem.DamageTakingTo(data.UnitAtacker, combat.unitAtacked);
-            Debug.Log("Damage Taken by " + data.UnitAtacker.name + ": " + damageTaken);
-            int EffectsApplied = data.UnitAtacker.GetOwner().activeEffects.Count;
+            int EffectsAppliedByAttacker = data.CountActiveEffectsByAttacker(combat.unitAtacked, data);
 
             contributions[data.UnitAtacker] += killerTypeBonus + 2 * 
-                meleeDamage + rangedDamage + damageTaken + 2 * EffectsApplied + 1;
+                meleeDamage + rangedDamage + damageTaken + 2 * EffectsAppliedByAttacker + 1;
 
             Debug.Log("Contributor: " + data.UnitAtacker.name + " Contribution: " + contributions[data.UnitAtacker]);
         }

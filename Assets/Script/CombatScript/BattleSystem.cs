@@ -5,6 +5,7 @@ using UnityEngine;
 public static class BattleSystem
 {
     private static List<Combat> combats = new List<Combat>();
+    private static List<Combat> completeCombats = new List<Combat>();
 
     private static bool IsInCombat(UnitStats atacked)
     {
@@ -36,10 +37,10 @@ public static class BattleSystem
         }
         else
         {
-            Debug.LogError("Combat not found for the attacked unit.");
             RegisterCombat(atacked);
             AddDamage(atacked, atacker, damageType, damageDealt, hasKilled);
         }
+        Debug.Log($"Number Of Combats Active: {combats.Count}");
     }
 
     public static void UnitKilled(UnitStats unitAtacked)
@@ -123,6 +124,16 @@ public static class BattleSystem
             }
         }
         return 0;
+    }
+
+    public static void EndCombat(Combat combat)
+    {
+        if(combats.Contains(combat))
+        {
+            combats.Remove(combat);
+            completeCombats.Add(combat);
+            Debug.Log("Combat ended for unit: " + combat.unitAtacked.name);
+        }
     }
 
 }

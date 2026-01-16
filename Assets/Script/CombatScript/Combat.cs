@@ -52,9 +52,12 @@ public class Combat
             //    contributorsAvailable.Add(data);
             //}
             //Production Version
-            if (data.LastInteractTurn > TurnManager.instance.currentTurnCount - 4)
+            if(data.UnitAtacker.GetOwner().GetCurrentHealth() > 0)
             {
-                contributorsAvailable.Add(data);
+                if (data.LastInteractTurn > TurnManager.instance.currentTurnCount - 4)
+                {
+                    contributorsAvailable.Add(data);
+                }
             }
         }
 

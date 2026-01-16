@@ -167,7 +167,8 @@ public sealed class StatExp:StatBase
     public void AddExp(int amount)
     {
         CurrentExp += amount;
-        if(CurrentExp >= ExpToNextLvl)
+        Debug.Log("Added " + amount + " EXP. Current EXP: " + CurrentExp + "/" + ExpToNextLvl);
+        if (CurrentExp >= ExpToNextLvl)
         {
             int r = CurrentExp - ExpToNextLvl;
             CurrentExp = r;
@@ -178,6 +179,7 @@ public sealed class StatExp:StatBase
     {   
         Level++;
         Level = Mathf.Clamp(Level, 0, 99);
+        Debug.Log("Unit leveled up! New Level: " + Level);
     }
 
 }

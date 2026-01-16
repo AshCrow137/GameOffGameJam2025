@@ -55,4 +55,22 @@ public class CombatData
             data.str_EffectsApplied.Add(effect.Name);
         }
     }
+
+    public int CountActiveEffectsByAttacker(UnitStats atacked, CombatData atacker)
+    {
+        List<BaseEffect> activeEffects = new List<BaseEffect>();
+        activeEffects = atacked.GetOwner().activeEffects;
+
+        int effectCount = 0;
+
+        for (int i = 0; i < atacker.str_EffectsApplied.Count; i++)
+        {
+            if(activeEffects.Exists(e=> e.Name == atacker.str_EffectsApplied[i]))
+            {
+                effectCount++;
+            }
+        }
+
+        return effectCount;
+    }
 }
