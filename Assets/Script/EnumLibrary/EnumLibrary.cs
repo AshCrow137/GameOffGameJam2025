@@ -63,12 +63,30 @@ public enum SelectionType
     }
 public enum EntityType
 {
+    Melee,
+    Ranged,
+    Spellcaster,
+
     Infantry,
     Archer,
     Cavalry,
     Special,
     Building,
     None
+}
+
+public enum DamageType
+{
+    Melee,
+    Ranged,
+    Magic
+}
+
+public enum EffectsType
+{
+    Curse,
+    Debuff,
+    Buff
 }
 
 public enum Fog

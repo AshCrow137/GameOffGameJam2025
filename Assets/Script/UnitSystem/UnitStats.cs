@@ -6,8 +6,9 @@ using UnityEngine;
 
     public class UnitStats : MonoBehaviour
     {
-    
     [Header("Unit stats")]
+    [SerializeField]
+    private int unitTier = 1;
     [SerializeField]
     protected StatExp unitExp; public StatExp UnitExp { get { return unitExp; } private set { unitExp = value; } }
     [SerializeField]
@@ -44,7 +45,6 @@ using UnityEngine;
 
 
     private BaseGridUnitScript owner;
-
     private List<StatBase> unitStats;
 
     public void Initialize()
@@ -56,6 +56,8 @@ using UnityEngine;
         {
             unitStat.Initialize();
         }
+
+        unitExp.ExpToNextLvl = ExperienceSystem.ExpToNextLevel(this);
     }
     public T GetUnitStat<T>() where T:StatBase
     {
@@ -93,6 +95,15 @@ using UnityEngine;
     private void CheckMadnessValue()
     {
         //TODO CHeck and aply madness effects;
+    }
+
+    public BaseGridUnitScript GetOwner()
+    {
+        if(owner == null)
+        {
+            owner = GetComponent<BaseGridUnitScript>();
+        }
+        return owner;
     }
 }
 
@@ -156,7 +167,8 @@ public sealed class StatExp:StatBase
     public void AddExp(int amount)
     {
         CurrentExp += amount;
-        if(CurrentExp >= ExpToNextLvl)
+        Debug.Log("Added " + amount + " EXP. Current EXP: " + CurrentExp + "/" + ExpToNextLvl);
+        if (CurrentExp >= ExpToNextLvl)
         {
             int r = CurrentExp - ExpToNextLvl;
             CurrentExp = r;
@@ -167,6 +179,7 @@ public sealed class StatExp:StatBase
     {   
         Level++;
         Level = Mathf.Clamp(Level, 0, 99);
+        Debug.Log("Unit leveled up! New Level: " + Level);
     }
 
 }

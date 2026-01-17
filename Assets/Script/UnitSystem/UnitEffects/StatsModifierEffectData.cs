@@ -13,7 +13,7 @@ public class StatsModifierEffectData : BaseUnitEffectData
 
     public override BaseEffect InstantiateEffect(BaseKingdom owner, BaseGridUnitScript target)
     {
-        return new StatsModifierEffect(duration,owner,target,procRate, effectType,effectModifier, AffectedByMagicDefence, StatsToModify);
+        return new StatsModifierEffect(effectName, duration,owner,target,procRate, effectType,effectModifier, AffectedByMagicDefence, StatsToModify);
     }
 
 }
@@ -22,7 +22,7 @@ public class StatsModifierEffect : BaseEffect
 {
    
     public List<StatToModifyTypeAndValue> StatsToModify { get; private set; }
-    public StatsModifierEffect(int duration, BaseKingdom OwnerKingdom, BaseGridUnitScript targetUnit,ProcRate procRate ,EffectType effectType,MagicDefenceEffectModifier effectModifier, bool affectedByMagicDefence, List<StatToModifyTypeAndValue> statsToModify) : base(duration, OwnerKingdom, targetUnit,procRate,effectType, effectModifier, affectedByMagicDefence)
+    public StatsModifierEffect(string effectName, int duration, BaseKingdom OwnerKingdom, BaseGridUnitScript targetUnit,ProcRate procRate ,EffectType effectType,MagicDefenceEffectModifier effectModifier, bool affectedByMagicDefence, List<StatToModifyTypeAndValue> statsToModify) : base(effectName, duration, OwnerKingdom, targetUnit,procRate,effectType, effectModifier, affectedByMagicDefence)
     {
         StatsToModify = statsToModify;
     }

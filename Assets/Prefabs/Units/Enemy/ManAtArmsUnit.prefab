@@ -68,6 +68,54 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitMana.MaxMana
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitExp.ExpModifier
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitHealth.MaxHealth
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitMana.CurrentMana
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitHealth.CurrentHealth
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitMeleeDamage.MeleeDamage
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitMagicDefence.MagicDefence
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitMeleeDefence.MeleeDefence
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitRangedDamage.RangedDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitCounterAttack.Counterattack
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitRangedDefence.RangedDefence
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: unitMovementDistance.MovementDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6882639330794916054, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: m_Name
       value: ManAtArmsUnit
@@ -139,18 +187,11 @@ MonoBehaviour:
   EntityDescription: 
   CameraRotationOffset: {x: 90, y: -90, z: -90}
   CanStandOnTiles: 
-  MeleeAttackDamage: 8
-  RangeAttackDamage: 1
-  RetallitionAttackDamage: 6
-  AttackRange: 1
-  MovementDistance: 3
-  ProductionTime: 1
-  MovementSpeed: 3
-  AttacksPerTurn: 1
   CanMoveAfterattack: 0
   movementPointsPanel: {fileID: 9161996410506791946}
   movementPointsImage: {fileID: 6842918741129442623}
   animator: {fileID: 823412541917233659}
+  MovementSpeed: 3
   specialAbilityRange: 1
   aiming: 0
   unitAttackSoundEvent:

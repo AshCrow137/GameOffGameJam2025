@@ -406,6 +406,12 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         InputManager.instance.SetDefaultCursor();
     }
 
+    //GetDistance between this unit and target unit in cells
+    public int GetDistanceToTargetUnit(BaseGridEntity targetEntity)
+    {
+        return hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position));
+    }
+
     /// <summary>
     /// Base attack function, controls what kind of attack is used, ranged or melee
     /// </summary>
@@ -413,7 +419,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     protected virtual void Attack(BaseGridEntity targetEntity)
     {
         animator.Play("Attack", 0, 0);
-        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(targetEntity.transform.position)) == 1)
+        if (GetDistanceToTargetUnit(targetEntity) == 1)
         {
             targetEntity.TakeDamage(unitStats.UnitMeleeDamage.FinalMeleeDamage, this, false);
             
@@ -437,43 +443,51 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         AttackFinishEvent.Invoke();
     }
 
+    private void AddDamageToBattleSystem(BaseGridUnitScript defender, BaseGridUnitScript attacker, int damageAmount, int distance)
+    {
+        Debug.Log($"Defender: {defender.name}/// Atacker: {attacker.name}");
+        BattleSystem.AddDamage(defender.unitStats, attacker.unitStats,
+            distance > 1 ? DamageType.Ranged : DamageType.Melee, damageAmount,
+            defender.unitStats.UnitHealth.CurrentHealth <= 0);
+    }
+
     /// <summary>
     /// calculate and apply final damage to unit
     /// </summary>
     /// <param name="amount">amount of taken damage before calculation</param>
     /// <param name="attacker">unit that attack this unit</param>
-    /// <param name="retallitionAttack">bool if this damage was retallition damage or not</param>
-    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool retallitionAttack)
+    /// <param name="bIsCounterattack">bool if this damage was counterattack damage or not</param>
+    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool bIsCounterattack)
     {
         animator.Play("TakeDamage", 0, 0);
         int resultDamage = amount;
-        if(!retallitionAttack)
+        if(!bIsCounterattack)
         {
             //if not retallition  damage calculate result damage using matrix of units
             resultDamage = (int)Mathf.Round( resultDamage * GetDamageModifier(attacker.entityType, entityType));
         }
-        CurrentHealth -= resultDamage;
+        unitStats.UnitHealth.CurrentHealth -= resultDamage;
         Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
-        HPImage.fillAmount = (float)CurrentHealth / Health;
-        if (CurrentHealth <= 0 ) 
+        AddDamageToBattleSystem(this, attacker, resultDamage, GetDistanceToTargetUnit(attacker));
+        HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / Health;
+        //Insert to Combat
+
+        if (unitStats.UnitHealth.CurrentHealth <= 0 ) 
         {
-           
-            
             Death();
             return;
         }
         //if attack is not retallition attack and this unit survives, this unit try to do retallition attack to it's attacker
-        if(!retallitionAttack)
+        if(!bIsCounterattack)
         {
-            
-            RetallitionAttack(attacker);
+            Counterattack(attacker);
         }
     }
     /// <summary>
     /// base retallition attack
     /// </summary>
     /// <param name="attacker"></param>
-    public virtual void RetallitionAttack(BaseGridUnitScript attacker)
+    public virtual void Counterattack(BaseGridUnitScript attacker)
     {
         if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
         {
@@ -496,6 +510,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         GetComponent<EntityVision>().OnDeath();
         hTM.RemoveUnitFromTile(hTM.PositionToCellPosition(transform.position));
         hTM.SetTileState(hTM.PositionToCellPosition(transform.position), TileState.Default);
+        BattleSystem.UnitKilled(this.unitStats);
         Owner.RemoveUnitFromKingdom(this);
         base.Death(); // Remove from entity directory
         gameObject.SetActive(false);

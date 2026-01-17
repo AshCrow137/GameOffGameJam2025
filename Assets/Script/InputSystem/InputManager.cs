@@ -110,7 +110,7 @@ public class InputManager : MonoBehaviour
     #region KeyboardInput
     public void OnCameraZoom(InputValue value)
     {
-        Debug.Log("CameraZoom");
+        //Debug.Log("CameraZoom");
     }
     public void OnMoveCamera(InputValue value)
     {
