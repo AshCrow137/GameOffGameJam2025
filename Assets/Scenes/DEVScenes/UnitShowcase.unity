@@ -9226,6 +9226,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: unitExp.ExpModifier
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: unitRangedDamage.IsMagic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2024756050137535649, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
       propertyPath: m_Name
       value: FishmanUnit
@@ -9993,11 +10001,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2623701123767332454, guid: db609474c7d29344d8029ccc95058d9a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.67
+      value: -7.7
       objectReference: {fileID: 0}
     - target: {fileID: 2623701123767332454, guid: db609474c7d29344d8029ccc95058d9a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.39
+      value: -2.4
       objectReference: {fileID: 0}
     - target: {fileID: 2623701123767332454, guid: db609474c7d29344d8029ccc95058d9a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10058,6 +10066,10 @@ PrefabInstance:
     - target: {fileID: 8363726841908446572, guid: db609474c7d29344d8029ccc95058d9a, type: 3}
       propertyPath: m_Name
       value: LongBowManUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8363726841908446572, guid: db609474c7d29344d8029ccc95058d9a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10606,6 +10618,10 @@ PrefabInstance:
     - target: {fileID: 2939275677540073900, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}
       propertyPath: m_Name
       value: ManAtArmsUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448387413527707176, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}
+      propertyPath: unitStamina.CurrentStamina
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8697234683866606246, guid: 50835bd5138ed4540a665f9e6e9e462a, type: 3}
       propertyPath: m_LocalPosition.x

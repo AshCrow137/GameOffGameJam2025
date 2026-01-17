@@ -96,6 +96,10 @@ using UnityEngine;
     {
         //TODO CHeck and aply madness effects;
     }
+    public float GetMadnessModifier()
+    {
+        return 1;
+    }
 
     public BaseGridUnitScript GetOwner()
     {
@@ -208,6 +212,7 @@ public sealed class StatVision:StatBase
 [Serializable]
 public sealed class StatMeleeDamage : StatBase
 {
+    public bool IsMagic = false;
     public int MeleeDamage = 1;
     public int FinalMeleeDamage { get; private set; }
     public override void ChangeStat(int amount)
@@ -229,6 +234,7 @@ public sealed class StatMeleeDamage : StatBase
 [Serializable]
 public sealed class StatRangedDamage : StatBase
 {
+    public bool IsMagic = false;
     public int RangedDamage = 1;
     public int FinalRangedDamage { get; private set; }
     public override void ChangeStat(int amount)
@@ -250,6 +256,7 @@ public sealed class StatRangedDamage : StatBase
 [Serializable]
 public sealed class StatCounterattack : StatBase
 {
+    public bool IsMagic = false;
     public int Counterattack = 1;
     public int FinalCounterattack { get; private set; }
     public override void ChangeStat(int amount)
@@ -427,6 +434,17 @@ public sealed class StatStamina : StatBase
         base.Initialize();
         FinalMaxStamina = MaxStamina;
     }
+    public float GetStaminaModifier()
+    {
+        float staminaPercent = (CurrentStamina / (float)FinalMaxStamina) * 100f;
+
+        if (staminaPercent > 50f) return 1f;
+        if (staminaPercent > 40f) return 0.85f;
+        if (staminaPercent > 30f) return 0.70f;
+        if (staminaPercent > 20f) return 0.55f;
+        if (staminaPercent > 10f) return 0.40f;
+        return 0.25f;
+    }
 }
 [Serializable]
 public sealed class StatMana : StatBase
@@ -462,4 +480,3 @@ public sealed class StatMana : StatBase
         FinalMaxMana = MaxMana;
     }
 }
-

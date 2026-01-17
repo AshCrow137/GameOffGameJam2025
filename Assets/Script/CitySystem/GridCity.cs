@@ -131,9 +131,9 @@ public class GridCity : BaseGridEntity,IDamageable
         }
        
     }
-    public override void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack)
+    public override void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack,DamageType damageType)
     {
-        base.TakeDamage(amount, attacker, retallitionAttack);
+        base.TakeDamage(amount, attacker, retallitionAttack,damageType);
         CurrentHealth -= amount;
         Debug.Log($"{this.gameObject.name} take {amount} damage");
         HPImage.fillAmount = (float)CurrentHealth / Health;
