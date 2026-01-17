@@ -146,6 +146,19 @@ public class InputManager : MonoBehaviour
         //GetComponent<PlayerInput>().SwitchCurrentActionMap("InMenu");
 
     }
+    
+    public void OnInventory(InputValue value)
+    {
+        InventoryUI.Instance.OnInventory();
+        //Debug.Log("OnInventory - Tab pressed");
+        //if (inventoryManager != null)
+        //{
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("CharacterInventoryManager reference is not set in InputManager!");
+        //}
+    }
 
     //Mouse Inputs
     public void OnMoveCameraWithMouse(InputValue value)

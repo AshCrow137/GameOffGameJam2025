@@ -209,8 +209,8 @@ public class UIManager : MonoBehaviour
             AbilitiesPanel.SetActive(false);
         }
         //habiliyInfo.text = "nothing yet";
-
         UpdateLife(unit);
+        InventoryUI.Instance.Assign(unit);
     }
     public void ActivateUnitAbility(int abilityIndex)
     {
