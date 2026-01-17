@@ -11,6 +11,16 @@ public class CombatData
     List<string> str_EffectsApplied = new List<string>();
     int lastInteractTurn;
 
+    public CombatData(UnitStats atacker, BaseEffect effect)
+    {
+        this.unitAtacker = atacker;
+        this.damageDealtByType = new Dictionary<DamageType, float>();
+        this.hasKilled = false;
+        this.lastInteractTurn = TurnManager.instance.currentTurnCount;
+        this.str_EffectsApplied = new List<string>();
+
+        AddEffect(this, effect);
+    }
     public CombatData(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, int lastInteractTurn)
     {
         this.unitAtacker = unitAtacker;

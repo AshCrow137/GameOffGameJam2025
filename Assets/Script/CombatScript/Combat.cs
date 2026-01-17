@@ -27,7 +27,7 @@ public class Combat
                 existingData.DamageDealtByType[damageType] = 0;
             }
             existingData.DamageDealtByType[damageType] += damageDealt;
-            existingData.HasKilled = existingData.HasKilled || hasKilled;
+            existingData.HasKilled = hasKilled;
             existingData.LastInteractTurn = currentTurn;
             if(hasKilled)
             {
@@ -46,14 +46,10 @@ public class Combat
         List<CombatData> contributorsAvailable = new List<CombatData>();
         foreach (CombatData data in combatDataList)
         {
-            ////Test Version
-            //if(data.LastInteractTurn > 5 - 4)
-            //{
-            //    contributorsAvailable.Add(data);
-            //}
-            //Production Version
-            if(data.UnitAtacker.GetOwner().GetCurrentHealth() > 0)
+            Debug.Log("Checking contributor Health: " + data.UnitAtacker.UnitHealth.CurrentHealth);
+            if (data.UnitAtacker.UnitHealth.CurrentHealth > 0)
             {
+                Debug.Log("Contributor is alive: " + data.UnitAtacker.name);
                 if (data.LastInteractTurn > TurnManager.instance.currentTurnCount - 4)
                 {
                     contributorsAvailable.Add(data);
@@ -88,6 +84,10 @@ public class Combat
         if (existingData != null)
         {
             existingData.AddEffect(existingData, effect);
+        }
+        else
+        {
+            CombatData newData = new CombatData(unitAtacker, effect);
         }
     }
 
