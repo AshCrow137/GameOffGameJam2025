@@ -9,8 +9,7 @@ public static class ExperienceSystem
 
     public static void DistributeExperience(Combat combat)
     {
-        Debug.Log("Total Experience to distribute calculated.");
-        expGain = TotalExperience(combat.unitAtacked);
+        expGain = Mathf.RoundToInt(TotalExperience(combat.unitAtacked));
         Debug.Log("Experience to distribute: " + expGain);
 
         CalculateContributions(combat);
@@ -22,7 +21,7 @@ public static class ExperienceSystem
 
     private static float TotalExperience(UnitStats unitKilled)
     {
-        return unitKilled.UnitExp.ExpModifier * (1 + 0.1f * unitKilled.UnitExp.Level);
+        return 0.1f * unitKilled.UnitExp.ExpModifier * (1 + 0.1f * unitKilled.UnitExp.Level);
     }
 
     private static void CalculateContributions(Combat combat)
@@ -65,8 +64,8 @@ public static class ExperienceSystem
 
         foreach(UnitStats unit in contributors.Keys)
         {
-            Debug.Log("Unit: " + unit.name + " gained " + Mathf.FloorToInt(expGain * (contributions[unit] / totalContribution)) + " EXP.");
-            unit.UnitExp.AddExp(Mathf.FloorToInt(expGain * (contributions[unit] / totalContribution)));
+            Debug.Log("Unit: " + unit.name + " gained " + Mathf.RoundToInt(expGain * (contributions[unit] / totalContribution)) + " EXP.");
+            unit.UnitExp.AddExp(Mathf.RoundToInt(expGain * (contributions[unit] / totalContribution)));
         }
     }
 
@@ -84,11 +83,11 @@ public static class ExperienceSystem
 
     public static int ExpToNextLevel(UnitStats unit)
     {
-        int level = unit.UnitExp.Level;
-        int expMod = unit.UnitExp.ExpModifier;
+        float level = unit.UnitExp.Level;
+        float expMod = unit.UnitExp.ExpModifier;
 
-        int expToNextLevel = 10 * (level + 1) * expMod / 100;
+        float expToNextLevel = 10 * (level + 1) * (expMod / 100);
         Debug.Log($"Experience of {unit.name} is: {expToNextLevel}");
-        return expToNextLevel;
+        return Mathf.RoundToInt(expToNextLevel);
     }
 }

@@ -90,6 +90,12 @@ public static class BattleSystem
         {
             combat.AddEffectFromAtacker(atacker, effect);
         }
+        else
+        {
+            RegisterCombat(atacked);
+            combat = combats.Find(c => c.unitAtacked == atacked);
+            combat.AddEffectFromAtacker(atacker, effect);
+        }
     }
 
     public static void RemoveEffect(UnitStats atacked, UnitStats atacker, BaseEffect effect)
