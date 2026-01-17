@@ -57,7 +57,7 @@ public class BaseGridEntity : MonoBehaviour
     /*Special*/ {1.0f,1.0f,1.0f,1f,1f },
     /*Building*/{1.0f,1.0f,1.0f,1f,1f },
     };
-    protected float GetDamageModifier(EntityType attacker, EntityType defender)
+    protected float GetCreatureTypeDamageModifier(EntityType attacker, EntityType defender)
     {
         return AttackModifiers[(int)attacker, (int)defender];
     }
@@ -227,7 +227,7 @@ public class BaseGridEntity : MonoBehaviour
         gridPosition = newPosition;
     }
     
-    public virtual void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack)
+    public virtual void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack, DamageType damageType)
     {
 
     }

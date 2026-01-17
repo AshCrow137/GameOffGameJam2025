@@ -96,6 +96,10 @@ using UnityEngine;
     {
         //TODO CHeck and aply madness effects;
     }
+    public float GetMadnessModifier()
+    {
+        return 1;
+    }
 
     public BaseGridUnitScript GetOwner()
     {
@@ -208,6 +212,7 @@ public sealed class StatVision:StatBase
 [Serializable]
 public sealed class StatMeleeDamage : StatBase
 {
+    public bool IsMagic = false;
     public int MeleeDamage = 1;
     public int FinalMeleeDamage { get; private set; }
     public override void ChangeStat(int amount)
@@ -229,6 +234,7 @@ public sealed class StatMeleeDamage : StatBase
 [Serializable]
 public sealed class StatRangedDamage : StatBase
 {
+    public bool IsMagic = false;
     public int RangedDamage = 1;
     public int FinalRangedDamage { get; private set; }
     public override void ChangeStat(int amount)
@@ -250,6 +256,7 @@ public sealed class StatRangedDamage : StatBase
 [Serializable]
 public sealed class StatCounterattack : StatBase
 {
+    public bool IsMagic = false;
     public int Counterattack = 1;
     public int FinalCounterattack { get; private set; }
     public override void ChangeStat(int amount)
