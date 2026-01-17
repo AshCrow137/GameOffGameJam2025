@@ -17,36 +17,36 @@ public static class EnumLibrary
 public enum TimerDirection
 {
     INCREASE,
-        DECREASE
-    }
+    DECREASE
+}
 
-    public enum TileState
-    {
-        Land,
-        Water,
-        OccupiedByUnit,
-        OccuppiedByBuilding,
-        OccupiedByCity,
-        Unavailable,
-        Default
-    }
+public enum TileState
+{
+    Land,
+    Water,
+    OccupiedByUnit,
+    OccuppiedByBuilding,
+    OccupiedByCity,
+    Unavailable,
+    Default
+}
 
 
-    public enum ToggleUseCase
-    {
-        UnitPlacement,
-        BuildingPlacement,
-        CityPlacement
-    }
+public enum ToggleUseCase
+{
+    UnitPlacement,
+    BuildingPlacement,
+    CityPlacement
+}
 
-    public enum MadnessEffect
-    {
-        None,
-        less10,
-        less25,
-        less35,
-        almostDefeat
-    }
+public enum MadnessEffect
+{
+    None,
+    less10,
+    less25,
+    less35,
+    almostDefeat
+}
 
 public enum SelectionType
 {
@@ -54,19 +54,15 @@ public enum SelectionType
     City,
     Unit
 }
-    
-    public enum CityMenuMode
-    {
-        None,
-        SpawnUnit,
-        SpawnBuilding
-    }
+
+public enum CityMenuMode
+{
+    None,
+    SpawnUnit,
+    SpawnBuilding
+}
 public enum EntityType
 {
-    Melee,
-    Ranged,
-    Spellcaster,
-
     Infantry,
     Archer,
     Cavalry,
@@ -110,7 +106,7 @@ public enum AIUnitAction
     Move,
     UseAbility,
     Explore
-    
+
 }
 public enum AIMacroAction
 {

@@ -480,4 +480,3 @@ public sealed class StatMana : StatBase
         FinalMaxMana = MaxMana;
     }
 }
-

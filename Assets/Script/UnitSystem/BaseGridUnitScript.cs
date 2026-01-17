@@ -421,11 +421,13 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         animator.Play("Attack", 0, 0);
         if (GetDistanceToTargetUnit(targetEntity) == 1)
         {
-            targetEntity.TakeDamage(unitStats.UnitMeleeDamage.FinalMeleeDamage, this, false, unitStats.UnitMeleeDamage.IsMagic?DamageType.Magic:DamageType.Melee);  
+            int finalDamage = (int)Mathf.Round(unitStats.UnitMeleeDamage.FinalMeleeDamage * unitStats.UnitStamina.GetStaminaModifier() * unitStats.GetMadnessModifier());
+            targetEntity.TakeDamage(finalDamage, this, false, unitStats.UnitMeleeDamage.IsMagic?DamageType.Magic:DamageType.Melee);  
         }
         else
         {
-            targetEntity.TakeDamage(unitStats.UnitRangedDamage.FinalRangedDamage, this, false, unitStats.UnitMeleeDamage.IsMagic ? DamageType.Magic : DamageType.Ranged);
+            int finalDamage = (int)Mathf.Round(unitStats.UnitRangedDamage.FinalRangedDamage * unitStats.UnitStamina.GetStaminaModifier() * unitStats.GetMadnessModifier());
+            targetEntity.TakeDamage(finalDamage, this, false, unitStats.UnitRangedDamage.IsMagic ? DamageType.Magic : DamageType.Ranged);
         }
        //if property true, unit can move after attack
         if(!CanMoveAfterattack)
@@ -464,7 +466,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         if(!bIsCounterattack)
         {
             //if not retallition  damage calculate result damage using matrix of units
-            resultDamage = (int)Mathf.Round( resultDamage*unitStats.UnitStamina.GetStaminaModifier()*unitStats.GetMadnessModifier() * GetCreatureTypeDamageModifier(attacker.entityType, entityType));
+            resultDamage = (int)Mathf.Round( resultDamage * GetCreatureTypeDamageModifier(attacker.entityType, entityType));
         }
         int defence = 0;
         switch(damageType)
@@ -481,9 +483,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         int takenDamage = resultDamage - defence;
         unitStats.UnitHealth.CurrentHealth -= takenDamage > 0 ? takenDamage : 0; 
-        Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
+        Debug.Log($"{this.gameObject.name} take {takenDamage} damage, base damage was {amount}, damage after modifiers: {resultDamage}");
         AddDamageToBattleSystem(this, attacker, resultDamage, damageType);
-        HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / Health;
+        HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / (float)unitStats.UnitHealth.FinalMaxHealth;
         //Insert to Combat
 
         if (unitStats.UnitHealth.CurrentHealth <= 0 ) 
