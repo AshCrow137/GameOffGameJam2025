@@ -414,6 +414,17 @@ public sealed class StatStamina : StatBase
         base.Initialize();
         FinalMaxStamina = MaxStamina;
     }
+    public float GetStaminaModifier()
+    {
+        float staminaPercent = (CurrentStamina / (float)FinalMaxStamina) * 100f;
+
+        if (staminaPercent > 50f) return 1f;
+        if (staminaPercent > 40f) return 0.85f;
+        if (staminaPercent > 30f) return 0.70f;
+        if (staminaPercent > 20f) return 0.55f;
+        if (staminaPercent > 10f) return 0.40f;
+        return 0.25f;
+    }
 }
 [Serializable]
 public sealed class StatMana : StatBase
