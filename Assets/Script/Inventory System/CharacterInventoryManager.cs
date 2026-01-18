@@ -25,7 +25,8 @@ public class CharacterInventoryManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        playerInventory = new Inventory(20, 99);
+        BaseGridUnitScript unit = GetComponent<BaseGridUnitScript>();
+        playerInventory = new Inventory(6, 1, unit);
         foreach (InventoryItem item in items)
         {
             playerInventory.AddItem(item);

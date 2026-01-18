@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Represents a character's complete inventory system with equipment slots and storage.
-/// Manages helmet, armor, weapons, trinket, and general storage.
+/// Represents a character's complete inventory system with equipment slots and general storage.
+/// Manages helmet, armor, weapons, trinket, and general storage slots.
 /// Usage: Create via constructor with desired slot capacity and stack size.
 /// </summary>
 public class Inventory
@@ -26,7 +26,7 @@ public class Inventory
     /// <summary>General storage inventory for non-equipped items.</summary>
     public StorageInventory playerStorage;
     
-    /// <summary>Maximum number of slots in the inventory.</summary>
+    /// <summary>Maximum number of slots in the general storage inventory.</summary>
     public int maxInventorySlots;
     
     /// <summary>Maximum stack size per storage slot.</summary>
@@ -37,28 +37,33 @@ public class Inventory
     /// </summary>
     /// <param name="maxSlots">Maximum number of storage slots.</param>
     /// <param name="stackPerSlot">Maximum items per stack in storage.</param>
-    public Inventory(int maxSlots, int stackPerSlot)
+    public Inventory(int maxSlots, int stackPerSlot): this(maxSlots, stackPerSlot, null)
+    {
+    }
+
+    public Inventory(int maxSlots, int stackPerSlot, BaseGridUnitScript ownerEntity)
     {
         maxInventorySlots = maxSlots;
         stackPerStorageSlot = stackPerSlot;
-        Initialize();
+        Initialize(ownerEntity);
     }
 
     /// <summary>
-    /// Initializes all equipment slots and storage inventory.
+    /// Initializes all equipment slots and storage inventory. Optionally applies effects on equip if an owner entity is provided.
     /// </summary>
-    public void Initialize()
+    public void Initialize(BaseGridUnitScript ownerEntity)
     {
-        helmet = new InventorySlot(SlotType.Helmet, 1);
-        armour = new InventorySlot(SlotType.Armor, 1);
-        mainHand = new InventorySlot(SlotType.MainHand, 1);
-        offHand = new InventorySlot(SlotType.OffHand, 1);
-        trinket = new InventorySlot(SlotType.Trinket, 1);
-        playerStorage = new StorageInventory(maxInventorySlots, 99);
+        bool applyEffectOnEquip = ownerEntity != null;
+        helmet = new InventorySlot(SlotType.Helmet, 1, applyEffectOnEquip, ownerEntity);
+        armour = new InventorySlot(SlotType.Armor, 1, applyEffectOnEquip, ownerEntity);
+        mainHand = new InventorySlot(SlotType.MainHand, 1, applyEffectOnEquip, ownerEntity);
+        offHand = new InventorySlot(SlotType.OffHand, 1, applyEffectOnEquip, ownerEntity);
+        trinket = new InventorySlot(SlotType.Trinket, 1, applyEffectOnEquip, ownerEntity);
+        playerStorage = new StorageInventory(maxInventorySlots, stackPerStorageSlot);
     }
 
     /// <summary>
-    /// Adds a single item to the inventory.
+    /// Adds a single item to the inventory (tries equipment slots first, then storage).
     /// </summary>
     /// <param name="itemToAdd">The item to add.</param>
     /// <returns>True if item was successfully added, false otherwise.</returns>
