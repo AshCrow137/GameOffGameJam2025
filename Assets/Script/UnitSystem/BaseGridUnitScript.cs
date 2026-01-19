@@ -421,12 +421,13 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         animator.Play("Attack", 0, 0);
         if (GetDistanceToTargetUnit(targetEntity) == 1)
         {
-            targetEntity.TakeDamage(unitStats.UnitMeleeDamage.FinalMeleeDamage, this, false);
-            
+            int finalDamage = (int)Mathf.Round(unitStats.UnitMeleeDamage.FinalMeleeDamage * unitStats.UnitStamina.GetStaminaModifier() * unitStats.GetMadnessModifier());
+            targetEntity.TakeDamage(finalDamage, this, false, unitStats.UnitMeleeDamage.IsMagic?DamageType.Magic:DamageType.Melee);  
         }
         else
         {
-            targetEntity.TakeDamage(unitStats.UnitRangedDamage.FinalRangedDamage, this, false);
+            int finalDamage = (int)Mathf.Round(unitStats.UnitRangedDamage.FinalRangedDamage * unitStats.UnitStamina.GetStaminaModifier() * unitStats.GetMadnessModifier());
+            targetEntity.TakeDamage(finalDamage, this, false, unitStats.UnitRangedDamage.IsMagic ? DamageType.Magic : DamageType.Ranged);
         }
        //if property true, unit can move after attack
         if(!CanMoveAfterattack)
@@ -443,11 +444,12 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         AttackFinishEvent.Invoke();
     }
 
-    private void AddDamageToBattleSystem(BaseGridUnitScript defender, BaseGridUnitScript attacker, int damageAmount, int distance)
+    private void AddDamageToBattleSystem(BaseGridUnitScript defender, BaseGridUnitScript attacker, int damageAmount, DamageType damageType)
     {
         Debug.Log($"Defender: {defender.name}/// Atacker: {attacker.name}");
         BattleSystem.AddDamage(defender.unitStats, attacker.unitStats,
-            distance > 1 ? DamageType.Ranged : DamageType.Melee, damageAmount,
+            damageType, 
+            damageAmount,
             defender.unitStats.UnitHealth.CurrentHealth <= 0);
     }
 
@@ -457,19 +459,33 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// <param name="amount">amount of taken damage before calculation</param>
     /// <param name="attacker">unit that attack this unit</param>
     /// <param name="bIsCounterattack">bool if this damage was counterattack damage or not</param>
-    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool bIsCounterattack)
+    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool bIsCounterattack,DamageType damageType)
     {
         animator.Play("TakeDamage", 0, 0);
         int resultDamage = amount;
         if(!bIsCounterattack)
         {
             //if not retallition  damage calculate result damage using matrix of units
-            resultDamage = (int)Mathf.Round( resultDamage * GetDamageModifier(attacker.entityType, entityType));
+            resultDamage = (int)Mathf.Round( resultDamage * GetCreatureTypeDamageModifier(attacker.entityType, entityType));
         }
-        unitStats.UnitHealth.CurrentHealth -= resultDamage;
-        Debug.Log($"{this.gameObject.name} take {resultDamage} damage, base damage was {amount}");
-        AddDamageToBattleSystem(this, attacker, resultDamage, GetDistanceToTargetUnit(attacker));
-        HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / Health;
+        int defence = 0;
+        switch(damageType)
+        {
+            case DamageType.Melee:
+                defence = unitStats.UnitMeleeDefence.FinalMeleeDefence;
+                break;
+            case DamageType.Ranged:
+                defence = unitStats.UnitRangedDefence.FinalRangedDefence;
+                break;
+            case DamageType.Magic:
+                defence = unitStats.UnitMagicDefence.FinalMagicDefence;
+                break;
+        }
+        int takenDamage = resultDamage - defence;
+        unitStats.UnitHealth.CurrentHealth -= takenDamage > 0 ? takenDamage : 0; 
+        Debug.Log($"{this.gameObject.name} take {takenDamage} damage, base damage was {amount}, damage after modifiers: {resultDamage}");
+        AddDamageToBattleSystem(this, attacker, resultDamage, damageType);
+        HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / (float)unitStats.UnitHealth.FinalMaxHealth;
         //Insert to Combat
 
         if (unitStats.UnitHealth.CurrentHealth <= 0 ) 
@@ -491,7 +507,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
         {
-            attacker.TakeDamage(unitStats.UnitCounterAttack.FinalCounterattack, this, true);
+            attacker.TakeDamage(unitStats.UnitCounterAttack.FinalCounterattack, this, true, unitStats.UnitMeleeDamage.IsMagic ? DamageType.Magic : DamageType.Melee);
             unitAttackSoundEvent.Post(gameObject);
         }
         
@@ -753,9 +769,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         if (unitStats.UnitAttackRange.FinalAttackRange > 1)
         {
-            return (int)Mathf.Round(unitStats.UnitRangedDamage.FinalRangedDamage * GetDamageModifier(attacker.entityType, entityType));
+            return (int)Mathf.Round(unitStats.UnitRangedDamage.FinalRangedDamage * GetCreatureTypeDamageModifier(attacker.entityType, entityType));
         }
-        else return (int)Mathf.Round(unitStats.UnitMeleeDamage.FinalMeleeDamage * GetDamageModifier(attacker.entityType, entityType)); ;
+        else return (int)Mathf.Round(unitStats.UnitMeleeDamage.FinalMeleeDamage * GetCreatureTypeDamageModifier(attacker.entityType, entityType)); ;
     }
     //public virtual void SpecialAbility() { }
     public virtual void SpecialAbility() { animator.Play("Attack", 0, 0); }
