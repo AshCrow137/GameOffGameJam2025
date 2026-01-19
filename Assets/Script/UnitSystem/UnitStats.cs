@@ -41,11 +41,13 @@ using UnityEngine;
     protected int localMadness = 0; public int LocalMadness { get {  return localMadness; } private set {  localMadness = value; } }
     [SerializeField]
     protected int productionTime = 1; public int ProductionTime {  get { return productionTime; } private set { productionTime = value; } }
-
+    [SerializeField]
+    protected List<Upgrade> possibleUpgrades; public List<Upgrade> PossibleUpgrades { get { return possibleUpgrades; } private set { possibleUpgrades = value; } }
 
 
     private BaseGridUnitScript owner;
     private List<StatBase> unitStats;
+    private List<Upgrade> availableUpgrades;
 
     public void Initialize()
     {

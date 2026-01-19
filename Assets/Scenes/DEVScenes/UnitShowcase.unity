@@ -9226,6 +9226,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: possibleUpgrades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a27a8256f739ae843b3f839f7930c35f, type: 2}
     - target: {fileID: 2024756050137535649, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
       propertyPath: m_Name
       value: FishmanUnit
