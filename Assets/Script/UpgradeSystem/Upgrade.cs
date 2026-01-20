@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Upgrade", menuName = "Scriptable Objects/Upgrade")]
 public class Upgrade : ScriptableObject
 {
     [SerializeField]
@@ -14,26 +13,36 @@ public class Upgrade : ScriptableObject
     [SerializeField]
     public int upgradeLimitLevel;        //-1 for unlimited
     [SerializeField]
+    public int amountToUpgrade;
+    [SerializeField]
     public bool isBehaviour;
 
     private int currentUpgradeLevel = 0;
 
-    private bool CanUpgrade()
+    private bool CanChooseUpgrade(Upgrade upgrade)
     {
         return upgradeLimitLevel == -1 || currentUpgradeLevel < upgradeLimitLevel;
     }
 
-    public virtual void ApplyUpgrade(UnitStats unitToApplyUpgrade)
+    public virtual void ChooseUpgrade(Upgrade upgradeChoosed)
     {
-        if (CanUpgrade())
+        if (CanChooseUpgrade(upgradeChoosed))
         {
-            Debug.Log("Applying upgrade: " + upgradeName);
-            Debug.Log("Upgrade description: " + upgradeDescription);
-            currentUpgradeLevel++;
+            Debug.Log("Choosing upgrade: " + upgradeName);
+            if (isBehaviour)
+            {
+                currentUpgradeLevel++;
+                amountToUpgrade++;
+            }
         }
         else
         {
             Debug.LogWarning("Upgrade limit reached for " + upgradeName);
         }
+    }
+
+    public virtual void ApplyUpgrade(UnitStats unitToApplyUpgrade)
+    {
+
     }
 }
