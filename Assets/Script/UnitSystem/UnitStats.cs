@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-
-    public class UnitStats : MonoBehaviour
+public class UnitStats : MonoBehaviour
     {
     [Header("Unit stats")]
     [SerializeField]
@@ -82,6 +82,7 @@ using UnityEngine;
         }
         return null;
     }
+    public  List<StatBase> GetStatsList() { return unitStats; }
     /// <summary>
     /// Changing Madness. + to add; - to remove. Value clamped 0-100
     /// </summary>
@@ -114,13 +115,14 @@ using UnityEngine;
 [Serializable]
 public abstract class StatBase
 {
+    public UnityEvent<StatBase> StatChangeEvent { get; private set; } = new UnityEvent<StatBase>();
     public virtual void ChangeStat(int amount)
     {
-
+        StatChangeEvent.Invoke(this);
     }
     public virtual void ChangeBaseStat(int amount)
     {
-
+        StatChangeEvent.Invoke(this);
     }
     public virtual void Initialize()
     {
@@ -142,17 +144,18 @@ public sealed class StatHealth:StatBase
     /// <param name="amount"></param>
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalMaxHealth += amount;
         if (CurrentHealth > FinalMaxHealth) CurrentHealth = FinalMaxHealth;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         MaxHealth += amount;
         FinalMaxHealth += amount;
         if (CurrentHealth > FinalMaxHealth) CurrentHealth = FinalMaxHealth;
-
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -194,8 +197,9 @@ public sealed class StatVision:StatBase
     public int FinalVision { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalVision += amount;
+        base.ChangeStat(amount);
     }
     public override void Initialize()
     {
@@ -204,9 +208,10 @@ public sealed class StatVision:StatBase
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         Vision += amount;
         FinalVision += amount;
+        base.ChangeBaseStat(amount);
     }
 }
 [Serializable]
@@ -217,14 +222,16 @@ public sealed class StatMeleeDamage : StatBase
     public int FinalMeleeDamage { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalMeleeDamage += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         MeleeDamage += amount;
         FinalMeleeDamage += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -239,14 +246,16 @@ public sealed class StatRangedDamage : StatBase
     public int FinalRangedDamage { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalRangedDamage += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         RangedDamage += amount;
         FinalRangedDamage += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -261,14 +270,16 @@ public sealed class StatCounterattack : StatBase
     public int FinalCounterattack { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalCounterattack += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         Counterattack += amount;
         FinalCounterattack += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -282,14 +293,16 @@ public sealed class StatMeleeDefence : StatBase
     public int FinalMeleeDefence { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalMeleeDefence += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         MeleeDefence += amount;
         FinalMeleeDefence += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -303,14 +316,16 @@ public sealed class StatRangedDefence : StatBase
     public int FinalRangedDefence { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalRangedDefence += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         RangedDefence += amount;
         FinalRangedDefence += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -324,14 +339,16 @@ public sealed class StatMagicDefence : StatBase
     public int FinalMagicDefence { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalMagicDefence += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         MagicDefence += amount;
         FinalMagicDefence += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -345,14 +362,16 @@ public sealed class StatAttackRange : StatBase
     public int FinalAttackRange { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalAttackRange += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         AttackRange += amount;
         FinalAttackRange += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -366,14 +385,16 @@ public sealed class StatMovementDistance : StatBase
     public int FinalMovementDistance { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalMovementDistance += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         MovementDistance += amount;
         FinalMovementDistance += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -387,14 +408,16 @@ public sealed class StatAttacksPerTurn : StatBase
     public int FinalAttacksPerTurn { get; private set; }
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalAttacksPerTurn += amount;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         AttacksPerTurn += amount;
         FinalAttacksPerTurn += amount;
+        base.ChangeBaseStat(amount);
     }
     public override void Initialize()
     {
@@ -417,16 +440,18 @@ public sealed class StatStamina : StatBase
     /// <param name="amount"></param>
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+        
         FinalMaxStamina += amount;
         if (CurrentStamina > FinalMaxStamina) CurrentStamina = FinalMaxStamina;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         MaxStamina += amount;
         FinalMaxStamina += amount;
         if (CurrentStamina > FinalMaxStamina) CurrentStamina = FinalMaxStamina;
+        base.ChangeBaseStat(amount);
 
     }
     public override void Initialize()
@@ -445,6 +470,18 @@ public sealed class StatStamina : StatBase
         if (staminaPercent > 10f) return 0.40f;
         return 0.25f;
     }
+    public int GetCurrentStamina()
+    { return CurrentStamina; }
+    /// <summary>
+    /// Method to increase and decrease CurrentStamina value. 
+    /// </summary>
+    /// <param name="amount">use +amount to increase, -amount to decrease</param>
+    public void ChangeStamina(int amount)
+    {
+        CurrentStamina += amount;
+        CurrentStamina = Mathf.Clamp(CurrentStamina, 0, FinalMaxStamina);
+        StatChangeEvent.Invoke(this);
+    }
 }
 [Serializable]
 public sealed class StatMana : StatBase
@@ -462,21 +499,24 @@ public sealed class StatMana : StatBase
     /// <param name="amount"></param>
     public override void ChangeStat(int amount)
     {
-        base.ChangeStat(amount);
+       
         FinalMaxMana += amount;
         if (CurrentMana > FinalMaxMana) CurrentMana = FinalMaxMana;
+        base.ChangeStat(amount);
     }
     public override void ChangeBaseStat(int amount)
     {
-        base.ChangeBaseStat(amount);
+        
         MaxMana += amount;
         FinalMaxMana += amount;
         if (CurrentMana > FinalMaxMana) CurrentMana = FinalMaxMana;
+        base.ChangeBaseStat(amount);
 
     }
     public override void Initialize()
     {
-        base.Initialize();
+        
         FinalMaxMana = MaxMana;
+        base.Initialize();
     }
 }

@@ -176,6 +176,11 @@ public class UIManager : MonoBehaviour
 
         if (unit.GetOwner() == null) return;
 
+        UpdateUnitStatsUI(unit);
+    }
+    public void UpdateUnitStatsUI(BaseGridUnitScript unit)
+    {
+        if (unit != UIUtility.selectedUnit) return;
         PlayerKingdom pk = unit.GetOwner().gameObject.GetComponent<PlayerKingdom>();
 
         if (pk != null)

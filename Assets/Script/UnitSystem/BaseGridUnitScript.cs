@@ -112,6 +112,10 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         seeker = GetComponent<Seeker>();
         unitStats = GetComponent<UnitStats>();
         unitStats.Initialize();
+        foreach (StatBase stat in unitStats.GetStatsList())
+        {
+            stat.StatChangeEvent.AddListener(OnStatChanged);
+        }
         tilesRemain = unitStats.UnitMovementDistance.FinalMovementDistance;
         remainMovementText.text = tilesRemain.ToString();
         UpdateMovementPointsUI();
@@ -198,6 +202,10 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
        
         baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
 
+    }
+    private void OnStatChanged(StatBase stat)
+    {
+        UIManager.Instance.UpdateUnitStatsUI(this);
     }
    
     public override void OnEntityDeselect()
@@ -287,6 +295,12 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         if (!targetUnit)
         {
+            AttackFinishEvent.Invoke();
+            return false;
+        }
+        if(unitStats.UnitStamina.GetCurrentStamina()==0)
+        {
+            UIManager.Instance.ShowMessageText($"Not enought stamina!");
             AttackFinishEvent.Invoke();
             return false;
         }
