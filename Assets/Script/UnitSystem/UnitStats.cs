@@ -47,7 +47,7 @@ using UnityEngine;
 
     private BaseGridUnitScript owner;
     private List<StatBase> unitStats;
-    private List<Upgrade> availableUpgrades;
+    private List<Upgrade> habilitys;
 
     public void Initialize()
     {
@@ -59,6 +59,7 @@ using UnityEngine;
             unitStat.Initialize();
         }
 
+        habilitys = new List<Upgrade>();
         unitExp.ExpToNextLvl = ExperienceSystem.ExpToNextLevel(this);
     }
     public T GetUnitStat<T>() where T:StatBase
@@ -110,6 +111,24 @@ using UnityEngine;
             owner = GetComponent<BaseGridUnitScript>();
         }
         return owner;
+    }
+
+    public void AddHability(Upgrade hability)
+    {
+        if(!habilitys.Contains(hability))
+        {
+            habilitys.Add(hability);
+        }
+        else
+        {
+            for(int i = 0; i < habilitys.Count; i++)
+            {
+                if(habilitys[i] == hability)
+                {
+                    habilitys[i].IncreaseLevel(habilitys[i]);
+                }
+            }
+        }
     }
 }
 
@@ -185,6 +204,7 @@ public sealed class StatExp:StatBase
     {   
         Level++;
         Level = Mathf.Clamp(Level, 0, 99);
+
         Debug.Log("Unit leveled up! New Level: " + Level);
     }
 

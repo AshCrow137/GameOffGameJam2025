@@ -4,9 +4,23 @@ using UnityEngine;
 
 public static class UpgradeSystemManager
 {
-    private static List<Upgrade> possibleUpgrades = new List<Upgrade>();
+    public static List<Upgrade> ShowUpgradeOptions(UnitStats unitToUpgrade)
+    {
+        int numberOfUpgradesToShow = 3;
+        List<Upgrade> upgradesToShow = new List<Upgrade>();
+        List<Upgrade> aux = unitToUpgrade.PossibleUpgrades;
 
-    // fazer O Start pegando os upgrades do UnitStats,
-    // e tirando os possivel para aquele lvl e colocando
-    // na lista de possiveis upgrades
+        for (int i = 0; i < numberOfUpgradesToShow; i++)
+        {
+            if (aux.Count == 0)
+                break;
+            int randomIndex = Random.Range(0, aux.Count);
+            upgradesToShow.Add(aux[randomIndex]);
+            aux.RemoveAt(randomIndex);
+        }
+
+        return upgradesToShow;
+    }
+
+
 }

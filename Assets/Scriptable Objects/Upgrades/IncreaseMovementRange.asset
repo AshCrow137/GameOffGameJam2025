@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b417f7227d45c4ea52ef61e5e13332, type: 3}
-  m_Name: IncreaseAttack
+  m_Script: {fileID: 11500000, guid: a23bf89a81e68bf4285bd80bfa1ff2c8, type: 3}
+  m_Name: IncreaseMovementRange
   m_EditorClassIdentifier: 
-  upgradeName: Increase Attack
-  upgradeDescription: Increase the base attack +1
+  upgradeName: Movement Range
+  upgradeDescription: 
   upgradeIcon: {fileID: 0}
-  minimumLevelRequirement: 1
-  upgradeLimitLevel: -1
-  amountToUpgrade: 1
+  minimumLevelRequirement: 0
+  upgradeLimitLevel: 0
   isBehaviour: 0

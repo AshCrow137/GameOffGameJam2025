@@ -13,27 +13,21 @@ public class Upgrade : ScriptableObject
     [SerializeField]
     public int upgradeLimitLevel;        //-1 for unlimited
     [SerializeField]
-    public int amountToUpgrade;
-    [SerializeField]
     public bool isBehaviour;
 
     private int currentUpgradeLevel = 0;
 
-    private bool CanChooseUpgrade(Upgrade upgrade)
+    private bool CanIncrementUpgrade(Upgrade upgrade)
     {
         return upgradeLimitLevel == -1 || currentUpgradeLevel < upgradeLimitLevel;
     }
 
     public virtual void ChooseUpgrade(Upgrade upgradeChoosed)
     {
-        if (CanChooseUpgrade(upgradeChoosed))
+        if (CanIncrementUpgrade(upgradeChoosed))
         {
             Debug.Log("Choosing upgrade: " + upgradeName);
-            if (isBehaviour)
-            {
-                currentUpgradeLevel++;
-                amountToUpgrade++;
-            }
+            
         }
         else
         {
@@ -44,5 +38,15 @@ public class Upgrade : ScriptableObject
     public virtual void ApplyUpgrade(UnitStats unitToApplyUpgrade)
     {
 
+    }
+
+    public virtual void IncreaseLevel(Upgrade upgrade)
+    {
+        upgrade.currentUpgradeLevel++;
+    }
+
+    public int GetCurrentUpgradeLevel(Upgrade upgrade)
+    {
+        return upgrade.currentUpgradeLevel;
     }
 }
