@@ -128,7 +128,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
            
         }
         CanStandOnTiles = possibleSpawnTiles;
-
+        if(TryGetComponent(out CharacterInventoryManager im)){
+            im.Initialize();
+        }
 
     }
 
