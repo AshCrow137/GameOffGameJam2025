@@ -243,6 +243,11 @@ public class InputManager : MonoBehaviour
         //and converts it to a raycast in the world,
 
     }
+
+    public void OnInventory(InputValue value)
+    {
+        InventoryUI.Instance.OnInventory();
+    }
     #endregion
 
     public Vector3 GetMousePosition()
