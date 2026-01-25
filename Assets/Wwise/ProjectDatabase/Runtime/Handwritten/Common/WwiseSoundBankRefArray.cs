@@ -69,7 +69,7 @@ public class WwiseSoundBankRefArray
     public WwiseSoundBankRefArray(global::System.IntPtr cPtr) : this(cPtr, true)
     {
     }
-    
+
     public WwiseSoundBankRefArray() : this(WwiseProjectDatabase.GetAllSoundBanksRef(), true)
     {
     }

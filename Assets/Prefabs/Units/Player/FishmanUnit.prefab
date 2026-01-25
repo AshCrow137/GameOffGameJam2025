@@ -89,6 +89,10 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: possibleUpgrades.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: unitMeleeDamage.MeleeDamage
       value: 6
       objectReference: {fileID: 0}
@@ -100,6 +104,22 @@ PrefabInstance:
       propertyPath: unitRangedDamage.RangedDamage
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 3ce65e3bd50c0e649ab497f504196452, type: 2}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a27a8256f739ae843b3f839f7930c35f, type: 2}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a0f88fd704ee541bd23e2b0904782c, type: 2}
+    - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: abfb43cac09825f4a8ac67d6e146fdd5, type: 2}
     - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: unitCounterAttack.Counterattack
       value: 5

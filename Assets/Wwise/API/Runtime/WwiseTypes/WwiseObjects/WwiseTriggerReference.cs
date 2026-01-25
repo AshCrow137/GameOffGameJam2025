@@ -18,5 +18,5 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// @brief Represents Wwise triggers as Unity assets.
 public class WwiseTriggerReference : WwiseObjectReference
 {
-	public override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.Trigger; } }
+    public override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.Trigger; } }
 }

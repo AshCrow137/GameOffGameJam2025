@@ -28,7 +28,7 @@ public class GamePlayEventManager : MonoBehaviour
 
         BaseGameplayEvent gameplayEvent = null;
 
-        if(kingdom is PlayerKingdom)
+        if (kingdom is PlayerKingdom)
         {
             gameplayEvent = gamePlayEventsPlayer[Random.Range(0, gamePlayEventsPlayer.Length)];
         }

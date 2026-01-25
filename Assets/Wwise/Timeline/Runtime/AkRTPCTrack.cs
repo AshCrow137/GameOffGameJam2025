@@ -32,37 +32,37 @@ Copyright (c) 2025 Audiokinetic Inc.
 #endif
 public class AkRTPCTrack : UnityEngine.Timeline.TrackAsset
 {
-	public AK.Wwise.RTPC Parameter;
+    public AK.Wwise.RTPC Parameter;
 
-	// override the type of mixer playable used by this track
-	public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph,
-		UnityEngine.GameObject go, int inputCount)
-	{
-		var playable = UnityEngine.Playables.ScriptPlayable<AkRTPCPlayableBehaviour>.Create(graph, inputCount);
-		setPlayableProperties();
-		return playable;
-	}
+    // override the type of mixer playable used by this track
+    public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph,
+        UnityEngine.GameObject go, int inputCount)
+    {
+        var playable = UnityEngine.Playables.ScriptPlayable<AkRTPCPlayableBehaviour>.Create(graph, inputCount);
+        setPlayableProperties();
+        return playable;
+    }
 
-	public void setPlayableProperties()
-	{
-		var clips = GetClips();
-		foreach (var clip in clips)
-		{
-			var clipPlayable = (AkRTPCPlayable) clip.asset;
-			clipPlayable.Parameter = Parameter;
-			clipPlayable.OwningClip = clip;
-		}
-	}
+    public void setPlayableProperties()
+    {
+        var clips = GetClips();
+        foreach (var clip in clips)
+        {
+            var clipPlayable = (AkRTPCPlayable)clip.asset;
+            clipPlayable.Parameter = Parameter;
+            clipPlayable.OwningClip = clip;
+        }
+    }
 
-	public void OnValidate()
-	{
-		var clips = GetClips();
-		foreach (var clip in clips)
-		{
-			var clipPlayable = (AkRTPCPlayable) clip.asset;
-			clipPlayable.Parameter = Parameter;
-		}
-	}
+    public void OnValidate()
+    {
+        var clips = GetClips();
+        foreach (var clip in clips)
+        {
+            var clipPlayable = (AkRTPCPlayable)clip.asset;
+            clipPlayable.Parameter = Parameter;
+        }
+    }
 }
 
 #endif // AK_ENABLE_TIMELINE

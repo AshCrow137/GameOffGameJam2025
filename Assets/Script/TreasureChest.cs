@@ -9,8 +9,8 @@ public class TreasureChest : BaseGridEntity
     [SerializeField]
     private bool spawnAroundChest = false;
     [SerializeField]
-    private Vector3Int specificPosToSpawn = Vector3Int.zero; 
-    
+    private Vector3Int specificPosToSpawn = Vector3Int.zero;
+
     private bool hasBeenCollected = false;
 
     /// <summary>
@@ -20,10 +20,10 @@ public class TreasureChest : BaseGridEntity
     {
         // Treasure chests cannot be attacked
         bCanBeAttacked = false;
-        
+
         // Call base initialization (owner can be null for neutral chests)
         base.Initialize(owner);
-        
+
         // Register this chest with the tilemap manager
         hTM.AddTreasureChestToTile(gridPosition, this);
     }
@@ -38,14 +38,14 @@ public class TreasureChest : BaseGridEntity
             return;
 
         hasBeenCollected = true;
-        if(spawnAroundChest)
+        if (spawnAroundChest)
         {
             List<Vector3Int> adjPos = hTM.GetCellsInRange(GetCellPosition(), 1);
             specificPosToSpawn = adjPos[Random.Range(0, adjPos.Count)];
         }
         // Execute the treasure event for the collecting kingdom
-        treasureEvent.ExecuteEvent(collector,specificPosToSpawn);
-        
+        treasureEvent.ExecuteEvent(collector, specificPosToSpawn);
+
         // Show additional UI message for player
         //if (collector is PlayerKingdom)
         //{
@@ -64,7 +64,7 @@ public class TreasureChest : BaseGridEntity
         {
             hTM.RemoveTreasureChestFromTile(gridPosition);
         }
-        
+
         // Call base death to remove from entity directory
         base.Death();
     }

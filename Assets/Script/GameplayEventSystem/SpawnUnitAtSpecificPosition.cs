@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SpawnAtPosition", menuName = "BaseTreasureChestEvent/SpawnAtPosition")]
@@ -6,7 +5,7 @@ public class SpawnUnitAtSpecificPosition : BaseTreasureChestEvent
 {
     public GameObject meleePrefab;
 
-    public override void ExecuteEvent(BaseKingdom kingdom,Vector3Int chestPos)
+    public override void ExecuteEvent(BaseKingdom kingdom, Vector3Int chestPos)
     {
 
 

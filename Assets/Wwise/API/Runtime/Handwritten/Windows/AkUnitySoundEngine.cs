@@ -15,22 +15,22 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
-﻿public partial class AkUnitySoundEngine
+public partial class AkUnitySoundEngine
 {
 #if UNITY_EDITOR_WIN || (UNITY_STANDALONE_WIN && !UNITY_EDITOR)
-	/// <summary>
-	///     Converts "AkOSChar*" C-strings to C# strings.
-	/// </summary>
-	/// <param name="ptr">"AkOSChar*" memory pointer passed to C# as an IntPtr.</param>
-	/// <returns>Converted string.</returns>
-	public static string StringFromIntPtrOSString(System.IntPtr ptr)
-	{
-		return StringFromIntPtrWString(ptr);
-	}
+    /// <summary>
+    ///     Converts "AkOSChar*" C-strings to C# strings.
+    /// </summary>
+    /// <param name="ptr">"AkOSChar*" memory pointer passed to C# as an IntPtr.</param>
+    /// <returns>Converted string.</returns>
+    public static string StringFromIntPtrOSString(System.IntPtr ptr)
+    {
+        return StringFromIntPtrWString(ptr);
+    }
 
-	public static bool PlatformSupportsDecodeBank()
-	{
-		return true;
-	}
+    public static bool PlatformSupportsDecodeBank()
+    {
+        return true;
+    }
 #endif
 }

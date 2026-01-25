@@ -20,54 +20,54 @@ using UnityEngine;
 
 namespace AK.Wwise.Editor
 {
-	[UnityEditor.CustomPropertyDrawer(typeof(Event))]
-	public class EventDrawer : BaseTypeDrawer
-	{
-		protected override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.Event; } }
-		
-		public override void OnGUI(UnityEngine.Rect position, UnityEditor.SerializedProperty property,
-			UnityEngine.GUIContent label)
-		{
-			position.height = UnityEditor.EditorGUI.GetPropertyHeight(property, label, true);
-			base.OnGUI(position, property, label);
-			position.y += UnityEditor.EditorGUIUtility.standardVerticalSpacing + position.height;
+    [UnityEditor.CustomPropertyDrawer(typeof(Event))]
+    public class EventDrawer : BaseTypeDrawer
+    {
+        protected override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.Event; } }
 
-			var wwiseObjectReferenceProperty = property.FindPropertyRelative("WwiseObjectReference");
-			
-			var wwiseProjectFullPath = AkWwiseEditorSettings.WwiseProjectAbsolutePath;
-			if (wwiseObjectReferenceProperty.objectReferenceValue)
-			{
-				var assetObject = new UnityEditor.SerializedObject(wwiseObjectReferenceProperty.objectReferenceValue);
-				var userBankProperty = assetObject.FindProperty("IsInUserDefinedSoundBank");
-				if (userBankProperty != null)
-				{
-					bool shouldGreyOut = !AkUtilities.IsAutoBankEnabled();
-					EditorGUI.BeginDisabledGroup(shouldGreyOut);
-					UnityEditor.EditorGUI.PropertyField(position, userBankProperty, new GUIContent("Is In User-Defined SoundBank:"));
-					EditorGUI.EndDisabledGroup();
-					assetObject.ApplyModifiedProperties();
-				}
-			}
-		}
+        public override void OnGUI(UnityEngine.Rect position, UnityEditor.SerializedProperty property,
+            UnityEngine.GUIContent label)
+        {
+            position.height = UnityEditor.EditorGUI.GetPropertyHeight(property, label, true);
+            base.OnGUI(position, property, label);
+            position.y += UnityEditor.EditorGUIUtility.standardVerticalSpacing + position.height;
 
-		public override float GetPropertyHeight(UnityEditor.SerializedProperty property, UnityEngine.GUIContent label)
-		{
-			float totalHeight = UnityEditor.EditorGUI.GetPropertyHeight(property, label, true) + UnityEditor.EditorGUIUtility.standardVerticalSpacing;
-			var wwiseObjectReferenceProperty = property.FindPropertyRelative("WwiseObjectReference");
-			if (wwiseObjectReferenceProperty.objectReferenceValue)
-			{
-				var assetObject = new UnityEditor.SerializedObject(wwiseObjectReferenceProperty.objectReferenceValue);
-				var userBankProperty = assetObject.FindProperty("IsInUserDefinedSoundBank");
-				if (userBankProperty != null)
-				{
-					totalHeight += UnityEditor.EditorGUI.GetPropertyHeight(userBankProperty) +
-					               UnityEditor.EditorGUIUtility.standardVerticalSpacing;
-				}
-			}
+            var wwiseObjectReferenceProperty = property.FindPropertyRelative("WwiseObjectReference");
 
-			return totalHeight;
-		}
-	}
-	
+            var wwiseProjectFullPath = AkWwiseEditorSettings.WwiseProjectAbsolutePath;
+            if (wwiseObjectReferenceProperty.objectReferenceValue)
+            {
+                var assetObject = new UnityEditor.SerializedObject(wwiseObjectReferenceProperty.objectReferenceValue);
+                var userBankProperty = assetObject.FindProperty("IsInUserDefinedSoundBank");
+                if (userBankProperty != null)
+                {
+                    bool shouldGreyOut = !AkUtilities.IsAutoBankEnabled();
+                    EditorGUI.BeginDisabledGroup(shouldGreyOut);
+                    UnityEditor.EditorGUI.PropertyField(position, userBankProperty, new GUIContent("Is In User-Defined SoundBank:"));
+                    EditorGUI.EndDisabledGroup();
+                    assetObject.ApplyModifiedProperties();
+                }
+            }
+        }
+
+        public override float GetPropertyHeight(UnityEditor.SerializedProperty property, UnityEngine.GUIContent label)
+        {
+            float totalHeight = UnityEditor.EditorGUI.GetPropertyHeight(property, label, true) + UnityEditor.EditorGUIUtility.standardVerticalSpacing;
+            var wwiseObjectReferenceProperty = property.FindPropertyRelative("WwiseObjectReference");
+            if (wwiseObjectReferenceProperty.objectReferenceValue)
+            {
+                var assetObject = new UnityEditor.SerializedObject(wwiseObjectReferenceProperty.objectReferenceValue);
+                var userBankProperty = assetObject.FindProperty("IsInUserDefinedSoundBank");
+                if (userBankProperty != null)
+                {
+                    totalHeight += UnityEditor.EditorGUI.GetPropertyHeight(userBankProperty) +
+                                   UnityEditor.EditorGUIUtility.standardVerticalSpacing;
+                }
+            }
+
+            return totalHeight;
+        }
+    }
+
 
 }

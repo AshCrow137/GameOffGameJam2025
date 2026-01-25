@@ -21,39 +21,39 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// Derive from this class to add your own triggering condition, as described in \ref unity_add_triggers
 public abstract class AkTriggerBase : UnityEngine.MonoBehaviour
 {
-	/// Delegate declaration for all Wwise Triggers.
-	public delegate void Trigger(
-		UnityEngine.GameObject in_gameObject ///< in_gameObject is used to pass "Collidee" objects when Colliders are used.  Some components have the option "Use other object", this is the object they'll use.
+    /// Delegate declaration for all Wwise Triggers.
+    public delegate void Trigger(
+        UnityEngine.GameObject in_gameObject ///< in_gameObject is used to pass "Collidee" objects when Colliders are used.  Some components have the option "Use other object", this is the object they'll use.
 	);
 
-	/// All components reacting to the trigger will be registered in this delegate.
-	public Trigger triggerDelegate = null;
+    /// All components reacting to the trigger will be registered in this delegate.
+    public Trigger triggerDelegate = null;
 
-	public static System.Collections.Generic.Dictionary<uint, string> GetAllDerivedTypes()
-	{
-		var derivedTypes = new System.Collections.Generic.Dictionary<uint, string>();
+    public static System.Collections.Generic.Dictionary<uint, string> GetAllDerivedTypes()
+    {
+        var derivedTypes = new System.Collections.Generic.Dictionary<uint, string>();
 
-		var baseType = typeof(AkTriggerBase);
+        var baseType = typeof(AkTriggerBase);
 
-		var types = baseType.Assembly.GetTypes();
+        var types = baseType.Assembly.GetTypes();
 
-		for (var i = 0; i < types.Length; i++)
-		{
-			if (types[i].IsClass &&
-			    (types[i].IsSubclassOf(baseType) || baseType.IsAssignableFrom(types[i]) && baseType != types[i]))
-			{
-				var typeName = types[i].Name;
-				derivedTypes.Add(AkUtilities.ShortIDGenerator.Compute(typeName), typeName);
-			}
-		}
+        for (var i = 0; i < types.Length; i++)
+        {
+            if (types[i].IsClass &&
+                (types[i].IsSubclassOf(baseType) || baseType.IsAssignableFrom(types[i]) && baseType != types[i]))
+            {
+                var typeName = types[i].Name;
+                derivedTypes.Add(AkUtilities.ShortIDGenerator.Compute(typeName), typeName);
+            }
+        }
 
-		//Add the Awake, Start and Destroy triggers and build the displayed list.
-		derivedTypes.Add(AkUtilities.ShortIDGenerator.Compute("Awake"), "Awake");
-		derivedTypes.Add(AkUtilities.ShortIDGenerator.Compute("Start"), "Start");
-		derivedTypes.Add(AkUtilities.ShortIDGenerator.Compute("Destroy"), "Destroy");
+        //Add the Awake, Start and Destroy triggers and build the displayed list.
+        derivedTypes.Add(AkUtilities.ShortIDGenerator.Compute("Awake"), "Awake");
+        derivedTypes.Add(AkUtilities.ShortIDGenerator.Compute("Start"), "Start");
+        derivedTypes.Add(AkUtilities.ShortIDGenerator.Compute("Destroy"), "Destroy");
 
-		return derivedTypes;
-	}
+        return derivedTypes;
+    }
 }
 
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

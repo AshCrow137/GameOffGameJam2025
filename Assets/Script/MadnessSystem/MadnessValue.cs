@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public static class MadnessValue
 {
     public const int HasUnitsNear = 3;

@@ -19,11 +19,11 @@ Copyright (c) 2025 Audiokinetic Inc.
 [UnityEditor.CustomEditor(typeof(AkSpatialAudioListener), true)]
 public class AkSpatialAudioListenerInspector : UnityEditor.Editor
 {
-	public override void OnInspectorGUI()
-	{
-		UnityEditor.EditorGUILayout.HelpBox(
-			"The current version of Spatial Audio only supports one listener. Make sure to only have one AkSpatialAudioListener active at a time.",
-			UnityEditor.MessageType.Info);
-	}
+    public override void OnInspectorGUI()
+    {
+        UnityEditor.EditorGUILayout.HelpBox(
+            "The current version of Spatial Audio only supports one listener. Make sure to only have one AkSpatialAudioListener active at a time.",
+            UnityEditor.MessageType.Info);
+    }
 }
 #endif

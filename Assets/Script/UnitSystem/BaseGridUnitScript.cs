@@ -1,11 +1,11 @@
-using UnityEngine;
 using Pathfinding;
-using TMPro;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(Seeker),typeof(UnitStats))]
+[RequireComponent(typeof(Seeker), typeof(UnitStats))]
 public class BaseGridUnitScript : BaseGridEntity, IDamageable
 {
 
@@ -20,7 +20,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     protected Animator animator;
     [SerializeField]
     protected float MovementSpeed = 3;
-    
+
     [SerializeField]
     protected int specialAbilityRange = 1;
     public bool aiming = false;
@@ -70,13 +70,13 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
 
     private bool bStartCreatePath = false;
     private bool bWasSelected = false;
-    public UnityEvent MovementFinishEvent {  get; protected set; } = new UnityEvent();
-    public UnityEvent AttackFinishEvent {  get; protected set; } = new UnityEvent();
-    public UnityEvent<bool> PathFinishEvent {  get; protected set; } = new UnityEvent<bool>();
+    public UnityEvent MovementFinishEvent { get; protected set; } = new UnityEvent();
+    public UnityEvent AttackFinishEvent { get; protected set; } = new UnityEvent();
+    public UnityEvent<bool> PathFinishEvent { get; protected set; } = new UnityEvent<bool>();
 
-    public UnitStats unitStats { get;private set; }
+    public UnitStats unitStats { get; private set; }
     private int attacksRemain;
-    public List<BaseEffect> activeEffects { get; private set; } = new List<BaseEffect> ();
+    public List<BaseEffect> activeEffects { get; private set; } = new List<BaseEffect>();
     public Dictionary<ResourceType, int> resource
     {
         get
@@ -89,7 +89,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
             return dict;
         }
     }
-    private Vector3Int previousMarkerPos = Vector3Int.one*int.MaxValue;
+    private Vector3Int previousMarkerPos = Vector3Int.one * int.MaxValue;
 
     public void BanExploring()
     {
@@ -115,17 +115,17 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         tilesRemain = unitStats.UnitMovementDistance.FinalMovementDistance;
         remainMovementText.text = tilesRemain.ToString();
         UpdateMovementPointsUI();
-        hTM.PlaceUnitOnTile(hTM.WorldToCellPos(transform.position),this);
+        hTM.PlaceUnitOnTile(hTM.WorldToCellPos(transform.position), this);
         movementPointsImages = new List<Image>(unitStats.UnitMovementDistance.FinalMovementDistance)
         {
             movementPointsImage
         };
-        for (int i=0;i< unitStats.UnitMovementDistance.FinalMovementDistance  - 1;i++)
+        for (int i = 0; i < unitStats.UnitMovementDistance.FinalMovementDistance - 1; i++)
         {
-            
-                Image newImage = Instantiate(movementPointsImage, movementPointsPanel.transform);
-                movementPointsImages.Add(newImage);
-           
+
+            Image newImage = Instantiate(movementPointsImage, movementPointsPanel.transform);
+            movementPointsImages.Add(newImage);
+
         }
         CanStandOnTiles = possibleSpawnTiles;
 
@@ -138,7 +138,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     }
     public virtual void AddEffect(BaseEffect effect)
     {
-        if(!activeEffects.Contains(effect))
+        if (!activeEffects.Contains(effect))
         {
             activeEffects.Add(effect);
             effect.ApplyEffect(this);
@@ -146,7 +146,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     }
     public virtual void RemoveEffect(BaseEffect effect)
     {
-        if(activeEffects.Contains(effect))
+        if (activeEffects.Contains(effect))
         {
             activeEffects.Remove(effect);
             effect.RemoveEffect();
@@ -155,9 +155,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     private void ManageEffects()
     {
         List<BaseEffect> effectsToRemove = new List<BaseEffect>();
-        foreach(BaseEffect effect in activeEffects)
+        foreach (BaseEffect effect in activeEffects)
         {
-            switch(effect.ProcRate)
+            switch (effect.ProcRate)
             {
                 case ProcRate.Once:
                     break;
@@ -166,12 +166,12 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                     break;
             }
             effect.DecreaseDuration();
-            if(effect.RemainDuration<=0)
+            if (effect.RemainDuration <= 0)
             {
                 effectsToRemove.Add(effect);
             }
         }
-        foreach(BaseEffect effectToRemove in effectsToRemove)
+        foreach (BaseEffect effectToRemove in effectsToRemove)
         {
             RemoveEffect(effectToRemove);
         }
@@ -188,29 +188,35 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 hTM.PlaceColoredMarkerOnPosition(pos, MarkerColor.White);
             }
         }
-        if (selector!= Owner)
+        if (selector != Owner)
         {
             UIManager.Instance.ShowMessageText($"This is not your unit!");
             return;
         }
         Debug.Log($"Select {this.name} unit");
         //GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
-       
+
         baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
 
     }
-   
+
     public override void OnEntityDeselect()
     {
-        bWasSelected= false;
+        bWasSelected = false;
         hTM.RemoveAllMarkers();
         base.OnEntityDeselect();
         Debug.Log($"Deselect {this.name} unit");
         //GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
         Color ownerColor = Owner.GetKingdomColor();
         baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
-        
+
     }
+
+    public bool isSelected()
+    {
+        return this.bWasSelected;
+    }
+
     //TODO replace Entitry with controller class and remove unit end turn listener
     protected override void OnEndTurn(BaseKingdom entity)
     {
@@ -222,7 +228,8 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         base.OnStartTurn(entity);
         if (entity != Owner) return;
         ManageEffects();
-
+        unitStats?.IsLevelUp();
+        unitStats?.ApplyAllHabilities();
     }
     public virtual void RefreshUnit()
     {
@@ -260,22 +267,22 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// </summary>
     /// <param name="tile">clicked tile</param>
     /// <param name="cellPos">position of clicked tile</param>
-    public virtual void  OnTileClicked(Vector3Int cellPos)
+    public virtual void OnTileClicked(Vector3Int cellPos)
     {
         BaseGridUnitScript targetedUnit = hTM.GetUnitOnTile(cellPos);
         GridCity city = hTM.GetCityOnTile(cellPos);
-        if( city != null)
+        if (city != null)
         {
             TryToAttack(city, cellPos);
-            
+
         }
-        else if(targetedUnit != null)
+        else if (targetedUnit != null)
         {
             TryToAttack(targetedUnit, cellPos);
         }
         else
         {
-            TryToMoveUnitToTile( cellPos);
+            TryToMoveUnitToTile(cellPos);
         }
     }
     /// <summary>
@@ -283,7 +290,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// </summary>
     /// <param name="targetUnit">attacked unit</param>
     /// <param name="targetUnitPosition">attacked unit position</param>
-   public bool TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
+    public bool TryToAttack(BaseGridEntity targetUnit, Vector3Int targetUnitPosition)
     {
         if (!targetUnit)
         {
@@ -300,10 +307,10 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         attackTarget = targetUnit;
         int intDistance = hTM.GetDistanceInCells(UnitPositionOnCell(), targetUnitPosition);
         Debug.Log($"Distance between {this.name} and target cell: {intDistance}");
-        if(intDistance <=unitStats.UnitAttackRange.FinalAttackRange) 
+        if (intDistance <= unitStats.UnitAttackRange.FinalAttackRange)
         {
             Debug.Log($"{name} try to attack {targetUnit.name}!");
-            if(attacksRemain>0)
+            if (attacksRemain > 0)
             {
                 attacksRemain--;
                 Attack(targetUnit);
@@ -316,21 +323,21 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 bTryToAttack = false;
                 return false;
             }
-            
+
         }
         //Calculate direction of attack (depends on mouse position on target unit's cell) and move unit to calculated cell
         else
         {
-            if(unitStats.UnitAttackRange.FinalAttackRange==1)
+            if (unitStats.UnitAttackRange.FinalAttackRange == 1)
             {
                 var tilePos = hTM.CellToWorldPos(targetUnitPosition);
                 Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
                 float angle = Mathf.Atan2(mousePos.y - tilePos.y, mousePos.x - tilePos.x) * Mathf.Rad2Deg;
 
                 int i = 0;
-                if (angle >= 0 && angle <= 60) i=1;
-                else if (angle < 0 && angle >= -60) i=0;
-                else if (angle < -60 && angle >= -120) i=7;
+                if (angle >= 0 && angle <= 60) i = 1;
+                else if (angle < 0 && angle >= -60) i = 0;
+                else if (angle < -60 && angle >= -120) i = 7;
                 else if (angle < -120 && angle >= -180) i = 3;
                 else if (angle <= 120 && angle > 60) i = 5;
                 else if (angle < 180 && angle > 120) i = 2;
@@ -342,7 +349,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 int distance = hTM.GetDistanceInCells(GetCellPosition(), resPos);
                 if (distance <= tilesRemain)
                 {
-                    if(TryToMoveUnitToTile(resPos))
+                    if (TryToMoveUnitToTile(resPos))
                     {
                         AttackFinishEvent.Invoke();
                         return true;
@@ -355,11 +362,11 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 }
 
             }
-            if(Owner is PlayerKingdom) UIManager.Instance.ShowMessageText($"Target unit too far!");
+            if (Owner is PlayerKingdom) UIManager.Instance.ShowMessageText($"Target unit too far!");
             AttackFinishEvent.Invoke();
             return false;
         }
-        
+
     }
 
     private void OnMouseEnter()
@@ -373,8 +380,8 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     //show marker tile if we try to attack this unit
     void OnMouseOver()
     {
-        
-        if (UIUtility.bHasSelectedEntity&& UIUtility.selectedUnit != null&&UIUtility.selectedUnit!=this&& UIUtility.selectedUnit.GetOwner()!=Owner&& UIUtility.selectedUnit.unitStats.UnitAttackRange.FinalAttackRange==1)
+
+        if (UIUtility.bHasSelectedEntity && UIUtility.selectedUnit != null && UIUtility.selectedUnit != this && UIUtility.selectedUnit.GetOwner() != Owner && UIUtility.selectedUnit.unitStats.UnitAttackRange.FinalAttackRange == 1)
         {
 
             Vector3 mousePos = InputManager.instance.GetWorldPositionOnMousePosition();
@@ -390,7 +397,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
             var nodeConnections = AstarPath.active.data.gridGraph.GetNodeConnection(node, i);
             var nodePos = (Vector3)nodeConnections.position;
             Vector3Int resPos = hTM.WorldToCellPos(nodePos);
-            if(resPos != previousMarkerPos)
+            if (resPos != previousMarkerPos)
             {
                 hTM.RemoveMarkerOnTilePosition(previousMarkerPos);
                 previousMarkerPos = resPos;
@@ -422,17 +429,17 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         if (GetDistanceToTargetUnit(targetEntity) == 1)
         {
             int finalDamage = (int)Mathf.Round(unitStats.UnitMeleeDamage.FinalMeleeDamage * unitStats.UnitStamina.GetStaminaModifier() * unitStats.GetMadnessModifier());
-            targetEntity.TakeDamage(finalDamage, this, false, unitStats.UnitMeleeDamage.IsMagic?DamageType.Magic:DamageType.Melee);  
+            targetEntity.TakeDamage(finalDamage, this, false, unitStats.UnitMeleeDamage.IsMagic ? DamageType.Magic : DamageType.Melee);
         }
         else
         {
             int finalDamage = (int)Mathf.Round(unitStats.UnitRangedDamage.FinalRangedDamage * unitStats.UnitStamina.GetStaminaModifier() * unitStats.GetMadnessModifier());
             targetEntity.TakeDamage(finalDamage, this, false, unitStats.UnitRangedDamage.IsMagic ? DamageType.Magic : DamageType.Ranged);
         }
-       //if property true, unit can move after attack
-        if(!CanMoveAfterattack)
+        //if property true, unit can move after attack
+        if (!CanMoveAfterattack)
         {
-            tilesRemain=0;
+            tilesRemain = 0;
             remainMovementText.text = tilesRemain.ToString();
             UpdateMovementPointsUI();
         }
@@ -448,7 +455,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         Debug.Log($"Defender: {defender.name}/// Atacker: {attacker.name}");
         BattleSystem.AddDamage(defender.unitStats, attacker.unitStats,
-            damageType, 
+            damageType,
             damageAmount,
             defender.unitStats.UnitHealth.CurrentHealth <= 0);
     }
@@ -459,17 +466,17 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// <param name="amount">amount of taken damage before calculation</param>
     /// <param name="attacker">unit that attack this unit</param>
     /// <param name="bIsCounterattack">bool if this damage was counterattack damage or not</param>
-    public override void TakeDamage(int amount,BaseGridUnitScript attacker,bool bIsCounterattack,DamageType damageType)
+    public override void TakeDamage(int amount, BaseGridUnitScript attacker, bool bIsCounterattack, DamageType damageType)
     {
         animator.Play("TakeDamage", 0, 0);
         int resultDamage = amount;
-        if(!bIsCounterattack)
+        if (!bIsCounterattack)
         {
             //if not retallition  damage calculate result damage using matrix of units
-            resultDamage = (int)Mathf.Round( resultDamage * GetCreatureTypeDamageModifier(attacker.entityType, entityType));
+            resultDamage = (int)Mathf.Round(resultDamage * GetCreatureTypeDamageModifier(attacker.entityType, entityType));
         }
         int defence = 0;
-        switch(damageType)
+        switch (damageType)
         {
             case DamageType.Melee:
                 defence = unitStats.UnitMeleeDefence.FinalMeleeDefence;
@@ -482,19 +489,19 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 break;
         }
         int takenDamage = resultDamage - defence;
-        unitStats.UnitHealth.CurrentHealth -= takenDamage > 0 ? takenDamage : 0; 
+        unitStats.UnitHealth.CurrentHealth -= takenDamage > 0 ? takenDamage : 0;
         Debug.Log($"{this.gameObject.name} take {takenDamage} damage, base damage was {amount}, damage after modifiers: {resultDamage}");
         AddDamageToBattleSystem(this, attacker, resultDamage, damageType);
         HPImage.fillAmount = (float)unitStats.UnitHealth.CurrentHealth / (float)unitStats.UnitHealth.FinalMaxHealth;
         //Insert to Combat
 
-        if (unitStats.UnitHealth.CurrentHealth <= 0 ) 
+        if (unitStats.UnitHealth.CurrentHealth <= 0)
         {
             Death();
             return;
         }
         //if attack is not retallition attack and this unit survives, this unit try to do retallition attack to it's attacker
-        if(!bIsCounterattack)
+        if (!bIsCounterattack)
         {
             Counterattack(attacker);
         }
@@ -505,12 +512,12 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// <param name="attacker"></param>
     public virtual void Counterattack(BaseGridUnitScript attacker)
     {
-        if(hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position))==1)
+        if (hTM.GetDistanceInCells(hTM.WorldToCellPos(transform.position), hTM.WorldToCellPos(attacker.transform.position)) == 1)
         {
             attacker.TakeDamage(unitStats.UnitCounterAttack.FinalCounterattack, this, true, unitStats.UnitMeleeDamage.IsMagic ? DamageType.Magic : DamageType.Melee);
             unitAttackSoundEvent.Post(gameObject);
         }
-        
+
     }
 
     /// <summary>
@@ -547,9 +554,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     /// </summary>
     /// <param name="tile">where you wish to move</param>
     /// <param name="cellPos">tile position you wish to move </param>
-    public bool TryToMoveUnitToTile( Vector3Int cellPos)
+    public bool TryToMoveUnitToTile(Vector3Int cellPos)
     {
-        if (tilesRemain > 0 && !bIsMoving&&!bStartCreatePath)
+        if (tilesRemain > 0 && !bIsMoving && !bStartCreatePath)
         {
 
             bStartCreatePath = true;
@@ -562,13 +569,13 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         else
         {
-            if(Owner is PlayerKingdom) UIManager.Instance.ShowMessageText($"Not enough movement points remain!");
+            if (Owner is PlayerKingdom) UIManager.Instance.ShowMessageText($"Not enough movement points remain!");
             MovementFinishEvent.Invoke();
             return false;
         }
     }
 
-    
+
     private void CreatePath(Vector3 target)
     {
 
@@ -585,13 +592,13 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         if (!p.error)
         {
             //Check if path end on traversable tile, if not do not start moving.
-            if( p.CanTraverse(AstarPath.active.GetNearest(PathTarget).node))
+            if (p.CanTraverse(AstarPath.active.GetNearest(PathTarget).node))
             {
 
                 path = p;
                 CurrentWaypoint = 0;
                 bIsMoving = true;
-                if(tilesRemain>=path.vectorPath.Count)
+                if (tilesRemain >= path.vectorPath.Count)
                 {
                     hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(path.vectorPath[path.vectorPath.Count - 1]), this);
                 }
@@ -610,8 +617,8 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
                 UIManager.Instance.ShowMessageText($"Unavailable tile for {this.gameObject.name} unit!");
             }
-            
-            
+
+
         }
         else
         {
@@ -623,7 +630,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         bStartCreatePath = false;
     }
     //Main movement cycle
-    private void  MovementCycle()
+    private void MovementCycle()
     {
         if (bIsMoving)
         {
@@ -638,7 +645,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                     // Check if there is another waypoint or if we have reached the end of the path
                     if (CurrentWaypoint + 1 < path.vectorPath.Count)
                     {
-                        if(Owner is PlayerKingdom||PlayerKingdom.Instance.GetComponent<VisionManager>().CanSee(entityVision))
+                        if (Owner is PlayerKingdom || PlayerKingdom.Instance.GetComponent<VisionManager>().CanSee(entityVision))
                         {
                             TileState tileUnderUnit = hTM.GetTileState(hTM.WorldToCellPos(path.vectorPath[CurrentWaypoint]));
                             switch (tileUnderUnit)
@@ -651,11 +658,11 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                                     break;
                             }
                         }
-                            
+
                         CurrentWaypoint++;
                         tilesRemain--;
                         remainMovementText.text = tilesRemain.ToString();
-                        
+
                         UpdateMovementPointsUI();
                         // Update vision when entering a new cell
                         Vector3Int currentCellPosition = GetCellPosition();
@@ -702,7 +709,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         {
             chest.Collect(Owner);
         }
-        hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position),this);
+        hTM.PlaceUnitOnTile(hTM.PositionToCellPosition(transform.position), this);
         bIsMoving = false;
         MovementFinishEvent.Invoke();
         // Final vision update at destination
@@ -717,8 +724,8 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
                 previousCellPosition = finalCellPosition;
             }
         }
-        
-        if(bTryToAttack)
+
+        if (bTryToAttack)
         {
             TryToAttack(attackTarget, attackTarget.GetCellPosition());
         }
@@ -726,7 +733,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         // Calculating distance travelled
         distanceTravelled = Vector3.Distance(startingPosition, GetCellPosition());
         startingPosition = GetCellPosition();
-        if (unitStats.UnitAttackRange.FinalAttackRange > 1&&bWasSelected)
+        if (unitStats.UnitAttackRange.FinalAttackRange > 1 && bWasSelected)
         {
             hTM.RemoveAllMarkers();
             if (Owner is PlayerKingdom) hTM.ShowMarkersForRangeAttack(this, unitStats.UnitAttackRange.FinalAttackRange);
@@ -738,27 +745,27 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     }
     private void UpdateMovementPointsUI()
     {
-        if(tilesRemain< unitStats.UnitMovementDistance.FinalMovementDistance)
+        if (tilesRemain < unitStats.UnitMovementDistance.FinalMovementDistance)
         {
             int i = tilesRemain;
             if (i < 0)
             {
                 i = 0;
             }
-            for(int index = movementPointsImages.Count - 1; index >= i;index--)
+            for (int index = movementPointsImages.Count - 1; index >= i; index--)
             {
                 movementPointsImages[index].color = Color.gray;
             }
-            
+
         }
         else
         {
-            foreach (var image in movementPointsImages) 
+            foreach (var image in movementPointsImages)
             {
-                image.color = Color.white;  
+                image.color = Color.white;
             }
         }
-        
+
     }
     public void DecreaseSpeedForFirstTurn()
     {
@@ -782,9 +789,9 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         MovementCycle();
     }
 
-    
-  
-  
+
+
+
 
 
 
@@ -797,7 +804,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     {
         return abilityImage;
     }
-    public string GetAbilityDescription() 
+    public string GetAbilityDescription()
     {
         return abilityDescription;
     }

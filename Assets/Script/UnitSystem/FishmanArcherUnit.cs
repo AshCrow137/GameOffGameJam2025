@@ -6,7 +6,7 @@ public class FishmanArcherUnit : BaseGridUnitScript
     protected GameObject projectilePrefab;
     [SerializeField]
     protected Transform shootingPoint;
-    [SerializeField] 
+    [SerializeField]
     protected float projectileSpeed = 15f;
 
     protected override void Attack(BaseGridEntity targetEntity)

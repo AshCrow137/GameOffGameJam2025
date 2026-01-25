@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
@@ -19,13 +18,13 @@ public class TurnManager : MonoBehaviour
     //{
     //    this.turnOrder = turnOrder;
     //}
-    public List<BaseKingdom> GetKingdoms ()=> turnOrder;
+    public List<BaseKingdom> GetKingdoms() => turnOrder;
     public void Initialize()
     {
         instance = this;
         currentOrderIndex = 0;
         StartTurn(turnOrder[currentOrderIndex]);
-       
+
     }
     public void RemoveKingdomFromTurnOrder(BaseKingdom kingdom)
     {
@@ -56,7 +55,7 @@ public class TurnManager : MonoBehaviour
     }
     public void EndPlayerTurn()
     {
-        if(turnOrder[currentOrderIndex].GetType() == typeof(PlayerKingdom))
+        if (turnOrder[currentOrderIndex].GetType() == typeof(PlayerKingdom))
         {
             OnTurnEnd();
         }
@@ -81,7 +80,7 @@ public class TurnManager : MonoBehaviour
         //when finish the turn, call NextRound
         StartTurn(turnOrder[currentOrderIndex]);
 
-       
+
     }
 
     private void NextRound()
@@ -90,7 +89,7 @@ public class TurnManager : MonoBehaviour
 
         Debug.Log("Next Turn");
         //increment turn count
-        
+
 
         //call StartTurn to start the next turn
         //StartTurn(turnOrder[currentOrderIndex]);

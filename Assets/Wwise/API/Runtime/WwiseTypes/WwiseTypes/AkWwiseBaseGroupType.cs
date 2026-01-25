@@ -19,61 +19,61 @@ Copyright (c) 2025 Audiokinetic Inc.
 
 namespace AK.Wwise
 {
-	[System.Serializable]
-	///@brief This type represents the base for all Wwise Types that also require a group GUID, such as State and Switch.
-	public abstract class BaseGroupType : BaseType
-	{
-		public WwiseObjectReference GroupWwiseObjectReference
-		{
-			get
-			{
-				var reference = ObjectReference as WwiseGroupValueObjectReference;
-				return reference ? reference.GroupObjectReference : null;
-			}
-		}
+    [System.Serializable]
+    ///@brief This type represents the base for all Wwise Types that also require a group GUID, such as State and Switch.
+    public abstract class BaseGroupType : BaseType
+    {
+        public WwiseObjectReference GroupWwiseObjectReference
+        {
+            get
+            {
+                var reference = ObjectReference as WwiseGroupValueObjectReference;
+                return reference ? reference.GroupObjectReference : null;
+            }
+        }
 
-		public abstract WwiseObjectType WwiseObjectGroupType { get; }
+        public abstract WwiseObjectType WwiseObjectGroupType { get; }
 
-		public uint GroupId
-		{
-			get { return GroupWwiseObjectReference ? GroupWwiseObjectReference.Id : AkUnitySoundEngine.AK_INVALID_UNIQUE_ID; }
-		}
+        public uint GroupId
+        {
+            get { return GroupWwiseObjectReference ? GroupWwiseObjectReference.Id : AkUnitySoundEngine.AK_INVALID_UNIQUE_ID; }
+        }
 
-		public override bool IsValid()
-		{
-			return base.IsValid() && GroupWwiseObjectReference != null;
-		}
+        public override bool IsValid()
+        {
+            return base.IsValid() && GroupWwiseObjectReference != null;
+        }
 
-		#region Obsolete
-		[System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_2)]
-		public int groupID
-		{
-			get { return (int)GroupId; }
-		}
+        #region Obsolete
+        [System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_2)]
+        public int groupID
+        {
+            get { return (int)GroupId; }
+        }
 
-		[System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
-		public byte[] groupGuid
-		{
-			get
-			{
-				var objRef = ObjectReference;
-				return !objRef ? null : objRef.Guid.ToByteArray();
-			}
-		}
-		#endregion
+        [System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
+        public byte[] groupGuid
+        {
+            get
+            {
+                var objRef = ObjectReference;
+                return !objRef ? null : objRef.Guid.ToByteArray();
+            }
+        }
+        #endregion
 
-		#region WwiseMigration
+        #region WwiseMigration
 #pragma warning disable 0414 // private field assigned but not used.
-		[UnityEngine.HideInInspector]
-		[UnityEngine.SerializeField]
-		[UnityEngine.Serialization.FormerlySerializedAs("groupID")]
-		private int groupIdInternal;
-		[UnityEngine.HideInInspector]
-		[UnityEngine.SerializeField]
-		[UnityEngine.Serialization.FormerlySerializedAs("groupGuid")]
-		private byte[] groupGuidInternal;
+        [UnityEngine.HideInInspector]
+        [UnityEngine.SerializeField]
+        [UnityEngine.Serialization.FormerlySerializedAs("groupID")]
+        private int groupIdInternal;
+        [UnityEngine.HideInInspector]
+        [UnityEngine.SerializeField]
+        [UnityEngine.Serialization.FormerlySerializedAs("groupGuid")]
+        private byte[] groupGuidInternal;
 #pragma warning restore 0414 // private field assigned but not used.
-		#endregion
-	}
+        #endregion
+    }
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

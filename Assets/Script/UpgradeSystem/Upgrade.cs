@@ -22,19 +22,6 @@ public class Upgrade : ScriptableObject
         return upgradeLimitLevel == -1 || currentUpgradeLevel < upgradeLimitLevel;
     }
 
-    public virtual void ChooseUpgrade(Upgrade upgradeChoosed)
-    {
-        if (CanIncrementUpgrade(upgradeChoosed))
-        {
-            Debug.Log("Choosing upgrade: " + upgradeName);
-            
-        }
-        else
-        {
-            Debug.LogWarning("Upgrade limit reached for " + upgradeName);
-        }
-    }
-
     public virtual void ApplyUpgrade(UnitStats unitToApplyUpgrade)
     {
 
@@ -42,7 +29,10 @@ public class Upgrade : ScriptableObject
 
     public virtual void IncreaseLevel(Upgrade upgrade)
     {
-        upgrade.currentUpgradeLevel++;
+        if (CanIncrementUpgrade(upgrade))
+        {
+            upgrade.currentUpgradeLevel++;
+        }
     }
 
     public int GetCurrentUpgradeLevel(Upgrade upgrade)

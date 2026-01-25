@@ -1,8 +1,7 @@
-using TMPro;
 using UnityEngine;
 
 public class DiplomacySystem : MonoBehaviour
-{ 
+{
     private BaseKingdom currentKingdom;
 
     public void StartDiplomacy(BaseKingdom baseKingdom)

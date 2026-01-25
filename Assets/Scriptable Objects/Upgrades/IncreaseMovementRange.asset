@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: IncreaseMovementRange
   m_EditorClassIdentifier: 
   upgradeName: Movement Range
-  upgradeDescription: 
-  upgradeIcon: {fileID: 0}
-  minimumLevelRequirement: 0
-  upgradeLimitLevel: 0
+  upgradeDescription: Increase Movement Distance
+  upgradeIcon: {fileID: 1097360369, guid: 2b117b6e74e3fce4c8dde2714ef0ca09, type: 3}
+  minimumLevelRequirement: 1
+  upgradeLimitLevel: 2
   isBehaviour: 0

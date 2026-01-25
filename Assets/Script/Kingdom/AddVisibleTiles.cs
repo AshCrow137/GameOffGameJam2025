@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
-using TMPro;
 
 /// <summary>
 /// Component that adds tiles to a kingdom's visible tiles list on click
@@ -58,7 +58,7 @@ public class AddVisibleTiles : MonoBehaviour
     public void OnClick(CallbackContext context)
     {
         if (!context.performed) return;
-        
+
         if (isAddingTileMode)
         {
             AddCurrentTileToVisibleTiles();

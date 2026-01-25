@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class BootManager : MonoBehaviour
 {
@@ -40,6 +39,9 @@ public class BootManager : MonoBehaviour
     [SerializeField]
     private AIController AIController;
 
+    [SerializeField]
+    private UIUpgradeManager upgradeManager;
+
 
     void Start()
     {
@@ -53,7 +55,7 @@ public class BootManager : MonoBehaviour
         cityManager?.Instantiate();
         gameManager?.Initialize();
 
-        
+
         //grid units and kingdoms should initialize after hexTilemapManager
         foreach (BaseKingdom kingdom in kingdoms)
         {
@@ -69,5 +71,7 @@ public class BootManager : MonoBehaviour
 
 
         AIController?.Initialize();
+
+        upgradeManager?.Initialize();
     }
 }

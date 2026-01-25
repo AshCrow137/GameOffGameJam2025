@@ -1,14 +1,21 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class UpgradeSystemManager
 {
-    public static List<Upgrade> ShowUpgradeOptions(UnitStats unitToUpgrade)
+    public static UnitStats currentUnit;
+
+    public static List<Upgrade> ChooseForUpgrade(UnitStats unitToUpgrade)
     {
+        currentUnit = unitToUpgrade;
         int numberOfUpgradesToShow = 3;
         List<Upgrade> upgradesToShow = new List<Upgrade>();
-        List<Upgrade> aux = unitToUpgrade.PossibleUpgrades;
+        List<Upgrade> aux = new List<Upgrade>();
+
+        foreach(Upgrade upgrade in unitToUpgrade.PossibleUpgrades)
+        {
+            aux.Add(upgrade);
+        }
 
         for (int i = 0; i < numberOfUpgradesToShow; i++)
         {
@@ -21,6 +28,4 @@ public static class UpgradeSystemManager
 
         return upgradesToShow;
     }
-
-
 }

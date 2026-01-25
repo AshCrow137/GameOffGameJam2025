@@ -20,83 +20,83 @@ Copyright (c) 2025 Audiokinetic Inc.
 [UnityEditor.CustomEditor(typeof(AkRoomPortal), true)]
 public class AkRoomPortalInspector : UnityEditor.Editor
 {
-	private UnityEditor.SerializedProperty initialState;
-	private UnityEditor.SerializedProperty rooms;
-	private UnityEditor.SerializedProperty isStatic;
+    private UnityEditor.SerializedProperty initialState;
+    private UnityEditor.SerializedProperty rooms;
+    private UnityEditor.SerializedProperty isStatic;
 
-	private readonly AkUnityEventHandlerInspector m_ClosePortalEventHandlerInspector = new AkUnityEventHandlerInspector();
-	private readonly AkUnityEventHandlerInspector m_OpenPortalEventHandlerInspector = new AkUnityEventHandlerInspector();
+    private readonly AkUnityEventHandlerInspector m_ClosePortalEventHandlerInspector = new AkUnityEventHandlerInspector();
+    private readonly AkUnityEventHandlerInspector m_OpenPortalEventHandlerInspector = new AkUnityEventHandlerInspector();
 
-	private AkRoomPortal m_roomPortal;
+    private AkRoomPortal m_roomPortal;
 
-	[UnityEditor.MenuItem("GameObject/Wwise/Room Portal", false, 1)]
-	public static void CreatePortal()
-	{
-		var portal = new UnityEngine.GameObject("RoomPortal");
+    [UnityEditor.MenuItem("GameObject/Wwise/Room Portal", false, 1)]
+    public static void CreatePortal()
+    {
+        var portal = new UnityEngine.GameObject("RoomPortal");
 
-		UnityEditor.Undo.AddComponent<AkRoomPortal>(portal);
-		portal.GetComponent<UnityEngine.Collider>().isTrigger = true;
+        UnityEditor.Undo.AddComponent<AkRoomPortal>(portal);
+        portal.GetComponent<UnityEngine.Collider>().isTrigger = true;
 
-		UnityEditor.Selection.objects = new UnityEngine.Object[] { portal };
-	}
+        UnityEditor.Selection.objects = new UnityEngine.Object[] { portal };
+    }
 
-	private void OnEnable()
-	{
-		initialState = serializedObject.FindProperty("initialState");
-		rooms = serializedObject.FindProperty("rooms");
-		isStatic = serializedObject.FindProperty("isStatic");
+    private void OnEnable()
+    {
+        initialState = serializedObject.FindProperty("initialState");
+        rooms = serializedObject.FindProperty("rooms");
+        isStatic = serializedObject.FindProperty("isStatic");
 
-		m_OpenPortalEventHandlerInspector.Init(serializedObject, "triggerList", "Open On: ", false);
-		m_ClosePortalEventHandlerInspector.Init(serializedObject, "closePortalTriggerList", "Close On: ", false);
+        m_OpenPortalEventHandlerInspector.Init(serializedObject, "triggerList", "Open On: ", false);
+        m_ClosePortalEventHandlerInspector.Init(serializedObject, "closePortalTriggerList", "Close On: ", false);
 
-		m_roomPortal = target as AkRoomPortal;
-	}
+        m_roomPortal = target as AkRoomPortal;
+    }
 
-	public override void OnInspectorGUI()
-	{
-		serializedObject.Update();
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
 
-		UnityEditor.EditorGUILayout.PropertyField(isStatic);
+        UnityEditor.EditorGUILayout.PropertyField(isStatic);
 
-		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-		{
-			UnityEditor.EditorGUILayout.PropertyField(initialState);
-			m_OpenPortalEventHandlerInspector.OnGUI();
-			m_ClosePortalEventHandlerInspector.OnGUI();
-		}
+        using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+        {
+            UnityEditor.EditorGUILayout.PropertyField(initialState);
+            m_OpenPortalEventHandlerInspector.OnGUI();
+            m_ClosePortalEventHandlerInspector.OnGUI();
+        }
 
-		m_roomPortal.UpdateRooms();
+        m_roomPortal.UpdateRooms();
 
-		var labels = new[] { "Back Room", "Front Room" };
-		var tooltips = new[] { "The highest priority, active and enabled AkRoom component overlapping the back surface of this AkRoomPortal.",
-			"The highest priority, active and enabled AkRoom component overlapping the front surface of this AkRoomPortal." };
+        var labels = new[] { "Back Room", "Front Room" };
+        var tooltips = new[] { "The highest priority, active and enabled AkRoom component overlapping the back surface of this AkRoomPortal.",
+            "The highest priority, active and enabled AkRoom component overlapping the front surface of this AkRoomPortal." };
 
-		var wasEnabled = UnityEngine.GUI.enabled;
-		UnityEngine.GUI.enabled = false;
+        var wasEnabled = UnityEngine.GUI.enabled;
+        UnityEngine.GUI.enabled = false;
 
-		for (var i = 0; i < AkRoomPortal.MAX_ROOMS_PER_PORTAL; i++)
-			UnityEditor.EditorGUILayout.PropertyField(rooms.GetArrayElementAtIndex(i), new UnityEngine.GUIContent(labels[i], tooltips[i]), true);
+        for (var i = 0; i < AkRoomPortal.MAX_ROOMS_PER_PORTAL; i++)
+            UnityEditor.EditorGUILayout.PropertyField(rooms.GetArrayElementAtIndex(i), new UnityEngine.GUIContent(labels[i], tooltips[i]), true);
 
-		UnityEngine.GUI.enabled = wasEnabled;
+        UnityEngine.GUI.enabled = wasEnabled;
 
-		RoomCheck(m_roomPortal);
+        RoomCheck(m_roomPortal);
 
-		serializedObject.ApplyModifiedProperties();
-	}
+        serializedObject.ApplyModifiedProperties();
+    }
 
-	public static void RoomCheck(AkRoomPortal portal)
-	{
-		if (AkWwiseEditorSettings.Instance.ShowSpatialAudioWarningMsg)
-		{
-			if (!portal.IsValid)
-			{
-				UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
+    public static void RoomCheck(AkRoomPortal portal)
+    {
+        if (AkWwiseEditorSettings.Instance.ShowSpatialAudioWarningMsg)
+        {
+            if (!portal.IsValid)
+            {
+                UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-				UnityEditor.EditorGUILayout.HelpBox(
-					"Portal placement is invalid. It will not be set in the Spatial Audio engine. The front and back Rooms of the Portal cannot be the same or have a ReverbZone-parent relationship.",
-					UnityEditor.MessageType.Warning);
-			}
-		}
-	}
+                UnityEditor.EditorGUILayout.HelpBox(
+                    "Portal placement is invalid. It will not be set in the Spatial Audio engine. The front and back Rooms of the Portal cannot be the same or have a ReverbZone-parent relationship.",
+                    UnityEditor.MessageType.Warning);
+            }
+        }
+    }
 }
 #endif

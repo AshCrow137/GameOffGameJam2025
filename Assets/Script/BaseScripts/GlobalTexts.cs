@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public static class GlobalTexts
 {
     public const string QUESTION = "Can I Help You?";

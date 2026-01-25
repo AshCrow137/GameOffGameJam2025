@@ -25,7 +25,7 @@ using System.Collections.ObjectModel;
 [System.Serializable]
 public class JsonSerializable
 {
-	public static implicit operator string(JsonSerializable o) => UnityEngine.JsonUtility.ToJson(o);
+    public static implicit operator string(JsonSerializable o) => UnityEngine.JsonUtility.ToJson(o);
 }
 
 /// <summary>
@@ -42,11 +42,11 @@ public abstract class Args : JsonSerializable
 [System.Serializable]
 public class WaqlArgs : Args
 {
-	public string waql;
-	public WaqlArgs(string query)
-	{
-		waql = query;
-	}
+    public string waql;
+    public WaqlArgs(string query)
+    {
+        waql = query;
+    }
 }
 
 /// <summary>
@@ -55,12 +55,12 @@ public class WaqlArgs : Args
 [System.Serializable]
 public class ArgsObject : Args
 {
-	public string @object;
+    public string @object;
 
-	public ArgsObject(string objectId)
-	{
-		@object = objectId;
-	}
+    public ArgsObject(string objectId)
+    {
+        @object = objectId;
+    }
 }
 
 
@@ -70,14 +70,14 @@ public class ArgsObject : Args
 [System.Serializable]
 public class ArgsRename : Args
 {
-	public string @object;
-	public string value;
+    public string @object;
+    public string value;
 
-	public ArgsRename(string objectId, string value)
-	{
-		@object = objectId;
-		this.value = value;
-	}
+    public ArgsRename(string objectId, string value)
+    {
+        @object = objectId;
+        this.value = value;
+    }
 }
 
 /// <summary>
@@ -86,12 +86,12 @@ public class ArgsRename : Args
 [System.Serializable]
 public class ArgsDisplayName : Args
 {
-	public string displayName;
+    public string displayName;
 
-	public ArgsDisplayName(string displayName)
-	{
-		this.displayName = displayName;
-	}
+    public ArgsDisplayName(string displayName)
+    {
+        this.displayName = displayName;
+    }
 }
 
 /// <summary>
@@ -101,13 +101,13 @@ public class ArgsDisplayName : Args
 [System.Serializable]
 public class ArgsCommand : Args
 {
-	public string[] @objects;
-	public string command;
-	public ArgsCommand(string c, string[] objectIds)
-	{
-		command = c;
-		objects = objectIds;
-	}
+    public string[] @objects;
+    public string command;
+    public ArgsCommand(string c, string[] objectIds)
+    {
+        command = c;
+        objects = objectIds;
+    }
 }
 
 /// <summary>
@@ -117,9 +117,9 @@ public class ArgsCommand : Args
 [System.Serializable]
 public class ArgsPlay : Args
 {
-	public string action;
-	public int transport;
-	public ArgsPlay(string a, int t) { action = a; transport = t; }
+    public string action;
+    public int transport;
+    public ArgsPlay(string a, int t) { action = a; transport = t; }
 }
 
 /// <summary>
@@ -129,8 +129,8 @@ public class ArgsPlay : Args
 [System.Serializable]
 public class ArgsTransport : Args
 {
-	public int transport;
-	public ArgsTransport(int t) { transport = t; }
+    public int transport;
+    public ArgsTransport(int t) { transport = t; }
 }
 
 /// <summary>
@@ -148,12 +148,12 @@ public class Options : JsonSerializable
 [System.Serializable]
 public class ReturnOptions : Options
 {
-	public string[] @return;
+    public string[] @return;
 
-	public ReturnOptions(string [] infokeys)
-	{
-		@return = infokeys;
-	}
+    public ReturnOptions(string[] infokeys)
+    {
+        @return = infokeys;
+    }
 }
 
 /// <summary>
@@ -162,11 +162,11 @@ public class ReturnOptions : Options
 [System.Serializable]
 public class TransportOptions : Options
 {
-	public int transport;
-	public TransportOptions(int id)
-	{
-		transport = id;
-	}
+    public int transport;
+    public TransportOptions(int id)
+    {
+        transport = id;
+    }
 }
 
 /// <summary>
@@ -176,7 +176,7 @@ public class TransportOptions : Options
 [System.Serializable]
 public class ReturnTransport : JsonSerializable
 {
-	public int transport;
+    public int transport;
 }
 
 /// <summary>
@@ -185,10 +185,10 @@ public class ReturnTransport : JsonSerializable
 [System.Serializable]
 public class TransportState : JsonSerializable
 {
-	public string gameObject;
-	public string state;
-	public string @object;
-	public int transport;
+    public string gameObject;
+    public string state;
+    public string @object;
+    public int transport;
 }
 
 /// <summary>
@@ -197,8 +197,8 @@ public class TransportState : JsonSerializable
 [System.Serializable]
 public class ErrorMessage : JsonSerializable
 {
-	public string message;
-	public ErrorDetails details;
+    public string message;
+    public ErrorDetails details;
 }
 
 /// <summary>
@@ -207,8 +207,8 @@ public class ErrorMessage : JsonSerializable
 [System.Serializable]
 public class ErrorDetails : JsonSerializable
 {
-	public string [] reasons;
-	public string procedureUri;
+    public string[] reasons;
+    public string procedureUri;
 }
 
 /// <summary>
@@ -217,7 +217,7 @@ public class ErrorDetails : JsonSerializable
 [System.Serializable]
 public class ReturnWwiseObjects : JsonSerializable
 {
-	public List<WwiseObjectInfoJsonObject> @return;
+    public List<WwiseObjectInfoJsonObject> @return;
 }
 
 /// <summary>
@@ -226,7 +226,7 @@ public class ReturnWwiseObjects : JsonSerializable
 [System.Serializable]
 public class ReturnWwiseObjects<T> : JsonSerializable
 {
-	public List<T> @return;
+    public List<T> @return;
 }
 
 /// <summary>
@@ -235,7 +235,7 @@ public class ReturnWwiseObjects<T> : JsonSerializable
 [System.Serializable]
 public class SelectedWwiseObjects : JsonSerializable
 {
-	public List<WwiseObjectInfoJsonObject> objects;
+    public List<WwiseObjectInfoJsonObject> objects;
 }
 
 /// <summary>
@@ -244,15 +244,15 @@ public class SelectedWwiseObjects : JsonSerializable
 [System.Serializable]
 public class WwiseRenameInfo : JsonSerializable
 {
-	public WwiseObjectInfoJsonObject @object;
-	public string newName;
-	public string oldName;
+    public WwiseObjectInfoJsonObject @object;
+    public string newName;
+    public string oldName;
 
-	public WwiseObjectInfo objectInfo;
-	public void ParseInfo()
-	{
-		objectInfo = @object;
-	}
+    public WwiseObjectInfo objectInfo;
+    public void ParseInfo()
+    {
+        objectInfo = @object;
+    }
 }
 
 
@@ -262,17 +262,17 @@ public class WwiseRenameInfo : JsonSerializable
 [System.Serializable]
 public class WwiseChildModifiedInfo : JsonSerializable
 {
-	public WwiseObjectInfoJsonObject parent;
-	public WwiseObjectInfoJsonObject child;
+    public WwiseObjectInfoJsonObject parent;
+    public WwiseObjectInfoJsonObject child;
 
-	public WwiseObjectInfo parentInfo;
-	public WwiseObjectInfo childInfo;
+    public WwiseObjectInfo parentInfo;
+    public WwiseObjectInfo childInfo;
 
-	public void ParseInfo()
-	{
-		parentInfo = parent;
-		childInfo = child;
-	}
+    public void ParseInfo()
+    {
+        parentInfo = parent;
+        childInfo = child;
+    }
 }
 
 /// <summary>
@@ -282,42 +282,42 @@ public class WwiseChildModifiedInfo : JsonSerializable
 [System.Serializable]
 public class WwiseObjectInfoJsonObject
 {
-	public string id;
-	public WwiseObjectInfoParent parent;
-	public string name;
-	public string type;
-	public int childrenCount;
-	public string path;
-	public string filePath;
-	public string workunitType;
-	public string soundbankBnkFilePath;
+    public string id;
+    public WwiseObjectInfoParent parent;
+    public string name;
+    public string type;
+    public int childrenCount;
+    public string path;
+    public string filePath;
+    public string workunitType;
+    public string soundbankBnkFilePath;
 
-	public static implicit operator WwiseObjectInfo(WwiseObjectInfoJsonObject info)
-	{
-		return ToObjectInfo(info);
-	}
+    public static implicit operator WwiseObjectInfo(WwiseObjectInfoJsonObject info)
+    {
+        return ToObjectInfo(info);
+    }
 
-	public static WwiseObjectInfo ToObjectInfo(WwiseObjectInfoJsonObject info)
-	{
-		var type = info.type == null ? "" : info.type;
-		var wutype = info.workunitType == null ? "" : info.workunitType;
-		var objectType = WaapiHelper.GetWwiseObjectTypeFromString(type.ToLower(), wutype.ToLower());
-		var parentID = info.parent.id == null ? System.Guid.Empty : System.Guid.Parse(info.parent.id);
-		var objectGuid = info.id == null ? System.Guid.Empty : System.Guid.Parse(info.id);
+    public static WwiseObjectInfo ToObjectInfo(WwiseObjectInfoJsonObject info)
+    {
+        var type = info.type == null ? "" : info.type;
+        var wutype = info.workunitType == null ? "" : info.workunitType;
+        var objectType = WaapiHelper.GetWwiseObjectTypeFromString(type.ToLower(), wutype.ToLower());
+        var parentID = info.parent.id == null ? System.Guid.Empty : System.Guid.Parse(info.parent.id);
+        var objectGuid = info.id == null ? System.Guid.Empty : System.Guid.Parse(info.id);
 
-		return new WwiseObjectInfo
-		{
-			objectGUID = objectGuid,
-			name = info.name,
-			type = objectType,
-			childrenCount = info.childrenCount,
-			path = info.path,
-			workUnitType = wutype,
-			parentID = parentID,
-			filePath = info.filePath,
-			soundbankBnkFilePath = info.soundbankBnkFilePath
-		};
-	}
+        return new WwiseObjectInfo
+        {
+            objectGUID = objectGuid,
+            name = info.name,
+            type = objectType,
+            childrenCount = info.childrenCount,
+            path = info.path,
+            workUnitType = wutype,
+            parentID = parentID,
+            filePath = info.filePath,
+            soundbankBnkFilePath = info.soundbankBnkFilePath
+        };
+    }
 }
 
 /// <summary>
@@ -326,7 +326,7 @@ public class WwiseObjectInfoJsonObject
 [System.Serializable]
 public class WwiseObjectInfoParent
 {
-	public string id;
+    public string id;
 }
 
 
@@ -336,15 +336,15 @@ public class WwiseObjectInfoParent
 [System.Serializable]
 public struct WwiseObjectInfo
 {
-	public System.Guid objectGUID;
-	public System.Guid parentID;
-	public string name;
-	public WwiseObjectType type;
-	public int childrenCount;
-	public string path;
-	public string workUnitType;
-	public string filePath;
-	public string soundbankBnkFilePath;
+    public System.Guid objectGUID;
+    public System.Guid parentID;
+    public string name;
+    public WwiseObjectType type;
+    public int childrenCount;
+    public string path;
+    public string workUnitType;
+    public string filePath;
+    public string soundbankBnkFilePath;
 }
 
 /// <summary>
@@ -352,22 +352,22 @@ public struct WwiseObjectInfo
 /// </summary>
 public static class WaapiHelper
 {
-	public static WwiseObjectType GetWwiseObjectTypeFromString(string typeString, string workUnitType)
-	{
-		if (!WaapiKeywords.typeStringDict.ContainsKey(typeString))
-			return WwiseObjectType.None;
+    public static WwiseObjectType GetWwiseObjectTypeFromString(string typeString, string workUnitType)
+    {
+        if (!WaapiKeywords.typeStringDict.ContainsKey(typeString))
+            return WwiseObjectType.None;
 
-		if (workUnitType != string.Empty)
-		{
-			if (workUnitType == "folder")
-			{
-				return WaapiKeywords.typeStringDict["physicalfolder"];
-			}
+        if (workUnitType != string.Empty)
+        {
+            if (workUnitType == "folder")
+            {
+                return WaapiKeywords.typeStringDict["physicalfolder"];
+            }
 
-			return WaapiKeywords.typeStringDict[typeString];
-		}
-		return WaapiKeywords.typeStringDict[typeString];
-	}
+            return WaapiKeywords.typeStringDict[typeString];
+        }
+        return WaapiKeywords.typeStringDict[typeString];
+    }
 }
 
 /// <summary>
@@ -375,145 +375,145 @@ public static class WaapiHelper
 /// </summary>
 public class WaapiKeywords
 {
-	public const string ACTION = "action";
-	public const string ANCESTORS = "ancestors";
-	public const string AT = "@";
-	public const string AUX_BUSSES = "auxBusses";
-	public const string BACK_SLASH = "\\";
-	public const string BANK_DATA = "bankData";
-	public const string BANK_INFO = "bankInfo";
-	public const string CHILD = "child";
-	public const string CHILDREN = "children";
-	public const string CHILDREN_COUNT = "childrenCount";
-	public const string CLASSID = "classId";
-	public const string COMMAND = "command";
-	public const string DATA = "data";
-	public const string DELETE_ITEMS = "Delete Items";
-	public const string DESCENDANTS = "descendants";
-	public const string DISPLAY_NAME = "displayName";
-	public const string DRAG_DROP_ITEMS = "Drag Drop Items";
-	public const string EVENT = "event";
-	public const string EVENTS = "events";
-	public const string FILEPATH = "filePath";
-	public const string FIND_IN_PROJECT_EXPLORER = "FindInProjectExplorerSyncGroup1";
-	public const string FOLDER = "Folder";
-	public const string FROM = "from";
-	public const string ID = "id";
-	public const string INCLUSIONS = "inclusions";
-	public const string INFO_FILE = "infoFile";
-	public const string IS_CONNECTED = "isConnected";
-	public const string LANGUAGE = "language";
-	public const string LANGUAGES = "languages";
-	public const string MAX = "max";
-	public const string MAX_RADIUS_ATTENUATION = "audioSource:maxRadiusAttenuation";
-	public const string MESSSAGE = "message";
-	public const string MIN = "min";
-	public const string NAME = "name";
-	public const string NAMECONTAINS = "name:contains";
-	public const string NEW = "new";
-	public const string NEW_NAME = "newName";
-	public const string NOTES = "notes";
-	public const string OBJECT = "object";
-	public const string OBJECTS = "objects";
-	public const string OF_TYPE = "ofType";
-	public const string OLD_NAME = "oldName";
-	public const string PARENT = "parent";
-	public const string PATH = "path";
-	public const string PHYSICAL_FOLDER = "PhysicalFolder";
-	public const string PLATFORM = "platform";
-	public const string PLATFORMS = "platforms";
-	public const string PLAY = "play";
-	public const string PLAYING = "playing";
-	public const string PLAYSTOP = "playStop";
-	public const string PLUGININFO_OPTIONS = "pluginInfo";
-	public const string PLUGININFO_RESPONSE = "PluginInfo";
-	public const string PROJECT = "Project";
-	public const string PROPERTY = "property";
-	public const string RADIUS = "radius";
-	public const string RANGE = "range";
-	public const string REBUILD = "rebuild";
-	public const string REDO = "Redo";
-	public const string RESTRICTION = "restriction";
-	public const string RETURN = "return";
-	public const string SEARCH = "search";
-	public const string SELECT = "select";
-	public const string SIZE = "size";
-	public const string SKIP_LANGUAGES = "skipLanguages";
-	public const string SOUNDBANK = "soundbank";
-	public const string SOUNDBANKS = "soundbanks";
-	public const string STATE = "state";
-	public const string STOP = "stop";
-	public const string STOPPED = "stopped";
-	public const string STRUCTURE = "structure";
-	public const string TRANSFORM = "transform";
-	public const string TRANSPORT = "transport";
-	public const string TYPE = "type";
-	public const string UI = "ui";
-	public const string UNDO = "Undo";
-	public const string VALUE = "value";
-	public const string VOLUME = "Volume";
-	public const string WHERE = "where";
-	public const string WORKUNIT_TYPE = "workunit:type";
-	public const string OPEN_SOUNDBANK_FOLDER = "OpenContainingFolderSoundbank";
-	public const string OPEN_WORKUNIT_FOLDER = "OpenContainingFolderWorkUnit";
-	public const string OPEN_WAV_FOLDER = "OpenContainingFolderWAV";
+    public const string ACTION = "action";
+    public const string ANCESTORS = "ancestors";
+    public const string AT = "@";
+    public const string AUX_BUSSES = "auxBusses";
+    public const string BACK_SLASH = "\\";
+    public const string BANK_DATA = "bankData";
+    public const string BANK_INFO = "bankInfo";
+    public const string CHILD = "child";
+    public const string CHILDREN = "children";
+    public const string CHILDREN_COUNT = "childrenCount";
+    public const string CLASSID = "classId";
+    public const string COMMAND = "command";
+    public const string DATA = "data";
+    public const string DELETE_ITEMS = "Delete Items";
+    public const string DESCENDANTS = "descendants";
+    public const string DISPLAY_NAME = "displayName";
+    public const string DRAG_DROP_ITEMS = "Drag Drop Items";
+    public const string EVENT = "event";
+    public const string EVENTS = "events";
+    public const string FILEPATH = "filePath";
+    public const string FIND_IN_PROJECT_EXPLORER = "FindInProjectExplorerSyncGroup1";
+    public const string FOLDER = "Folder";
+    public const string FROM = "from";
+    public const string ID = "id";
+    public const string INCLUSIONS = "inclusions";
+    public const string INFO_FILE = "infoFile";
+    public const string IS_CONNECTED = "isConnected";
+    public const string LANGUAGE = "language";
+    public const string LANGUAGES = "languages";
+    public const string MAX = "max";
+    public const string MAX_RADIUS_ATTENUATION = "audioSource:maxRadiusAttenuation";
+    public const string MESSSAGE = "message";
+    public const string MIN = "min";
+    public const string NAME = "name";
+    public const string NAMECONTAINS = "name:contains";
+    public const string NEW = "new";
+    public const string NEW_NAME = "newName";
+    public const string NOTES = "notes";
+    public const string OBJECT = "object";
+    public const string OBJECTS = "objects";
+    public const string OF_TYPE = "ofType";
+    public const string OLD_NAME = "oldName";
+    public const string PARENT = "parent";
+    public const string PATH = "path";
+    public const string PHYSICAL_FOLDER = "PhysicalFolder";
+    public const string PLATFORM = "platform";
+    public const string PLATFORMS = "platforms";
+    public const string PLAY = "play";
+    public const string PLAYING = "playing";
+    public const string PLAYSTOP = "playStop";
+    public const string PLUGININFO_OPTIONS = "pluginInfo";
+    public const string PLUGININFO_RESPONSE = "PluginInfo";
+    public const string PROJECT = "Project";
+    public const string PROPERTY = "property";
+    public const string RADIUS = "radius";
+    public const string RANGE = "range";
+    public const string REBUILD = "rebuild";
+    public const string REDO = "Redo";
+    public const string RESTRICTION = "restriction";
+    public const string RETURN = "return";
+    public const string SEARCH = "search";
+    public const string SELECT = "select";
+    public const string SIZE = "size";
+    public const string SKIP_LANGUAGES = "skipLanguages";
+    public const string SOUNDBANK = "soundbank";
+    public const string SOUNDBANKS = "soundbanks";
+    public const string STATE = "state";
+    public const string STOP = "stop";
+    public const string STOPPED = "stopped";
+    public const string STRUCTURE = "structure";
+    public const string TRANSFORM = "transform";
+    public const string TRANSPORT = "transport";
+    public const string TYPE = "type";
+    public const string UI = "ui";
+    public const string UNDO = "Undo";
+    public const string VALUE = "value";
+    public const string VOLUME = "Volume";
+    public const string WHERE = "where";
+    public const string WORKUNIT_TYPE = "workunit:type";
+    public const string OPEN_SOUNDBANK_FOLDER = "OpenContainingFolderSoundbank";
+    public const string OPEN_WORKUNIT_FOLDER = "OpenContainingFolderWorkUnit";
+    public const string OPEN_WAV_FOLDER = "OpenContainingFolderWAV";
 
-	/// <summary>
-	/// Maps WwiseObjectType to strings.
-	/// </summary>
-	public static ReadOnlyDictionary<WwiseObjectType, string> WwiseObjectTypeStrings = new ReadOnlyDictionary<WwiseObjectType, string>(new Dictionary<WwiseObjectType, string>()
-		{
-			{WwiseObjectType.None, "None"},
-			{WwiseObjectType.AuxBus, "AuxiliaryBus"},
-			{WwiseObjectType.Bus, "Bus"},
-			{WwiseObjectType.Event, "Event"},
-			{WwiseObjectType.Folder, "Folder"},
-			{WwiseObjectType.PhysicalFolder, "PhysicalFolder"},
-			{WwiseObjectType.Project, "Project"},
-			{WwiseObjectType.Soundbank, "SoundBank"},
-			{WwiseObjectType.State, "State"},
-			{WwiseObjectType.StateGroup, "StateGroup"},
-			{WwiseObjectType.Switch, "Switch"},
-			{WwiseObjectType.SwitchGroup, "SwitchGroup"},
-			{WwiseObjectType.WorkUnit, "WorkUnit"},
-			{WwiseObjectType.GameParameter, "Game Parametr"},
-			{WwiseObjectType.Trigger, "Trigger"},
-			{WwiseObjectType.AcousticTexture, "AcousticTexture"}
-		});
+    /// <summary>
+    /// Maps WwiseObjectType to strings.
+    /// </summary>
+    public static ReadOnlyDictionary<WwiseObjectType, string> WwiseObjectTypeStrings = new ReadOnlyDictionary<WwiseObjectType, string>(new Dictionary<WwiseObjectType, string>()
+        {
+            {WwiseObjectType.None, "None"},
+            {WwiseObjectType.AuxBus, "AuxiliaryBus"},
+            {WwiseObjectType.Bus, "Bus"},
+            {WwiseObjectType.Event, "Event"},
+            {WwiseObjectType.Folder, "Folder"},
+            {WwiseObjectType.PhysicalFolder, "PhysicalFolder"},
+            {WwiseObjectType.Project, "Project"},
+            {WwiseObjectType.Soundbank, "SoundBank"},
+            {WwiseObjectType.State, "State"},
+            {WwiseObjectType.StateGroup, "StateGroup"},
+            {WwiseObjectType.Switch, "Switch"},
+            {WwiseObjectType.SwitchGroup, "SwitchGroup"},
+            {WwiseObjectType.WorkUnit, "WorkUnit"},
+            {WwiseObjectType.GameParameter, "Game Parametr"},
+            {WwiseObjectType.Trigger, "Trigger"},
+            {WwiseObjectType.AcousticTexture, "AcousticTexture"}
+        });
 
-	/// <summary>
-	/// Maps root folder names to displayed strings.
-	/// </summary>
-	public static ReadOnlyDictionary<string, string> FolderDisplaynames = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
-	{
-		{"Master-Mixer Hierarchy", "Auxiliary Busses" },
-		{ "Events", "Events"},
-		{ "States", "States"},
-		{ "SoundBanks", "SoundBanks"},
-		{ "Switches", "Switches"},
-		{ "Triggers", "Triggers"},
-		{ "Virtual Acoustics", "Virtual Acoustics"},
-	});
+    /// <summary>
+    /// Maps root folder names to displayed strings.
+    /// </summary>
+    public static ReadOnlyDictionary<string, string> FolderDisplaynames = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
+    {
+        {"Master-Mixer Hierarchy", "Auxiliary Busses" },
+        { "Events", "Events"},
+        { "States", "States"},
+        { "SoundBanks", "SoundBanks"},
+        { "Switches", "Switches"},
+        { "Triggers", "Triggers"},
+        { "Virtual Acoustics", "Virtual Acoustics"},
+    });
 
-	/// <summary>
-	/// Maps strings to WwiseObjectType.
-	/// </summary>
-	public static ReadOnlyDictionary<string, WwiseObjectType> typeStringDict = new ReadOnlyDictionary<string, WwiseObjectType>(new Dictionary<string, WwiseObjectType>()
-	{
-		["auxbus"] = WwiseObjectType.AuxBus,
-		["bus"] = WwiseObjectType.Bus,
-		["event"] = WwiseObjectType.Event,
-		["folder"] = WwiseObjectType.Folder,
-		["physicalfolder"] = WwiseObjectType.PhysicalFolder,
-		["soundbank"] = WwiseObjectType.Soundbank,
-		["project"] = WwiseObjectType.Project,
-		["state"] = WwiseObjectType.State,
-		["stategroup"] = WwiseObjectType.StateGroup,
-		["switch"] = WwiseObjectType.Switch,
-		["switchgroup"] = WwiseObjectType.SwitchGroup,
-		["workunit"] = WwiseObjectType.WorkUnit,
-		["gameparameter"] = WwiseObjectType.GameParameter,
-		["trigger"] = WwiseObjectType.Trigger,
-		["acoustictexture"] = WwiseObjectType.AcousticTexture
-	});
+    /// <summary>
+    /// Maps strings to WwiseObjectType.
+    /// </summary>
+    public static ReadOnlyDictionary<string, WwiseObjectType> typeStringDict = new ReadOnlyDictionary<string, WwiseObjectType>(new Dictionary<string, WwiseObjectType>()
+    {
+        ["auxbus"] = WwiseObjectType.AuxBus,
+        ["bus"] = WwiseObjectType.Bus,
+        ["event"] = WwiseObjectType.Event,
+        ["folder"] = WwiseObjectType.Folder,
+        ["physicalfolder"] = WwiseObjectType.PhysicalFolder,
+        ["soundbank"] = WwiseObjectType.Soundbank,
+        ["project"] = WwiseObjectType.Project,
+        ["state"] = WwiseObjectType.State,
+        ["stategroup"] = WwiseObjectType.StateGroup,
+        ["switch"] = WwiseObjectType.Switch,
+        ["switchgroup"] = WwiseObjectType.SwitchGroup,
+        ["workunit"] = WwiseObjectType.WorkUnit,
+        ["gameparameter"] = WwiseObjectType.GameParameter,
+        ["trigger"] = WwiseObjectType.Trigger,
+        ["acoustictexture"] = WwiseObjectType.AcousticTexture
+    });
 }

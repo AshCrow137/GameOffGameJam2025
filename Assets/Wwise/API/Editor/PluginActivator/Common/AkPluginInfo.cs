@@ -18,18 +18,18 @@ Copyright (c) 2025 Audiokinetic Inc.
 #if UNITY_EDITOR
 internal class AkPluginInfo
 {
-	public uint PluginID;
-	public string DllName;
-	public string StaticLibName;
+    public uint PluginID;
+    public string DllName;
+    public string StaticLibName;
 
-	public override int GetHashCode()
-	{
-		return PluginID.GetHashCode();
-	}
+    public override int GetHashCode()
+    {
+        return PluginID.GetHashCode();
+    }
 
-	public override bool Equals(object obj)
-	{
-		return PluginID.Equals(obj);
-	}
+    public override bool Equals(object obj)
+    {
+        return PluginID.Equals(obj);
+    }
 }
 #endif

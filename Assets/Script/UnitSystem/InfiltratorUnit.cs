@@ -26,9 +26,9 @@ public class InfiltratorUnit : BaseGridUnitScript
                 UIManager.Instance.ShowMessageText($"Your infiltrator was detected and killed!");
                 infiltratedCity.GetOwner().DecreaseMadness(Random.Range(minMadnessInreace, maxMadnessIncreace));
                 Death();
+            }
         }
-        }
-        
+
     }
 
     public override void OnTileClicked(Vector3Int cellPos)

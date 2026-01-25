@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 // Ai controlled kingdom class
 public class AIKingdom : BaseKingdom
 {
@@ -8,11 +8,11 @@ public class AIKingdom : BaseKingdom
     [SerializeField]
     private MadnessData madnessData;
     [SerializeField]
-    private int maxMainProductionBuildings = 2; 
-    public int GetMaxMainProductionBuildings() { return maxMainProductionBuildings  ; }
+    private int maxMainProductionBuildings = 2;
+    public int GetMaxMainProductionBuildings() { return maxMainProductionBuildings; }
 
     [SerializeField]
-    private int maxSecondaryProductionBuilding = 1; 
+    private int maxSecondaryProductionBuilding = 1;
     public int GetMaxSecondaryProductionBuildings() { return maxSecondaryProductionBuilding; }
 
     [SerializeField]
@@ -28,9 +28,9 @@ public class AIKingdom : BaseKingdom
     public List<BaseGridUnitScript> GetNotUnlockedUnits()
     {
         List<BaseGridUnitScript> temp = new List<BaseGridUnitScript>(TotalUnlockableUnits);
-        foreach(BaseGridUnitScript unit in unlockedUnits)
+        foreach (BaseGridUnitScript unit in unlockedUnits)
         {
-            if(temp.Contains(unit))
+            if (temp.Contains(unit))
             {
                 temp.Remove(unit);
             }
@@ -83,7 +83,7 @@ public class AIKingdom : BaseKingdom
         //{
         //    unit.ApplyMadnessEffect(currentMadnessEffect);
         //}
-        
+
     }
     public override void DecreaseMadness(int amount)
     {
@@ -99,8 +99,8 @@ public class AIKingdom : BaseKingdom
     {
         return madnessData.GetMadnessEffects(madnessLevel);
     }
-    public bool IsBuildUnit { get;private set; }
-    
+    public bool IsBuildUnit { get; private set; }
+
     public void StartTurn()
     {
 

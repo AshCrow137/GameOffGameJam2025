@@ -26,24 +26,24 @@ Copyright (c) 2025 Audiokinetic Inc.
 ///	In this scenario, attenuation is based on the distance between the character and the sound, whereas panning, spatialization, and spread and focus calculations are based on the camera.
 public class AkListenerDistanceProbe : UnityEngine.MonoBehaviour
 {
-	[UnityEngine.Tooltip("Game object that is assigned as the distance probe for this listener.")]
-	public AkGameObj distanceProbe;
+    [UnityEngine.Tooltip("Game object that is assigned as the distance probe for this listener.")]
+    public AkGameObj distanceProbe;
 
-	private void OnEnable()
-	{
+    private void OnEnable()
+    {
         if (distanceProbe)
         {
             var listenerGameObjectID = AkUnitySoundEngine.GetAkGameObjectID(this.gameObject);
             var distanceProbeGameObjectID = AkUnitySoundEngine.GetAkGameObjectID(distanceProbe.gameObject);
-			AkUnitySoundEngine.SetDistanceProbe(listenerGameObjectID, distanceProbeGameObjectID);
+            AkUnitySoundEngine.SetDistanceProbe(listenerGameObjectID, distanceProbeGameObjectID);
         }
     }
 
-	private void OnDisable()
-	{
+    private void OnDisable()
+    {
         var listenerGameObjectID = AkUnitySoundEngine.GetAkGameObjectID(this.gameObject);
         AkUnitySoundEngine.SetDistanceProbe(listenerGameObjectID, AkUnitySoundEngine.AK_INVALID_GAME_OBJECT);
-	}
+    }
 
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

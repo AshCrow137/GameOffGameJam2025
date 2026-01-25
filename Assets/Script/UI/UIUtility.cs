@@ -1,6 +1,7 @@
-﻿public static class UIUtility {
+﻿public static class UIUtility
+{
 
-    public static GridCity selectedCity {  get; private set; }
+    public static GridCity selectedCity { get; private set; }
     public static BaseGridUnitScript selectedUnit { get; private set; }
     public static bool bHasSelectedEntity { get; private set; } = false;
     public static void SelectCity(GridCity newCity)
@@ -10,11 +11,11 @@
         bHasSelectedEntity = true;
         UIManager.Instance?.OnCitySelect(newCity);
     }
-    public static void SelectUnit(BaseGridUnitScript newUnit )
+    public static void SelectUnit(BaseGridUnitScript newUnit)
     {
         selectedUnit = newUnit;
         selectedUnit.OnEntitySelect(PlayerKingdom.Instance);
-        bHasSelectedEntity=true;
+        bHasSelectedEntity = true;
         UIManager.Instance.OnUnitSelect(newUnit);
     }
     public static void DeselectCity()

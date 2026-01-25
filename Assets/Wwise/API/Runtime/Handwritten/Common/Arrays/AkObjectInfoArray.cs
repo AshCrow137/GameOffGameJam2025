@@ -18,28 +18,28 @@ Copyright (c) 2025 Audiokinetic Inc.
 
 public class AkObjectInfoArray : AkBaseArray<AkObjectInfo>
 {
-	public AkObjectInfoArray(int count) : base(count)
-	{
-	}
+    public AkObjectInfoArray(int count) : base(count)
+    {
+    }
 
-	protected override int StructureSize
-	{
-		get { return AkUnitySoundEnginePINVOKE.CSharp_AkObjectInfo_GetSizeOf(); }
-	}
+    protected override int StructureSize
+    {
+        get { return AkUnitySoundEnginePINVOKE.CSharp_AkObjectInfo_GetSizeOf(); }
+    }
 
-	protected override void DefaultConstructAtIntPtr(System.IntPtr address)
-	{
-		AkUnitySoundEnginePINVOKE.CSharp_AkObjectInfo_Clear(address);
-	}
+    protected override void DefaultConstructAtIntPtr(System.IntPtr address)
+    {
+        AkUnitySoundEnginePINVOKE.CSharp_AkObjectInfo_Clear(address);
+    }
 
-	protected override AkObjectInfo CreateNewReferenceFromIntPtr(System.IntPtr address)
-	{
-		return new AkObjectInfo(address, false);
-	}
+    protected override AkObjectInfo CreateNewReferenceFromIntPtr(System.IntPtr address)
+    {
+        return new AkObjectInfo(address, false);
+    }
 
-	protected override void CloneIntoReferenceFromIntPtr(System.IntPtr address, AkObjectInfo other)
-	{
-		AkUnitySoundEnginePINVOKE.CSharp_AkObjectInfo_Clone(address, AkObjectInfo.getCPtr(other));
-	}
+    protected override void CloneIntoReferenceFromIntPtr(System.IntPtr address, AkObjectInfo other)
+    {
+        AkUnitySoundEnginePINVOKE.CSharp_AkObjectInfo_Clone(address, AkObjectInfo.getCPtr(other));
+    }
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

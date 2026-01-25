@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GridBuilding : BaseGridEntity
 {
@@ -22,7 +22,7 @@ public class GridBuilding : BaseGridEntity
     /// <summary>
     /// Initialize the GridBuilding with a Building scriptable object
     /// </summary>
-    public override  void Initialize( BaseKingdom owner)
+    public override void Initialize(BaseKingdom owner)
     {
         base.Initialize(owner);
         bIsActive = true;
@@ -44,11 +44,11 @@ public class GridBuilding : BaseGridEntity
     public override void Death()
     {
         base.Death();
-        
+
         // Find parent city and remove this building from it
         Vector3Int buildingPosition = GetCellPosition();
         Dictionary<Vector3Int, GridCity> allCities = CityManager.Instance.GetAllCities();
-        
+
         foreach (var cityEntry in allCities)
         {
             GridCity city = cityEntry.Value;
@@ -58,7 +58,7 @@ public class GridBuilding : BaseGridEntity
                 break;
             }
         }
-        
+
         GetComponent<EntityVision>()?.OnDeath();
         gameObject.SetActive(false);
     }

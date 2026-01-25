@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using TMPro;
 
 public class TutorialScript : MonoBehaviour
 {
@@ -33,9 +33,9 @@ public class TutorialScript : MonoBehaviour
     {
         tutorialPages[currentPage].PageCloseEvent.Invoke();
         currentPage++;
-        if(currentPage >= tutorialPages.Count-1)
+        if (currentPage >= tutorialPages.Count - 1)
         {
-            currentPage = tutorialPages.Count-1;
+            currentPage = tutorialPages.Count - 1;
             nextButton.interactable = false;
         }
         prevButton.interactable = true;
@@ -46,7 +46,7 @@ public class TutorialScript : MonoBehaviour
     {
         tutorialPages[currentPage].PageCloseEvent.Invoke();
         currentPage--;
-        if(currentPage<=0)
+        if (currentPage <= 0)
         {
             currentPage = 0;
             prevButton.interactable = false;
@@ -62,6 +62,6 @@ public struct TutorialStruct
 {
     public UnityEvent PageOpenEvent;
     public UnityEvent PageCloseEvent;
-    [TextArea(15,20)]
+    [TextArea(15, 20)]
     public string TutorialText;
 }

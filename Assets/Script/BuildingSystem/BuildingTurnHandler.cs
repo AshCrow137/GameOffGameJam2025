@@ -1,5 +1,3 @@
-using UnityEngine;
-
 /// <summary>
 /// Handles turn-based logic for the BuildingManager
 /// This component should be attached to the same GameObject as BuildingManager
@@ -11,7 +9,7 @@ public class BuildingTurnHandler : EntityTurnHandler
     // {
     //     // Get reference to BuildingManager on the same GameObject
     //     buildingManager = GetComponent<BuildingManager>();
-        
+
     //     if (buildingManager == null)
     //     {
     //         Debug.LogError("BuildingTurnHandler requires a BuildingManager component on the same GameObject!");
@@ -25,8 +23,8 @@ public class BuildingTurnHandler : EntityTurnHandler
     public override void OnTurnStart()
     {
         base.OnTurnStart(); // Call base implementation for logging
-        //GetComponent<BuildingManager>().StartTurn();
-        
+                            //GetComponent<BuildingManager>().StartTurn();
+
     }
 }
 

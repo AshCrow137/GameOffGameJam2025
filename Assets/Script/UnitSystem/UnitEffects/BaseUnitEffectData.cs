@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BaseUnitEffectData", menuName = "UnitEffects/BasaeUnitEffect")]
-public class BaseUnitEffectData:ScriptableObject
+public class BaseUnitEffectData : ScriptableObject
 {
 
     /// <summary>
@@ -24,9 +24,9 @@ public class BaseUnitEffectData:ScriptableObject
     [SerializeField]
     protected MagicDefenceEffectModifier effectModifier = MagicDefenceEffectModifier.Full;
 
-    public virtual BaseEffect InstantiateEffect(BaseKingdom owner,BaseGridUnitScript target)
+    public virtual BaseEffect InstantiateEffect(BaseKingdom owner, BaseGridUnitScript target)
     {
-        return new BaseEffect(effectName, duration, owner, target, procRate, effectType,effectModifier, AffectedByMagicDefence);
+        return new BaseEffect(effectName, duration, owner, target, procRate, effectType, effectModifier, AffectedByMagicDefence);
     }
 }
 /// <summary>
@@ -44,7 +44,7 @@ public enum EffectType
 }
 public enum MagicDefenceEffectModifier
 {
-    
+
     Full,
     Half,
     Quarter,
@@ -56,15 +56,15 @@ public class BaseEffect
 {
     public string Name { get; private set; }
     public int Duration { get; private set; }
-    public ProcRate ProcRate { get; private set; } 
-    public BaseKingdom OwnerKingdom {  get; private set; }
+    public ProcRate ProcRate { get; private set; }
+    public BaseKingdom OwnerKingdom { get; private set; }
     public BaseGridUnitScript TargetUnit { get; private set; }
     public int RemainDuration { get; private set; }
     public EffectType EffectType { get; private set; }
     public bool AffectedByMagicDefence { get; private set; }
     public MagicDefenceEffectModifier EffectModifier { get; private set; }
-   
-    public BaseEffect(string effectName, int duration, BaseKingdom ownerKingdom, BaseGridUnitScript targetUnit,ProcRate procRate,EffectType effectType,MagicDefenceEffectModifier effectModifier,bool affectedByMagicDefence)
+
+    public BaseEffect(string effectName, int duration, BaseKingdom ownerKingdom, BaseGridUnitScript targetUnit, ProcRate procRate, EffectType effectType, MagicDefenceEffectModifier effectModifier, bool affectedByMagicDefence)
     {
         Name = effectName;
         Duration = duration;
@@ -81,7 +81,7 @@ public class BaseEffect
                 RemainDuration = duration;
                 break;
             case EffectType.Negative:
-                if(AffectedByMagicDefence)
+                if (AffectedByMagicDefence)
                 {
                     RemainDuration = duration - Mathf.RoundToInt(targetUnit.unitStats.UnitMagicDefence.FinalMagicDefence * GetMagicDefenceModifier(effectModifier));
                 }

@@ -15,7 +15,7 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 #if UNITY_EDITOR
-public class WwiseSoundBankRef: global::System.IDisposable
+public class WwiseSoundBankRef : global::System.IDisposable
 {
     private global::System.IntPtr swigCPtr;
     protected bool swigCMemOwn;
@@ -71,7 +71,7 @@ public class WwiseSoundBankRef: global::System.IDisposable
     public WwiseSoundBankRef(global::System.IntPtr cPtr) : this(cPtr, true)
     {
     }
-    
+
     public WwiseSoundBankRef(string soundBankName, string soundBankType) : this(WwiseProjectDatabase.GetSoundBankRefString(soundBankName, soundBankType), true)
     {
     }

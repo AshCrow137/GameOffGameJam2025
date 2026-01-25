@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 // Base kingdom class
 public class BaseKingdom : Entity
@@ -14,9 +14,9 @@ public class BaseKingdom : Entity
     protected List<TreasureChest> chests = new();
 
     [SerializeField]
-    protected List<BaseGridUnitScript> unlockedUnits = new List<BaseGridUnitScript> ();
+    protected List<BaseGridUnitScript> unlockedUnits = new List<BaseGridUnitScript>();
     [SerializeField]
-    protected List<GridBuilding> unlockedBuildings= new List<GridBuilding> ();
+    protected List<GridBuilding> unlockedBuildings = new List<GridBuilding>();
     [SerializeField]
     private int StartingMagic = 50;
     [SerializeField]
@@ -34,15 +34,15 @@ public class BaseKingdom : Entity
     }
     protected virtual void DefeatCheck()
     {
-        if(controlledCities.Count<=0 &&controlledUnits.Count<=0)
+        if (controlledCities.Count <= 0 && controlledUnits.Count <= 0)
         {
-            isDefeated=true;
+            isDefeated = true;
             GlobalEventManager.InvokeKingdomDefeat(this);
         }
     }
     public Dictionary<AIKingdom, int> relationsWithOtherKingdoms { get; protected set; } = new();
     [SerializeField]
-    protected Color kingdomColor  = new Color();
+    protected Color kingdomColor = new Color();
 
     public Color GetKingdomColor() { return kingdomColor; }
     public Resource Resources() => currentResources;
@@ -54,13 +54,13 @@ public class BaseKingdom : Entity
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
         visionManager = GetComponent<VisionManager>();
         visionManager.Initialize();
-        currentResources = new Resource(this, StartingMagic,StartingGold,StartingMaterials);
+        currentResources = new Resource(this, StartingMagic, StartingGold, StartingMaterials);
         // Initializing controlled units
-        foreach ( BaseGridUnitScript unit in controlledUnits)
+        foreach (BaseGridUnitScript unit in controlledUnits)
         {
             unit?.Initialize(this);
         }
-        foreach ( GridCity city in controlledCities)
+        foreach (GridCity city in controlledCities)
         {
             city?.Initialize(this);
         }
@@ -73,7 +73,7 @@ public class BaseKingdom : Entity
     protected virtual void OnStartTurn(BaseKingdom kingdom)
     {
         if (kingdom != this) return;
-        foreach( BaseGridUnitScript unit in controlledUnits)
+        foreach (BaseGridUnitScript unit in controlledUnits)
         {
             unit.RefreshUnit();
         }
@@ -85,19 +85,19 @@ public class BaseKingdom : Entity
         int unitsCount = GetUnitsCountInRange(5);
         if (unitsCount != 0)
         {
-            IncreaseMadness(unitsCount );
+            IncreaseMadness(unitsCount);
         }
         else
         {
             DecreaseMadness(3);
         }
 
-        
+
     }
 
     public void AddUnitToKingdom(BaseGridUnitScript unit)
     {
-        if(!controlledUnits.Contains(unit))
+        if (!controlledUnits.Contains(unit))
         {
             controlledUnits.Add(unit);
         }
@@ -112,7 +112,7 @@ public class BaseKingdom : Entity
     }
     public void AddCityToKingdom(GridCity city)
     {
-        if(!controlledCities.Contains(city))
+        if (!controlledCities.Contains(city))
         {
             controlledCities.Add(city);
         }
@@ -137,7 +137,7 @@ public class BaseKingdom : Entity
     }
     public void UnlockUnit(BaseGridUnitScript unit)
     {
-        if(!unlockedUnits.Contains(unit))
+        if (!unlockedUnits.Contains(unit))
         {
             unlockedUnits.Add(unit);
             //CityUI.Instance.UpdateUnitButtonsInteractability();
@@ -146,7 +146,7 @@ public class BaseKingdom : Entity
     }
     public void UnlockBuilding(GridBuilding building)
     {
-        if(!unlockedBuildings.Contains(building))
+        if (!unlockedBuildings.Contains(building))
         {
             unlockedBuildings.Add(building);
             //CityUI.Instance.UpdateUnitButtonsInteractability();
@@ -162,7 +162,7 @@ public class BaseKingdom : Entity
     public virtual void IncreaseMadness(int amount)
     {
         madnessLevel += amount;
-        if(madnessLevel > maxMadnessLevel)
+        if (madnessLevel > maxMadnessLevel)
         {
             madnessLevel = maxMadnessLevel;
         }
@@ -172,7 +172,7 @@ public class BaseKingdom : Entity
     public virtual void DecreaseMadness(int amount)
     {
         madnessLevel -= amount;
-        if(madnessLevel < 0)
+        if (madnessLevel < 0)
         {
             madnessLevel = 0;
         }
@@ -212,13 +212,13 @@ public class BaseKingdom : Entity
     {
         // Find units, not controlled by this kingdom in rage 
         int result = 0;
-        foreach(GridCity city in controlledCities)
+        foreach (GridCity city in controlledCities)
         {
             List<Vector3Int> tilesWithUnits = HexTilemapManager.Instance.GetCellsInRange(city.GetCellPosition(), range, new List<TileState> { TileState.OccupiedByUnit });
-            foreach(Vector3Int unitPos in tilesWithUnits)
+            foreach (Vector3Int unitPos in tilesWithUnits)
             {
                 BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(unitPos);
-                if(unit!=null&&unit.GetOwner() is PlayerKingdom)
+                if (unit != null && unit.GetOwner() is PlayerKingdom)
                 {
                     result++;
                 }

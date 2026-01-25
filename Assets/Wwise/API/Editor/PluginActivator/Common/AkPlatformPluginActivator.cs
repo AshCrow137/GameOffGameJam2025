@@ -19,7 +19,6 @@ Copyright (c) 2025 Audiokinetic Inc.
 using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.VersionControl;
 
 [UnityEditor.InitializeOnLoad]
 public abstract class AkPlatformPluginActivator
@@ -34,7 +33,7 @@ public abstract class AkPlatformPluginActivator
     public virtual string StaticPluginDefine => null;
 
     public virtual bool RequiresStaticPluginRegistration => false;
-    
+
     public virtual void FilterOutPlatformIfNeeded(BuildTarget target, PluginImporter pluginImporter,
         string pluginPlatform)
     {
@@ -49,7 +48,7 @@ public abstract class AkPlatformPluginActivator
     {
         return true;
     }
-    
+
     internal string[] GetPluginPathParts(string pluginPath)
     {
         var indexOfPluginFolder = pluginPath.IndexOf(AkPluginActivatorConstants.WwisePluginFolder, StringComparison.OrdinalIgnoreCase);

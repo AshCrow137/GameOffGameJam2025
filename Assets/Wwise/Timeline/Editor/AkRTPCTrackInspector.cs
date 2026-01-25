@@ -15,7 +15,7 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
-﻿#if !UNITY_2019_1_OR_NEWER
+#if !UNITY_2019_1_OR_NEWER
 #define AK_ENABLE_TIMELINE
 #endif
 #if AK_ENABLE_TIMELINE
@@ -23,25 +23,25 @@ Copyright (c) 2025 Audiokinetic Inc.
 [UnityEditor.CustomEditor(typeof(AkRTPCTrack))]
 public class AkRTPCTrackInspector : UnityEditor.Editor
 {
-	private UnityEditor.SerializedProperty Parameter;
+    private UnityEditor.SerializedProperty Parameter;
 
-	public void OnEnable()
-	{
-		Parameter = serializedObject.FindProperty("Parameter");
-	}
+    public void OnEnable()
+    {
+        Parameter = serializedObject.FindProperty("Parameter");
+    }
 
-	public override void OnInspectorGUI()
-	{
-		serializedObject.Update();
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
 
-		UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
+        UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-		{
-			UnityEditor.EditorGUILayout.PropertyField(Parameter, new UnityEngine.GUIContent("Parameter: "));
-		}
+        using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+        {
+            UnityEditor.EditorGUILayout.PropertyField(Parameter, new UnityEngine.GUIContent("Parameter: "));
+        }
 
-		serializedObject.ApplyModifiedProperties();
-	}
+        serializedObject.ApplyModifiedProperties();
+    }
 }
 #endif //AK_ENABLE_TIMELINE

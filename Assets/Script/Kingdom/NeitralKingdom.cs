@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class NeitralKingdom : BaseKingdom
 {
-   [SerializeField]
-   private List<BaseGridEntity> controlledEntities = new List<BaseGridEntity>();
+    [SerializeField]
+    private List<BaseGridEntity> controlledEntities = new List<BaseGridEntity>();
 
     public static NeitralKingdom Instance;
 
     public override void Initialize()
     {
         base.Initialize();
-        if(!Instance)
+        if (!Instance)
         {
             Instance = this;
         }
@@ -26,6 +26,6 @@ public class NeitralKingdom : BaseKingdom
     }
     protected override void DefeatCheck()
     {
-        
+
     }
 }

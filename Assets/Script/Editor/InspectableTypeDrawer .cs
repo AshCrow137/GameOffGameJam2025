@@ -1,8 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
 using UnityEditor;
-using System.Linq;
-using System;
-
+using UnityEngine;
 using Type = System.Type;
 
 [CustomPropertyDrawer(typeof(InspectableType<>), true)]
@@ -11,7 +9,7 @@ public class InspectableTypeDrawer : PropertyDrawer
     System.Type[] _derivedTypes;
     GUIContent[] _optionLabels;
     int _selectedIndex;
-    
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         var storedProperty = property.FindPropertyRelative("qualifiedName");

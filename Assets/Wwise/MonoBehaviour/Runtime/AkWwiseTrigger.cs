@@ -25,46 +25,46 @@ public class AkWwiseTrigger : AkDragDropTriggerHandler
 #if UNITY_EDITOR
         , AK.Wwise.IMigratable
 #endif
+{
+    public AK.Wwise.Trigger data = new AK.Wwise.Trigger();
+    protected override AK.Wwise.BaseType WwiseType { get { return data; } }
+
+    protected override void Awake()
     {
-	public AK.Wwise.Trigger data = new AK.Wwise.Trigger();
-	protected override AK.Wwise.BaseType WwiseType { get { return data; } }
-
-	protected override void Awake()
-	{
-		base.Awake();
+        base.Awake();
 #if UNITY_EDITOR
-		var reference = AkWwiseTypes.DragAndDropObjectReference;
-		if (reference)
-		{
-			UnityEngine.GUIUtility.hotControl = 0;
-			data.ObjectReference = reference;
-			AkWwiseTypes.DragAndDropObjectReference = null;
-		}
+        var reference = AkWwiseTypes.DragAndDropObjectReference;
+        if (reference)
+        {
+            UnityEngine.GUIUtility.hotControl = 0;
+            data.ObjectReference = reference;
+            AkWwiseTypes.DragAndDropObjectReference = null;
+        }
 #endif
-	}
-	
-	protected override void Start()
-	{
-#if UNITY_EDITOR
-		if (UnityEditor.BuildPipeline.isBuildingPlayer || AkUtilities.IsMigrating || !UnityEditor.EditorApplication.isPlaying)
-			return;
-#endif
-		base.Start();
-	}
-	public override void HandleEvent(UnityEngine.GameObject in_gameObject)
-	{
-		var gameObj = useOtherObject && in_gameObject != null ? in_gameObject : gameObject;
-		data.Post(gameObj);
-	}
-
-	#region WwiseMigration
-#if UNITY_EDITOR
-	public virtual bool Migrate(UnityEditor.SerializedObject obj)
-	{
-		//Didn't exist before, so no migration step as of yet
-		return true;
-	}
-#endif
-	#endregion
     }
+
+    protected override void Start()
+    {
+#if UNITY_EDITOR
+        if (UnityEditor.BuildPipeline.isBuildingPlayer || AkUtilities.IsMigrating || !UnityEditor.EditorApplication.isPlaying)
+            return;
+#endif
+        base.Start();
+    }
+    public override void HandleEvent(UnityEngine.GameObject in_gameObject)
+    {
+        var gameObj = useOtherObject && in_gameObject != null ? in_gameObject : gameObject;
+        data.Post(gameObj);
+    }
+
+    #region WwiseMigration
+#if UNITY_EDITOR
+    public virtual bool Migrate(UnityEditor.SerializedObject obj)
+    {
+        //Didn't exist before, so no migration step as of yet
+        return true;
+    }
+#endif
+    #endregion
+}
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

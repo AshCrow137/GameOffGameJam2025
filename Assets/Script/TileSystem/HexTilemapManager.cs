@@ -1,10 +1,8 @@
+using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
-using Pathfinding;
-using NUnit.Framework;
-using UnityEngine.Timeline;
+using UnityEngine.Tilemaps;
 
 
 /// <summary>
@@ -16,7 +14,7 @@ using UnityEngine.Timeline;
 /// </summary>
 public class HexTilemapManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap tilemap; 
+    [SerializeField] private Tilemap tilemap;
     [SerializeField] private Tilemap markerTilemap;
     [SerializeField] private Tilemap EffectTilemap;
     [SerializeField] private TileBase redMarkerTile;
@@ -35,7 +33,7 @@ public class HexTilemapManager : MonoBehaviour
     private Dictionary<Vector3Int, GridCity> gridCities = new Dictionary<Vector3Int, GridCity>();
     private Dictionary<Vector3Int, TreasureChest> gridTreasureChests = new Dictionary<Vector3Int, TreasureChest>();
 
-    private Dictionary<Vector3Int, List<BaseGridEntity> > allEntityDirectory = new();
+    private Dictionary<Vector3Int, List<BaseGridEntity>> allEntityDirectory = new();
 
 
     // Singleton instance for easy access
@@ -44,7 +42,8 @@ public class HexTilemapManager : MonoBehaviour
     /// <summary>
     /// Called by Bootmanager
     /// </summary>
-    public void Initialize(){
+    public void Initialize()
+    {
         Instantiate();
         AstarPath.active.Scan();
         InitializeTileStates();
@@ -68,19 +67,19 @@ public class HexTilemapManager : MonoBehaviour
     }
     private void SetupWaterEffectTiles()
     {
-        foreach(Vector3Int pos in GetAllTilePositions())
+        foreach (Vector3Int pos in GetAllTilePositions())
         {
-            if(GetTileState(pos)==TileState.Water)
+            if (GetTileState(pos) == TileState.Water)
             {
                 EffectTilemap.SetTile(pos, waterWaveEffect);
-                if(GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(pos)==Fog.Black)
+                if (GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(pos) == Fog.Black)
                 {
                     UpdateEffectTileAtPosition(pos, false);
                 }
             }
         }
     }
-    
+
     /// <summary>
     /// Gets the cell at the mouse position
     /// </summary>
@@ -89,7 +88,7 @@ public class HexTilemapManager : MonoBehaviour
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = mainCamera.ScreenPointToRay(mousePos);
-        
+
         // cast a 3d ray onto a 2d plane. 
         // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
@@ -122,12 +121,12 @@ public class HexTilemapManager : MonoBehaviour
     public void PlaceColoredMarkerOnPosition(Vector3Int cellPos, MarkerColor markerColor)
     {
         TileBase marker = null;
-        switch(markerColor)
+        switch (markerColor)
         {
-            case MarkerColor.Green:marker = greenMarkerTile; break;
-            case MarkerColor.Blue:marker = blueMarkerTile; break;
-            case MarkerColor.Red:marker = redMarkerTile; break;
-            case MarkerColor.White:marker = whiteMarkerTile; break;
+            case MarkerColor.Green: marker = greenMarkerTile; break;
+            case MarkerColor.Blue: marker = blueMarkerTile; break;
+            case MarkerColor.Red: marker = redMarkerTile; break;
+            case MarkerColor.White: marker = whiteMarkerTile; break;
         }
         markerTilemap?.SetTile(cellPos, marker);
         markerTilemap?.RefreshTile(cellPos);
@@ -149,9 +148,9 @@ public class HexTilemapManager : MonoBehaviour
         }
         return entityOnCell;
     }
-    public void ShowMarkersForRangeAttack(BaseGridUnitScript unit,int attackRange)
+    public void ShowMarkersForRangeAttack(BaseGridUnitScript unit, int attackRange)
     {
-       List<Vector3Int> cells =  GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, EnumLibrary.AllTileStates);
+        List<Vector3Int> cells = GetCellsInRange(WorldToCellPos(unit.transform.position), attackRange, EnumLibrary.AllTileStates);
         foreach (var cell in cells)
         {
             BaseGridEntity entityOnCell;
@@ -161,16 +160,16 @@ public class HexTilemapManager : MonoBehaviour
             }
             else
             {
-                entityOnCell =GetCityOnTile(cell);
+                entityOnCell = GetCityOnTile(cell);
             }
 
-            if (entityOnCell&&entityOnCell!= unit)
+            if (entityOnCell && entityOnCell != unit)
             {
-                if(entityOnCell.GetOwner() == unit.GetOwner())
+                if (entityOnCell.GetOwner() == unit.GetOwner())
                 {
                     PlaceColoredMarkerOnPosition(cell, MarkerColor.Green);
                 }
-                else if(entityOnCell.GetOwner()!= unit.GetOwner())
+                else if (entityOnCell.GetOwner() != unit.GetOwner())
                 {
                     PlaceColoredMarkerOnPosition(cell, MarkerColor.Red);
                 }
@@ -186,7 +185,7 @@ public class HexTilemapManager : MonoBehaviour
 
 
         BoundsInt bounds = tilemap.cellBounds;
-        
+
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
             TileBase tile = tilemap.GetTile(pos);
@@ -203,10 +202,10 @@ public class HexTilemapManager : MonoBehaviour
                 //    blockedTiles.SetTile(pos, tile);
                 //    blockedTiles.RefreshTile(pos);
                 //}
-                
+
             }
         }
-        
+
 
 
     }
@@ -218,7 +217,7 @@ public class HexTilemapManager : MonoBehaviour
     {
         List<Vector3Int> coastalTiles = new List<Vector3Int>();
         BoundsInt bounds = tilemap.cellBounds;
-        
+
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
             TileBase tile = tilemap.GetTile(pos);
@@ -227,19 +226,19 @@ public class HexTilemapManager : MonoBehaviour
                 coastalTiles.Add(pos);
             }
         }
-        
+
         return coastalTiles;
     }
 
-    public List<Vector3Int> GetCellsInRange(Vector3Int startPos, int range, List<TileState> possibleStates = null )
+    public List<Vector3Int> GetCellsInRange(Vector3Int startPos, int range, List<TileState> possibleStates = null)
     {
         possibleStates = possibleStates ?? new List<TileState> { TileState.Land, TileState.Water };
         List<Vector3Int> possibleCellsInRage = new List<Vector3Int>();
-        for (int x = startPos.x-range; x<=startPos.x+range; x++)
+        for (int x = startPos.x - range; x <= startPos.x + range; x++)
         {
-            for (int y = startPos.y - range; y <= startPos.y+range; y++)
+            for (int y = startPos.y - range; y <= startPos.y + range; y++)
             {
-                Vector3Int pos = new Vector3Int(x, y,0);
+                Vector3Int pos = new Vector3Int(x, y, 0);
                 int distance = GetDistanceInCells(startPos, pos);
                 if (distance > range) { continue; }
                 if (possibleStates.Contains(GetTileState(pos)))
@@ -271,7 +270,7 @@ public class HexTilemapManager : MonoBehaviour
         }
         return tempTiles;
     }
-    public List<Vector3Int> GetAllCellsOnDistance(Vector3Int startPos,int range)
+    public List<Vector3Int> GetAllCellsOnDistance(Vector3Int startPos, int range)
     {
         List<Vector3Int> possibleCellsInRage = new List<Vector3Int>();
         for (int x = startPos.x - range; x <= startPos.x + range; x++)
@@ -280,7 +279,7 @@ public class HexTilemapManager : MonoBehaviour
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
                 int distance = GetDistanceInCells(startPos, pos);
-                if (distance == range)  possibleCellsInRage.Add(pos);
+                if (distance == range) possibleCellsInRage.Add(pos);
             }
         }
         return possibleCellsInRage;
@@ -288,7 +287,7 @@ public class HexTilemapManager : MonoBehaviour
     public Vector3Int PositionToCellPosition(Vector3 pos)
     {
         return tilemap.WorldToCell(pos);
-        
+
     }
 
 
@@ -316,7 +315,7 @@ public class HexTilemapManager : MonoBehaviour
 
     //        // Get the tile at the clicked position
     //    TileBase clickedTile = tilemap.GetTile(cellPosition);
-        
+
     //        if (clickedTile is HexTile)
     //        {
     //        HexTile hexTile = (HexTile)clickedTile;
@@ -325,7 +324,7 @@ public class HexTilemapManager : MonoBehaviour
     //        TileState currentState = GetTileState(cellPosition);
 
     //        }
-        
+
     //}
     public TileState GetHoweredTileState()
     {
@@ -339,7 +338,7 @@ public class HexTilemapManager : MonoBehaviour
         if (clickedTile is HexTile)
         {
             HexTile hexTile = (HexTile)clickedTile;
-            
+
             return hexTile.state;
         }
         return TileState.Unavailable;
@@ -350,7 +349,7 @@ public class HexTilemapManager : MonoBehaviour
     public void SetTileState(Vector3Int cellPosition, TileState newState)
     {
         TileBase tile = tilemap.GetTile(cellPosition);
-        
+
         if (tile is HexTile)
         {
             if (newState == TileState.Default)
@@ -370,7 +369,7 @@ public class HexTilemapManager : MonoBehaviour
         if (tile is HexTile)
         {
             HexTile htile = (HexTile)tile;
-            
+
             if (newState == TileState.Default)
             {
                 newState = htile.defaultState;
@@ -384,7 +383,7 @@ public class HexTilemapManager : MonoBehaviour
             UpdateTileWalkability(cellPosition, newState);
         }
     }
-    public void PlaceUnitOnTile(Vector3Int cellPosition,BaseGridUnitScript unit)
+    public void PlaceUnitOnTile(Vector3Int cellPosition, BaseGridUnitScript unit)
     {
         TileBase tile = tilemap.GetTile(cellPosition);
 
@@ -392,15 +391,15 @@ public class HexTilemapManager : MonoBehaviour
         {
             // Check if there's a treasure chest at this position and collect it
 
-            
+
             tileStates[cellPosition] = TileState.OccupiedByUnit;
             tilemap.RefreshTile(cellPosition);
             UpdateTileWalkability(cellPosition, TileState.OccupiedByUnit);
-            if(!gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
+            if (!gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
             {
                 gridUnits.Add(cellPosition, unit);
             }
-            
+
             // Update unit's grid position and add to entity directory
             unit.UpdateGridPosition(cellPosition);
             AddEntityToDirectory(cellPosition, unit);
@@ -411,7 +410,7 @@ public class HexTilemapManager : MonoBehaviour
         if (gridUnits.TryGetValue(cellPosition, out BaseGridUnitScript unitScript))
         {
             gridUnits.Remove(cellPosition);
-            
+
             // Remove unit from entity directory at this position
             RemoveEntityFromDirectory(cellPosition, unitScript);
         }
@@ -427,8 +426,8 @@ public class HexTilemapManager : MonoBehaviour
     public List<BaseGridUnitScript> GetUnitsInRange(Vector3Int startPos, int range)
     {
         List<BaseGridUnitScript> unitsInRange = new List<BaseGridUnitScript>();
-        List<Vector3Int> positions = GetCellsInRange(startPos, range, new List<TileState>() {TileState.OccupiedByUnit });
-        foreach(Vector3Int pos in positions)
+        List<Vector3Int> positions = GetCellsInRange(startPos, range, new List<TileState>() { TileState.OccupiedByUnit });
+        foreach (Vector3Int pos in positions)
         {
             unitsInRange.Add(GetUnitOnTile(pos));
         }
@@ -445,7 +444,7 @@ public class HexTilemapManager : MonoBehaviour
             {
                 gridCities.Add(cellPosition, city);
             }
-            
+
             // Update city's grid position and add to entity directory
             city.UpdateGridPosition(cellPosition);
             AddEntityToDirectory(cellPosition, city);
@@ -456,7 +455,7 @@ public class HexTilemapManager : MonoBehaviour
         if (gridCities.TryGetValue(cellPosition, out GridCity cityScript))
         {
             gridCities.Remove(cellPosition);
-            
+
             // Remove city from entity directory at this position
             RemoveEntityFromDirectory(cellPosition, cityScript);
         }
@@ -508,7 +507,7 @@ public class HexTilemapManager : MonoBehaviour
             entities = new List<BaseGridEntity>();
             allEntityDirectory.Add(position, entities);
         }
-        
+
         if (!entities.Contains(entity))
         {
             entities.Add(entity);
@@ -519,16 +518,16 @@ public class HexTilemapManager : MonoBehaviour
         if (allEntityDirectory.TryGetValue(position, out List<BaseGridEntity> entities))
         {
             bool removed = entities.Remove(entity);
-            
+
             // Clean up empty lists
             if (entities.Count == 0)
             {
                 allEntityDirectory.Remove(position);
             }
-            
+
             return removed;
         }
-        
+
         return false;
     }
     /// <summary>
@@ -565,7 +564,7 @@ public class HexTilemapManager : MonoBehaviour
         return entities;
     }
 
-    private void UpdateTileWalkability(Vector3Int cellPos,TileState state)
+    private void UpdateTileWalkability(Vector3Int cellPos, TileState state)
     {
         Bounds newBounds = new Bounds();
         newBounds.center = tilemap.CellToWorld(cellPos);
@@ -587,7 +586,7 @@ public class HexTilemapManager : MonoBehaviour
         {
             return state;
         }
-        
+
         // If not in dictionary, check if tile exists and get default state
         TileBase tile = tilemap.GetTile(cellPosition);
         if (tile is HexTile hexTile)
@@ -596,7 +595,7 @@ public class HexTilemapManager : MonoBehaviour
             tileStates[cellPosition] = hexTile.defaultState;
             return hexTile.defaultState;
         }
-        
+
         // No tile at this position
         return TileState.Unavailable;
     }
@@ -622,7 +621,7 @@ public class HexTilemapManager : MonoBehaviour
     {
         return tilemap;
     }
-   public Vector3Int WorldToCellPos(Vector3 pos)
+    public Vector3Int WorldToCellPos(Vector3 pos)
     {
         return tilemap.WorldToCell(pos);
     }
@@ -631,12 +630,12 @@ public class HexTilemapManager : MonoBehaviour
         return tilemap.CellToWorld(cellPos);
     }
 
-    public void UpdateEffectTileAtPosition(Vector3Int position,bool bVisible)
+    public void UpdateEffectTileAtPosition(Vector3Int position, bool bVisible)
     {
         TileBase effectTile = EffectTilemap.GetTile(position);
-        if(effectTile!=null)
+        if (effectTile != null)
         {
-            switch(bVisible)
+            switch (bVisible)
             {
                 case true:
                     EffectTilemap.SetTileFlags(position, TileFlags.None);
@@ -658,8 +657,8 @@ public class HexTilemapManager : MonoBehaviour
     {
         // color derived from fog
         Fog fog = GlobalVisionManager.Instance.GetPlayerVisionManager().GetFogAtPosition(position);
-        
-        
+
+
         if (fog == Fog.Grey)
         {
             UpdateEffectTileAtPosition(position, true);

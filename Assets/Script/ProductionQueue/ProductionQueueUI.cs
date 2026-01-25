@@ -18,11 +18,11 @@ public class ProductionQueueUI : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
     [Header("UI Elements")]
     public GameObject currentProductionDisplay;
     public Transform queueLayoutGroup;
-    
+
     [Header("Prefabs")]
     public GameObject productionItemPrefab;
 
@@ -51,7 +51,7 @@ public class ProductionQueueUI : MonoBehaviour
 
         // Update current production display
         Production currentProduction = cityProductionQueue.currentProduction;
-        
+
         if (currentProduction != null)
         {
             currentProductionDisplay.SetActive(true);
@@ -75,7 +75,7 @@ public class ProductionQueueUI : MonoBehaviour
 
         // Update production queue display
         List<Production> productionQueue = cityProductionQueue.productionQueue;
-        
+
         if (productionQueue != null && productionQueue.Count > 0)
         {
             foreach (Production production in productionQueue)
@@ -105,7 +105,7 @@ public class ProductionQueueUI : MonoBehaviour
 
         GameObject queueItem = Instantiate(productionItemPrefab);
         ProductionQueueItem itemComponent = queueItem.GetComponent<ProductionQueueItem>();
-        
+
         if (itemComponent != null)
         {
             itemComponent.SetupItem(production);
@@ -114,7 +114,7 @@ public class ProductionQueueUI : MonoBehaviour
         {
             Debug.LogError("ProductionItemPrefab does not have ProductionQueueItem component");
         }
-        
+
         return queueItem;
     }
 

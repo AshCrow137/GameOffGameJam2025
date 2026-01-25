@@ -15,11 +15,11 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
-﻿namespace AK.Wwise.Editor
+namespace AK.Wwise.Editor
 {
-	[UnityEditor.CustomPropertyDrawer(typeof(Switch))]
-	public class SwitchDrawer : BaseTypeDrawer
-	{
-		protected override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.Switch; } }
-	}
+    [UnityEditor.CustomPropertyDrawer(typeof(Switch))]
+    public class SwitchDrawer : BaseTypeDrawer
+    {
+        protected override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.Switch; } }
+    }
 }

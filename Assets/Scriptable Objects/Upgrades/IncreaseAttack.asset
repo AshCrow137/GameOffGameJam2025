@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Increase Attack
   upgradeDescription: Increase the base attack +1
-  upgradeIcon: {fileID: 0}
+  upgradeIcon: {fileID: 294437729, guid: 3140baadb69c54146a4cb357d7f1e5c1, type: 3}
   minimumLevelRequirement: 1
   upgradeLimitLevel: -1
-  amountToUpgrade: 1
   isBehaviour: 0

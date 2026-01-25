@@ -18,44 +18,44 @@ Copyright (c) 2025 Audiokinetic Inc.
 #if UNITY_EDITOR
 public class AkPluginActivatorMenus
 {
-	private const string MENU_PATH = "Assets/Wwise/Activate Plugins/";
+    private const string MENU_PATH = "Assets/Wwise/Activate Plugins/";
 
-	[UnityEditor.MenuItem(MENU_PATH + AkPluginActivatorConstants.CONFIG_DEBUG)]
-	public static void ActivateDebug()
-	{
-		ActivateConfig(AkPluginActivatorConstants.CONFIG_DEBUG);
-	}
+    [UnityEditor.MenuItem(MENU_PATH + AkPluginActivatorConstants.CONFIG_DEBUG)]
+    public static void ActivateDebug()
+    {
+        ActivateConfig(AkPluginActivatorConstants.CONFIG_DEBUG);
+    }
 
-	[UnityEditor.MenuItem(MENU_PATH + AkPluginActivatorConstants.CONFIG_PROFILE)]
-	public static void ActivateProfile()
-	{
-		ActivateConfig(AkPluginActivatorConstants.CONFIG_PROFILE);
-	}
+    [UnityEditor.MenuItem(MENU_PATH + AkPluginActivatorConstants.CONFIG_PROFILE)]
+    public static void ActivateProfile()
+    {
+        ActivateConfig(AkPluginActivatorConstants.CONFIG_PROFILE);
+    }
 
-	[UnityEditor.MenuItem(MENU_PATH + AkPluginActivatorConstants.CONFIG_RELEASE)]
-	public static void ActivateRelease()
-	{
-		ActivateConfig(AkPluginActivatorConstants.CONFIG_RELEASE);
-	}
+    [UnityEditor.MenuItem(MENU_PATH + AkPluginActivatorConstants.CONFIG_RELEASE)]
+    public static void ActivateRelease()
+    {
+        ActivateConfig(AkPluginActivatorConstants.CONFIG_RELEASE);
+    }
 
-	public static void CheckMenuItems(string config)
-	{
-		UnityEditor.Menu.SetChecked(MENU_PATH + AkPluginActivatorConstants.CONFIG_DEBUG, config == AkPluginActivatorConstants.CONFIG_DEBUG);
-		UnityEditor.Menu.SetChecked(MENU_PATH + AkPluginActivatorConstants.CONFIG_PROFILE, config == AkPluginActivatorConstants.CONFIG_PROFILE);
-		UnityEditor.Menu.SetChecked(MENU_PATH + AkPluginActivatorConstants.CONFIG_RELEASE, config == AkPluginActivatorConstants.CONFIG_RELEASE);
-	}
-	private static void SetCurrentConfig(string config)
-	{
-		var data = AkWwiseProjectInfo.GetData();
-		data.CurrentPluginConfig = config;
-		UnityEditor.EditorUtility.SetDirty(data);
-	}
+    public static void CheckMenuItems(string config)
+    {
+        UnityEditor.Menu.SetChecked(MENU_PATH + AkPluginActivatorConstants.CONFIG_DEBUG, config == AkPluginActivatorConstants.CONFIG_DEBUG);
+        UnityEditor.Menu.SetChecked(MENU_PATH + AkPluginActivatorConstants.CONFIG_PROFILE, config == AkPluginActivatorConstants.CONFIG_PROFILE);
+        UnityEditor.Menu.SetChecked(MENU_PATH + AkPluginActivatorConstants.CONFIG_RELEASE, config == AkPluginActivatorConstants.CONFIG_RELEASE);
+    }
+    private static void SetCurrentConfig(string config)
+    {
+        var data = AkWwiseProjectInfo.GetData();
+        data.CurrentPluginConfig = config;
+        UnityEditor.EditorUtility.SetDirty(data);
+    }
 
-	private static void ActivateConfig(string config)
-	{
-		SetCurrentConfig(config);
-		AkPluginActivatorMenus.CheckMenuItems(config);
-	}
+    private static void ActivateConfig(string config)
+    {
+        SetCurrentConfig(config);
+        AkPluginActivatorMenus.CheckMenuItems(config);
+    }
 
 }
 #endif

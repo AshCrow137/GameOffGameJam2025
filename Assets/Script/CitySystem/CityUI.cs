@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
-using static UnityEngine.InputSystem.InputAction;
 
 [Serializable]
 public class PlayerEntityPair
@@ -23,10 +20,10 @@ public class CityUI : MonoBehaviour
     private GameObject cityUIPanel;
     [SerializeField]
     private PlayerKingdom playerKingdom;
-    
+
     [SerializeField]
     private List<PlayerEntityPair> unitButtons = new List<PlayerEntityPair>();
-    
+
 
     public CityMenuMode cityMenuMode { get; private set; } = CityMenuMode.None;
 
@@ -36,7 +33,7 @@ public class CityUI : MonoBehaviour
     public static CityUI Instance { get; private set; }
     private int buildingType;
     private GameObject unitPrefab;
-    
+
     public void Instantiate()
     {
         if (Instance == null)
@@ -99,18 +96,18 @@ public class CityUI : MonoBehaviour
     }
     public void SetSpawnUnitMode(GameObject unitPrefab)
     {
-        List<BaseGridUnitScript> unlockedUnits =  UIUtility.selectedCity.GetOwner().GetunlockedUnits();
+        List<BaseGridUnitScript> unlockedUnits = UIUtility.selectedCity.GetOwner().GetunlockedUnits();
         BaseGridUnitScript prefabScript = unitPrefab.GetComponent<BaseGridUnitScript>();
         bool bUnitUnlocked = false;
-        foreach(BaseGridUnitScript unit in unlockedUnits)
+        foreach (BaseGridUnitScript unit in unlockedUnits)
         {
-            if(unit.GetType()==prefabScript.GetType())
+            if (unit.GetType() == prefabScript.GetType())
             {
                 bUnitUnlocked = true;
                 break;
             }
         }
-        if(bUnitUnlocked)
+        if (bUnitUnlocked)
         {
             cityMenuMode = CityMenuMode.SpawnUnit;
             isUsingCityMenu = true;

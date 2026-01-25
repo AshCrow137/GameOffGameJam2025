@@ -1,12 +1,8 @@
-using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 
 public class AIController : MonoBehaviour
@@ -53,7 +49,7 @@ public class AIController : MonoBehaviour
     //        foreach (BaseGridUnitScript unit in kingdomUnits)
     //        {
     //            AIUnitAction unitAction = AssignAction(unit);
-                
+
     //        }
     //        if(unitsToAct.Count <=0) 
     //        {
@@ -74,7 +70,7 @@ public class AIController : MonoBehaviour
     //                    for (int i = 1; i < unit.GetVision()+unit.GetMovementDistance(); i++)
     //                    {
     //                        List<Vector3Int> allCellsOnDistance = HexTilemapManager.Instance.GetAllCellsOnDistance(unit.GetCellPosition(), unit.GetVision() + i);
-                          
+
 
     //                        foreach (Vector3Int pos in allCellsOnDistance)
     //                        {
@@ -159,26 +155,26 @@ public class AIController : MonoBehaviour
         cancellationTokenSource = new CancellationTokenSource();
         try
         {
-            
-            
+
+
             int attempt = 0;
             int actionCount = 0;
             #region unitTasks
-            while (attempt<=10)
+            while (attempt <= 10)
             {
                 attempt++;
                 List<BaseGridUnitScript> kingdomUnits = new List<BaseGridUnitScript>(kingdom.ControlledUnits);
-                if (attempt>=9)
+                if (attempt >= 9)
                 {
 
                 }
-                
+
                 unitsToAct = new Dictionary<BaseGridUnitScript, AIUnitTask>();
                 reservedPositions = new List<Vector3Int>();
                 foreach (BaseGridUnitScript unit in kingdomUnits)
                 {
                     AIUnitAction unitAction = AssignAction(unit, kingdom);
-                    
+
                 }
                 if (unitsToAct.Count <= 0)
                 {
@@ -192,7 +188,7 @@ public class AIController : MonoBehaviour
                     BaseGridUnitScript unit = pair.Key;
                     AIUnitTask unitTask = pair.Value;
                     AIUnitAction unitAction = unitTask.Action;
-                    Action action = () => actionCount--;unitTask.Finished = true;
+                    Action action = () => actionCount--; unitTask.Finished = true;
                     Debug.Log($"{unit} action: {unitAction}");
                     switch (unitAction)
                     {
@@ -215,7 +211,7 @@ public class AIController : MonoBehaviour
                             {
                                 actionCount++;
                                 unit.AttackFinishEvent.AddListener(action.Invoke);
- 
+
 
                             }
 
@@ -223,7 +219,7 @@ public class AIController : MonoBehaviour
                         case AIUnitAction.Move:
                             if (unit.TryToMoveUnitToTile(unitTask.Target))
                             {
- 
+
                                 actionCount++;
                                 unit.MovementFinishEvent.AddListener(action.Invoke);
                                 UnitActions.Add(action);
@@ -238,7 +234,7 @@ public class AIController : MonoBehaviour
                 if (await WaitUntil(() => actionCount <= 0, cancellationTokenSource))
                 //if (await WaitUntil(CheckForEndTurn, cancellationTokenSource))
                 {
-                    
+
                     foreach (KeyValuePair<BaseGridUnitScript, AIUnitTask> pair in unitsToAct)
                     {
                         BaseGridUnitScript unit = pair.Key;
@@ -258,18 +254,18 @@ public class AIController : MonoBehaviour
                     }
                     break;
                 }
-               
+
 
             }
             #endregion
 
-            if(attempt>=10)
+            if (attempt >= 10)
             {
                 Debug.LogError("Too many attempts");
             }
             attempt = 0;
             #region macroTasks
-            while (attempt<=10)
+            while (attempt <= 10)
             {
                 attempt++;
                 List<GridCity> controlledCities = new List<GridCity>(kingdom.GetControlledCities());
@@ -280,14 +276,14 @@ public class AIController : MonoBehaviour
                 }
                 if (citiesToAct.Count > 0)
                 {
-                    foreach(KeyValuePair<GridCity,AICityTask> pair in citiesToAct)
+                    foreach (KeyValuePair<GridCity, AICityTask> pair in citiesToAct)
                     {
                         GridCity city = pair.Key;
                         AICityTask cityTask = pair.Value;
-                        switch(cityTask.Action)
+                        switch (cityTask.Action)
                         {
                             case AICityAction.BuildProductionBuilding:
-                                
+
                                 GridBuilding buildingToPlace = cityTask.taskTarget as GridBuilding;
                                 if (!buildingToPlace) break;
                                 List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(city.GetCellPosition(), 1, new List<TileState>() { TileState.Land });
@@ -298,7 +294,7 @@ public class AIController : MonoBehaviour
                                 }
                                 break;
                             case AICityAction.BuildUnitTechBuilding:
-                                
+
                                 GridBuilding techbuildingToPlace = cityTask.taskTarget as GridBuilding;
                                 if (!techbuildingToPlace) break;
                                 List<Vector3Int> adjPoses = HexTilemapManager.Instance.GetCellsInRange(city.GetCellPosition(), 1, new List<TileState>() { TileState.Land });
@@ -335,8 +331,9 @@ public class AIController : MonoBehaviour
             Debug.LogException(ex);
             cancellationTokenSource?.Cancel();
         }
-        finally { 
-            cancellationTokenSource?.Dispose(); 
+        finally
+        {
+            cancellationTokenSource?.Dispose();
             cancellationTokenSource = null;
         }
     }
@@ -379,7 +376,7 @@ public class AIController : MonoBehaviour
             }
             return true;
         }
-        catch (TaskCanceledException) 
+        catch (TaskCanceledException)
         {
             Debug.Log($"wait time {t}");
             return false;
@@ -387,15 +384,15 @@ public class AIController : MonoBehaviour
 
 
     }
-    private List<BaseGridEntity> CheckForTargets(BaseGridUnitScript unit, List<Vector3Int> kingdomVision,AIKingdom kingdom)
+    private List<BaseGridEntity> CheckForTargets(BaseGridUnitScript unit, List<Vector3Int> kingdomVision, AIKingdom kingdom)
     {
         List<BaseGridEntity> potentialTargets = new List<BaseGridEntity>();
-        foreach(Vector3Int pos in kingdomVision)
+        foreach (Vector3Int pos in kingdomVision)
         {
-            if(HexTilemapManager.Instance.GetTileState(pos)==TileState.OccupiedByUnit|| HexTilemapManager.Instance.GetTileState(pos) == TileState.OccuppiedByBuilding)
+            if (HexTilemapManager.Instance.GetTileState(pos) == TileState.OccupiedByUnit || HexTilemapManager.Instance.GetTileState(pos) == TileState.OccuppiedByBuilding)
             {
                 BaseGridEntity potentialTarget = HexTilemapManager.Instance.GetEntityOnCell(pos);
-                if(potentialTarget&&potentialTarget.GetOwner()!=kingdom&&potentialTarget.GetComponent<IDamageable>()!=null&&potentialTarget.CanBeActtacked())
+                if (potentialTarget && potentialTarget.GetOwner() != kingdom && potentialTarget.GetComponent<IDamageable>() != null && potentialTarget.CanBeActtacked())
                 {
                     potentialTargets.Add(potentialTarget);
                 }
@@ -414,7 +411,7 @@ public class AIController : MonoBehaviour
             Vector3Int pos = fpair.Key;
             bool inFog = fpair.Value;
             if (!inFog && unit.GetWalkableTiles().Contains(HexTilemapManager.Instance.GetTileState(pos))) fogTiles.Add(pos);
-            else if(inFog)
+            else if (inFog)
             {
                 notFogTiles.Add(pos);
                 //HexTilemapManager.Instance.PlaceColoredMarkerOnPosition(pos, MarkerColor.Blue);
@@ -422,42 +419,42 @@ public class AIController : MonoBehaviour
         }
         //Attack 
         List<BaseGridEntity> targets = new List<BaseGridEntity>();
-        if(kingdom.GetCurrentMadnessEffect().CanFight)
+        if (kingdom.GetCurrentMadnessEffect().CanFight)
         {
             targets = CheckForTargets(unit, notFogTiles, kingdom);
         }
-         
-        if(targets.Count > 0)
+
+        if (targets.Count > 0)
         {
             List<Vector3Int> potentialTargetPositions = new List<Vector3Int>();
-            Dictionary<BaseGridEntity,AIAttackWeight> potentialTargetWithWeight = new Dictionary<BaseGridEntity, AIAttackWeight>();
+            Dictionary<BaseGridEntity, AIAttackWeight> potentialTargetWithWeight = new Dictionary<BaseGridEntity, AIAttackWeight>();
             foreach (BaseGridEntity target in targets)
             {
 
                 int distanceBetween = HexTilemapManager.Instance.GetDistanceInCells(unit.GetCellPosition(), target.GetCellPosition());
-                if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange&&unit.GetFinalDamageWithModifiers(unit,target)>=target.GetCurrentHealth()) 
+                if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange && unit.GetFinalDamageWithModifiers(unit, target) >= target.GetCurrentHealth())
                 {
-                    potentialTargetWithWeight.Add(target,new AIAttackWeight(6,false));
+                    potentialTargetWithWeight.Add(target, new AIAttackWeight(6, false));
                 }
-                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange+unit.unitStats.UnitMovementDistance.FinalMovementDistance && unit.GetFinalDamageWithModifiers(unit, target) >= target.GetCurrentHealth()&&unit.tilesRemain>0)
+                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange + unit.unitStats.UnitMovementDistance.FinalMovementDistance && unit.GetFinalDamageWithModifiers(unit, target) >= target.GetCurrentHealth() && unit.tilesRemain > 0)
                 {
                     potentialTargetWithWeight.Add(target, new AIAttackWeight(5, true));
                 }
                 //TODO SpecialAbility
-                else if(distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange &&target.entityType==unit.getVulnerableEntityType(unit.entityType))
+                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange && target.entityType == unit.getVulnerableEntityType(unit.entityType))
                 {
-                    if(target is BaseGridUnitScript)
+                    if (target is BaseGridUnitScript)
                     {
-                        BaseGridUnitScript unitTarget = (BaseGridUnitScript)target; 
-                        if(unit.GetCurrentHealth() > unitTarget.unitStats.UnitCounterAttack.FinalCounterattack) 
+                        BaseGridUnitScript unitTarget = (BaseGridUnitScript)target;
+                        if (unit.GetCurrentHealth() > unitTarget.unitStats.UnitCounterAttack.FinalCounterattack)
                         {
                             potentialTargetWithWeight.Add(target, new AIAttackWeight(4, false));
                         }
                     }
-                   
+
                 }
                 //TODO else if target close than 6 tiles from one of kingdom cities
-                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange + unit.unitStats.UnitMovementDistance.FinalMovementDistance && target.entityType == unit.getVulnerableEntityType(unit.entityType)&&unit.tilesRemain>0)
+                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange + unit.unitStats.UnitMovementDistance.FinalMovementDistance && target.entityType == unit.getVulnerableEntityType(unit.entityType) && unit.tilesRemain > 0)
                 {
                     if (target is BaseGridUnitScript)
                     {
@@ -468,12 +465,12 @@ public class AIController : MonoBehaviour
                         }
                     }
                 }
-                else if(distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange)
+                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange)
                 {
                     if (target is BaseGridUnitScript)
                     {
                         BaseGridUnitScript unitTarget = (BaseGridUnitScript)target;
-                        if (unit.GetCurrentHealth() > unitTarget.unitStats.UnitCounterAttack.FinalCounterattack||unit.unitStats.UnitAttackRange.FinalAttackRange >1)
+                        if (unit.GetCurrentHealth() > unitTarget.unitStats.UnitCounterAttack.FinalCounterattack || unit.unitStats.UnitAttackRange.FinalAttackRange > 1)
                         {
                             potentialTargetWithWeight.Add(target, new AIAttackWeight(2, false));
                         }
@@ -483,7 +480,7 @@ public class AIController : MonoBehaviour
                         potentialTargetWithWeight.Add(target, new AIAttackWeight(2, false));
                     }
                 }
-                else if(distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange + unit.unitStats.UnitMovementDistance.FinalMovementDistance &&unit.tilesRemain>0)
+                else if (distanceBetween <= unit.unitStats.UnitAttackRange.FinalAttackRange + unit.unitStats.UnitMovementDistance.FinalMovementDistance && unit.tilesRemain > 0)
                 {
                     if (target is BaseGridUnitScript)
                     {
@@ -499,50 +496,40 @@ public class AIController : MonoBehaviour
                     }
                 }
 
-                if (!potentialTargetWithWeight.TryGetValue(target,out AIAttackWeight value))
+                if (!potentialTargetWithWeight.TryGetValue(target, out AIAttackWeight value))
                 {
                     potentialTargetPositions.Add(target.GetCellPosition());
                 }
-    
+
             }
             Vector3Int targetPos = new Vector3Int();
-            if (potentialTargetWithWeight.Count> 0)
+            if (potentialTargetWithWeight.Count > 0)
             {
                 //select target by weight
                 int weight = 0;
                 BaseGridEntity potentialTarget = null;
                 bool bNeedToMove = false;
-                foreach (KeyValuePair<BaseGridEntity,AIAttackWeight> pair in potentialTargetWithWeight)
+                foreach (KeyValuePair<BaseGridEntity, AIAttackWeight> pair in potentialTargetWithWeight)
                 {
                     BaseGridEntity entity = pair.Key;
                     AIAttackWeight targetWeight = pair.Value;
-                    if(targetWeight.Weight>weight)
+                    if (targetWeight.Weight > weight)
                     {
                         weight = targetWeight.Weight;
                         potentialTarget = entity;
                         bNeedToMove = targetWeight.bNeedToMove;
                     }
                 }
-                if(potentialTarget)
+                if (potentialTarget)
                 {
                     targetPos = potentialTarget.GetCellPosition();
-                    if(bNeedToMove)
+                    if (bNeedToMove)
                     {
                         List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(targetPos, unit.unitStats.UnitAttackRange.FinalAttackRange, unit.GetWalkableTiles());
                         List<Vector3Int> closestAdjPos = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), adjPos);
                         if (closestAdjPos.Count > 0)
                         {
-                            foreach(Vector3Int pos in closestAdjPos)
-                            {
-                                if(!reservedPositions.Contains(pos))
-                                {
-                                    reservedPositions.Add(pos);
-                                    targetPos = pos;
-                                    unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Move, targetPos));
-                                    return AIUnitAction.Move;
-                                }
-                            }
-                            foreach(Vector3Int pos in adjPos)
+                            foreach (Vector3Int pos in closestAdjPos)
                             {
                                 if (!reservedPositions.Contains(pos))
                                 {
@@ -552,34 +539,44 @@ public class AIController : MonoBehaviour
                                     return AIUnitAction.Move;
                                 }
                             }
-                            
+                            foreach (Vector3Int pos in adjPos)
+                            {
+                                if (!reservedPositions.Contains(pos))
+                                {
+                                    reservedPositions.Add(pos);
+                                    targetPos = pos;
+                                    unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Move, targetPos));
+                                    return AIUnitAction.Move;
+                                }
+                            }
+
                         }
                     }
                     else
                     {
-                        if(unit.GetRemainAttacksCount()>0)
+                        if (unit.GetRemainAttacksCount() > 0)
                         {
                             unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Attack, targetPos));
                             return AIUnitAction.Attack;
                         }
 
                     }
-                    
+
                 }
 
             }
             else
             {
                 //secelt closest visible enemy unit
-                if(potentialTargetPositions.Count> 0)
+                if (potentialTargetPositions.Count > 0)
                 {
                     List<Vector3Int> closestTargetPoses = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), potentialTargetPositions);
-                    if (closestTargetPoses.Count > 0&& unit.tilesRemain > 0)
+                    if (closestTargetPoses.Count > 0 && unit.tilesRemain > 0)
                     {
                         targetPos = closestTargetPoses[0];
                         List<Vector3Int> adjPos = HexTilemapManager.Instance.GetCellsInRange(targetPos, 1, unit.GetWalkableTiles());
                         List<Vector3Int> closestAdjPos = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), adjPos);
-                        if(closestAdjPos.Count>0)
+                        if (closestAdjPos.Count > 0)
                         {
                             foreach (Vector3Int pos in closestAdjPos)
                             {
@@ -602,29 +599,29 @@ public class AIController : MonoBehaviour
                                 }
                             }
                         }
-                        
+
                     }
-                    
+
                 }
-                
+
             }
-            
+
         }
 
         //Exploration
-        if (unit.tilesRemain> 0&&fogTiles.Count > 0)
+        if (unit.tilesRemain > 0 && fogTiles.Count > 0)
         {
 
 
 
-                fogTiles = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), fogTiles);
+            fogTiles = HexTilemapManager.Instance.GetClosestTiles(unit.GetCellPosition(), fogTiles);
 
 
-                Vector3Int randomTile = fogTiles[UnityEngine.Random.Range(0, fogTiles.Count - 1)];
-                unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Explore,randomTile));
-                return AIUnitAction.Explore;
+            Vector3Int randomTile = fogTiles[UnityEngine.Random.Range(0, fogTiles.Count - 1)];
+            unitsToAct.Add(unit, new AIUnitTask(AIUnitAction.Explore, randomTile));
+            return AIUnitAction.Explore;
 
-           
+
         }
         return AIUnitAction.None;
         //1) check for attack target
@@ -641,21 +638,21 @@ public class AIController : MonoBehaviour
         Resource kingdomResources = kingdom.Resources();
         List<GridBuilding> unlockedBuildings = kingdom.GetUnlockedBuildings();
         List<BaseGridUnitScript> unlockedUnits = kingdom.GetunlockedUnits();
-        Dictionary<Vector3Int,GridBuilding> cityBuildings = new Dictionary<Vector3Int, GridBuilding>(city.buildings);
-        List<FabricResourses>  productionBuildings = new List<FabricResourses>();
+        Dictionary<Vector3Int, GridBuilding> cityBuildings = new Dictionary<Vector3Int, GridBuilding>(city.buildings);
+        List<FabricResourses> productionBuildings = new List<FabricResourses>();
         CityProductionQueue productionQueue = city.GetComponent<CityProductionQueue>();
         List<Production> cityProduction = productionQueue.productionQueue;
         if (cityBuildings.Count > 0)
         {
-            foreach(KeyValuePair<Vector3Int,GridBuilding> pair in cityBuildings)
+            foreach (KeyValuePair<Vector3Int, GridBuilding> pair in cityBuildings)
             {
                 Vector3Int pos = pair.Key;
                 GridBuilding building = pair.Value;
-                if(building is FabricResourses)
+                if (building is FabricResourses)
                 {
                     productionBuildings.Add(building as FabricResourses);
                 }
-                
+
             }
             //Build economic buildings
             if (productionBuildings.Count < 2)
@@ -685,27 +682,27 @@ public class AIController : MonoBehaviour
             }
             List<BaseGridUnitScript> notUnlockedUnits = kingdom.GetNotUnlockedUnits();
             //build tech buildings
-            if(notUnlockedUnits.Count > 0)
+            if (notUnlockedUnits.Count > 0)
             {
                 Debug.Log(notUnlockedUnits);
                 List<OpenNewUnit> techBuildings = new List<OpenNewUnit>();
-                foreach(GridBuilding techBuilding in unlockedBuildings)
+                foreach (GridBuilding techBuilding in unlockedBuildings)
                 {
-                    if(techBuilding is OpenNewUnit)
+                    if (techBuilding is OpenNewUnit)
                     {
                         techBuildings.Add((OpenNewUnit)techBuilding);
                     }
                 }
-                if(techBuildings.Count > 0)
+                if (techBuildings.Count > 0)
                 {
-                    foreach(OpenNewUnit tBuilding in techBuildings)
+                    foreach (OpenNewUnit tBuilding in techBuildings)
                     {
-                        if(notUnlockedUnits.Contains(tBuilding.GetUnitToOpen()))
+                        if (notUnlockedUnits.Contains(tBuilding.GetUnitToOpen()))
                         {
                             bool bHasSimilarBuildingInProduction = false;
-                            if (cityProduction.Count > 0||productionQueue.currentProduction!=null)
+                            if (cityProduction.Count > 0 || productionQueue.currentProduction != null)
                             {
-                                if(productionQueue.currentProduction!=null&&productionQueue.currentProduction.building?.buildingPrefab==tBuilding.gameObject)
+                                if (productionQueue.currentProduction != null && productionQueue.currentProduction.building?.buildingPrefab == tBuilding.gameObject)
                                 {
                                     bHasSimilarBuildingInProduction = true;
                                 }
@@ -719,7 +716,7 @@ public class AIController : MonoBehaviour
                                 }
 
                             }
-                            if(!bHasSimilarBuildingInProduction&&CheckResources(kingdom,tBuilding.GetBuilding().resource))
+                            if (!bHasSimilarBuildingInProduction && CheckResources(kingdom, tBuilding.GetBuilding().resource))
                             {
                                 citiesToAct.Add(city, new AICityTask(AICityAction.BuildUnitTechBuilding, tBuilding));
                                 return AICityAction.BuildUnitTechBuilding;
@@ -735,18 +732,18 @@ public class AIController : MonoBehaviour
             {
                 if (!CheckResources(kingdom, unlockedUnit.resource)) continue;
 
-                if(unlockedUnit.GetTier()>highestTier)
+                if (unlockedUnit.GetTier() > highestTier)
                 {
                     potentialUnits.Clear();
                     potentialUnits.Add(unlockedUnit);
                     highestTier = unlockedUnit.GetTier();
                 }
-                else if(unlockedUnit.GetTier()==highestTier)
+                else if (unlockedUnit.GetTier() == highestTier)
                 {
                     potentialUnits.Add(unlockedUnit);
-                } 
+                }
             }
-            if(potentialUnits.Count>0)
+            if (potentialUnits.Count > 0)
             {
                 BaseGridUnitScript potentialUnit = potentialUnits[UnityEngine.Random.Range(0, potentialUnits.Count)];
                 List<Production> totalProduction = new List<Production>(cityProduction);
@@ -757,13 +754,13 @@ public class AIController : MonoBehaviour
                 int similarUnitsInQueue = 0;
                 foreach (Production production in totalProduction)
                 {
-                    if(production.prefab==potentialUnit.gameObject)
+                    if (production.prefab == potentialUnit.gameObject)
                     {
                         similarUnitsInQueue++;
                     }
                 }
 
-                if (potentialUnit != null&& CheckResources(kingdom, potentialUnit.resource)&&similarUnitsInQueue<=2)
+                if (potentialUnit != null && CheckResources(kingdom, potentialUnit.resource) && similarUnitsInQueue <= 2)
                 {
                     citiesToAct.Add(city, new AICityTask(AICityAction.BuildMeleeUnit, potentialUnit));
                     return AICityAction.BuildMeleeUnit;
@@ -776,9 +773,9 @@ public class AIController : MonoBehaviour
             FabricResourses mainProductionFabric = GetUnlockedFabric(kingdom, unlockedBuildings);
             bool bHasSimilarBuildingInProduction = false;
 
-            if(productionQueue.currentProduction !=null&& productionQueue.currentProduction.building?.buildingPrefab== mainProductionFabric.gameObject)
+            if (productionQueue.currentProduction != null && productionQueue.currentProduction.building?.buildingPrefab == mainProductionFabric.gameObject)
             {
-                    bHasSimilarBuildingInProduction = true;
+                bHasSimilarBuildingInProduction = true;
             }
             else
             {
@@ -786,16 +783,16 @@ public class AIController : MonoBehaviour
                 {
                     foreach (Production production in cityProduction)
                     {
-                        if (mainProductionFabric!=null&&production.building.buildingPrefab == mainProductionFabric.gameObject)
+                        if (mainProductionFabric != null && production.building.buildingPrefab == mainProductionFabric.gameObject)
                         {
                             bHasSimilarBuildingInProduction = true;
                             break;
                         }
                     }
                 }
-                
+
             }
-            if (mainProductionFabric != null && CheckResources(kingdom, mainProductionFabric.GetBuilding().resource)&&!bHasSimilarBuildingInProduction)
+            if (mainProductionFabric != null && CheckResources(kingdom, mainProductionFabric.GetBuilding().resource) && !bHasSimilarBuildingInProduction)
             {
                 citiesToAct.Add(city, new AICityTask(AICityAction.BuildProductionBuilding, mainProductionFabric));
                 return AICityAction.BuildProductionBuilding;
@@ -803,7 +800,7 @@ public class AIController : MonoBehaviour
         }
         return AICityAction.None;
     }
-    private FabricResourses GetUnlockedFabric(AIKingdom kingdom,List<GridBuilding> unlockedBuildings)
+    private FabricResourses GetUnlockedFabric(AIKingdom kingdom, List<GridBuilding> unlockedBuildings)
     {
         List<FabricResourses> unlockedProductionBuildings = new List<FabricResourses>();
         foreach (GridBuilding unlockedBuilding in unlockedBuildings)
@@ -827,7 +824,7 @@ public class AIController : MonoBehaviour
     }
     private bool CheckResources(AIKingdom kingdom, Dictionary<ResourceType, int> required)
     {
-        if (kingdom.Resources().HasEnough(required) == null) 
+        if (kingdom.Resources().HasEnough(required) == null)
         {
             return true;
         }
@@ -847,7 +844,7 @@ public class AIController : MonoBehaviour
         {
             Weight = weight;
             this.bNeedToMove = bNeedToMove;
-        }   
+        }
     }
     private class AIUnitTask
     {
@@ -861,7 +858,7 @@ public class AIController : MonoBehaviour
             Target = target;
         }
     }
-   private class AICityTask
+    private class AICityTask
     {
         public bool Finished;
         public AICityAction Action;
@@ -877,6 +874,6 @@ public class AIController : MonoBehaviour
     }
 
 
-    
-    
+
+
 }

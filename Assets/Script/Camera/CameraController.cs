@@ -1,6 +1,6 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Cinemachine;
 using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
@@ -11,14 +11,14 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float CameraSpeedEdgeScreen = 1;
     [SerializeField]
-    private Transform Camera; 
+    private Transform Camera;
     [SerializeField] private InputActionAsset CustomInput;
     private InputAction moveAction;
     private InputAction moveActionMouse;
     private InputAction moveCameraZoom;
     private InputAction rotateAction;
     [SerializeField]
-    private  float EDGE_THRESHOLD = 0.4f;//a variable indicating how far the camera will move to the end of the screen.
+    private float EDGE_THRESHOLD = 0.4f;//a variable indicating how far the camera will move to the end of the screen.
 
     public float moveSpeed = 5f;//Speed Camera
     [SerializeField]
@@ -36,17 +36,17 @@ public class CameraController : MonoBehaviour
     private Slider cameraSpeedEdgeScreenSlider;
 
     [SerializeField]
-    private float CameraXBordedMax = 15;  
+    private float CameraXBordedMax = 15;
     [SerializeField]
     private float CameraXBordedMin = -15;
     [SerializeField]
-    private float CameraYBordedMax = 15;    
+    private float CameraYBordedMax = 15;
     [SerializeField]
     private float CameraYBordedMin = -15;
     public Camera GetMainCamera()
     {
         return mainCamera;
-    }    
+    }
     public Transform GetCameraArmTransform()
     { return CameraArm; }
 
@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviour
         CameraRotationSpeed = PlayerPrefs.HasKey("CameraRotationSpeed") ? PlayerPrefs.GetFloat("CameraRotationSpeed") : CameraRotationSpeed;
         CameraSpeedEdgeScreen = PlayerPrefs.HasKey("CameraSpeedEdgeScreen") ? PlayerPrefs.GetFloat("CameraSpeedEdgeScreen") : CameraSpeedEdgeScreen;
         CameraSpeed = PlayerPrefs.HasKey("CameraSpeed") ? PlayerPrefs.GetFloat("CameraSpeed") : CameraSpeed;
-        if(instance!=null)
+        if (instance != null)
         {
             Destroy(this);
         }
@@ -87,7 +87,7 @@ public class CameraController : MonoBehaviour
     public Transform GetCameraArm() { return CameraArm; }
     void LateUpdate()
     {
-        if(!bCameraPosFixed)
+        if (!bCameraPosFixed)
         {
             Vector2 mousepos = InputManager.instance.GetMousePosVector2();
             Vector2 screenUV = new Vector2(mousepos.x / Screen.width - .5f, mousepos.y / Screen.height - .5f);
@@ -99,12 +99,12 @@ public class CameraController : MonoBehaviour
             if (screenUV.y > EDGE_THRESHOLD) move.y = CameraSpeedEdgeScreen;
             Vector2 movementInput = InputManager.instance.CameraKeyMovementDirection;
             // the final calculation of the movement vector and the movement itself
-            Vector3 movement = new Vector3(movementInput.x*CameraSpeed, movementInput.y*CameraSpeed, 0f);
+            Vector3 movement = new Vector3(movementInput.x * CameraSpeed, movementInput.y * CameraSpeed, 0f);
             transform.Translate(Time.deltaTime * (move + movement) * moveSpeed);
             transform.Rotate(Vector3.forward * rotateValue * CameraRotationSpeed);
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, CameraXBordedMin, CameraXBordedMax), Mathf.Clamp(transform.position.y, CameraYBordedMin, CameraYBordedMax), transform.position.z);
             var orbital = vcam.GetComponent<CinemachineOrbitalFollow>();
-            if(!UIManager.Instance.isOnCanvas) orbital.VerticalAxis.Value = Mathf.Clamp(orbital.VerticalAxis.Value + (-1) * moveCameraZoom.ReadValue<float>() * 2f, 200, 250);
+            if (!UIManager.Instance.isOnCanvas) orbital.VerticalAxis.Value = Mathf.Clamp(orbital.VerticalAxis.Value + (-1) * moveCameraZoom.ReadValue<float>() * 2f, 200, 250);
 
 
         }
@@ -120,7 +120,7 @@ public class CameraController : MonoBehaviour
     {
         bCameraPosFixed = false;
     }
-    public void sldr_SetRotateSpeed(Slider sld) => CameraRotationSpeed=sld.value;
-    public void sldr_SetCameraSpeedEdgeScreen(Slider sld) => CameraSpeedEdgeScreen=sld.value;
-    public void sldr_SetCameraSpeed(Slider sld)=> CameraSpeed=sld.value;
+    public void sldr_SetRotateSpeed(Slider sld) => CameraRotationSpeed = sld.value;
+    public void sldr_SetCameraSpeedEdgeScreen(Slider sld) => CameraSpeedEdgeScreen = sld.value;
+    public void sldr_SetCameraSpeed(Slider sld) => CameraSpeed = sld.value;
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 /// <summary>
 /// Handles vision and fog of war for grid entities
@@ -34,7 +33,7 @@ public class EntityVision : MonoBehaviour
         UpdateFog();
         CoverByFog();
     }
-    
+
     /// <summary>
     /// Called when entity dies
     /// </summary>
@@ -53,7 +52,7 @@ public class EntityVision : MonoBehaviour
 
         // Get all tiles in vision radius (includes all tile states)
 
-        
+
         List<Vector3Int> updatedTiles = hTM.GetCellsInRange(entityPosition, entity.GetVision(), EnumLibrary.AllTileStates);
 
         // Update fog for each tile
@@ -76,7 +75,7 @@ public class EntityVision : MonoBehaviour
     {
         // Get all tiles in vision radius from old position (includes all tile states)
 
-        
+
         List<Vector3Int> updatedTiles = hTM.GetCellsInRange(oldPosition, entity.GetVision(), EnumLibrary.AllTileStates);
 
         // Remove fog for each tile
@@ -191,7 +190,7 @@ public class EntityVision : MonoBehaviour
         switch (fog)
         {
             case Fog.None:
-                
+
                 shouldBeVisible = true;
                 break;
             case Fog.Grey:

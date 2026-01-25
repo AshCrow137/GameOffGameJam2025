@@ -21,38 +21,38 @@ using UnityEditor;
 [UnityEditor.InitializeOnLoad]
 public class AkMacPluginActivator : AkPlatformPluginActivator
 {
-	public override string WwisePlatformName => "Mac";
-	public override string PluginDirectoryName => "Mac";
+    public override string WwisePlatformName => "Mac";
+    public override string PluginDirectoryName => "Mac";
 
-	static AkMacPluginActivator()
-	{
-		if (UnityEditor.AssetDatabase.IsAssetImportWorkerProcess())
-		{
-			return;
-		}
+    static AkMacPluginActivator()
+    {
+        if (UnityEditor.AssetDatabase.IsAssetImportWorkerProcess())
+        {
+            return;
+        }
 
-		AkPluginActivator.RegisterPlatformPluginActivator(BuildTarget.StandaloneOSX, new AkMacPluginActivator());
-	}
-	
-	private const int CONFIG_INDEX = 1;
-	public override AkPluginActivator.PluginImporterInformation GetPluginImporterInformation(PluginImporter pluginImporter)
-	{
-		return new AkPluginActivator.PluginImporterInformation
-		{
-			PluginConfig = GetPluginPathParts(pluginImporter.assetPath)[CONFIG_INDEX],
-			
-			EditorOS = "OSX",
-			EditorCPU = "AnyCPU"
-		};
-	}
+        AkPluginActivator.RegisterPlatformPluginActivator(BuildTarget.StandaloneOSX, new AkMacPluginActivator());
+    }
 
-	internal override bool ConfigurePlugin(PluginImporter pluginImporter, AkPluginActivator.PluginImporterInformation pluginImporterInformation)
-	{
-		pluginImporter.SetPlatformData(BuildTarget.StandaloneLinux64, "CPU", "None");
-		pluginImporter.SetPlatformData(BuildTarget.StandaloneWindows, "CPU", "None");
-		pluginImporter.SetPlatformData(BuildTarget.StandaloneWindows64, "CPU", "None");
-		pluginImporter.SetPlatformData(BuildTarget.StandaloneOSX, "CPU", "AnyCPU");
-		return true;
-	}
+    private const int CONFIG_INDEX = 1;
+    public override AkPluginActivator.PluginImporterInformation GetPluginImporterInformation(PluginImporter pluginImporter)
+    {
+        return new AkPluginActivator.PluginImporterInformation
+        {
+            PluginConfig = GetPluginPathParts(pluginImporter.assetPath)[CONFIG_INDEX],
+
+            EditorOS = "OSX",
+            EditorCPU = "AnyCPU"
+        };
+    }
+
+    internal override bool ConfigurePlugin(PluginImporter pluginImporter, AkPluginActivator.PluginImporterInformation pluginImporterInformation)
+    {
+        pluginImporter.SetPlatformData(BuildTarget.StandaloneLinux64, "CPU", "None");
+        pluginImporter.SetPlatformData(BuildTarget.StandaloneWindows, "CPU", "None");
+        pluginImporter.SetPlatformData(BuildTarget.StandaloneWindows64, "CPU", "None");
+        pluginImporter.SetPlatformData(BuildTarget.StandaloneOSX, "CPU", "AnyCPU");
+        return true;
+    }
 }
 #endif

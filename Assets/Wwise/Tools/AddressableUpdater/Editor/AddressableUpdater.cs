@@ -15,15 +15,12 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
-using System.Collections.Generic;
-using System.IO;
 using UnityEditor;
-using UnityEngine;
 
 [InitializeOnLoad]
 public static class AddressableUpdater
 {
-    
+
 #if AK_WWISE_ADDRESSABLES && UNITY_ADDRESSABLES
     [MenuItem("Wwise/Update Addressables")]
     public static void UpdateAddressables()

@@ -28,7 +28,7 @@ namespace Wwise.API.Runtime.WwiseTypes.WwiseObjectsManagers
     {
         private ConcurrentDictionary<string, WwiseEventReference> m_wwiseEventReferences =
             new ConcurrentDictionary<string, WwiseEventReference>();
-        
+
         private static WwiseEventReferencesManager instance;
         public static WwiseEventReferencesManager Instance
         {
@@ -52,7 +52,7 @@ namespace Wwise.API.Runtime.WwiseTypes.WwiseObjectsManagers
         {
             m_wwiseEventReferences.TryRemove(eventReference.DisplayName, out eventReference);
         }
-        
+
         public IEnumerator SetLanguageAndReloadLocalizedBanks(string language, List<string> eventNames = null)
         {
             var eventReferences = new List<WwiseEventReference>();

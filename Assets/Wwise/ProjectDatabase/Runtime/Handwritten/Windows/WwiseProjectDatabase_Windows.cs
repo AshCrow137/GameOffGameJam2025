@@ -45,7 +45,7 @@ public partial class WwiseProjectDatabase
         }
         return ProjectInfoExists;
     }
-    
+
     public static void Init(string inDirectoryPath, string inDirectoryPlatformName, string language = null)
     {
         InitCheckUp(inDirectoryPath);
@@ -65,9 +65,9 @@ public partial class WwiseProjectDatabase
             LogProjectDatabaseDLLException(e);
             throw;
         }
-      
+
     }
-    
+
     public static void SetCurrentPlatform(string inDirectoryPlatformName)
     {
         try
@@ -106,7 +106,7 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     /*
      * SoundBanks
      */
@@ -175,7 +175,7 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     public static string GetSoundBankName(global::System.IntPtr soundBankRefPtr)
     {
         try
@@ -350,11 +350,11 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     /*
      * Medias
     */
-    
+
     public static string GetMediaName(global::System.IntPtr mediaRefPtr)
     {
         try
@@ -451,11 +451,11 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     /*
      * Events
     */
-    
+
     public static global::System.IntPtr GetEventRefString(string soundBankName)
     {
         try
@@ -564,7 +564,7 @@ public partial class WwiseProjectDatabase
             LogProjectDatabaseDLLException(e);
             throw;
         }
-    }    
+    }
     public static uint GetEventMediasCount(global::System.IntPtr soundBankRefPtr)
     {
         try
@@ -589,11 +589,11 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     /*
      * Platform
     */
-    
+
     public static global::System.IntPtr GetPlatformRef(string soundBankName)
     {
         try
@@ -642,11 +642,11 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     /**
      * Plugin
      */
-    
+
     public static global::System.IntPtr GetAllPluginRef()
     {
         try
@@ -659,7 +659,7 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     public static uint GetPluginCount()
     {
         try
@@ -709,7 +709,7 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     public static string GetPluginDLL(global::System.IntPtr pluginRefPtr)
     {
         try
@@ -722,7 +722,7 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     public static string GetPluginStaticLib(global::System.IntPtr pluginRefPtr)
     {
         try
@@ -747,7 +747,7 @@ public partial class WwiseProjectDatabase
             throw;
         }
     }
-    
+
     public static void DeletePluginArrayRef(global::System.IntPtr pluginArrayRefPtr)
     {
         try

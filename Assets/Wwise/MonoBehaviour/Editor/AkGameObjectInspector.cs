@@ -18,203 +18,203 @@ Copyright (c) 2025 Audiokinetic Inc.
 
 public class DefaultHandles
 {
-	public static bool Hidden
-	{
-		get
-		{
-			var type = typeof(UnityEditor.Tools);
-			var field = type.GetField("s_Hidden",
-				System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-			return (bool) field.GetValue(null);
-		}
-		set
-		{
-			var type = typeof(UnityEditor.Tools);
-			var field = type.GetField("s_Hidden",
-				System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-			field.SetValue(null, value);
-		}
-	}
+    public static bool Hidden
+    {
+        get
+        {
+            var type = typeof(UnityEditor.Tools);
+            var field = type.GetField("s_Hidden",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            return (bool)field.GetValue(null);
+        }
+        set
+        {
+            var type = typeof(UnityEditor.Tools);
+            var field = type.GetField("s_Hidden",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            field.SetValue(null, value);
+        }
+    }
 }
 
 [UnityEditor.CanEditMultipleObjects]
 [UnityEditor.CustomEditor(typeof(AkGameObj), true)]
 public class AkGameObjectInspector : UnityEditor.Editor
 {
-	private bool hideDefaultHandle;
-	private UnityEditor.SerializedProperty listeners;
-	private AkGameObj m_AkGameObject;
-	private UnityEditor.SerializedProperty usePositionOffsetData;
+    private bool hideDefaultHandle;
+    private UnityEditor.SerializedProperty listeners;
+    private AkGameObj m_AkGameObject;
+    private UnityEditor.SerializedProperty usePositionOffsetData;
 
-	private void OnEnable()
-	{
-		m_AkGameObject = target as AkGameObj;
-		listeners = serializedObject.FindProperty("m_listeners");
-		usePositionOffsetData = serializedObject.FindProperty("usePositionOffsetData");
-		DefaultHandles.Hidden = hideDefaultHandle;
-	}
+    private void OnEnable()
+    {
+        m_AkGameObject = target as AkGameObj;
+        listeners = serializedObject.FindProperty("m_listeners");
+        usePositionOffsetData = serializedObject.FindProperty("usePositionOffsetData");
+        DefaultHandles.Hidden = hideDefaultHandle;
+    }
 
-	private void OnDisable()
-	{
-		DefaultHandles.Hidden = false;
-	}
+    private void OnDisable()
+    {
+        DefaultHandles.Hidden = false;
+    }
 
-	public override void OnInspectorGUI()
-	{
-		var positionOffsetData = m_AkGameObject.m_positionOffsetData;
-		var positionOffset = UnityEngine.Vector3.zero;
+    public override void OnInspectorGUI()
+    {
+        var positionOffsetData = m_AkGameObject.m_positionOffsetData;
+        var positionOffset = UnityEngine.Vector3.zero;
 
-		UnityEditor.EditorGUI.BeginChangeCheck();
+        UnityEditor.EditorGUI.BeginChangeCheck();
 
-		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-		{
-			UnityEditor.EditorGUILayout.PropertyField(usePositionOffsetData, new UnityEngine.GUIContent("Apply Position Offset:"));
+        using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+        {
+            UnityEditor.EditorGUILayout.PropertyField(usePositionOffsetData, new UnityEngine.GUIContent("Apply Position Offset:"));
 
-			if (usePositionOffsetData.boolValue)
-			{
-				positionOffset = UnityEditor.EditorGUILayout.Vector3Field("Position Offset", positionOffsetData.positionOffset);
+            if (usePositionOffsetData.boolValue)
+            {
+                positionOffset = UnityEditor.EditorGUILayout.Vector3Field("Position Offset", positionOffsetData.positionOffset);
 
-				UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
-			
-				if (hideDefaultHandle)
-				{
-					if (UnityEngine.GUILayout.Button("Show Main Transform"))
-					{
-						hideDefaultHandle = false;
-						DefaultHandles.Hidden = hideDefaultHandle;
-					}
-				}
-				else if (UnityEngine.GUILayout.Button("Hide Main Transform"))
-				{
-					hideDefaultHandle = true;
-					DefaultHandles.Hidden = hideDefaultHandle;
-				}
-			}
-			else if (hideDefaultHandle)
-			{
-				hideDefaultHandle = false;
-				DefaultHandles.Hidden = hideDefaultHandle;
-			}
-		}
+                UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-		UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
+                if (hideDefaultHandle)
+                {
+                    if (UnityEngine.GUILayout.Button("Show Main Transform"))
+                    {
+                        hideDefaultHandle = false;
+                        DefaultHandles.Hidden = hideDefaultHandle;
+                    }
+                }
+                else if (UnityEngine.GUILayout.Button("Hide Main Transform"))
+                {
+                    hideDefaultHandle = true;
+                    DefaultHandles.Hidden = hideDefaultHandle;
+                }
+            }
+            else if (hideDefaultHandle)
+            {
+                hideDefaultHandle = false;
+                DefaultHandles.Hidden = hideDefaultHandle;
+            }
+        }
 
-		var isEnvironmentAware = m_AkGameObject.isEnvironmentAware;
+        UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-		{
-			isEnvironmentAware = UnityEditor.EditorGUILayout.Toggle("Environment Aware:", isEnvironmentAware);
-		}
-		
-		if (m_AkGameObject.gameObject.GetComponent<AkRoomAwareObject>() == null)
-		{
-			using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-			{
-				UnityEditor.EditorGUILayout.LabelField("Room Aware: ", "");
-				if (UnityEngine.GUILayout.Button("Add AkRoomAwareObject"))
-					UnityEditor.Undo.AddComponent<AkRoomAwareObject>(m_AkGameObject.gameObject);
-			}
-		}
+        var isEnvironmentAware = m_AkGameObject.isEnvironmentAware;
 
-		if (UnityEditor.EditorGUI.EndChangeCheck())
-		{
-			UnityEditor.Undo.RecordObject(target, "AkGameObj Parameter Change");
+        using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+        {
+            isEnvironmentAware = UnityEditor.EditorGUILayout.Toggle("Environment Aware:", isEnvironmentAware);
+        }
 
-			m_AkGameObject.m_positionOffsetData = positionOffsetData;
-			
-			var posOffsetDataProperty = serializedObject.FindProperty("m_positionOffsetData");
-			var KeepMeProperty = posOffsetDataProperty.FindPropertyRelative("KeepMe");
-			KeepMeProperty.boolValue = (positionOffsetData != null);
-			if (positionOffsetData != null)
-			{
-				var posOffsetProperty = posOffsetDataProperty.FindPropertyRelative("positionOffset");
-				posOffsetProperty.vector3Value = positionOffset;
-			}
-			serializedObject.ApplyModifiedProperties();
+        if (m_AkGameObject.gameObject.GetComponent<AkRoomAwareObject>() == null)
+        {
+            using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+            {
+                UnityEditor.EditorGUILayout.LabelField("Room Aware: ", "");
+                if (UnityEngine.GUILayout.Button("Add AkRoomAwareObject"))
+                    UnityEditor.Undo.AddComponent<AkRoomAwareObject>(m_AkGameObject.gameObject);
+            }
+        }
 
-			m_AkGameObject.isEnvironmentAware = isEnvironmentAware;
-		}
+        if (UnityEditor.EditorGUI.EndChangeCheck())
+        {
+            UnityEditor.Undo.RecordObject(target, "AkGameObj Parameter Change");
 
-		if (isEnvironmentAware)
-		{
-			RigidbodyCheck(m_AkGameObject.gameObject);
-		}
+            m_AkGameObject.m_positionOffsetData = positionOffsetData;
 
-		UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
+            var posOffsetDataProperty = serializedObject.FindProperty("m_positionOffsetData");
+            var KeepMeProperty = posOffsetDataProperty.FindPropertyRelative("KeepMe");
+            KeepMeProperty.boolValue = (positionOffsetData != null);
+            if (positionOffsetData != null)
+            {
+                var posOffsetProperty = posOffsetDataProperty.FindPropertyRelative("positionOffset");
+                posOffsetProperty.vector3Value = positionOffset;
+            }
+            serializedObject.ApplyModifiedProperties();
 
-		UnityEditor.EditorGUI.BeginChangeCheck();
-		m_AkGameObject.ScalingFactor = UnityEditor.EditorGUILayout.FloatField("Attenuation Scaling Factor", m_AkGameObject.ScalingFactor);
-		if (UnityEditor.EditorGUI.EndChangeCheck())
-		{
-			if (m_AkGameObject.ScalingFactor <= 0)
-			{
-				m_AkGameObject.ScalingFactor = 0;
-			}
-			else
-			{
-				if (m_AkGameObject.enabled)
-				{
-					AkUnitySoundEngine.SetScalingFactor(m_AkGameObject.gameObject, m_AkGameObject.ScalingFactor);
-				}
-			}
-		}
-		UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
+            m_AkGameObject.isEnvironmentAware = isEnvironmentAware;
+        }
 
-		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-		{
-			UnityEditor.EditorGUI.BeginChangeCheck();
-			UnityEditor.EditorGUILayout.PropertyField(listeners);
-			if (UnityEditor.EditorGUI.EndChangeCheck())
-			{
-				serializedObject.ApplyModifiedProperties();
-			}
-		}
-	}
+        if (isEnvironmentAware)
+        {
+            RigidbodyCheck(m_AkGameObject.gameObject);
+        }
 
-	public static void RigidbodyCheck(UnityEngine.GameObject gameObject)
-	{
-		if (AkWwiseEditorSettings.Instance.ShowSpatialAudioWarningMsg && gameObject.GetComponent<UnityEngine.Rigidbody>() == null)
-		{
-			UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
+        UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-			using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-			{
-				UnityEditor.EditorGUILayout.HelpBox(
-					"Interactions between AkGameObj and AkEnvironment require a Rigidbody component on the object or the environment.",
-					UnityEditor.MessageType.Warning);
+        UnityEditor.EditorGUI.BeginChangeCheck();
+        m_AkGameObject.ScalingFactor = UnityEditor.EditorGUILayout.FloatField("Attenuation Scaling Factor", m_AkGameObject.ScalingFactor);
+        if (UnityEditor.EditorGUI.EndChangeCheck())
+        {
+            if (m_AkGameObject.ScalingFactor <= 0)
+            {
+                m_AkGameObject.ScalingFactor = 0;
+            }
+            else
+            {
+                if (m_AkGameObject.enabled)
+                {
+                    AkUnitySoundEngine.SetScalingFactor(m_AkGameObject.gameObject, m_AkGameObject.ScalingFactor);
+                }
+            }
+        }
+        UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-				if (UnityEngine.GUILayout.Button("Add Rigidbody"))
-				{
-					var rb = UnityEditor.Undo.AddComponent<UnityEngine.Rigidbody>(gameObject);
-					rb.useGravity = false;
-					rb.isKinematic = true;
-				}
-			}
-		}
-	}
+        using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+        {
+            UnityEditor.EditorGUI.BeginChangeCheck();
+            UnityEditor.EditorGUILayout.PropertyField(listeners);
+            if (UnityEditor.EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+            }
+        }
+    }
 
-	private void OnSceneGUI()
-	{
-		if (m_AkGameObject.m_positionOffsetData == null)
-		{
-			return;
-		}
+    public static void RigidbodyCheck(UnityEngine.GameObject gameObject)
+    {
+        if (AkWwiseEditorSettings.Instance.ShowSpatialAudioWarningMsg && gameObject.GetComponent<UnityEngine.Rigidbody>() == null)
+        {
+            UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-		UnityEditor.EditorGUI.BeginChangeCheck();
+            using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+            {
+                UnityEditor.EditorGUILayout.HelpBox(
+                    "Interactions between AkGameObj and AkEnvironment require a Rigidbody component on the object or the environment.",
+                    UnityEditor.MessageType.Warning);
 
-		// Transform local offset to world coordinate
-		var pos = m_AkGameObject.transform.TransformPoint(m_AkGameObject.m_positionOffsetData.positionOffset);
+                if (UnityEngine.GUILayout.Button("Add Rigidbody"))
+                {
+                    var rb = UnityEditor.Undo.AddComponent<UnityEngine.Rigidbody>(gameObject);
+                    rb.useGravity = false;
+                    rb.isKinematic = true;
+                }
+            }
+        }
+    }
 
-		// Get new handle position
-		pos = UnityEditor.Handles.PositionHandle(pos, UnityEngine.Quaternion.identity);
+    private void OnSceneGUI()
+    {
+        if (m_AkGameObject.m_positionOffsetData == null)
+        {
+            return;
+        }
 
-		if (UnityEditor.EditorGUI.EndChangeCheck())
-		{
-			UnityEditor.Undo.RecordObject(target, "Position Offset Change");
+        UnityEditor.EditorGUI.BeginChangeCheck();
 
-			// Transform world offset to local coordinate
-			m_AkGameObject.m_positionOffsetData.positionOffset = m_AkGameObject.transform.InverseTransformPoint(pos);
-		}
-	}
+        // Transform local offset to world coordinate
+        var pos = m_AkGameObject.transform.TransformPoint(m_AkGameObject.m_positionOffsetData.positionOffset);
+
+        // Get new handle position
+        pos = UnityEditor.Handles.PositionHandle(pos, UnityEngine.Quaternion.identity);
+
+        if (UnityEditor.EditorGUI.EndChangeCheck())
+        {
+            UnityEditor.Undo.RecordObject(target, "Position Offset Change");
+
+            // Transform world offset to local coordinate
+            m_AkGameObject.m_positionOffsetData.positionOffset = m_AkGameObject.transform.InverseTransformPoint(pos);
+        }
+    }
 }
 #endif

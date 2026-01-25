@@ -15,7 +15,7 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 #if UNITY_EDITOR
-public class WwiseEventRef: global::System.IDisposable
+public class WwiseEventRef : global::System.IDisposable
 {
     private global::System.IntPtr swigCPtr;
     protected bool swigCMemOwn;
@@ -67,18 +67,18 @@ public class WwiseEventRef: global::System.IDisposable
             global::System.GC.SuppressFinalize(this);
         }
     }
-    
+
     public WwiseEventRef(global::System.IntPtr cPtr) : this(cPtr, true)
     {
     }
     public WwiseEventRef(string eventName) : this(WwiseProjectDatabase.GetEventRefString(eventName), true)
     {
     }
-    
+
     public string Name => WwiseProjectDatabase.GetEventName(swigCPtr);
     public string Path => WwiseProjectDatabase.GetEventPath(swigCPtr);
-    public System.IntPtr Guid =>WwiseProjectDatabase.GetEventGuid(swigCPtr);
-    public uint ShortId =>WwiseProjectDatabase.GetEventShortId(swigCPtr);
+    public System.IntPtr Guid => WwiseProjectDatabase.GetEventGuid(swigCPtr);
+    public uint ShortId => WwiseProjectDatabase.GetEventShortId(swigCPtr);
     public float MaxAttenuation => WwiseProjectDatabase.GetEventMaxAttenuation(swigCPtr);
     public float MinDuration => WwiseProjectDatabase.GetEventMinDuration(swigCPtr);
     public float MaxDuration => WwiseProjectDatabase.GetEventMaxDuration(swigCPtr);

@@ -17,12 +17,12 @@ public class MadnessData : ScriptableObject
     private const int almostDefeat = 100;
     [SerializeField]
     private List<MadnessDataStruct> madnessEffectsList = new List<MadnessDataStruct>(5);
-    
+
     public MadnessDataStruct GetMadnessEffects(int currentMadness)
     {
-        foreach(MadnessDataStruct mstruct in madnessEffectsList)
+        foreach (MadnessDataStruct mstruct in madnessEffectsList)
         {
-            if(currentMadness >= mstruct.minMadness && currentMadness <= mstruct.maxMadness)
+            if (currentMadness >= mstruct.minMadness && currentMadness <= mstruct.maxMadness)
             {
                 return mstruct;
             }

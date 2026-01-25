@@ -112,13 +112,13 @@ public class AkAmbientInspector : AkEventInspector
 
             UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-            currentAttSphereOp = (AttenuationSphereOptions) UnityEditor.EditorGUILayout.EnumPopup("Show Attenuation Sphere: ", currentAttSphereOp);
+            currentAttSphereOp = (AttenuationSphereOptions)UnityEditor.EditorGUILayout.EnumPopup("Show Attenuation Sphere: ", currentAttSphereOp);
             attSphereProperties[target] = currentAttSphereOp;
 
             UnityEditor.EditorGUI.BeginChangeCheck();
             if (currentAttSphereOp != AttenuationSphereOptions.Dont_Show)
             {
-                UnityEditor.EditorGUILayout.PropertyField(sphereColorProperty, new UnityEngine.GUIContent("Attenuation Sphere Color") );
+                UnityEditor.EditorGUILayout.PropertyField(sphereColorProperty, new UnityEngine.GUIContent("Attenuation Sphere Color"));
             }
             if (UnityEditor.EditorGUI.EndChangeCheck())
             {

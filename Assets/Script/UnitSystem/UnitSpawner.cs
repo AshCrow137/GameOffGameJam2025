@@ -1,8 +1,6 @@
 using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class UnitSpawner : MonoBehaviour
 {
@@ -66,7 +64,7 @@ public class UnitSpawner : MonoBehaviour
     }
 
 
-    public void QueueUnitAtPosition(Vector3Int position,GridCity city,BaseGridUnitScript unitPrefab)
+    public void QueueUnitAtPosition(Vector3Int position, GridCity city, BaseGridUnitScript unitPrefab)
     {
         if (!CanUnitBePlaced(city, unitPrefab.gameObject, position))
         {
@@ -167,14 +165,14 @@ public class UnitSpawner : MonoBehaviour
         var r = seeker.traversableTags;
 
         unit.GetComponent<BaseGridUnitScript>().Initialize(ownerKingdom);
-        if(ownerKingdom is AIKingdom)
+        if (ownerKingdom is AIKingdom)
         {
-            AIKingdom aiownerKingdom = (AIKingdom) ownerKingdom;
-            if(aiownerKingdom.GetCurrentMadnessEffect().DecreaseSpeed)
+            AIKingdom aiownerKingdom = (AIKingdom)ownerKingdom;
+            if (aiownerKingdom.GetCurrentMadnessEffect().DecreaseSpeed)
             {
                 unit.GetComponent<BaseGridUnitScript>().DecreaseSpeedForFirstTurn();
             }
-           
+
         }
         //unit.GetComponent<BaseGridUnitScript>().Initialize(playerKingdom);
 

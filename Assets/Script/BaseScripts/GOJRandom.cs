@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-    
+﻿
 public class GOJRandom
 {
     public int Seed { get; private set; }
@@ -12,6 +10,6 @@ public class GOJRandom
 
     public void SetRandomSeed()
     {
-        
+
     }
 }

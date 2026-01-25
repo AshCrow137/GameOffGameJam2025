@@ -1,10 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.Tilemaps;
-using UnityEngine.InputSystem;
-using System.Security.Permissions;
-using static UnityEngine.InputSystem.InputAction;
 /// <summary>
 /// This class handles which item is selected
 /// </summary>
@@ -78,17 +73,17 @@ public class SelectionManager : MonoBehaviour
     //{
     //    if (!context.performed) return;
     //    if (CityUI.Instance.cityMenuMode != CityMenuMode.None) return;
-        
+
     //    Vector2 mousePos = Mouse.current.position.ReadValue();
     //    Ray ray = mainCamera.ScreenPointToRay(mousePos);
-        
+
     //    // Cast a 3d ray onto a 2d plane and get all hits
     //    // Note: composite collider2d with outlines as geometry type does not work because that creates an edge collider with no area.
     //    RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity);
-        
+
     //    if (hits.Length == 0)
     //        return;
-        
+
     //    // Prioritize unit selection - check all hits for units first
     //    foreach (RaycastHit2D hit in hits)
     //    {
@@ -115,8 +110,8 @@ public class SelectionManager : MonoBehaviour
     //        }
     //    }
     //    Deselect();
-        
-        
+
+
     //    // if(CityUI.Instance.cityMenuMode == CityMenuMode.None)
     //    // {
 

@@ -10,7 +10,7 @@ public class CityProductionQueue : MonoBehaviour
 
     private GridCity ownerCity;
     private BaseKingdom ownerKingdom;
-    [SerializeField] 
+    [SerializeField]
     private int maxQueueSize = 5;
     public void Initialize(BaseKingdom kingdom, GridCity city)
     {
@@ -20,7 +20,7 @@ public class CityProductionQueue : MonoBehaviour
     public List<Production> GetTotalProduction()
     {
         List<Production> totalProduction = new List<Production>(productionQueue);
-        if (currentProduction != null&&!totalProduction.Contains(currentProduction))
+        if (currentProduction != null && !totalProduction.Contains(currentProduction))
         {
             totalProduction.Add(currentProduction);
         }
@@ -39,11 +39,11 @@ public class CityProductionQueue : MonoBehaviour
         }
         currentProduction.UpdateProduction();
         CheckIfProductionComplete();
-        if(ownerKingdom is PlayerKingdom)
+        if (ownerKingdom is PlayerKingdom)
         {
             ProductionQueueUI.Instance.UpdateUI(this);
         }
-        
+
 
     }
 
@@ -115,7 +115,7 @@ public class CityProductionQueue : MonoBehaviour
             return;
         }
         //production.Cancel(GetComponent<GridCity>());
-        
+
         // Properly clean up the preview entity from the directory before destroying
         if (production.placedObject != null)
         {

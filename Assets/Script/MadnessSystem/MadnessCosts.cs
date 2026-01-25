@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public static class MadnessCosts
 {
     public const int NONE = 0;
