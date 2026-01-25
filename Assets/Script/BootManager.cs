@@ -39,7 +39,10 @@ public class BootManager : MonoBehaviour
 
     [SerializeField]
     private AIController AIController;
-
+    [SerializeField]
+    private InventoryUIToggle inventoryUIToggle;
+    [SerializeField]
+    private InventoryItemDragged draggedInventorySlot;
 
     void Start()
     {
@@ -69,5 +72,7 @@ public class BootManager : MonoBehaviour
 
 
         AIController?.Initialize();
+        draggedInventorySlot?.Instantiate();
+        inventoryUIToggle?.Instantiate();
     }
 }

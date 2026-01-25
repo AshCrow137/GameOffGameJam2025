@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,13 +13,13 @@ public class InventorySlot
 {
     /// <summary>The type of slot, determining what items can be placed here (e.g., Helmet, Armor, MainHand, etc.).</summary>
     public SlotType slotType;
-    
+
     /// <summary>The item currently stored in this slot, or null if empty.</summary>
     public InventoryItem item;
-    
+
     /// <summary>The quantity of items in this slot.</summary>
     public int amount;
-    
+
     /// <summary>Maximum number of items that can be stacked in this slot.</summary>
     public int maxStackSize;
 
@@ -30,20 +31,22 @@ public class InventorySlot
     /// <summary>The effect instance currently applied by the equipped item, if any.</summary>
     public BaseEffect appliedEffect;
 
+    public UnityEvent OnSlotUpdated = new();
+
     /// <summary>
     /// Creates a general-purpose inventory slot with the default slot type (General).
     /// </summary>
     /// <param name="maxStackSize">Maximum items that can stack in this slot.</param>
-    public InventorySlot(int maxStackSize) : this(SlotType.General, maxStackSize) {}
+    public InventorySlot(int maxStackSize) : this(SlotType.General, maxStackSize) { }
     /// <summary>
     /// Creates a specialized inventory slot for specific equipment types.
     /// </summary>
     /// <param name="slotType">The type of items this slot accepts (Helmet, Armor, etc.).</param>
     /// <param name="maxStackSize">Maximum items that can stack in this slot.</param>
-    public InventorySlot(SlotType slotType, int maxStackSize)  : this(slotType, maxStackSize, slotType != SlotType.General, null) {}
+    public InventorySlot(SlotType slotType, int maxStackSize) : this(slotType, maxStackSize, slotType != SlotType.General, null) { }
     public InventorySlot(SlotType slotType, int maxStackSize, bool applyEffectOnEquip, BaseGridUnitScript ownerEntity)
     {
-        
+
         this.maxStackSize = maxStackSize;
         item = null;
         amount = 0;
@@ -73,7 +76,7 @@ public class InventorySlot
     public bool Add(InventoryItem newItem, int amountToAdd)
     {
         bool added = false;
-        if(!SlotCompatibility.IsItemCompatibleWithSlot(newItem.itemType, slotType))
+        if (!SlotCompatibility.IsItemCompatibleWithSlot(newItem.itemType, slotType))
         {
             Debug.Log("Unable to Add Item. Item type is not compatible with slot type.");
         }
@@ -90,22 +93,25 @@ public class InventorySlot
                 Debug.Log("Unable to Add Item. Slot already contains a different item or is full.");
             }
         }
-        else if(amountToAdd <= maxStackSize && amountToAdd <= newItem.maxStackSize)
+        else if (amountToAdd <= maxStackSize && amountToAdd <= newItem.maxStackSize)
         {
             item = newItem;
             amount = amountToAdd;
             added = true;
         }
-        if(added && applyEffectOnEquip)
+        if (added && applyEffectOnEquip)
         {
-            if(item.equippedEffectData==null)
+            if (item.equippedEffectData)
+            {
+                appliedEffect = item.equippedEffectData.InstantiateEffect(ownerEntity.GetOwner(), ownerEntity);
+                appliedEffect.ApplyEffect(ownerEntity);
+            }
+            else
             {
                 Debug.LogWarning($"Item {item.itemName} has no equipped effect data.");
-                return added;
             }
-            appliedEffect = item.equippedEffectData.InstantiateEffect(ownerEntity.GetOwner(), ownerEntity);
-            appliedEffect.ApplyEffect(ownerEntity);
         }
+        if (added) OnSlotUpdated?.Invoke();
         return added;
     }
 
@@ -117,11 +123,12 @@ public class InventorySlot
     {
         item = null;
         amount = 0;
-        if(appliedEffect != null)
+        if (appliedEffect != null)
         {
             appliedEffect.RemoveEffect();
             appliedEffect = null;
         }
+        OnSlotUpdated?.Invoke();
         return true;
     }
 
@@ -142,7 +149,7 @@ public class InventorySlot
             Debug.Log("Cannot transfer item: incompatible slot type.");
             return false;
         }
-        if(targetSlot.Add(item, amount))
+        if (targetSlot.Add(item, amount))
         {
             Remove();
             return true;

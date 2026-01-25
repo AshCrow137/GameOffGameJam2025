@@ -12,10 +12,10 @@ public class InventorySlotUI : MonoBehaviour
 {
     /// <summary>Text display showing the item quantity in this slot.</summary>
     public TextMeshProUGUI amountText;
-    
+
     /// <summary>Image component displaying the item's icon.</summary>
     public Image slotImage;
-    
+
     /// <summary>The inventory slot data this UI represents.</summary>
     public InventorySlot slot;
 
@@ -39,6 +39,7 @@ public class InventorySlotUI : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Transfers items from this slot to another slot UI.
     /// Updates both UIs after successful transfer.
@@ -51,14 +52,7 @@ public class InventorySlotUI : MonoBehaviour
         {
             return false;
         }
-        if (slot.TransferTo(newSlot.slot))
-        {
-            UpdateUI();
-            newSlot.UpdateUI();
-            return true;
-        }
-
-        return false;
+        return slot.TransferTo(newSlot.slot);
     }
 
     /// <summary>
@@ -67,8 +61,10 @@ public class InventorySlotUI : MonoBehaviour
     /// <param name=\"newSlot\">The inventory slot to assign.</param>
     public void Assign(InventorySlot newSlot)
     {
+        // if (newSlot == null) return;
         slot = newSlot;
         UpdateUI();
+        slot.OnSlotUpdated.AddListener(UpdateUI);
     }
 
     /// <summary>
@@ -76,6 +72,8 @@ public class InventorySlotUI : MonoBehaviour
     /// </summary>
     public void Clear()
     {
+        // if (slot == null) return;
+        slot.OnSlotUpdated.RemoveListener(UpdateUI);
         slot = null;
         UpdateUI();
     }

@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 /// <summary>
 /// Main UI controller for the inventory system.
 /// Manages equipment slots (head, body, hands, etc.) and storage panel.
@@ -13,71 +14,80 @@ public class InventoryUI : MonoBehaviour
 
     /// <summary>UI element for the head/helmet equipment slot.</summary>
     public InventorySlotUI headSlotUi;
-    
+
     /// <summary>UI element for the body/armor equipment slot.</summary>
     public InventorySlotUI bodySlotUi;
-    
+
     /// <summary>UI element for the main hand equipment slot.</summary>
     public InventorySlotUI handSlotUi;
-    
+
     /// <summary>UI element for the off-hand equipment slot.</summary>
     public InventorySlotUI offhandSlotUi;
-    
+
     /// <summary>UI element for the trinket equipment slot.</summary>
     public InventorySlotUI trinketSlotUi;
 
     /// <summary>Array of storage slot UI elements, dynamically created.</summary>
     public InventorySlotUI[] slotUis;
-    
+
     /// <summary>Container for storage slot UI elements.</summary>
     public RectTransform storagePanel;
-    
+
     /// <summary>Root GameObject for the entire inventory panel.</summary>
     public GameObject inventoryPanel;
-    
+
     /// <summary>Number of storage slots to create.</summary>
-    public int inventorySize = 20;
+    public int storageSize;
 
     /// <summary>Reference to the character whose inventory is currently displayed.</summary>
     public CharacterInventoryManager assignedCharacter;
 
-    /// <summary>Singleton instance for global access.</summary>
-    public static InventoryUI Instance;
+    public Button closeButton;
+    public UIDragger inventoryDragger;
 
-    /// <summary>
-    /// Initializes the singleton instance.
-    /// </summary>
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            inventoryPanel.SetActive(false);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    public EventTrigger eventTrigger;
 
-    /// <summary>
-    /// Initializes storage slot UI elements on start.
-    /// </summary>
-    private void Start()
-    {
-        Initialize();
-    }
+    // public InventoryDragger inventoryDragger;
 
-    /// <summary>
-    /// Toggles the visibility of the inventory panel.
-    /// </summary>
-    public void OnInventory()
-    {
-        if (inventoryPanel != null)
-        {
-            inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-        }
-    }
+    // /// <summary>Singleton instance for global access.</summary>
+    // public static InventoryUI Instance;
+
+    // /// <summary>
+    // /// Initializes the singleton instance.
+    // /// </summary>
+    // private void Awake()
+    // {
+    //     if (Instance == null)
+    //     {
+    //         Instance = this;
+    //         inventoryPanel.SetActive(false);
+    //     }
+    //     else
+    //     {
+    //         Destroy(gameObject);
+    //     }
+    // }
+
+
+
+    ///// <summary>
+    ///// Initializes storage slot UI elements on start.
+    ///// </summary>
+    //private void Start()
+    //{
+    //    Initialize();
+    //}
+
+    ///// <summary>
+    ///// Toggles the visibility of the inventory panel.
+    ///// </summary>
+    //public void OnInventory()
+    //{
+    //    if (inventoryPanel != null)
+    //    {
+    //        inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+    //    }
+    //}
 
     /// <summary>
     /// Assigns a unit's inventory to this UI for display.
@@ -85,27 +95,31 @@ public class InventoryUI : MonoBehaviour
     /// <param name="unit">The unit whose inventory should be displayed.</param>
     public void Assign(BaseGridUnitScript unit)
     {
-        if(unit == null)
+        if (unit == null)
         {
             Debug.LogError("InventoryUI Assign called with null unit!");
             return;
         }
-        assignedCharacter = unit.GetComponent<CharacterInventoryManager>();
+        if (!unit.TryGetComponent(out assignedCharacter))
+        {
+            Debug.LogError("Assigned Character has no CharacterInventoryManager attached!");
+            return;
+        }
         UpdateInventory(assignedCharacter.playerInventory);
     }
 
-    /// <summary>
-    /// Creates storage slot UI elements based on inventory size.
-    /// </summary>
-    public void Initialize()
-    {
-        slotUis = new InventorySlotUI[inventorySize];
-        for(int i = 0; i < inventorySize; i++)
-        {
-            InventorySlotUI slotUi = Instantiate(InventorySlotUIPrefab, storagePanel);
-            slotUis[i] = slotUi;
-        }
-    }
+    ///// <summary>
+    ///// Creates storage slot UI elements based on inventory size.
+    ///// </summary>
+    //public void Initialize()
+    //{
+    //    slotUis = new InventorySlotUI[storageSize];
+    //    for(int i = 0; i < storageSize; i++)
+    //    {
+    //        InventorySlotUI slotUi = Instantiate(InventorySlotUIPrefab, storagePanel);
+    //        slotUis[i] = slotUi;
+    //    }
+    //}
 
     /// <summary>
     /// Updates all UI elements to reflect the current state of the inventory.
@@ -119,6 +133,16 @@ public class InventoryUI : MonoBehaviour
         handSlotUi.Assign(playerInventory.mainHand);
         offhandSlotUi.Assign(playerInventory.offHand);
         trinketSlotUi.Assign(playerInventory.trinket);
+        if (storageSize < playerInventory.playerStorage.maxStorageSlots)
+        {
+            storageSize = playerInventory.playerStorage.maxStorageSlots;
+            slotUis = new InventorySlotUI[storageSize];
+            for (int i = 0; i < storageSize; i++)
+            {
+                InventorySlotUI slotUi = PoolingEntity.Spawn(InventorySlotUIPrefab, storagePanel);
+                slotUis[i] = slotUi;
+            }
+        }
         for (int i = 0; i < slotUis.Length; i++)
         {
             if (i < playerInventory.playerStorage.maxStorageSlots)

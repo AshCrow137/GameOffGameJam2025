@@ -11,7 +11,8 @@ public class InventoryItemDragger : MonoBehaviour, IPointerDownHandler, IPointer
 {
     /// <summary>Reference to the current inventory slot UI.</summary>
     public InventorySlotUI currentSlot;
-
+    public Image slotImage;
+    private bool beingDragged = false;
     /// <summary>
     /// Called when the pointer is pressed down on the slot. Initiates drag operation.
     /// </summary>
@@ -22,7 +23,38 @@ public class InventoryItemDragger : MonoBehaviour, IPointerDownHandler, IPointer
         {
             currentSlot = GetComponent<InventorySlotUI>();
         }
-        InventoryItemDragged.Instance.TakeFrom(currentSlot);
+        if (InventoryItemDragged.Instance.TakeFrom(currentSlot))
+        {
+            OnBeginDrag();
+        }
+    }
+
+    public void OnBeginDrag()
+    {
+        if (!beingDragged)
+        {
+            beingDragged = true;
+            slotImage.color = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 0.5f);
+        }
+        else
+        {
+            Debug.LogError("Inventory Slot STARTING to drag twice cannot happen. Please check for bugs!");
+        }
+
+    }
+
+    public void OnEndDrag()
+    {
+        if (beingDragged)
+        {
+            beingDragged = false;
+            if (slotImage)
+                slotImage.color = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 1f);
+        }
+        else
+        {
+            Debug.LogError("Inventory Slot STOPPING to drag twice cannot happen. Please check for bugs!");
+        }
     }
 
     /// <summary>
@@ -33,6 +65,7 @@ public class InventoryItemDragger : MonoBehaviour, IPointerDownHandler, IPointer
     {
         GameObject droppedOn = eventData.pointerCurrentRaycast.gameObject;
         InventoryItemDragged.Instance.DropAt(GetSlotAtPosition(eventData));
+        OnEndDrag();
     }
 
     /// <summary>

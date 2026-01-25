@@ -8,25 +8,25 @@ using UnityEngine;
 public class InventoryItemDragged : MonoBehaviour
 {
     [SerializeField] private Canvas canvas;
-    
+
     /// <summary>Singleton instance of the dragged item manager.</summary>
     public static InventoryItemDragged Instance { get; private set; }
-    
+
     /// <summary>The UI slot being visually dragged.</summary>
     public InventorySlotUI draggedSlot;
-    
-    private RectTransform draggedSlotTransform;
+
+    [SerializeField] private RectTransform draggedSlotTransform;
     private InventorySlotUI originalSlot;
 
     /// <summary>
     /// Initializes the singleton instance.
     /// </summary>
-    private void Awake()
+    // private void Awake()
+    public void Instantiate()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
-            draggedSlotTransform = GetComponent<RectTransform>();
             gameObject.SetActive(false);
         }
         else
@@ -39,25 +39,32 @@ public class InventoryItemDragged : MonoBehaviour
     /// Starts dragging an item from the specified slot.
     /// </summary>
     /// <param name="slot">The slot to take the item from.</param>
-    public void TakeFrom(InventorySlotUI slot)
+    public bool TakeFrom(InventorySlotUI slot)
     {
         if (draggedSlot == null)
         {
             draggedSlot = GetComponent<InventorySlotUI>();
         }
         originalSlot = slot;
-        if(slot.slot == null || slot.slot.item == null)
+        if (slot.slot == null || slot.slot.item == null)
         {
-            return;
+            return false;
         }
         draggedSlot.Assign(slot.slot);
+        SetPosition();
         gameObject.SetActive(true);
+        return true;
     }
 
     /// <summary>
     /// Updates the dragged item's position to follow the mouse cursor.
     /// </summary>
     private void Update()
+    {
+        SetPosition();
+    }
+
+    private void SetPosition()
     {
         if (draggedSlot.slot != null)
         {
@@ -83,7 +90,7 @@ public class InventoryItemDragged : MonoBehaviour
             return CancelDrag();
         }
 
-        if(originalSlot.TransferTo(targetSlotUI))
+        if (originalSlot.TransferTo(targetSlotUI))
         {
             CancelDrag();
             return true;
