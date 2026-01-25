@@ -118,6 +118,7 @@ public class UnitStats : MonoBehaviour
         {
             hability.IncreaseLevel(hability);
             habilitys.Add(hability);
+            ApplyAllHabilities();
         }
         else
         {
@@ -127,12 +128,15 @@ public class UnitStats : MonoBehaviour
     }
     public void ApplyAllHabilities()
     {
-        foreach (Upgrade upgrade in habilitys)
+        if (habilitys.Count == 0) return;
+        Debug.Log("Applying habilitys...");
+        for (int i = 0; i < habilitys.Count; i++)
         {
-            upgrade.ApplyUpgrade(this);
-            if (!upgrade.isBehaviour)
+            habilitys[i].ApplyUpgrade(this);
+            if (!habilitys[i].isBehaviour)
             {
-                habilitys.Remove(upgrade);
+                habilitys[i].ResetCurrentUpgradeLevel(habilitys[i]);
+                habilitys.RemoveAt(i);
             }
         }
     }

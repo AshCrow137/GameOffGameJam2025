@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class UIUpgradeStruct
 {
     [SerializeField]
+    public GameObject upgradePanel;
+    [SerializeField]
     public TextMeshProUGUI upgradeName;
     [SerializeField]
     public TextMeshProUGUI upgradeDescription;
@@ -43,6 +45,10 @@ public class UIUpgradeManager : MonoBehaviour
     public void HidePanel()
     {
         upgradePanel.SetActive(false);
+        foreach(UIUpgradeStruct panel in UpgradePanels)
+        {
+            panel.upgradePanel.SetActive(false);
+        }
     }
 
     public void ShowUpgradeOptions(List<Upgrade> options)
@@ -51,6 +57,7 @@ public class UIUpgradeManager : MonoBehaviour
         UpgradeOptions = options;
         for (int i = 0; i < options.Count; i++)
         {
+            UpgradePanels[i].upgradePanel.SetActive(true);
             UpgradePanels[i].upgradeName.text = options[i].upgradeName;
             UpgradePanels[i].upgradeDescription.text = options[i].upgradeDescription;
             UpgradePanels[i].UpgradeIcon.sprite = options[i].upgradeIcon;
@@ -63,11 +70,11 @@ public class UIUpgradeManager : MonoBehaviour
         string upgradeName = UpgradeName.GetComponent<TextMeshProUGUI>().text;
         Debug.Log($"Upgrade Setected Name: {upgradeName}");
 
-        foreach (Upgrade upgrade in UpgradeOptions)
+        for(int i = 0; i < UpgradeOptions.Count; i++)
         {
-            if (upgrade.upgradeName == upgradeName)
+            if (UpgradeOptions[i].upgradeName == upgradeName)
             {
-                UpgradeSystemManager.currentUnit.AddHability(upgrade);
+                UpgradeSystemManager.currentUnit.AddHability(UpgradeOptions[i]);
                 HidePanel();
                 return;
             }

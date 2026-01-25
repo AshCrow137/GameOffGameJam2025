@@ -93,13 +93,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradePanel: {fileID: 5769057325669573054}
   UpgradePanels:
-  - upgradeName: {fileID: 3587188469393571699}
+  - upgradePanel: {fileID: 8617840162550016984}
+    upgradeName: {fileID: 3587188469393571699}
     upgradeDescription: {fileID: 4906272583128428369}
     UpgradeIcon: {fileID: 3609373196617144553}
-  - upgradeName: {fileID: 3752574623653789853}
+  - upgradePanel: {fileID: 8233465926636295222}
+    upgradeName: {fileID: 3752574623653789853}
     upgradeDescription: {fileID: 4741453403187089599}
     UpgradeIcon: {fileID: 4020733257514313479}
-  - upgradeName: {fileID: 2017988341761243039}
+  - upgradePanel: {fileID: 6508161794819302196}
+    upgradeName: {fileID: 2017988341761243039}
     upgradeDescription: {fileID: 7628958917766277053}
     UpgradeIcon: {fileID: 2296277879970074629}
 --- !u!1001 &1089511417372204004
@@ -253,6 +256,11 @@ MonoBehaviour:
 --- !u!1 &5153507496433072147 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5231589711742985207, guid: 14995a371ba68a943b8edf5bef50a06c, type: 3}
+  m_PrefabInstance: {fileID: 1089511417372204004}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6508161794819302196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6147161115387951312, guid: 14995a371ba68a943b8edf5bef50a06c, type: 3}
   m_PrefabInstance: {fileID: 1089511417372204004}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7628958917766277053 stripped
@@ -454,6 +462,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5231589711742985207, guid: 14995a371ba68a943b8edf5bef50a06c, type: 3}
   m_PrefabInstance: {fileID: 2510666086042145544}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8617840162550016984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6147161115387951312, guid: 14995a371ba68a943b8edf5bef50a06c, type: 3}
+  m_PrefabInstance: {fileID: 2510666086042145544}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2813694047246003430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -616,5 +629,10 @@ MonoBehaviour:
 --- !u!1 &8040729410027769617 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5231589711742985207, guid: 14995a371ba68a943b8edf5bef50a06c, type: 3}
+  m_PrefabInstance: {fileID: 2813694047246003430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8233465926636295222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6147161115387951312, guid: 14995a371ba68a943b8edf5bef50a06c, type: 3}
   m_PrefabInstance: {fileID: 2813694047246003430}
   m_PrefabAsset: {fileID: 0}

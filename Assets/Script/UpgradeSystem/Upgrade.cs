@@ -39,4 +39,9 @@ public class Upgrade : ScriptableObject
     {
         return upgrade.currentUpgradeLevel;
     }
+
+    public void ResetCurrentUpgradeLevel(Upgrade upgrade)
+    {
+        upgrade.currentUpgradeLevel = 0;
+    }
 }
