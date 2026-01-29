@@ -61,7 +61,7 @@ public class InventorySlotUI : MonoBehaviour
     /// <param name=\"newSlot\">The inventory slot to assign.</param>
     public void Assign(InventorySlot newSlot)
     {
-        // if (newSlot == null) return;
+
         slot = newSlot;
         UpdateUI();
         slot.OnSlotUpdated.AddListener(UpdateUI);
@@ -72,7 +72,7 @@ public class InventorySlotUI : MonoBehaviour
     /// </summary>
     public void Clear()
     {
-        // if (slot == null) return;
+
         slot.OnSlotUpdated.RemoveListener(UpdateUI);
         slot = null;
         UpdateUI();

@@ -1,4 +1,4 @@
-using UnityEngine; 
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -10,25 +10,25 @@ public class Inventory
 {
     /// <summary>Equipment slot for helmets.</summary>
     public InventorySlot helmet;
-    
+
     /// <summary>Equipment slot for body armor.</summary>
     public InventorySlot armour;
-    
+
     /// <summary>Equipment slot for main hand weapons/items.</summary>
     public InventorySlot mainHand;
-    
+
     /// <summary>Equipment slot for off-hand items (shields, secondary weapons).</summary>
     public InventorySlot offHand;
-    
+
     /// <summary>Equipment slot for trinkets and accessories.</summary>
     public InventorySlot trinket;
-    
+
     /// <summary>General storage inventory for non-equipped items.</summary>
     public StorageInventory playerStorage;
-    
+
     /// <summary>Maximum number of slots in the general storage inventory.</summary>
     public int maxInventorySlots;
-    
+
     /// <summary>Maximum stack size per storage slot.</summary>
     public int stackPerStorageSlot;
 
@@ -37,10 +37,16 @@ public class Inventory
     /// </summary>
     /// <param name="maxSlots">Maximum number of storage slots.</param>
     /// <param name="stackPerSlot">Maximum items per stack in storage.</param>
-    public Inventory(int maxSlots, int stackPerSlot): this(maxSlots, stackPerSlot, null)
+    public Inventory(int maxSlots, int stackPerSlot) : this(maxSlots, stackPerSlot, null)
     {
     }
 
+    /// <summary>
+    /// Initializes a new inventory with specified parameters and owner.
+    /// </summary>
+    /// <param name="maxSlots">Maximum number of storage slots.</param>
+    /// <param name="stackPerSlot">Maximum items per stack.</param>
+    /// <param name="ownerEntity">The entity that owns this inventory, for effect application.</param>
     public Inventory(int maxSlots, int stackPerSlot, BaseGridUnitScript ownerEntity)
     {
         maxInventorySlots = maxSlots;
@@ -48,7 +54,12 @@ public class Inventory
         Initialize(ownerEntity);
     }
 
-    public Inventory(int maxSlots, BaseGridUnitScript ownerEntity): this(maxSlots, 1, ownerEntity) { }
+    /// <summary>
+    /// Initializes a new inventory with specified capacity and owner (default stack size 1).
+    /// </summary>
+    /// <param name="maxSlots">Maximum number of storage slots.</param>
+    /// <param name="ownerEntity">The entity that owns this inventory.</param>
+    public Inventory(int maxSlots, BaseGridUnitScript ownerEntity) : this(maxSlots, 1, ownerEntity) { }
 
     /// <summary>
     /// Initializes all equipment slots and storage inventory. Optionally applies effects on equip if an owner entity is provided.
@@ -66,6 +77,7 @@ public class Inventory
 
     /// <summary>
     /// Adds a single item to the inventory (tries equipment slots first, then storage).
+    /// Defaults to adding 1 item.
     /// </summary>
     /// <param name="itemToAdd">The item to add.</param>
     /// <returns>True if item was successfully added, false otherwise.</returns>

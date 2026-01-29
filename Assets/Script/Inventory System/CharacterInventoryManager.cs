@@ -18,16 +18,19 @@ public class CharacterInventoryManager : MonoBehaviour
         playerInventory = new Inventory(storageSlots, 1, GetComponent<BaseGridUnitScript>());
     }
 
-    // only for automation purpose. Otherwise use inventory UI to drag and drop items.
+    /// <summary>
+    /// Adds an item directly to the inventory.
+    /// Intended for automation or debugging purposes where UI interaction is bypassed.
+    /// </summary>
+    /// <param name="item">The item to add.</param>
     public void AddItem(InventoryItem item)
     {
         playerInventory.AddItem(item);
     }
 
-    // /// <summary>Reference to the inventory UI for displaying and interacting with items.</summary>
-    // public InventoryUI inventoryUI;
 
-    ///////////// Test Items TODO: Delete this later/////////////
+
+    [Header("Test Configuration")]
     [SerializeField] private List<InventoryItem> items;
 
     /// <summary>
@@ -42,6 +45,6 @@ public class CharacterInventoryManager : MonoBehaviour
             playerInventory.AddItem(item);
         }
     }
-    //////////////////////////////////////////////////////////////
+
 
 }

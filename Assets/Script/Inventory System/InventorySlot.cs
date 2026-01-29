@@ -44,6 +44,14 @@ public class InventorySlot
     /// <param name="slotType">The type of items this slot accepts (Helmet, Armor, etc.).</param>
     /// <param name="maxStackSize">Maximum items that can stack in this slot.</param>
     public InventorySlot(SlotType slotType, int maxStackSize) : this(slotType, maxStackSize, slotType != SlotType.General, null) { }
+
+    /// <summary>
+    /// Creates an inventory slot with full configuration.
+    /// </summary>
+    /// <param name="slotType">The type of items this slot accepts.</param>
+    /// <param name="maxStackSize">Maximum items that can stack in this slot.</param>
+    /// <param name="applyEffectOnEquip">Whether to apply item effects when equipped.</param>
+    /// <param name="ownerEntity">The entity that owns this slot.</param>
     public InventorySlot(SlotType slotType, int maxStackSize, bool applyEffectOnEquip, BaseGridUnitScript ownerEntity)
     {
 

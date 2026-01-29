@@ -4,6 +4,7 @@ using UnityEngine;
 /// Singleton that manages the visual representation of items being dragged between inventory slots.
 /// Follows the mouse cursor while dragging and handles drop logic.
 /// Usage: Automatically managed by InventoryItemDragger, should exist as a single instance in the scene.
+/// This singleton is responsible for the visual representation of the dragged item.
 /// </summary>
 public class InventoryItemDragged : MonoBehaviour
 {
@@ -19,9 +20,9 @@ public class InventoryItemDragged : MonoBehaviour
     private InventorySlotUI originalSlot;
 
     /// <summary>
-    /// Initializes the singleton instance.
+    /// Initializes the singleton instance. Should be called by a dedicated manager or system.
+    /// Ensures only one instance exists.
     /// </summary>
-    // private void Awake()
     public void Instantiate()
     {
         if (Instance == null)

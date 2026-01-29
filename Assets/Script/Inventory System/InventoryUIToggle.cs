@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Manages the opening and closing of inventory UIs for different characters.
+/// Handles positioning of inventory windows and tracks open instances.
+/// Usage: Attach to a manager GameObject (e.g., UIManager). Access via singleton instance.
+/// </summary>
 public class InventoryUIToggle : MonoBehaviour
 {
-    // remove awake call later
-    //private void Awake()
-    //{
-    //    Instantiate();
-    //}
     public static InventoryUIToggle instance;
+
+    /// <summary>
+    /// Initializes the singleton instance.
+    /// </summary>
     public void Instantiate()
     {
         if (instance == null)
@@ -29,6 +33,12 @@ public class InventoryUIToggle : MonoBehaviour
 
     private HashSet<InventoryUI> openInventories = new HashSet<InventoryUI>();
 
+    /// <summary>
+    /// Opens an inventory UI for the specified unit at the given mouse position.
+    /// Closes any existing open inventory if needed (though implementation supports multiple via tracking).
+    /// </summary>
+    /// <param name="unit">The unit whose inventory to open.</param>
+    /// <param name="mousePosition">The screen position to spawn the inventory UI near.</param>
     public void Open(BaseGridUnitScript unit, Vector3 mousePosition)
     {
         Vector3 inventoryOpenPosition = GetInventoryOpenPosition(mousePosition);
@@ -67,6 +77,10 @@ public class InventoryUIToggle : MonoBehaviour
         openInventories.Add(inventoryUI);
     }
 
+    /// <summary>
+    /// Closes the specified inventory UI.
+    /// </summary>
+    /// <param name="inventoryUI">The inventory UI instance to close.</param>
     public void Close(InventoryUI inventoryUI)
     {
         if (inventoryUI != null)
@@ -84,6 +98,9 @@ public class InventoryUIToggle : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Closes all currently open inventory UIs.
+    /// </summary>
     public void CloseAll()
     {
         if (openInventories.Count == 0) { return; }
@@ -95,6 +112,11 @@ public class InventoryUIToggle : MonoBehaviour
         openInventories.Clear();
     }
 
+    /// <summary>
+    /// Calculates a valid screen position for the inventory UI to ensure it stays within screen bounds.
+    /// </summary>
+    /// <param name="mousePosition">The initial desired position (usually mouse cursor).</param>
+    /// <returns>A corrected position vector that keeps the UI on screen.</returns>
     private Vector3 GetInventoryOpenPosition(Vector3 mousePosition)
     {
         RectTransform rectTransform = InventoryUIPrefab.GetComponent<RectTransform>();

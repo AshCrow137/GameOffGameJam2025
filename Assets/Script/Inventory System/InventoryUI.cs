@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections.Generic;
 /// <summary>
 /// Main UI controller for the inventory system.
 /// Manages equipment slots (head, body, hands, etc.) and storage panel.
@@ -27,8 +28,8 @@ public class InventoryUI : MonoBehaviour
     /// <summary>UI element for the trinket equipment slot.</summary>
     public InventorySlotUI trinketSlotUi;
 
-    /// <summary>Array of storage slot UI elements, dynamically created.</summary>
-    public InventorySlotUI[] slotUis;
+    /// <summary>List of storage slot UI elements, dynamically created.</summary>
+    public List<InventorySlotUI> slotUis = new List<InventorySlotUI>();
 
     /// <summary>Container for storage slot UI elements.</summary>
     public RectTransform storagePanel;
@@ -46,48 +47,6 @@ public class InventoryUI : MonoBehaviour
     public UIDragger inventoryDragger;
 
     public EventTrigger eventTrigger;
-
-    // public InventoryDragger inventoryDragger;
-
-    // /// <summary>Singleton instance for global access.</summary>
-    // public static InventoryUI Instance;
-
-    // /// <summary>
-    // /// Initializes the singleton instance.
-    // /// </summary>
-    // private void Awake()
-    // {
-    //     if (Instance == null)
-    //     {
-    //         Instance = this;
-    //         inventoryPanel.SetActive(false);
-    //     }
-    //     else
-    //     {
-    //         Destroy(gameObject);
-    //     }
-    // }
-
-
-
-    ///// <summary>
-    ///// Initializes storage slot UI elements on start.
-    ///// </summary>
-    //private void Start()
-    //{
-    //    Initialize();
-    //}
-
-    ///// <summary>
-    ///// Toggles the visibility of the inventory panel.
-    ///// </summary>
-    //public void OnInventory()
-    //{
-    //    if (inventoryPanel != null)
-    //    {
-    //        inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-    //    }
-    //}
 
     /// <summary>
     /// Assigns a unit's inventory to this UI for display.
@@ -108,19 +67,6 @@ public class InventoryUI : MonoBehaviour
         UpdateInventory(assignedCharacter.playerInventory);
     }
 
-    ///// <summary>
-    ///// Creates storage slot UI elements based on inventory size.
-    ///// </summary>
-    //public void Initialize()
-    //{
-    //    slotUis = new InventorySlotUI[storageSize];
-    //    for(int i = 0; i < storageSize; i++)
-    //    {
-    //        InventorySlotUI slotUi = Instantiate(InventorySlotUIPrefab, storagePanel);
-    //        slotUis[i] = slotUi;
-    //    }
-    //}
-
     /// <summary>
     /// Updates all UI elements to reflect the current state of the inventory.
     /// Assigns equipment slots and storage slots to their corresponding UI elements.
@@ -133,19 +79,17 @@ public class InventoryUI : MonoBehaviour
         handSlotUi.Assign(playerInventory.mainHand);
         offhandSlotUi.Assign(playerInventory.offHand);
         trinketSlotUi.Assign(playerInventory.trinket);
-        if (storageSize < playerInventory.playerStorage.maxStorageSlots)
+        storageSize = playerInventory.playerStorage.maxStorageSlots;
+        while (slotUis.Count < storageSize)
         {
-            storageSize = playerInventory.playerStorage.maxStorageSlots;
-            slotUis = new InventorySlotUI[storageSize];
-            for (int i = 0; i < storageSize; i++)
-            {
-                InventorySlotUI slotUi = PoolingEntity.Spawn(InventorySlotUIPrefab, storagePanel);
-                slotUis[i] = slotUi;
-            }
+            // InventorySlotUI slotUi = PoolingEntity.Spawn(InventorySlotUIPrefab, storagePanel); // Not required as we are never really destroying slotUIs
+            InventorySlotUI slotUi = Instantiate(InventorySlotUIPrefab, storagePanel);
+            slotUis.Add(slotUi);
         }
-        for (int i = 0; i < slotUis.Length; i++)
+
+        for (int i = 0; i < slotUis.Count; i++)
         {
-            if (i < playerInventory.playerStorage.maxStorageSlots)
+            if (i < storageSize)
             {
                 slotUis[i].Assign(playerInventory.playerStorage.storageSlots[i]);
             }
