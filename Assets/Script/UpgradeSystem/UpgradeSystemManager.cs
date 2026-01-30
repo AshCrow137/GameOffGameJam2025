@@ -8,7 +8,6 @@ public static class UpgradeSystemManager
     public static List<Upgrade> ChooseForUpgrade(UnitStats unitToUpgrade)
     {
         currentUnit = unitToUpgrade;
-        int numberOfUpgradesToShow = 3;
         List<Upgrade> upgradesToShow = new List<Upgrade>();
         List<Upgrade> aux = new List<Upgrade>();
 
@@ -19,7 +18,7 @@ public static class UpgradeSystemManager
                 aux.Add(upgrade);
             }
         }
-        numberOfUpgradesToShow = aux.Count;
+        int numberOfUpgradesToShow = aux.Count;
 
         for (int i = 0; i < numberOfUpgradesToShow; i++)
         {

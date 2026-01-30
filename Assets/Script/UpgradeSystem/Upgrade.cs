@@ -61,6 +61,6 @@ public class Upgrade : ScriptableObject
 
     public int GetAmount(Upgrade upgrade)
     {
-        return upgrade.amountOfIncrement * upgrade.GetCurrentUpgradeLevel(upgrade);
+        return upgrade.amountOfIncrement;
     }
 }

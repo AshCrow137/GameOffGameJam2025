@@ -125,12 +125,23 @@ public class UnitStats : MonoBehaviour
             Upgrade upgrade = ScriptableObject.CreateInstance(hability.GetType()) as Upgrade;
             upgrade.Init(hability);
             habilitys.Add(upgrade);
-            ApplyAllHabilities();
         }
         else
         {
             upgradeToIncreaseLvl.IncreaseLevel(upgradeToIncreaseLvl);
         }
+
+        
+        for (int i = 0; i < possibleUpgrades.Count; i++)
+        {
+            if (possibleUpgrades[i].upgradeName == hability.upgradeName)
+            {
+                possibleUpgrades[i].IncreaseLevel(possibleUpgrades[i]);
+                break;
+            }
+        }
+        
+        ApplyAllHabilities();
     }
     public void ApplyAllHabilities()
     {
