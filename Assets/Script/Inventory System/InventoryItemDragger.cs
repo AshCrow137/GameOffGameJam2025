@@ -51,10 +51,6 @@ public class InventoryItemDragger : MonoBehaviour, IPointerDownHandler, IPointer
             if (slotImage)
                 slotImage.color = new Color(slotImage.color.r, slotImage.color.g, slotImage.color.b, 1f);
         }
-        else
-        {
-            Debug.LogError("Inventory Slot STOPPING to drag twice cannot happen. Please check for bugs!");
-        }
     }
 
     /// <summary>
