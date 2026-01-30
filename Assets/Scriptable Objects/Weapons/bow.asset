@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6091bd39343767a498f37e1750482a0d, type: 3}
-  m_Name: bow
+  m_Script: {fileID: 11500000, guid: bd841a0205684344f89ae0c6c57f1799, type: 3}
+  m_Name: Bow
   m_EditorClassIdentifier: 
   itemType: 5
-  itemName: bow
+  itemName: Bow
   itemIcon: {fileID: 1339487731, guid: a4e89c677a990744ea3390d300203a90, type: 3}
   description: 
   maxStackSize: 1
+  effectApplier:
+    equippedEffectData: {fileID: 11400000, guid: 52fae35101c7a6241965208c8021a625, type: 2}

@@ -23,20 +23,36 @@ public class InventorySlotUI : MonoBehaviour
     /// Updates the visual display based on the current slot's item and amount.
     /// Shows icon and quantity if item exists, otherwise hides display.
     /// </summary>
-    private void UpdateUI()
+    private void UpdateUI(InventoryItem item, int amount)
     {
-        if (slot != null && slot.item != null)
+        if (item != null)
         {
-            slotImage.sprite = slot.item.itemIcon;
-            amountText.text = slot.amount > 1 ? slot.amount.ToString() : "";
-            slotImage.enabled = true;
+            OnItemAdded(item, amount);
         }
         else
         {
-            slotImage.sprite = null;
-            amountText.text = "";
-            slotImage.enabled = false;
+            OnItemRemoved(item, amount);
         }
+    }
+
+    /// <summary>
+    /// Updates the slot image and text when an item is added.
+    /// </summary>
+    private void OnItemAdded(InventoryItem item, int amount)
+    {
+        slotImage.sprite = item.itemIcon;
+        amountText.text = amount > 1 ? amount.ToString() : "";
+        slotImage.enabled = true;
+    }
+
+    /// <summary>
+    /// Clears the slot image and text when an item is removed.
+    /// </summary>
+    private void OnItemRemoved(InventoryItem item, int amount)
+    {
+        slotImage.sprite = null;
+        amountText.text = "";
+        slotImage.enabled = false;
     }
 
 
@@ -44,7 +60,7 @@ public class InventorySlotUI : MonoBehaviour
     /// Transfers items from this slot to another slot UI.
     /// Updates both UIs after successful transfer.
     /// </summary>
-    /// <param name=\"newSlot\">The target slot UI to transfer items to.</param>
+    /// <param name="newSlot">The target slot UI to transfer items to.</param>
     /// <returns>True if transfer succeeded, false if slot is null or transfer failed.</returns>
     public bool TransferTo(InventorySlotUI newSlot)
     {
@@ -58,13 +74,13 @@ public class InventorySlotUI : MonoBehaviour
     /// <summary>
     /// Assigns a new inventory slot to this UI element and refreshes the display.
     /// </summary>
-    /// <param name=\"newSlot\">The inventory slot to assign.</param>
+    /// <param name="newSlot">The inventory slot to assign.</param>
     public void Assign(InventorySlot newSlot)
     {
-
         slot = newSlot;
-        UpdateUI();
-        slot.OnSlotUpdated.AddListener(UpdateUI);
+        UpdateUI(slot.item, slot.amount);
+        slot.OnItemAdded.AddListener(OnItemAdded);
+        slot.OnItemRemoved.AddListener(OnItemRemoved);
     }
 
     /// <summary>
@@ -72,9 +88,10 @@ public class InventorySlotUI : MonoBehaviour
     /// </summary>
     public void Clear()
     {
-
-        slot.OnSlotUpdated.RemoveListener(UpdateUI);
+        if (slot == null) return;
+        slot.OnItemAdded.RemoveListener(OnItemAdded);
+        slot.OnItemRemoved.RemoveListener(OnItemRemoved);
         slot = null;
-        UpdateUI();
+        OnItemRemoved(null, 0);
     }
 }

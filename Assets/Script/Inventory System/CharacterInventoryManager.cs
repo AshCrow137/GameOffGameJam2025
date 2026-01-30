@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Manages the inventory for a character unit in the game.
@@ -14,9 +15,52 @@ public class CharacterInventoryManager : MonoBehaviour
     public Inventory playerInventory;
     [SerializeField] private BaseGridUnitScript self;
 
+    /// <summary>
+    /// Initializes the component with a specific number of storage slots.
+    /// </summary>
+    /// <param name="storageSlots">The amount of storage slots</param>
     public void Initialize(int storageSlots)
     {
-        playerInventory = new Inventory(self, storageSlots, 1);
+        playerInventory = new Inventory(storageSlots, 1);
+        playerInventory.OnItemAdded.AddListener(OnItemAdded);
+        playerInventory.OnItemRemoved.AddListener(OnItemRemoved);
+    }
+    private void OnItemAdded(InventoryItem item, int amount, int index, Type holderType)
+    {
+        if (holderType == typeof(GearSlots))
+        {
+            ApplyEffectOnEquip(self, item);
+        }
+    }
+
+    private void OnItemRemoved(InventoryItem item, int amount, int index, Type holderType)
+    {
+        if (holderType == typeof(GearSlots))
+        {
+            RemoveEffectOnUnequip(self, item);
+        }
+    }
+
+    /// <summary>
+    /// Applies the effect of an item to an entity when equipped.
+    /// </summary>
+    private void ApplyEffectOnEquip(BaseGridUnitScript entity, InventoryItem item)
+    {
+        if (item is EquippableInventoryItem equippableItem)
+        {
+            equippableItem.OnEquip(entity);
+        }
+    }
+
+    /// <summary>
+    /// Removes the effect of an item from an entity when unequipped.
+    /// </summary>
+    private void RemoveEffectOnUnequip(BaseGridUnitScript entity, InventoryItem item)
+    {
+        if (item is EquippableInventoryItem equippableItem)
+        {
+            equippableItem.OnUnequip(entity);
+        }
     }
 
     /// <summary>
@@ -39,7 +83,8 @@ public class CharacterInventoryManager : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
-        playerInventory = new Inventory(self, 6, 1);
+        //playerInventory = new Inventory(6, 1);
+        Initialize(6);
         foreach (InventoryItem item in items)
         {
             playerInventory.AddItem(item);

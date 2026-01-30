@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
+using System;
 
 /// <summary>
 /// Represents a character's complete inventory system.
@@ -12,45 +14,24 @@ public class Inventory
     /// List of all slot holders managed by this inventory.
     /// </summary>
     public List<InventorySlotHolder> SlotHolders { get; private set; } = new List<InventorySlotHolder>();
+    public UnityEvent<InventoryItem, int, int, Type> OnItemAdded = new();
+    public UnityEvent<InventoryItem, int, int, Type> OnItemRemoved = new();
 
-    // /// <summary>
-    // /// Maximum number of slots in the general storage inventory.
-    // /// kept for initialization params logic
-    // /// </summary>
-    // public int maxInventorySlots;
-
-    // /// <summary>
-    // /// Maximum stack size per storage slot.
-    // /// </summary>
-    // public int stackPerStorageSlot;
-
-    // Constructors kept compatible in signature but refactored internally
-
-    // public Inventory(int maxSlots, int stackPerSlot) : this(maxSlots, stackPerSlot, null)
-    // {
-    // }
-
-    // public Inventory(int maxSlots, int stackPerSlot, BaseGridUnitScript ownerEntity)
-    // {
-    //     // maxInventorySlots = maxSlots;
-    //     // stackPerStorageSlot = stackPerSlot;
-    //     Initialize(ownerEntity);
-    // }
-
-    // public Inventory(int maxSlots, BaseGridUnitScript ownerEntity) : this(maxSlots, 1, ownerEntity) { }
 
     /// <summary>
     /// Initializes all slot holders.
     /// </summary>
-    public Inventory(BaseGridUnitScript ownerEntity, int maxSlots, int stackPerSlot)
+    public Inventory(int maxSlots, int stackPerSlot)
     {
-        // Initialize GearSlots
-        var gearSlots = new GearSlots(ownerEntity);
-        SlotHolders.Add(gearSlots);
+        AddSlotHolder(new GearSlots());
+        AddSlotHolder(new StorageSlots(maxSlots, stackPerSlot));
+    }
 
-        // Initialize StorageSlots
-        var storageSlots = new StorageSlots(maxSlots, stackPerSlot, ownerEntity);
-        SlotHolders.Add(storageSlots);
+    private void AddSlotHolder(InventorySlotHolder holder)
+    {
+        SlotHolders.Add(holder);
+        holder.OnItemAdded.AddListener((item, amount, index) => OnItemAdded?.Invoke(item, amount, index, holder.GetType()));
+        holder.OnItemRemoved.AddListener((item, amount, index) => OnItemRemoved?.Invoke(item, amount, index, holder.GetType()));
     }
 
     /// <summary>

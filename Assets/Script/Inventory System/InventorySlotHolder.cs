@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Abstract base class for any component that holds and manages a collection of InventorySlots.
@@ -16,7 +17,7 @@ public abstract class InventorySlotHolder
     /// Initializes the holder and its slots with the given owner.
     /// </summary>
     /// <param name="owner">The entity that owns these slots.</param>
-    // public abstract InventorySlotHolder(BaseGridUnitScript owner);
+
 
     /// <summary>
     /// Attempts to add an item to one of the slots in this holder.
@@ -29,9 +30,16 @@ public abstract class InventorySlotHolder
     /// <summary>
     /// Returns the list of slots managed by this holder.
     /// </summary>
-    // public List<InventorySlot> GetSlots()
-    // {
-    //     return slots;
-    // }
+
+
+    protected void AddSlot(InventorySlot slot)
+    {
+        slots.Add(slot);
+        slot.OnItemAdded.AddListener((item, amount) => OnItemAdded?.Invoke(item, amount, slots.Count - 1));
+        slot.OnItemRemoved.AddListener((item, amount) => OnItemRemoved?.Invoke(item, amount, slots.Count - 1));
+    }
+
+    public UnityEvent<InventoryItem, int, int> OnItemAdded = new();
+    public UnityEvent<InventoryItem, int, int> OnItemRemoved = new();
 
 }

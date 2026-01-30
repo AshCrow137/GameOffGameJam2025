@@ -7,16 +7,16 @@ using UnityEngine;
 public class StorageSlots : InventorySlotHolder
 {
     public int maxSlots { get; private set; }
-    // private int maxStackPerSlot;
 
-    public StorageSlots(int maxSlots, int maxStackPerSlot, BaseGridUnitScript owner)
+
+    public StorageSlots(int maxSlots, int maxStackPerSlot)
     {
         this.maxSlots = maxSlots;
-        // this.maxStackPerSlot = maxStackPerSlot;
+
         for (int i = 0; i < maxSlots; i++)
         {
             // Create a general slot. Owner might be needed for some slot logic, passing it in.
-            slots.Add(new InventorySlot(SlotType.General, maxStackPerSlot, owner));
+            AddSlot(new InventorySlot(SlotType.General, maxStackPerSlot));
         }
     }
 

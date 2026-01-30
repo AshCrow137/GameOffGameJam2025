@@ -8,13 +8,13 @@ public class GearSlots : InventorySlotHolder
 {
     private const int EQUIP_STACK_SIZE = 1;
 
-    public GearSlots(BaseGridUnitScript owner)
+    public GearSlots()
     {
-        slots.Add(new EquipmentInventorySlot(SlotType.Helmet, EQUIP_STACK_SIZE, owner));
-        slots.Add(new EquipmentInventorySlot(SlotType.Armor, EQUIP_STACK_SIZE, owner));
-        slots.Add(new EquipmentInventorySlot(SlotType.MainHand, EQUIP_STACK_SIZE, owner));
-        slots.Add(new EquipmentInventorySlot(SlotType.OffHand, EQUIP_STACK_SIZE, owner));
-        slots.Add(new EquipmentInventorySlot(SlotType.Trinket, EQUIP_STACK_SIZE, owner));
+        AddSlot(new InventorySlot(SlotType.Helmet, EQUIP_STACK_SIZE));
+        AddSlot(new InventorySlot(SlotType.Armor, EQUIP_STACK_SIZE));
+        AddSlot(new InventorySlot(SlotType.MainHand, EQUIP_STACK_SIZE));
+        AddSlot(new InventorySlot(SlotType.OffHand, EQUIP_STACK_SIZE));
+        AddSlot(new InventorySlot(SlotType.Trinket, EQUIP_STACK_SIZE));
     }
 
     public override bool AddItem(InventoryItem item, int amount)
@@ -28,9 +28,9 @@ public class GearSlots : InventorySlotHolder
         return false;
     }
 
-    public EquipmentInventorySlot GetSlot(SlotType type)
+    public InventorySlot GetSlot(SlotType type)
     {
-        return slots.FirstOrDefault(s => s.slotType == type) as EquipmentInventorySlot;
+        return slots.FirstOrDefault(s => s.slotType == type);
     }
 }
 

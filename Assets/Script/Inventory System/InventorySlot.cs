@@ -24,14 +24,10 @@ public class InventorySlot
     public int maxStackSize;
 
     /// <summary>The entity that owns this slot (for effect application).</summary>
-    public BaseGridUnitScript ownerEntity;
-    /// <summary>Whether to apply the item's effect when equipped in this slot.</summary>
-    // public bool applyEffectOnEquip;
 
-    /// <summary>The effect instance currently applied by the equipped item, if any.</summary>
-    // public BaseEffect appliedEffect;
 
-    public UnityEvent OnSlotUpdated = new();
+    public UnityEvent<InventoryItem, int> OnItemAdded = new();
+    public UnityEvent<InventoryItem, int> OnItemRemoved = new();
 
     /// <summary>
     /// Creates a general-purpose inventory slot with the default slot type (General).
@@ -43,7 +39,7 @@ public class InventorySlot
     /// </summary>
     /// <param name="slotType">The type of items this slot accepts (Helmet, Armor, etc.).</param>
     /// <param name="maxStackSize">Maximum items that can stack in this slot.</param>
-    public InventorySlot(SlotType slotType, int maxStackSize) : this(slotType, maxStackSize, null) { }
+
 
     /// <summary>
     /// Creates an inventory slot with full configuration.
@@ -51,14 +47,14 @@ public class InventorySlot
     /// <param name="slotType">The type of items this slot accepts.</param>
     /// <param name="maxStackSize">Maximum items that can stack in this slot.</param>
     /// <param name="ownerEntity">The entity that owns this slot.</param>
-    public InventorySlot(SlotType slotType, int maxStackSize, BaseGridUnitScript ownerEntity)
+    public InventorySlot(SlotType slotType, int maxStackSize)
     {
 
         this.maxStackSize = maxStackSize;
         item = null;
         amount = 0;
         this.slotType = slotType;
-        this.ownerEntity = ownerEntity;
+
     }
 
     /// <summary>
@@ -105,22 +101,16 @@ public class InventorySlot
             amount = amountToAdd;
             added = true;
         }
-        // if (added && applyEffectOnEquip)
-        // {
-        //     item.ApplyEffectOnEquip(ownerEntity);
-        // }
+
         if (added)
         {
-            OnItemAdded(item, amount);
-            OnSlotUpdated?.Invoke();
+            // OnItemAdded(item, amount);
+            OnItemAdded?.Invoke(item, amount);
         }
         return added;
     }
 
-    public virtual void OnItemAdded(InventoryItem item, int amount)
-    {
 
-    }
 
     /// <summary>
     /// Clears the slot, removing all items and any applied effects.
@@ -128,23 +118,17 @@ public class InventorySlot
     /// <returns>Always returns true.</returns>
     public bool Remove()
     {
-        // if (applyEffectOnEquip && item != null)
-        // {
-        //     item.RemoveEffectOnEquip();
-        // }
+
         InventoryItem removedItem = item;
         int removedAmount = amount;
         item = null;
         amount = 0;
-        OnItemRemoved(removedItem, removedAmount);
-        OnSlotUpdated?.Invoke();
+        // OnItemRemoved(removedItem, removedAmount);
+        OnItemRemoved?.Invoke(removedItem, removedAmount);
         return true;
     }
 
-    public virtual void OnItemRemoved(InventoryItem item, int amount)
-    {
 
-    }
 
     /// <summary>
     /// Transfers all items from this slot to another slot.

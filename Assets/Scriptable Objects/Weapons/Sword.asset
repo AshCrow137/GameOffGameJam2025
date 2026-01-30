@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6091bd39343767a498f37e1750482a0d, type: 3}
+  m_Script: {fileID: 11500000, guid: bd841a0205684344f89ae0c6c57f1799, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
   itemType: 3
@@ -17,4 +17,5 @@ MonoBehaviour:
   itemIcon: {fileID: 1593591987, guid: a4e89c677a990744ea3390d300203a90, type: 3}
   description: 
   maxStackSize: 1
-  equippedEffectData: {fileID: 11400000, guid: 5f84c112cc0968543bdf699dd49e62d3, type: 2}
+  effectApplier:
+    equippedEffectData: {fileID: 11400000, guid: c3d2c868f300e8240bb73f282685a3ab, type: 2}
