@@ -15,6 +15,7 @@ MonoBehaviour:
   upgradeName: Movement Range
   upgradeDescription: Increase Movement Distance
   upgradeIcon: {fileID: 1097360369, guid: 2b117b6e74e3fce4c8dde2714ef0ca09, type: 3}
+  amountOfIncrement: 1
   minimumLevelRequirement: 1
-  upgradeLimitLevel: 2
-  isBehaviour: 0
+  upgradeLimitLevel: 1
+  isBehaviour: 1

@@ -15,6 +15,7 @@ MonoBehaviour:
   upgradeName: Increase Attack
   upgradeDescription: Increase the base attack +1
   upgradeIcon: {fileID: 294437729, guid: 3140baadb69c54146a4cb357d7f1e5c1, type: 3}
+  amountOfIncrement: 1
   minimumLevelRequirement: 1
   upgradeLimitLevel: -1
   isBehaviour: 0

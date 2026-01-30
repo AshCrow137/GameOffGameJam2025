@@ -15,6 +15,7 @@ MonoBehaviour:
   upgradeName: Melee Defence
   upgradeDescription: Increase Melee Defence
   upgradeIcon: {fileID: -2095366127, guid: 725cffa404322054aad25b2cad346cc6, type: 3}
+  amountOfIncrement: 1
   minimumLevelRequirement: 1
   upgradeLimitLevel: -1
   isBehaviour: 0

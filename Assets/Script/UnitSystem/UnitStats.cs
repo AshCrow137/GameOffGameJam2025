@@ -60,6 +60,11 @@ public class UnitStats : MonoBehaviour
 
         habilitys = new List<Upgrade>();
         unitExp.ExpToNextLvl = ExperienceSystem.ExpToNextLevel(this);
+
+        foreach (Upgrade upgrade in possibleUpgrades)
+        {
+            upgrade.ResetCurrentUpgradeLevel(upgrade);
+        }
     }
     public T GetUnitStat<T>() where T : StatBase
     {
@@ -114,15 +119,16 @@ public class UnitStats : MonoBehaviour
 
     public void AddHability(Upgrade hability)
     {
-        if (!habilitys.Contains(hability))
+        Upgrade upgradeToIncreaseLvl = habilitys.Find(upgrade => upgrade.upgradeName == hability.upgradeName);
+        if (upgradeToIncreaseLvl == null)
         {
-            hability.IncreaseLevel(hability);
-            habilitys.Add(hability);
+            Upgrade upgrade = ScriptableObject.CreateInstance(hability.GetType()) as Upgrade;
+            upgrade.Init(hability);
+            habilitys.Add(upgrade);
             ApplyAllHabilities();
         }
         else
         {
-            Upgrade upgradeToIncreaseLvl = habilitys.Find(upgrade => upgrade.upgradeName == hability.upgradeName);
             upgradeToIncreaseLvl.IncreaseLevel(upgradeToIncreaseLvl);
         }
     }
@@ -135,7 +141,6 @@ public class UnitStats : MonoBehaviour
             habilitys[i].ApplyUpgrade(this);
             if (!habilitys[i].isBehaviour)
             {
-                habilitys[i].ResetCurrentUpgradeLevel(habilitys[i]);
                 habilitys.RemoveAt(i);
             }
         }
@@ -146,6 +151,7 @@ public class UnitStats : MonoBehaviour
         if (this.unitExp.IsLvlUp())
         {
             UIUpgradeManager.Instance.ShowUpgradeOptions(UpgradeSystemManager.ChooseForUpgrade(this));
+            ApplyAllHabilities();
         }
     }
 }

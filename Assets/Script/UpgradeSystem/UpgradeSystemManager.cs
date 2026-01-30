@@ -14,18 +14,29 @@ public static class UpgradeSystemManager
 
         foreach(Upgrade upgrade in unitToUpgrade.PossibleUpgrades)
         {
-            aux.Add(upgrade);
+            if(CanAddUpgradeToShow(unitToUpgrade, upgrade))
+            {
+                aux.Add(upgrade);
+            }
         }
+        numberOfUpgradesToShow = aux.Count;
 
         for (int i = 0; i < numberOfUpgradesToShow; i++)
         {
-            if (aux.Count == 0)
-                break;
             int randomIndex = Random.Range(0, aux.Count);
             upgradesToShow.Add(aux[randomIndex]);
             aux.RemoveAt(randomIndex);
         }
 
         return upgradesToShow;
+    }
+
+    private static bool CanAddUpgradeToShow(UnitStats unit, Upgrade upgrade)
+    {
+        if (upgrade.minimumLevelRequirement > unit.UnitExp.Level)
+            return false;
+        if (upgrade.upgradeLimitLevel != -1 && upgrade.GetCurrentUpgradeLevel(upgrade) >= upgrade.upgradeLimitLevel)
+            return false;
+        return true;
     }
 }

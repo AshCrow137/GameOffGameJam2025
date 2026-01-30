@@ -15,6 +15,7 @@ MonoBehaviour:
   upgradeName: Blood Of Depths
   upgradeDescription: When in Water Increase Health Regeneration
   upgradeIcon: {fileID: 21300000, guid: f515a61f313fe9940b392137e3fa75e0, type: 3}
-  minimumLevelRequirement: 2
+  amountOfIncrement: 1
+  minimumLevelRequirement: 6
   upgradeLimitLevel: 4
   isBehaviour: 1

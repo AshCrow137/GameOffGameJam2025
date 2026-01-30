@@ -68,6 +68,8 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     [SerializeField]
     private string abilityDescription;
 
+    private bool canCheckForUpgrade;
+
     private bool bStartCreatePath = false;
     private bool bWasSelected = false;
     public UnityEvent MovementFinishEvent { get; protected set; } = new UnityEvent();
@@ -129,6 +131,7 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         }
         CanStandOnTiles = possibleSpawnTiles;
 
+        canCheckForUpgrade = false;
 
     }
 
@@ -196,7 +199,17 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         Debug.Log($"Select {this.name} unit");
         //GlobalEventManager.OnTileClickEvent.AddListener(OnTileClicked);
 
-        baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
+        if (canCheckForUpgrade)
+        {
+            canCheckForUpgrade = false;
+            unitStats?.IsLevelUp();
+        }
+        else
+        {
+            canCheckForUpgrade = false;
+        }
+
+            baseSprite.color = new Color(Color.gray.r, Color.gray.g, Color.gray.b, baseSprite.color.a);
 
     }
 
@@ -209,7 +222,6 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         //GlobalEventManager.OnTileClickEvent.RemoveListener(OnTileClicked);
         Color ownerColor = Owner.GetKingdomColor();
         baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
-
     }
 
     public bool isSelected()
@@ -221,15 +233,13 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
     protected override void OnEndTurn(BaseKingdom entity)
     {
         base.OnEndTurn(entity);
-
+        canCheckForUpgrade = true;
     }
     protected override void OnStartTurn(BaseKingdom entity)
     {
         base.OnStartTurn(entity);
         if (entity != Owner) return;
         ManageEffects();
-        unitStats?.IsLevelUp();
-        unitStats?.ApplyAllHabilities();
     }
     public virtual void RefreshUnit()
     {
@@ -240,6 +250,8 @@ public class BaseGridUnitScript : BaseGridEntity, IDamageable
         remainMovementText.text = tilesRemain.ToString();
         UpdateMovementPointsUI();
         bStartCreatePath = false;
+        canCheckForUpgrade = true;
+        OnEntityDeselect();
     }
     //public virtual void ApplyMadnessEffect(MadnessDataStruct madnessEffect)
     //{
