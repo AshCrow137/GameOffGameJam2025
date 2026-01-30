@@ -74,12 +74,15 @@ public class InventoryUI : MonoBehaviour
     /// <param name="playerInventory">The inventory to display.</param>
     public void UpdateInventory(Inventory playerInventory)
     {
-        headSlotUi.Assign(playerInventory.helmet);
-        bodySlotUi.Assign(playerInventory.armour);
-        handSlotUi.Assign(playerInventory.mainHand);
-        offhandSlotUi.Assign(playerInventory.offHand);
-        trinketSlotUi.Assign(playerInventory.trinket);
-        storageSize = playerInventory.playerStorage.maxStorageSlots;
+        StorageSlots storageSlots = playerInventory.GetSlotHolder<StorageSlots>();
+        GearSlots gearSlots = playerInventory.GetSlotHolder<GearSlots>();
+
+        headSlotUi.Assign(gearSlots.GetSlot(SlotType.Helmet));
+        bodySlotUi.Assign(gearSlots.GetSlot(SlotType.Armor));
+        handSlotUi.Assign(gearSlots.GetSlot(SlotType.MainHand));
+        offhandSlotUi.Assign(gearSlots.GetSlot(SlotType.OffHand));
+        trinketSlotUi.Assign(gearSlots.GetSlot(SlotType.Trinket));
+        storageSize = storageSlots.maxSlots;
         while (slotUis.Count < storageSize)
         {
             // InventorySlotUI slotUi = PoolingEntity.Spawn(InventorySlotUIPrefab, storagePanel); // Not required as we are never really destroying slotUIs
@@ -91,7 +94,7 @@ public class InventoryUI : MonoBehaviour
         {
             if (i < storageSize)
             {
-                slotUis[i].Assign(playerInventory.playerStorage.storageSlots[i]);
+                slotUis[i].Assign(storageSlots.GetSlot(i));
             }
             else
             {

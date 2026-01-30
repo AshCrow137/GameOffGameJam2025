@@ -12,10 +12,11 @@ public class CharacterInventoryManager : MonoBehaviour
 {
     /// <summary>Reference to the player's inventory containing equipment slots and storage.</summary>
     public Inventory playerInventory;
+    [SerializeField] private BaseGridUnitScript self;
 
     public void Initialize(int storageSlots)
     {
-        playerInventory = new Inventory(storageSlots, 1, GetComponent<BaseGridUnitScript>());
+        playerInventory = new Inventory(self, storageSlots, 1);
     }
 
     /// <summary>
@@ -28,7 +29,7 @@ public class CharacterInventoryManager : MonoBehaviour
         playerInventory.AddItem(item);
     }
 
-
+    /////////////////////REMOVE AFTER TESTING/////////////////////
 
     [Header("Test Configuration")]
     [SerializeField] private List<InventoryItem> items;
@@ -38,13 +39,11 @@ public class CharacterInventoryManager : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
-        BaseGridUnitScript unit = GetComponent<BaseGridUnitScript>();
-        playerInventory = new Inventory(6, 1, unit);
+        playerInventory = new Inventory(self, 6, 1);
         foreach (InventoryItem item in items)
         {
             playerInventory.AddItem(item);
         }
     }
-
-
+    /////////////////////REMOVE AFTER TESTING/////////////////////
 }

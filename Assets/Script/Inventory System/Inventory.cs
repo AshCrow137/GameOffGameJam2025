@@ -1,105 +1,88 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Linq;
 
 /// <summary>
-/// Represents a character's complete inventory system with equipment slots and general storage.
-/// Manages helmet, armor, weapons, trinket, and general storage slots.
-/// Usage: Create via constructor with desired slot capacity and stack size.
+/// Represents a character's complete inventory system.
+/// Manages multiple InventorySlotHolders (e.g., GearSlots, StorageSlots).
 /// </summary>
 public class Inventory
 {
-    /// <summary>Equipment slot for helmets.</summary>
-    public InventorySlot helmet;
+    /// <summary>
+    /// List of all slot holders managed by this inventory.
+    /// </summary>
+    public List<InventorySlotHolder> SlotHolders { get; private set; } = new List<InventorySlotHolder>();
 
-    /// <summary>Equipment slot for body armor.</summary>
-    public InventorySlot armour;
+    // /// <summary>
+    // /// Maximum number of slots in the general storage inventory.
+    // /// kept for initialization params logic
+    // /// </summary>
+    // public int maxInventorySlots;
 
-    /// <summary>Equipment slot for main hand weapons/items.</summary>
-    public InventorySlot mainHand;
+    // /// <summary>
+    // /// Maximum stack size per storage slot.
+    // /// </summary>
+    // public int stackPerStorageSlot;
 
-    /// <summary>Equipment slot for off-hand items (shields, secondary weapons).</summary>
-    public InventorySlot offHand;
+    // Constructors kept compatible in signature but refactored internally
 
-    /// <summary>Equipment slot for trinkets and accessories.</summary>
-    public InventorySlot trinket;
+    // public Inventory(int maxSlots, int stackPerSlot) : this(maxSlots, stackPerSlot, null)
+    // {
+    // }
 
-    /// <summary>General storage inventory for non-equipped items.</summary>
-    public StorageInventory playerStorage;
+    // public Inventory(int maxSlots, int stackPerSlot, BaseGridUnitScript ownerEntity)
+    // {
+    //     // maxInventorySlots = maxSlots;
+    //     // stackPerStorageSlot = stackPerSlot;
+    //     Initialize(ownerEntity);
+    // }
 
-    /// <summary>Maximum number of slots in the general storage inventory.</summary>
-    public int maxInventorySlots;
-
-    /// <summary>Maximum stack size per storage slot.</summary>
-    public int stackPerStorageSlot;
+    // public Inventory(int maxSlots, BaseGridUnitScript ownerEntity) : this(maxSlots, 1, ownerEntity) { }
 
     /// <summary>
-    /// Initializes a new inventory with specified capacity.
+    /// Initializes all slot holders.
     /// </summary>
-    /// <param name="maxSlots">Maximum number of storage slots.</param>
-    /// <param name="stackPerSlot">Maximum items per stack in storage.</param>
-    public Inventory(int maxSlots, int stackPerSlot) : this(maxSlots, stackPerSlot, null)
+    public Inventory(BaseGridUnitScript ownerEntity, int maxSlots, int stackPerSlot)
     {
+        // Initialize GearSlots
+        var gearSlots = new GearSlots(ownerEntity);
+        SlotHolders.Add(gearSlots);
+
+        // Initialize StorageSlots
+        var storageSlots = new StorageSlots(maxSlots, stackPerSlot, ownerEntity);
+        SlotHolders.Add(storageSlots);
     }
 
     /// <summary>
-    /// Initializes a new inventory with specified parameters and owner.
+    /// Adds a single item to the inventory (delegates to holders).
     /// </summary>
-    /// <param name="maxSlots">Maximum number of storage slots.</param>
-    /// <param name="stackPerSlot">Maximum items per stack.</param>
-    /// <param name="ownerEntity">The entity that owns this inventory, for effect application.</param>
-    public Inventory(int maxSlots, int stackPerSlot, BaseGridUnitScript ownerEntity)
-    {
-        maxInventorySlots = maxSlots;
-        stackPerStorageSlot = stackPerSlot;
-        Initialize(ownerEntity);
-    }
-
-    /// <summary>
-    /// Initializes a new inventory with specified capacity and owner (default stack size 1).
-    /// </summary>
-    /// <param name="maxSlots">Maximum number of storage slots.</param>
-    /// <param name="ownerEntity">The entity that owns this inventory.</param>
-    public Inventory(int maxSlots, BaseGridUnitScript ownerEntity) : this(maxSlots, 1, ownerEntity) { }
-
-    /// <summary>
-    /// Initializes all equipment slots and storage inventory. Optionally applies effects on equip if an owner entity is provided.
-    /// </summary>
-    public void Initialize(BaseGridUnitScript ownerEntity)
-    {
-        bool applyEffectOnEquip = ownerEntity != null;
-        helmet = new InventorySlot(SlotType.Helmet, 1, applyEffectOnEquip, ownerEntity);
-        armour = new InventorySlot(SlotType.Armor, 1, applyEffectOnEquip, ownerEntity);
-        mainHand = new InventorySlot(SlotType.MainHand, 1, applyEffectOnEquip, ownerEntity);
-        offHand = new InventorySlot(SlotType.OffHand, 1, applyEffectOnEquip, ownerEntity);
-        trinket = new InventorySlot(SlotType.Trinket, 1, applyEffectOnEquip, ownerEntity);
-        playerStorage = new StorageInventory(maxInventorySlots, stackPerStorageSlot);
-    }
-
-    /// <summary>
-    /// Adds a single item to the inventory (tries equipment slots first, then storage).
-    /// Defaults to adding 1 item.
-    /// </summary>
-    /// <param name="itemToAdd">The item to add.</param>
-    /// <returns>True if item was successfully added, false otherwise.</returns>
     public bool AddItem(InventoryItem itemToAdd)
     {
         return AddItem(itemToAdd, 1);
     }
 
     /// <summary>
-    /// Adds items to the first compatible slot (equipment or storage).
-    /// Tries equipment slots first, then general storage.
+    /// Adds items to the first compatible holder.
     /// </summary>
-    /// <param name="itemToAdd">The item to add.</param>
-    /// <param name="amountToAdd">Number of items to add.</param>
-    /// <returns>True if items were successfully added, false if no space available.</returns>
     public bool AddItem(InventoryItem itemToAdd, int amountToAdd)
     {
-        if (helmet.Add(itemToAdd, amountToAdd)) return true;
-        if (armour.Add(itemToAdd, amountToAdd)) return true;
-        if (mainHand.Add(itemToAdd, amountToAdd)) return true;
-        if (offHand.Add(itemToAdd, amountToAdd)) return true;
-        if (trinket.Add(itemToAdd, amountToAdd)) return true;
-        return playerStorage.Add(itemToAdd, amountToAdd);
+        foreach (var holder in SlotHolders)
+        {
+            if (holder.AddItem(itemToAdd, amountToAdd))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Retrieves a specific type of slot holder.
+    /// </summary>
+    /// <typeparam name="T">The type of holder to retrieve.</typeparam>
+    /// <returns>The holder instance, or null if not found.</returns>
+    public T GetSlotHolder<T>() where T : InventorySlotHolder
+    {
+        return SlotHolders.OfType<T>().FirstOrDefault();
     }
 }

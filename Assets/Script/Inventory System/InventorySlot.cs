@@ -26,10 +26,10 @@ public class InventorySlot
     /// <summary>The entity that owns this slot (for effect application).</summary>
     public BaseGridUnitScript ownerEntity;
     /// <summary>Whether to apply the item's effect when equipped in this slot.</summary>
-    public bool applyEffectOnEquip;
+    // public bool applyEffectOnEquip;
 
     /// <summary>The effect instance currently applied by the equipped item, if any.</summary>
-    public BaseEffect appliedEffect;
+    // public BaseEffect appliedEffect;
 
     public UnityEvent OnSlotUpdated = new();
 
@@ -43,23 +43,21 @@ public class InventorySlot
     /// </summary>
     /// <param name="slotType">The type of items this slot accepts (Helmet, Armor, etc.).</param>
     /// <param name="maxStackSize">Maximum items that can stack in this slot.</param>
-    public InventorySlot(SlotType slotType, int maxStackSize) : this(slotType, maxStackSize, slotType != SlotType.General, null) { }
+    public InventorySlot(SlotType slotType, int maxStackSize) : this(slotType, maxStackSize, null) { }
 
     /// <summary>
     /// Creates an inventory slot with full configuration.
     /// </summary>
     /// <param name="slotType">The type of items this slot accepts.</param>
     /// <param name="maxStackSize">Maximum items that can stack in this slot.</param>
-    /// <param name="applyEffectOnEquip">Whether to apply item effects when equipped.</param>
     /// <param name="ownerEntity">The entity that owns this slot.</param>
-    public InventorySlot(SlotType slotType, int maxStackSize, bool applyEffectOnEquip, BaseGridUnitScript ownerEntity)
+    public InventorySlot(SlotType slotType, int maxStackSize, BaseGridUnitScript ownerEntity)
     {
 
         this.maxStackSize = maxStackSize;
         item = null;
         amount = 0;
         this.slotType = slotType;
-        this.applyEffectOnEquip = applyEffectOnEquip;
         this.ownerEntity = ownerEntity;
     }
 
@@ -107,20 +105,21 @@ public class InventorySlot
             amount = amountToAdd;
             added = true;
         }
-        if (added && applyEffectOnEquip)
+        // if (added && applyEffectOnEquip)
+        // {
+        //     item.ApplyEffectOnEquip(ownerEntity);
+        // }
+        if (added)
         {
-            if (item.equippedEffectData)
-            {
-                appliedEffect = item.equippedEffectData.InstantiateEffect(ownerEntity.GetOwner(), ownerEntity);
-                appliedEffect.ApplyEffect(ownerEntity);
-            }
-            else
-            {
-                Debug.LogWarning($"Item {item.itemName} has no equipped effect data.");
-            }
+            OnItemAdded(item, amount);
+            OnSlotUpdated?.Invoke();
         }
-        if (added) OnSlotUpdated?.Invoke();
         return added;
+    }
+
+    public virtual void OnItemAdded(InventoryItem item, int amount)
+    {
+
     }
 
     /// <summary>
@@ -129,15 +128,22 @@ public class InventorySlot
     /// <returns>Always returns true.</returns>
     public bool Remove()
     {
+        // if (applyEffectOnEquip && item != null)
+        // {
+        //     item.RemoveEffectOnEquip();
+        // }
+        InventoryItem removedItem = item;
+        int removedAmount = amount;
         item = null;
         amount = 0;
-        if (appliedEffect != null)
-        {
-            appliedEffect.RemoveEffect();
-            appliedEffect = null;
-        }
+        OnItemRemoved(removedItem, removedAmount);
         OnSlotUpdated?.Invoke();
         return true;
+    }
+
+    public virtual void OnItemRemoved(InventoryItem item, int amount)
+    {
+
     }
 
     /// <summary>
