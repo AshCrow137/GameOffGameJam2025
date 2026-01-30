@@ -163,7 +163,7 @@ public class InputManager : MonoBehaviour
     public void OnLeftClick(InputValue value)
     {
         if (bIsOnUIElement || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
-
+        InventoryUIToggle.instance.CloseAll();
         if (CityUI.Instance && CityUI.Instance.cityMenuMode != CityMenuMode.None)
         {
             CityUI.Instance.PlaceEntity();
@@ -233,16 +233,25 @@ public class InputManager : MonoBehaviour
     public void OnRightClick(InputValue value)
     {
         if (bIsOnUIElement || TurnManager.instance.GetCurrentActingKingdom() != playerKngdom) { return; }
-        //GlobalEventManager.InvokeMouseClickedEvent(mousePos);
+
+        Vector3Int cellPos = HexTilemapManager.Instance.GetCellAtMousePosition();
+
         if (UIUtility.selectedUnit)
         {
-            UIUtility.selectedUnit.OnTileClicked(HexTilemapManager.Instance.GetCellAtMousePosition());
+            UIUtility.selectedUnit.OnTileClicked(cellPos);
+        }
+
+        BaseGridUnitScript unit = HexTilemapManager.Instance.GetUnitOnTile(cellPos);
+        if (unit)
+        {
+            InventoryUIToggle.instance?.Open(unit, mousePos);
         }
         //send a position to Selection Manager
         //I need a mathod that receives a screen position (Vector2)
         //and converts it to a raycast in the world,
 
     }
+
     #endregion
 
     public Vector3 GetMousePosition()

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 781202495555979482}
   - component: {fileID: 7093897914129096053}
   - component: {fileID: 7887498637837899476}
-  - component: {fileID: 6630524666620089037}
   m_Layer: 0
   m_Name: CityManager
   m_TagString: Untagged
@@ -91,21 +90,6 @@ MonoBehaviour:
     entityPrefab: {fileID: 3832580847944561018, guid: 64c33e0fa77d8c043bb0558b02262698, type: 3}
   - button: {fileID: 0}
     entityPrefab: {fileID: 8522753570575279098, guid: 11aa7507cd5f0b7458f692639cb818e1, type: 3}
---- !u!114 &6630524666620089037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020626910761716222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dccbf5599017554a90e2a281f5a0b96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentProductionDisplay: {fileID: 0}
-  queueLayoutGroup: {fileID: 0}
-  productionItemPrefab: {fileID: 8414904744397869905, guid: 68330a6de6d01e94cb379dd48f29b8a6, type: 3}
 --- !u!1 &2055366699181082500
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,12 +146,13 @@ MonoBehaviour:
   - {fileID: 0}
   cityUI: {fileID: 7887498637837899476}
   globalVisionManager: {fileID: 4654213460046089383}
-  productionQueueUI: {fileID: 6630524666620089037}
   UIManager: {fileID: 0}
   unitSpawner: {fileID: 7576329091854031146}
   gameplayEventManager: {fileID: 7730135686498519765}
   gameManager: {fileID: 7330257870035692604}
   AIController: {fileID: 4902278892098807829}
+  inventoryUIToggle: {fileID: 0}
+  draggedInventorySlot: {fileID: 0}
 --- !u!1 &2352172120503063927
 GameObject:
   m_ObjectHideFlags: 0

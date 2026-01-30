@@ -148,3 +148,28 @@ public enum GamePlayEvent
     SpawnUnit,
     SpecialEvent
 }
+public enum ItemType
+{
+    General,
+    Helmet,
+    Armor,
+    OneHandedMelee,
+    TwoHandedMelee,
+    Ranged,
+    Trinket,
+    Shield,
+}
+
+
+// in futre slot type will be like Ranged Unit Main Hand, Melee unit Offhand so that we can restrict equipping items based on unit type
+// or we can find some way to bring in entity type into inventory system
+public enum SlotType
+{
+    General,
+    Helmet,
+    Armor,
+    MainHand,
+    OffHand,
+    Trinket,
+    Shield,
+}
