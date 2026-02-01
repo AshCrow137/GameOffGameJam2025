@@ -61,6 +61,7 @@ public class UnitStats : MonoBehaviour
         habilitys = new List<Upgrade>();
         unitExp.ExpToNextLvl = ExperienceSystem.ExpToNextLevel(this);
 
+        // Reset upgrades levels
         foreach (Upgrade upgrade in possibleUpgrades)
         {
             upgrade.ResetCurrentUpgradeLevel(upgrade);

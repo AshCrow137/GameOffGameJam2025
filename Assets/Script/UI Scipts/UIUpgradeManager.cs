@@ -51,6 +51,10 @@ public class UIUpgradeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Show the upgrade options to the player
+    /// </summary>
+    /// <param name="options"></param>
     public void ShowUpgradeOptions(List<Upgrade> options)
     {
         Debug.Log($"Option Count: {options.Count}");
@@ -65,7 +69,11 @@ public class UIUpgradeManager : MonoBehaviour
         ShowPanel();
     }
 
-    public void UpgradeSelected(GameObject UpgradeName)
+    /// <summary>
+    /// On Upgrade Selected by the player Send the Name of the Upgrade to take the corresponding Upgrade 
+    /// </summary>
+    /// <param name="UpgradeName"></param>
+    public void OnUpgradeSelected(GameObject UpgradeName)
     {
         string upgradeName = UpgradeName.GetComponent<TextMeshProUGUI>().text;
         Debug.Log($"Upgrade Setected Name: {upgradeName}");

@@ -19,6 +19,7 @@ public class Upgrade : ScriptableObject
 
     private int currentUpgradeLevel = 0;
 
+    //Create a New Instance of the Upgrade Scriptable Object
     public virtual void Init(Upgrade upgrade)
     {
         this.upgradeName = upgrade.upgradeName;
@@ -31,6 +32,7 @@ public class Upgrade : ScriptableObject
         this.currentUpgradeLevel = 1;
     }
 
+    //Verify if the Upgrade can be incremented
     private bool CanIncrementUpgrade(Upgrade upgrade)
     {
         return upgrade.upgradeLimitLevel == -1 || upgrade.GetCurrentUpgradeLevel(upgrade) < upgrade.upgradeLimitLevel;
@@ -38,9 +40,9 @@ public class Upgrade : ScriptableObject
 
     public virtual void ApplyUpgrade(UnitStats unitToApplyUpgrade)
     {
-        Debug.Log("In Upgrade Class");
     }
 
+    //Increase the Upgrade Level by 1
     public virtual void IncreaseLevel(Upgrade upgrade)
     {
         if (CanIncrementUpgrade(upgrade))
@@ -48,6 +50,7 @@ public class Upgrade : ScriptableObject
             upgrade.currentUpgradeLevel++;
         }
     }
+
 
     public int GetCurrentUpgradeLevel(Upgrade upgrade)
     {
