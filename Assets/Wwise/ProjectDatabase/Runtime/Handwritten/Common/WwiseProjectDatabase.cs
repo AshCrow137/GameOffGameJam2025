@@ -46,7 +46,7 @@ public partial class WwiseProjectDatabase
             bool x86Architecture = System.IntPtr.Size == 4;
             directory += "/Linux/" + (x86Architecture ? "x86" : "x86_64") + "/DSP";
         }
-        
+
         UnityEngine.Debug.LogError($"WwiseUnity: {libraryName} could not be found. Please check the parent folder {directory}. If the {Path.GetExtension(libraryName)} is missing, try 1. Modifying the Wwise Project or 2. Copying the {libraryName} directly from the SDK\\platform_architecture\\Profile\\bin folder of your Wwise installation into {directory}.");
     }
 
@@ -58,7 +58,7 @@ public partial class WwiseProjectDatabase
         }
         else
         {
-            UnityEngine.Debug.LogError($"WwiseUnity: The project database dll encountered the following error: {e.Message}" );
+            UnityEngine.Debug.LogError($"WwiseUnity: The project database dll encountered the following error: {e.Message}");
         }
     }
 }

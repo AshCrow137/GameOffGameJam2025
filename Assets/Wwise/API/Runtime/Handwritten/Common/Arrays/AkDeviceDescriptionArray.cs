@@ -18,28 +18,28 @@ Copyright (c) 2025 Audiokinetic Inc.
 
 public class AkDeviceDescriptionArray : AkBaseArray<AkDeviceDescription>
 {
-	public AkDeviceDescriptionArray(int count) : base(count)
-	{
-	}
+    public AkDeviceDescriptionArray(int count) : base(count)
+    {
+    }
 
-	protected override int StructureSize
-	{
-		get { return AkUnitySoundEnginePINVOKE.CSharp_AkDeviceDescription_GetSizeOf(); }
-	}
+    protected override int StructureSize
+    {
+        get { return AkUnitySoundEnginePINVOKE.CSharp_AkDeviceDescription_GetSizeOf(); }
+    }
 
-	protected override void DefaultConstructAtIntPtr(System.IntPtr address)
-	{
-		AkUnitySoundEnginePINVOKE.CSharp_AkDeviceDescription_Clear(address);
-	}
+    protected override void DefaultConstructAtIntPtr(System.IntPtr address)
+    {
+        AkUnitySoundEnginePINVOKE.CSharp_AkDeviceDescription_Clear(address);
+    }
 
-	protected override AkDeviceDescription CreateNewReferenceFromIntPtr(System.IntPtr address)
-	{
-		return new AkDeviceDescription(address, false);
-	}
+    protected override AkDeviceDescription CreateNewReferenceFromIntPtr(System.IntPtr address)
+    {
+        return new AkDeviceDescription(address, false);
+    }
 
-	protected override void CloneIntoReferenceFromIntPtr(System.IntPtr address, AkDeviceDescription other)
-	{
-		AkUnitySoundEnginePINVOKE.CSharp_AkDeviceDescription_Clone(address, AkDeviceDescription.getCPtr(other));
-	}
+    protected override void CloneIntoReferenceFromIntPtr(System.IntPtr address, AkDeviceDescription other)
+    {
+        AkUnitySoundEnginePINVOKE.CSharp_AkDeviceDescription_Clone(address, AkDeviceDescription.getCPtr(other));
+    }
 }
 #endif

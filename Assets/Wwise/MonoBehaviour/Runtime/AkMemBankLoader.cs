@@ -20,22 +20,22 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// This would be useful for situations where you use the WWW class
 public class AkMemBankLoader : UnityEngine.MonoBehaviour
 {
-	private const int WaitMs = 50;
-	private const long AK_BANK_PLATFORM_DATA_ALIGNMENT = AkUnitySoundEngine.AK_BANK_PLATFORM_DATA_ALIGNMENT;
-	private const long AK_BANK_PLATFORM_DATA_ALIGNMENT_MASK = AK_BANK_PLATFORM_DATA_ALIGNMENT - 1;
+    private const int WaitMs = 50;
+    private const long AK_BANK_PLATFORM_DATA_ALIGNMENT = AkUnitySoundEngine.AK_BANK_PLATFORM_DATA_ALIGNMENT;
+    private const long AK_BANK_PLATFORM_DATA_ALIGNMENT_MASK = AK_BANK_PLATFORM_DATA_ALIGNMENT - 1;
 
-	/// Name of the bank to load
-	public string bankName = "";
+    /// Name of the bank to load
+    public string bankName = "";
 
-	/// Is the bank localized (situated in the language-specific folders)
-	public bool isLocalizedBank = false;
+    /// Is the bank localized (situated in the language-specific folders)
+    public bool isLocalizedBank = false;
 
-	private string m_bankPath;
+    private string m_bankPath;
 
-	[UnityEngine.HideInInspector] public uint ms_bankID = AkUnitySoundEngine.AK_INVALID_BANK_ID;
+    [UnityEngine.HideInInspector] public uint ms_bankID = AkUnitySoundEngine.AK_INVALID_BANK_ID;
 
-	private System.IntPtr ms_pInMemoryBankPtr = System.IntPtr.Zero;
-	private System.Runtime.InteropServices.GCHandle ms_pinnedArray;
+    private System.IntPtr ms_pInMemoryBankPtr = System.IntPtr.Zero;
+    private System.Runtime.InteropServices.GCHandle ms_pinnedArray;
 
 #if UNITY_2018_3_OR_NEWER
     private UnityEngine.Networking.UnityWebRequest ms_www;
@@ -43,30 +43,30 @@ public class AkMemBankLoader : UnityEngine.MonoBehaviour
     private UnityEngine.WWW ms_www;
 #endif
 
-	private void Start()
-	{
-        
-		if (isLocalizedBank)
-			LoadLocalizedBank(bankName);
-		else
-			LoadNonLocalizedBank(bankName);
-	}
+    private void Start()
+    {
 
-	/// Load a SoundBank from WWW object
-	public void LoadNonLocalizedBank(string in_bankFilename)
-	{
-		var bankPath = "file://" + System.IO.Path.Combine(AkBasePathGetter.Get().SoundBankBasePath, in_bankFilename);
-		DoLoadBank(bankPath);
-	}
+        if (isLocalizedBank)
+            LoadLocalizedBank(bankName);
+        else
+            LoadNonLocalizedBank(bankName);
+    }
 
-	/// Load a language-specific bank from WWW object
-	public void LoadLocalizedBank(string in_bankFilename)
-	{
-		var bankPath = "file://" + System.IO.Path.Combine(
-			               System.IO.Path.Combine(AkBasePathGetter.Get().SoundBankBasePath, AkUnitySoundEngine.GetCurrentLanguage()),
-			               in_bankFilename);
-		DoLoadBank(bankPath);
-	}
+    /// Load a SoundBank from WWW object
+    public void LoadNonLocalizedBank(string in_bankFilename)
+    {
+        var bankPath = "file://" + System.IO.Path.Combine(AkBasePathGetter.Get().SoundBankBasePath, in_bankFilename);
+        DoLoadBank(bankPath);
+    }
+
+    /// Load a language-specific bank from WWW object
+    public void LoadLocalizedBank(string in_bankFilename)
+    {
+        var bankPath = "file://" + System.IO.Path.Combine(
+                           System.IO.Path.Combine(AkBasePathGetter.Get().SoundBankBasePath, AkUnitySoundEngine.GetCurrentLanguage()),
+                           in_bankFilename);
+        DoLoadBank(bankPath);
+    }
 
     private uint AllocateAlignedBuffer(byte[] data)
     {
@@ -113,7 +113,7 @@ public class AkMemBankLoader : UnityEngine.MonoBehaviour
     }
 
     private System.Collections.IEnumerator LoadFile()
-	{
+    {
 #if UNITY_2018_3_OR_NEWER
         ms_www = UnityEngine.Networking.UnityWebRequest.Get(m_bankPath);
         yield return ms_www.SendWebRequest();
@@ -123,26 +123,26 @@ public class AkMemBankLoader : UnityEngine.MonoBehaviour
         yield return ms_www;
         uint uInMemoryBankSize = AllocateAlignedBuffer(ms_www.bytes);
 #endif
-		uint BankType;
+        uint BankType;
         var result = AkUnitySoundEngine.LoadBankMemoryView(ms_pInMemoryBankPtr, uInMemoryBankSize, out ms_bankID, out BankType);
-		if (result != AKRESULT.AK_Success)
-			UnityEngine.Debug.LogError("WwiseUnity: AkMemBankLoader: bank loading failed with result " + result);
-	}
+        if (result != AKRESULT.AK_Success)
+            UnityEngine.Debug.LogError("WwiseUnity: AkMemBankLoader: bank loading failed with result " + result);
+    }
 
-	private void DoLoadBank(string in_bankPath)
-	{
-		m_bankPath = in_bankPath;
-		StartCoroutine(LoadFile());
-	}
+    private void DoLoadBank(string in_bankPath)
+    {
+        m_bankPath = in_bankPath;
+        StartCoroutine(LoadFile());
+    }
 
-	private void OnDestroy()
-	{
-		if (ms_pInMemoryBankPtr != System.IntPtr.Zero)
-		{
-			var result = AkUnitySoundEngine.UnloadBank(ms_bankID, ms_pInMemoryBankPtr);
-			if (result == AKRESULT.AK_Success)
-				ms_pinnedArray.Free();
-		}
-	}
+    private void OnDestroy()
+    {
+        if (ms_pInMemoryBankPtr != System.IntPtr.Zero)
+        {
+            var result = AkUnitySoundEngine.UnloadBank(ms_bankID, ms_pInMemoryBankPtr);
+            if (result == AKRESULT.AK_Success)
+                ms_pinnedArray.Free();
+        }
+    }
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

@@ -15,7 +15,7 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
-﻿#if !(UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
+#if !(UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
 #if !UNITY_2019_1_OR_NEWER
 #define AK_ENABLE_TIMELINE
 #endif
@@ -28,27 +28,27 @@ Copyright (c) 2025 Audiokinetic Inc.
 [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.GameObject))]
 public class AkTimelineRtpcTrack : UnityEngine.Timeline.TrackAsset
 {
-	public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject gameObject, int inputCount)
-	{
-		var playable = UnityEngine.Playables.ScriptPlayable<AkTimelineRtpcPlayableBehaviour>.Create(graph, inputCount);
+    public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject gameObject, int inputCount)
+    {
+        var playable = UnityEngine.Playables.ScriptPlayable<AkTimelineRtpcPlayableBehaviour>.Create(graph, inputCount);
 
-		var clips = GetClips();
-		foreach (var clip in clips)
-		{
-			var rtpcPlayable = (clip.asset as AkTimelineRtpcPlayable);
-			rtpcPlayable.owningClip = clip;
-			rtpcPlayable.SetupClipDisplay();
-		}
+        var clips = GetClips();
+        foreach (var clip in clips)
+        {
+            var rtpcPlayable = (clip.asset as AkTimelineRtpcPlayable);
+            rtpcPlayable.owningClip = clip;
+            rtpcPlayable.SetupClipDisplay();
+        }
 
-		return playable;
-	}
+        return playable;
+    }
 
-	public void OnValidate()
-	{
-		var clips = GetClips();
-		foreach (var clip in clips)
-			(clip.asset as AkTimelineRtpcPlayable).SetupClipDisplay();
-	}
+    public void OnValidate()
+    {
+        var clips = GetClips();
+        foreach (var clip in clips)
+            (clip.asset as AkTimelineRtpcPlayable).SetupClipDisplay();
+    }
 }
 #endif // AK_ENABLE_TIMELINE
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

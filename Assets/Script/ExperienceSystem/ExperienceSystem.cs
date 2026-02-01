@@ -27,7 +27,7 @@ public static class ExperienceSystem
     private static void CalculateContributions(Combat combat)
     {
         float killerTypeBonus = 0;
-        if(killerTypeBonus == 0)
+        if (killerTypeBonus == 0)
         {
             killerTypeBonus = CalculateKilledTypeBonus(combat.combatDataList[0]);
         }
@@ -38,7 +38,7 @@ public static class ExperienceSystem
 
         foreach (CombatData data in contributorsAvailable)
         {
-            if(!contributions.ContainsKey(data.UnitAtacker))
+            if (!contributions.ContainsKey(data.UnitAtacker))
             {
                 contributions[data.UnitAtacker] = 0;
             }
@@ -47,7 +47,7 @@ public static class ExperienceSystem
             float damageTaken = BattleSystem.DamageTakingTo(data.UnitAtacker, combat.unitAtacked);
             int EffectsAppliedByAttacker = data.CountActiveEffectsByAttacker(combat.unitAtacked, data);
 
-            contributions[data.UnitAtacker] += killerTypeBonus + 2 * 
+            contributions[data.UnitAtacker] += killerTypeBonus + 2 *
                 meleeDamage + rangedDamage + damageTaken + 2 * EffectsAppliedByAttacker + 1;
 
             Debug.Log("Contributor: " + data.UnitAtacker.name + " Contribution: " + contributions[data.UnitAtacker]);
@@ -62,7 +62,7 @@ public static class ExperienceSystem
             totalContribution += individualContribution;
         }
 
-        foreach(UnitStats unit in contributors.Keys)
+        foreach (UnitStats unit in contributors.Keys)
         {
             Debug.Log("Unit: " + unit.name + " gained " + Mathf.RoundToInt(expGain * (contributions[unit] / totalContribution)) + " EXP.");
             unit.UnitExp.AddExp(Mathf.RoundToInt(expGain * (contributions[unit] / totalContribution)));
@@ -71,7 +71,7 @@ public static class ExperienceSystem
 
     private static float CalculateKilledTypeBonus(CombatData data)
     {
-        if(data.KilledTypeDamage == DamageType.Melee)
+        if (data.KilledTypeDamage == DamageType.Melee)
         {
             return 20;
         }

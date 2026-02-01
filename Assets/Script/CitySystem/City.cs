@@ -22,7 +22,8 @@ public class City
     public Dictionary<ResourceType, int> resourceGainPerTurn = new Dictionary<ResourceType, int>();
     public Dictionary<Vector3Int, Building> buildings = new Dictionary<Vector3Int, Building>();
 
-    public City(CityData cityData, Vector3Int position){
+    public City(CityData cityData, Vector3Int position)
+    {
         this.name = "City Name";
         this.sprite = cityData.sprite;
         this.position = position;
@@ -32,7 +33,7 @@ public class City
         this.unitSpawnRadius = 1;
         this.owner = null;
         this.buildings = new Dictionary<Vector3Int, Building>();
-        
+
         // Initialize empty resource dictionary - will be populated by other means
         this.resourceGainPerTurn = new Dictionary<ResourceType, int>();
     }

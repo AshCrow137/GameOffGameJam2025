@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
-using static UnityEngine.InputSystem.InputAction;
 
 public class InputManager : MonoBehaviour
 {

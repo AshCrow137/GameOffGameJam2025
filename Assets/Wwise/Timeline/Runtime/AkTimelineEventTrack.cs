@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 #if !(UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
 #if !UNITY_2019_1_OR_NEWER
 #define AK_ENABLE_TIMELINE
@@ -33,34 +32,34 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// - \ref AkTimelineEventPlayableBehavior
 public class AkTimelineEventTrack : UnityEngine.Timeline.TrackAsset
 {
-	public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject go, int inputCount)
-	{
-		var playable = UnityEngine.Playables.ScriptPlayable<AkTimelineEventPlayableBehavior>.Create(graph);
-		UnityEngine.Playables.PlayableExtensions.SetInputCount(playable, inputCount);
+    public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject go, int inputCount)
+    {
+        var playable = UnityEngine.Playables.ScriptPlayable<AkTimelineEventPlayableBehavior>.Create(graph);
+        UnityEngine.Playables.PlayableExtensions.SetInputCount(playable, inputCount);
 
-		var clips = GetClips();
-		foreach (var clip in clips)
-		{
-			var eventPlayable = clip.asset as AkTimelineEventPlayable;
-			eventPlayable.owningClip = clip;
-		}
+        var clips = GetClips();
+        foreach (var clip in clips)
+        {
+            var eventPlayable = clip.asset as AkTimelineEventPlayable;
+            eventPlayable.owningClip = clip;
+        }
 
-		return playable;
-	}
-	public List<WwiseEventReference> GetEventReferences()
-	{
-		List<WwiseEventReference> returnValue = new List<WwiseEventReference>();
-		var clips = GetClips();
-		foreach (var clip in clips)
-		{
-			var timelineEventPlayable = clip.asset as AkTimelineEventPlayable;
-			if (timelineEventPlayable)
-			{
-				returnValue.Add(timelineEventPlayable.akEvent.WwiseObjectReference);
-			}
-		}
-		return returnValue;
-	}
+        return playable;
+    }
+    public List<WwiseEventReference> GetEventReferences()
+    {
+        List<WwiseEventReference> returnValue = new List<WwiseEventReference>();
+        var clips = GetClips();
+        foreach (var clip in clips)
+        {
+            var timelineEventPlayable = clip.asset as AkTimelineEventPlayable;
+            if (timelineEventPlayable)
+            {
+                returnValue.Add(timelineEventPlayable.akEvent.WwiseObjectReference);
+            }
+        }
+        return returnValue;
+    }
 }
 #endif // AK_ENABLE_TIMELINE
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

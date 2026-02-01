@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using static UnityEngine.InputSystem.InputAction;
 
 // Base kingdom class
@@ -25,7 +24,8 @@ public class KingdomUI : MonoBehaviour
         }
     }
 
-    private void InitializeEndTurn(){
+    private void InitializeEndTurn()
+    {
         GlobalEventManager.EndTurnEvent.AddListener(EndTurn);
     }
     [SerializeField]
@@ -34,15 +34,18 @@ public class KingdomUI : MonoBehaviour
     [SerializeField]
     private GameObject kingdomUIPanel;
 
-    private void ShowKingdomUI(){
+    private void ShowKingdomUI()
+    {
         kingdomUIPanel.SetActive(true);
     }
 
-    private void HideKingdomUI(){
+    private void HideKingdomUI()
+    {
         kingdomUIPanel.SetActive(false);
     }
 
-    public void StartTurn(){
+    public void StartTurn()
+    {
         ShowKingdomUI();
 
         // if(TurnManager.instance.GetCurrentActingKingdom() == playerKingdom){
@@ -53,10 +56,10 @@ public class KingdomUI : MonoBehaviour
         //     StopPlaceCityMode();
         // }
     }
-    
+
     public void EndTurn(BaseKingdom entity)
     {
-        if(entity != playerKingdom)
+        if (entity != playerKingdom)
             return;
         HideKingdomUI();
         StopPlaceCityMode();
@@ -75,7 +78,7 @@ public class KingdomUI : MonoBehaviour
 
     public void OnClick(CallbackContext context)
     {
-        if(!context.performed) return;
+        if (!context.performed) return;
         if (shouldPlaceCity)
         {
             CityManager.Instance.PlaceCityAtMousePosition(playerKingdom);

@@ -15,23 +15,23 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 [UnityEditor.InitializeOnLoad]
 public class AkMacBuildPreprocessor
 {
-	static AkMacBuildPreprocessor()
-	{
-		if (UnityEditor.AssetDatabase.IsAssetImportWorkerProcess())
-		{
-			return;
-		}
+    static AkMacBuildPreprocessor()
+    {
+        if (UnityEditor.AssetDatabase.IsAssetImportWorkerProcess())
+        {
+            return;
+        }
 
-		AkBuildPreprocessor.RegisterBuildTarget(UnityEditor.BuildTarget.StandaloneOSX, new AkBuildPreprocessor.PlatformConfiguration
-		{
-			WwisePlatformName = "Mac"
-		});
-		
-		WwiseSetupWizard.AddBuildTargetGroup(UnityEditor.BuildTargetGroup.Standalone);
-	}
+        AkBuildPreprocessor.RegisterBuildTarget(UnityEditor.BuildTarget.StandaloneOSX, new AkBuildPreprocessor.PlatformConfiguration
+        {
+            WwisePlatformName = "Mac"
+        });
+
+        WwiseSetupWizard.AddBuildTargetGroup(UnityEditor.BuildTargetGroup.Standalone);
+    }
 }
 #endif

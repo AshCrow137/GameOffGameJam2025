@@ -15,8 +15,6 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 using System.IO;
-using UnityEditor;
-using UnityEngine;
 
 public class AddressableBankPathSetter
 {
@@ -26,71 +24,71 @@ public class AddressableBankPathSetter
     /// <param name="bankFolder">The path of the folder in which to output the bank. Should be relative to the Asset Folder</param>
     public static bool SetBankPath(string bankFolder)
     {
-	    if (bankFolder == null)
-	    {
-		    UnityEngine.Debug.LogError("AddressableBankPathSetter: Bank folder was not specified.");
-		    return false;
-	    }
+        if (bankFolder == null)
+        {
+            UnityEngine.Debug.LogError("AddressableBankPathSetter: Bank folder was not specified.");
+            return false;
+        }
 
-	    var fullPath = Path.Combine(UnityEngine.Application.dataPath, bankFolder);
-	    fullPath = fullPath.Replace('\\', '/');
-	    
-		if (bankFolder.Length != 0)
-		{
-			var settings = AkWwiseEditorSettings.Instance;
-			settings.GeneratedSoundbanksPath = bankFolder;
-			var projectPath = AkUtilities.GetFullPath(UnityEngine.Application.dataPath, settings.WwiseProjectPath);
-			var relPath = AkUtilities.MakeRelativePath(System.IO.Path.GetDirectoryName(projectPath), fullPath);
-			AkUtilities.SetSoundbanksDestinationFoldersInWproj(projectPath, relPath);
-			settings.SaveSettings();
-		}
+        var fullPath = Path.Combine(UnityEngine.Application.dataPath, bankFolder);
+        fullPath = fullPath.Replace('\\', '/');
 
-		return true;
+        if (bankFolder.Length != 0)
+        {
+            var settings = AkWwiseEditorSettings.Instance;
+            settings.GeneratedSoundbanksPath = bankFolder;
+            var projectPath = AkUtilities.GetFullPath(UnityEngine.Application.dataPath, settings.WwiseProjectPath);
+            var relPath = AkUtilities.MakeRelativePath(System.IO.Path.GetDirectoryName(projectPath), fullPath);
+            AkUtilities.SetSoundbanksDestinationFoldersInWproj(projectPath, relPath);
+            settings.SaveSettings();
+        }
+
+        return true;
     }
 
     public static bool SetExternalSourcePath(string externalSourcePath)
     {
-	    if (externalSourcePath == null)
-	    {
-		    UnityEngine.Debug.LogError("AddressableBankPathSetter: Bank folder was not specified.");
-		    return false;
-	    }
+        if (externalSourcePath == null)
+        {
+            UnityEngine.Debug.LogError("AddressableBankPathSetter: Bank folder was not specified.");
+            return false;
+        }
 
-	    var fullPath = Path.Combine(UnityEngine.Application.dataPath, externalSourcePath);
-	    fullPath = fullPath.Replace('\\', '/');
-	    
-	    if (externalSourcePath.Length != 0)
-	    {
-		    var settings = AkWwiseEditorSettings.Instance;
-		    var projectPath = AkUtilities.GetFullPath(UnityEngine.Application.dataPath, settings.WwiseProjectPath);
-		    var relPath = AkUtilities.MakeRelativePath(System.IO.Path.GetDirectoryName(projectPath), fullPath);
-		    AkUtilities.SetExternalSourceDestinationFolderInWproj(projectPath, relPath);
-		    settings.SaveSettings();
-	    }
+        var fullPath = Path.Combine(UnityEngine.Application.dataPath, externalSourcePath);
+        fullPath = fullPath.Replace('\\', '/');
 
-	    return true;
+        if (externalSourcePath.Length != 0)
+        {
+            var settings = AkWwiseEditorSettings.Instance;
+            var projectPath = AkUtilities.GetFullPath(UnityEngine.Application.dataPath, settings.WwiseProjectPath);
+            var relPath = AkUtilities.MakeRelativePath(System.IO.Path.GetDirectoryName(projectPath), fullPath);
+            AkUtilities.SetExternalSourceDestinationFolderInWproj(projectPath, relPath);
+            settings.SaveSettings();
+        }
+
+        return true;
     }
-    
+
     public static void SetSoundbankPath(string soundBankPath)
     {
-	    if (soundBankPath == null)
-	    {
-		    UnityEngine.Debug.LogError("AddressableBankPathSetter: Bank folder was not specified.");
-		    return;
-	    }
+        if (soundBankPath == null)
+        {
+            UnityEngine.Debug.LogError("AddressableBankPathSetter: Bank folder was not specified.");
+            return;
+        }
 
-	    var fullPath = Path.Combine(UnityEngine.Application.streamingAssetsPath, soundBankPath);
-	    fullPath = fullPath.Replace('\\', '/');
-	    
-	    if (soundBankPath.Length != 0)
-	    {
-		    var settings = AkWwiseEditorSettings.Instance;
-		    settings.GeneratedSoundbanksPath = AkUtilities.MakeRelativePath(UnityEngine.Application.dataPath, fullPath);
-		    var projectPath = AkUtilities.GetFullPath(UnityEngine.Application.dataPath, settings.WwiseProjectPath);
-		    var relPath = AkUtilities.MakeRelativePath(System.IO.Path.GetDirectoryName(projectPath), fullPath);
-		    AkUtilities.SetWwiseRootOutputPath(projectPath, relPath);
-		    AkUtilities.SetPlatformsSoundBankPath(projectPath, "GeneratedSoundBanks");
-		    settings.SaveSettings();
-	    }
+        var fullPath = Path.Combine(UnityEngine.Application.streamingAssetsPath, soundBankPath);
+        fullPath = fullPath.Replace('\\', '/');
+
+        if (soundBankPath.Length != 0)
+        {
+            var settings = AkWwiseEditorSettings.Instance;
+            settings.GeneratedSoundbanksPath = AkUtilities.MakeRelativePath(UnityEngine.Application.dataPath, fullPath);
+            var projectPath = AkUtilities.GetFullPath(UnityEngine.Application.dataPath, settings.WwiseProjectPath);
+            var relPath = AkUtilities.MakeRelativePath(System.IO.Path.GetDirectoryName(projectPath), fullPath);
+            AkUtilities.SetWwiseRootOutputPath(projectPath, relPath);
+            AkUtilities.SetPlatformsSoundBankPath(projectPath, "GeneratedSoundBanks");
+            settings.SaveSettings();
+        }
     }
 }

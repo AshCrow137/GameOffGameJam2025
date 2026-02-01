@@ -20,75 +20,75 @@ Copyright (c) 2025 Audiokinetic Inc.
 [UnityEditor.CustomEditor(typeof(AkBank), true)]
 public class AkBankInspector : AkBaseInspector
 {
-	private readonly AkUnityEventHandlerInspector m_LoadBankEventHandlerInspector = new AkUnityEventHandlerInspector();
-	private readonly AkUnityEventHandlerInspector m_UnloadBankEventHandlerInspector = new AkUnityEventHandlerInspector();
-	private UnityEditor.SerializedProperty loadAsync;
+    private readonly AkUnityEventHandlerInspector m_LoadBankEventHandlerInspector = new AkUnityEventHandlerInspector();
+    private readonly AkUnityEventHandlerInspector m_UnloadBankEventHandlerInspector = new AkUnityEventHandlerInspector();
+    private UnityEditor.SerializedProperty loadAsync;
 
-	private UnityEditor.SerializedProperty decode;
-	private UnityEditor.SerializedProperty saveDecoded;
+    private UnityEditor.SerializedProperty decode;
+    private UnityEditor.SerializedProperty saveDecoded;
 
-	private UnityEditor.SerializedProperty overrideLoadAsync;
+    private UnityEditor.SerializedProperty overrideLoadAsync;
 
-	private void OnEnable()
-	{
-		m_LoadBankEventHandlerInspector.Init(serializedObject, "triggerList", "Load On: ", false);
-		m_UnloadBankEventHandlerInspector.Init(serializedObject, "unloadTriggerList", "Unload On: ", false);
+    private void OnEnable()
+    {
+        m_LoadBankEventHandlerInspector.Init(serializedObject, "triggerList", "Load On: ", false);
+        m_UnloadBankEventHandlerInspector.Init(serializedObject, "unloadTriggerList", "Unload On: ", false);
 
-		decode = serializedObject.FindProperty("decodeBank");
-		saveDecoded = serializedObject.FindProperty("saveDecodedBank");
+        decode = serializedObject.FindProperty("decodeBank");
+        saveDecoded = serializedObject.FindProperty("saveDecodedBank");
 
-		loadAsync = serializedObject.FindProperty("loadAsynchronous");
-		overrideLoadAsync = serializedObject.FindProperty("overrideLoadSetting");
-	}
+        loadAsync = serializedObject.FindProperty("loadAsynchronous");
+        overrideLoadAsync = serializedObject.FindProperty("overrideLoadSetting");
+    }
 
-	public override void OnChildInspectorGUI()
-	{
-		m_LoadBankEventHandlerInspector.OnGUI();
-		m_UnloadBankEventHandlerInspector.OnGUI();
+    public override void OnChildInspectorGUI()
+    {
+        m_LoadBankEventHandlerInspector.OnGUI();
+        m_UnloadBankEventHandlerInspector.OnGUI();
 
-		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-		{
-			UnityEditor.EditorGUILayout.PropertyField(overrideLoadAsync, new UnityEngine.GUIContent("Override Load Setting:"));
-			if (overrideLoadAsync.boolValue)
-			{
-				UnityEditor.EditorGUILayout.PropertyField(loadAsync, new UnityEngine.GUIContent("Load Bank Asynchronously:"));
-			}
-		}
+        using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+        {
+            UnityEditor.EditorGUILayout.PropertyField(overrideLoadAsync, new UnityEngine.GUIContent("Override Load Setting:"));
+            if (overrideLoadAsync.boolValue)
+            {
+                UnityEditor.EditorGUILayout.PropertyField(loadAsync, new UnityEngine.GUIContent("Load Bank Asynchronously:"));
+            }
+        }
 
 #if !(AK_WWISE_ADDRESSABLES && UNITY_ADDRESSABLES)
-		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
-		{
-			UnityEngine.GUIStyle wrapLabelStyle = new UnityEngine.GUIStyle(UnityEditor.EditorStyles.label)
-			{
-				wordWrap = true
-			};
-			UnityEngine.GUILayout.Label("Decode compressed data (DEPRECATED):", wrapLabelStyle);
-			decode.boolValue = UnityEditor.EditorGUILayout.ToggleLeft(UnityEngine.GUIContent.none, decode.boolValue);
-			if (!decode.boolValue)
-			{
-				return;
-			}
+        using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+        {
+            UnityEngine.GUIStyle wrapLabelStyle = new UnityEngine.GUIStyle(UnityEditor.EditorStyles.label)
+            {
+                wordWrap = true
+            };
+            UnityEngine.GUILayout.Label("Decode compressed data (DEPRECATED):", wrapLabelStyle);
+            decode.boolValue = UnityEditor.EditorGUILayout.ToggleLeft(UnityEngine.GUIContent.none, decode.boolValue);
+            if (!decode.boolValue)
+            {
+                return;
+            }
 
-			var oldSaveDecodedValue = saveDecoded.boolValue;
-			UnityEditor.EditorGUILayout.PropertyField(saveDecoded, new UnityEngine.GUIContent("Save decoded bank:"));
-			if (!oldSaveDecodedValue || saveDecoded.boolValue)
-			{
-				return;
-			}
+            var oldSaveDecodedValue = saveDecoded.boolValue;
+            UnityEditor.EditorGUILayout.PropertyField(saveDecoded, new UnityEngine.GUIContent("Save decoded bank:"));
+            if (!oldSaveDecodedValue || saveDecoded.boolValue)
+            {
+                return;
+            }
 
-			var bank = target as AkBank;
-			var decodedBankPath = System.IO.Path.Combine(AkBasePathGetter.Get().DecodedBankFullPath, bank.data.Name + ".bnk");
+            var bank = target as AkBank;
+            var decodedBankPath = System.IO.Path.Combine(AkBasePathGetter.Get().DecodedBankFullPath, bank.data.Name + ".bnk");
 
-			try
-			{
-				System.IO.File.Delete(decodedBankPath);
-			}
-			catch (System.Exception e)
-			{
-				UnityEngine.Debug.Log("WwiseUnity: Could not delete existing decoded SoundBank. Please delete it manually. " + e);
-			}
-		}
+            try
+            {
+                System.IO.File.Delete(decodedBankPath);
+            }
+            catch (System.Exception e)
+            {
+                UnityEngine.Debug.Log("WwiseUnity: Could not delete existing decoded SoundBank. Please delete it manually. " + e);
+            }
+        }
 #endif
-	}
+    }
 }
 #endif

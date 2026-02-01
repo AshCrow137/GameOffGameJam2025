@@ -120,7 +120,7 @@ public class VisionManager : MonoBehaviour
         notBlackFog[position] = true;
     }
 
-    
+
     /// <summary>
     /// Determines if an entity can be seen based on fog state at its position
     /// </summary>
@@ -135,24 +135,24 @@ public class VisionManager : MonoBehaviour
             Debug.LogError("VisionEntity not attached to same GO as basegridentity. Please implement functionality to get VisionEntity position if this is desired");
             return false;
         }
-        
+
         Vector3Int otherPosition = otherEntity.GetCellPosition();
-        
+
         // Check the fog at that position
         Fog fogAtPosition = GetFogAtPosition(otherPosition);
-        
+
         // If it's black fog, can't see
         if (fogAtPosition == Fog.Black)
         {
             return false;
         }
-        
+
         // If it's grey fog, check if the entity is visible under grey fog
         if (fogAtPosition == Fog.Grey)
         {
             return otherEntityVision.GetVisibleUnderGreyFog();
         }
-        
+
         // If no fog, can see
         return true;
     }

@@ -21,111 +21,111 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// </summary>
 internal class AkWaapiClient
 {
-	public Wamp wamp;
+    public Wamp wamp;
 
-	public event Wamp.DisconnectedHandler Disconnected;
+    public event Wamp.DisconnectedHandler Disconnected;
 
-	/// <summary>Connect to a running instance of Wwise Authoring.</summary>
-	/// <param name="uri">URI to connect. Usually the WebSocket protocol (ws:) followed by the hostname and port, followed by waapi.</param>
-	/// <example>Connect("ws://localhost:8080/waapi")</example>
-	/// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
-	public async System.Threading.Tasks.Task Connect(
-		string uri = "ws://localhost:8080/waapi",
-		int timeout = System.Int32.MaxValue)
-	{
-		if (wamp == null)
-			wamp = new Wamp();
-		wamp.Disconnected += Wamp_Disconnected;
-		await wamp.Connect(uri, timeout);
-	}
+    /// <summary>Connect to a running instance of Wwise Authoring.</summary>
+    /// <param name="uri">URI to connect. Usually the WebSocket protocol (ws:) followed by the hostname and port, followed by waapi.</param>
+    /// <example>Connect("ws://localhost:8080/waapi")</example>
+    /// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
+    public async System.Threading.Tasks.Task Connect(
+        string uri = "ws://localhost:8080/waapi",
+        int timeout = System.Int32.MaxValue)
+    {
+        if (wamp == null)
+            wamp = new Wamp();
+        wamp.Disconnected += Wamp_Disconnected;
+        await wamp.Connect(uri, timeout);
+    }
 
-	private void Wamp_Disconnected()
-	{
-		if (Disconnected != null)
-		{
-			Disconnected();
-		}
-	}
+    private void Wamp_Disconnected()
+    {
+        if (Disconnected != null)
+        {
+            Disconnected();
+        }
+    }
 
-	/// <summary>Close the connection.</summary>
-	/// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
-	public async System.Threading.Tasks.Task Close(
-		int timeout = System.Int32.MaxValue)
-	{
-		if (wamp == null)
-			throw new Wamp.WampNotConnectedException("WAMP connection is not established");
-		
-		await wamp.Close(timeout);
+    /// <summary>Close the connection.</summary>
+    /// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
+    public async System.Threading.Tasks.Task Close(
+        int timeout = System.Int32.MaxValue)
+    {
+        if (wamp == null)
+            throw new Wamp.WampNotConnectedException("WAMP connection is not established");
 
-		wamp.Disconnected -= Wamp_Disconnected;
-		wamp = null;
-	}
+        await wamp.Close(timeout);
 
-	/// <summary>
-	/// Return true if the client is connected and ready for operations.
-	/// </summary>
-	public bool IsConnected()
-	{
-		if (wamp == null)
-			return false;
+        wamp.Disconnected -= Wamp_Disconnected;
+        wamp = null;
+    }
 
-		return wamp.IsConnected();
-	}
+    /// <summary>
+    /// Return true if the client is connected and ready for operations.
+    /// </summary>
+    public bool IsConnected()
+    {
+        if (wamp == null)
+            return false;
 
-	/// <summary>Call a WAAPI remote procedure. Refer to WAAPI reference documentation for a list of URIs and their arguments and options.</summary>
-	/// <param name="uri">The URI of the remote procedure.</param>
-	/// <param name="args">The arguments of the remote procedure.</param>
-	/// <param name="options">The options the remote procedure.</param>
-	/// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
-	/// <returns>A JSON string with the result of the Remote Procedure Call.</returns>
-	public async System.Threading.Tasks.Task<string> Call(
-		string uri,
-		string args = "{}",
-		string options = "{}",
-		int timeout = System.Int32.MaxValue)
-	{
-		if (wamp == null)
-			throw new Wamp.WampNotConnectedException("WAMP connection is not established");
+        return wamp.IsConnected();
+    }
 
-		if (args == null)
-			args = "{}";
-		if (options == null)
-			options = "{}";
+    /// <summary>Call a WAAPI remote procedure. Refer to WAAPI reference documentation for a list of URIs and their arguments and options.</summary>
+    /// <param name="uri">The URI of the remote procedure.</param>
+    /// <param name="args">The arguments of the remote procedure.</param>
+    /// <param name="options">The options the remote procedure.</param>
+    /// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
+    /// <returns>A JSON string with the result of the Remote Procedure Call.</returns>
+    public async System.Threading.Tasks.Task<string> Call(
+        string uri,
+        string args = "{}",
+        string options = "{}",
+        int timeout = System.Int32.MaxValue)
+    {
+        if (wamp == null)
+            throw new Wamp.WampNotConnectedException("WAMP connection is not established");
 
-		return await wamp.Call(uri, args, options, timeout);
-	}
+        if (args == null)
+            args = "{}";
+        if (options == null)
+            options = "{}";
 
-	/// <summary>Subscribe to WAAPI topic. Refer to WAAPI reference documentation for a list of topics and their options.</summary>
-	/// <param name="topic">The topic to which subscribe.</param>
-	/// <param name="options">The options the subscription.</param>
-	/// <param name="publishHandler/// ">The delegate function to call when the topic is published.</param>
-	/// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
-	/// <returns>Subscription id, that you can use to unsubscribe.</returns>
-	public async System.Threading.Tasks.Task<uint> Subscribe(
-		string topic,
-		string options,
-		Wamp.PublishHandler publishHandler,
-		int timeout = System.Int32.MaxValue)
-	{
-		if (wamp == null)
-			throw new Wamp.WampNotConnectedException("WAMP connection is not established");
+        return await wamp.Call(uri, args, options, timeout);
+    }
 
-		if (options == null)
-			options = "{}";
+    /// <summary>Subscribe to WAAPI topic. Refer to WAAPI reference documentation for a list of topics and their options.</summary>
+    /// <param name="topic">The topic to which subscribe.</param>
+    /// <param name="options">The options the subscription.</param>
+    /// <param name="publishHandler/// ">The delegate function to call when the topic is published.</param>
+    /// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
+    /// <returns>Subscription id, that you can use to unsubscribe.</returns>
+    public async System.Threading.Tasks.Task<uint> Subscribe(
+        string topic,
+        string options,
+        Wamp.PublishHandler publishHandler,
+        int timeout = System.Int32.MaxValue)
+    {
+        if (wamp == null)
+            throw new Wamp.WampNotConnectedException("WAMP connection is not established");
 
-		return await wamp.Subscribe(topic, options, publishHandler, timeout);
-	}
+        if (options == null)
+            options = "{}";
 
-	/// <summary>Unsubscribe from a subscription.</summary>
-	/// <param name="subscriptionId">The subscription id received from the initial subscription.</param>
-	/// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
-	public async System.Threading.Tasks.Task Unsubscribe(
-		uint subscriptionId,
-		int timeout = System.Int32.MaxValue)
-	{
-		if (wamp == null)
-			throw new Wamp.WampNotConnectedException("WAMP connection is not established");
+        return await wamp.Subscribe(topic, options, publishHandler, timeout);
+    }
 
-		await wamp.Unsubscribe(subscriptionId, timeout);
-	}
+    /// <summary>Unsubscribe from a subscription.</summary>
+    /// <param name="subscriptionId">The subscription id received from the initial subscription.</param>
+    /// <param name="timeout">The maximum timeout in milliseconds for the function to execute. Will raise Waapi.TimeoutException when timeout is reached.</param>
+    public async System.Threading.Tasks.Task Unsubscribe(
+        uint subscriptionId,
+        int timeout = System.Int32.MaxValue)
+    {
+        if (wamp == null)
+            throw new Wamp.WampNotConnectedException("WAMP connection is not established");
+
+        await wamp.Unsubscribe(subscriptionId, timeout);
+    }
 }

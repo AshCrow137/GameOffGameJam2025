@@ -69,7 +69,7 @@ public class WwisePluginRefArray
     public WwisePluginRefArray(global::System.IntPtr cPtr) : this(cPtr, true)
     {
     }
-    
+
     public WwisePluginRefArray() : this(WwiseProjectDatabase.GetAllPluginRef(), true)
     {
     }

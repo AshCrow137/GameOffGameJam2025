@@ -1,15 +1,13 @@
 using Pathfinding;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class GridCity : BaseGridEntity,IDamageable
+public class GridCity : BaseGridEntity, IDamageable
 {
 
     [Header("Production Data")]
-    [SerializeField] private int productGold=5;
-    [SerializeField] private int productMagic=5;
+    [SerializeField] private int productGold = 5;
+    [SerializeField] private int productMagic = 5;
     [SerializeField] private int productMaterial = 1;
     [SerializeField] private GameObject destroyedCityPrefab;
     Dictionary<ResourceType, int> product = new Dictionary<ResourceType, int>();
@@ -38,11 +36,11 @@ public class GridCity : BaseGridEntity,IDamageable
         productionQueue = GetComponent<CityProductionQueue>();
         if (productionQueue == null)
         {
-           gameObject.AddComponent<CityProductionQueue>();
+            gameObject.AddComponent<CityProductionQueue>();
             productionQueue = GetComponent<CityProductionQueue>();
         }
         productionQueue.Initialize(owner, this);
-        hTM.PlaceCityOnTheTile(GetCellPosition(),this);
+        hTM.PlaceCityOnTheTile(GetCellPosition(), this);
         owner.AddCityToKingdom(this);
         if (productGold > 0) product.Add(ResourceType.Gold, productGold);
         if (productMagic > 0) product.Add(ResourceType.Magic, productMagic);
@@ -51,7 +49,7 @@ public class GridCity : BaseGridEntity,IDamageable
     }
     public void OnBuildingConstructed(GridBuilding building)
     {
-        Health +=(int) building.HpForCity;
+        Health += (int)building.HpForCity;
         CurrentHealth += (int)building.HpForCity;
         HPImage.fillAmount = (float)CurrentHealth / Health;
     }
@@ -60,11 +58,11 @@ public class GridCity : BaseGridEntity,IDamageable
     {
         base.OnEndTurn(entity);
         bCanSpawnUnits = true;
-        if(entity==Owner)
+        if (entity == Owner)
         {
             GetComponent<CityProductionQueue>().OnTurnEnd();
         }
-        
+
     }
     protected override void OnStartTurn(BaseKingdom entity)
     {
@@ -75,7 +73,7 @@ public class GridCity : BaseGridEntity,IDamageable
         Owner.Resources().AddAll(product);
     }
 
-    public void InstantiateCity(CityData cityData, Vector3Int position,BaseKingdom owner)
+    public void InstantiateCity(CityData cityData, Vector3Int position, BaseKingdom owner)
     {
         this.sprite = cityData.sprite;
         this.position = position;
@@ -94,7 +92,7 @@ public class GridCity : BaseGridEntity,IDamageable
         Debug.Log($"Select {this.name} city");
         UIManager.Instance.ActivateUnitProductionPanel(this);
         ProductionQueueUI.Instance.UpdateUI(productionQueue);
-        
+
     }
     public override void OnEntityDeselect()
     {
@@ -105,10 +103,10 @@ public class GridCity : BaseGridEntity,IDamageable
 
     public void TryToSpawnUnitInCity(GameObject unitPrefab)
     {
-        if(bCanSpawnUnits) 
+        if (bCanSpawnUnits)
         {
-            List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(gridPosition, 1,unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
-            if(possiblePositions.Count <= 0)
+            List<Vector3Int> possiblePositions = HexTilemapManager.Instance.GetCellsInRange(gridPosition, 1, unitPrefab.GetComponent<BaseGridUnitScript>().GetPossibleSpawnTiles());
+            if (possiblePositions.Count <= 0)
             {
                 UIManager.Instance.ShowMessageText($"This have no available tiles to spawn {unitPrefab.GetComponent<BaseGridEntity>().GetEntityDisplayName()}!");
                 return;
@@ -129,11 +127,11 @@ public class GridCity : BaseGridEntity,IDamageable
         {
             UIManager.Instance.ShowMessageText($"This city already placed a unit this turn!");
         }
-       
+
     }
-    public override void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack,DamageType damageType)
+    public override void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack, DamageType damageType)
     {
-        base.TakeDamage(amount, attacker, retallitionAttack,damageType);
+        base.TakeDamage(amount, attacker, retallitionAttack, damageType);
         CurrentHealth -= amount;
         Debug.Log($"{this.gameObject.name} take {amount} damage");
         HPImage.fillAmount = (float)CurrentHealth / Health;
@@ -148,13 +146,13 @@ public class GridCity : BaseGridEntity,IDamageable
 
     public override void Death()
     {
-        Dictionary< Vector3Int, GridBuilding > buildingsToDestroy = new Dictionary< Vector3Int, GridBuilding >(buildings);
+        Dictionary<Vector3Int, GridBuilding> buildingsToDestroy = new Dictionary<Vector3Int, GridBuilding>(buildings);
         foreach (KeyValuePair<Vector3Int, GridBuilding> pair in buildingsToDestroy)
         {
             pair.Value.Death();
         }
         List<Production> productions = productionQueue?.GetTotalProduction();
-        if(productions!=null)
+        if (productions != null)
         {
             foreach (Production production in productions)
             {
@@ -162,13 +160,13 @@ public class GridCity : BaseGridEntity,IDamageable
             }
 
         }
-  
+
         base.Death();
         hTM.RemoveCityOnTile(GetCellPosition());
         CityManager.Instance.RemoveCity(GetCellPosition());
         GetComponent<EntityVision>()?.OnDeath();
         Owner.RemoveCityFromKingdom(this);
-        if(Owner is AIKingdom)
+        if (Owner is AIKingdom)
         {
             GameObject destroyedCity = Instantiate(destroyedCityPrefab, transform.position, Quaternion.identity);
             DestroyedCity script = destroyedCity.GetComponent<DestroyedCity>();
@@ -184,13 +182,13 @@ public class GridCity : BaseGridEntity,IDamageable
     public void UpdateUnitSpawnRadius()
     {
         const int maxRadius = 5;
-        
+
         // Keep expanding the radius until we find available tiles or reach max radius
         for (int checkRadius = 1; checkRadius <= maxRadius; checkRadius++)
         {
             // GetCellsInRange already filters for Land and Water tiles by default
             List<Vector3Int> cellsInRadius = HexTilemapManager.Instance.GetCellsInRange(gridPosition, checkRadius);
-            
+
             // If we found available land/water tiles at this radius, set it and stop
             if (cellsInRadius.Count > 0)
             {
@@ -198,7 +196,7 @@ public class GridCity : BaseGridEntity,IDamageable
                 return;
             }
         }
-        
+
         // If no available tiles found even at max radius, set to max
         unitSpawnRadius = maxRadius;
     }

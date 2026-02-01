@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,14 +21,14 @@ public class Combat
         CombatData existingData = combatDataList.Find(data => data.UnitAtacker == unitAtacker);
         if (existingData != null)
         {
-            if(!existingData.DamageDealtByType.ContainsKey(damageType))
+            if (!existingData.DamageDealtByType.ContainsKey(damageType))
             {
                 existingData.DamageDealtByType[damageType] = 0;
             }
             existingData.DamageDealtByType[damageType] += damageDealt;
             existingData.HasKilled = hasKilled;
             existingData.LastInteractTurn = currentTurn;
-            if(hasKilled)
+            if (hasKilled)
             {
                 combatDataList = SortCombatData(combatDataList);
             }
@@ -65,9 +64,9 @@ public class Combat
     {
         CombatData dataAux;
 
-        for(int i = 0; i < dataList.Count; i++)
+        for (int i = 0; i < dataList.Count; i++)
         {
-            if(dataList[i].HasKilled)
+            if (dataList[i].HasKilled)
             {
                 dataAux = dataList[i];
                 dataList.RemoveAt(i);

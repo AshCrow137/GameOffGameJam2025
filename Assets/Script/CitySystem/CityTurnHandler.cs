@@ -1,5 +1,3 @@
-using UnityEngine;
-
 /// <summary>
 /// Handles turn-based logic for the CityManager
 /// This component should be attached to the same GameObject as CityManager

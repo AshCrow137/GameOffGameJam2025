@@ -1,9 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using System;
-using Unity.VisualScripting;
+using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     private bool PanelOpenSounds = false;
@@ -17,12 +15,12 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject PanelMain;
     [SerializeField] private Button[] Buttons;
     [SerializeField] private string[] LevelsName;
-    private string currentLevel="";
+    private string currentLevel = "";
     [SerializeField] private Button ButtonStartLevel;
     [SerializeField]
-    private Slider cameraRotationSlider; 
+    private Slider cameraRotationSlider;
     [SerializeField]
-    private Slider cameraSpeedSlider;  
+    private Slider cameraSpeedSlider;
     [SerializeField]
     private Slider cameraSpeedEdgeScreenSlider;
 
@@ -47,18 +45,19 @@ public class MainMenuController : MonoBehaviour
     void Start()
     {
         Initialize();
-        
+
     }
     private void OnEnable()
     {
         var map = CustomInput.FindActionMap("InMenu");
         moveAction = map.FindAction("Navigate");
         moveAction.Enable();
-        
+
     }
-    private void OnDisable() {
-        moveAction.Disable(); 
-        }
+    private void OnDisable()
+    {
+        moveAction.Disable();
+    }
     public void btn_StartGame()
     {
         AudioManager.Instance.ui_menumain_start.Post(gameObject);
@@ -66,15 +65,15 @@ public class MainMenuController : MonoBehaviour
     }
     public void tgl_Level(int level)
     {
-        currentLevel=LevelsName[level];
-        ButtonStartLevel.interactable=true;
+        currentLevel = LevelsName[level];
+        ButtonStartLevel.interactable = true;
     }
     public void btn_OpenLevels()
     {
         //SceneManager.LoadSceneAsync(Scene);
         AudioManager.Instance.ui_menumain_continue.Post(gameObject);
-        currentLevel="";
-        ButtonStartLevel.interactable=false;
+        currentLevel = "";
+        ButtonStartLevel.interactable = false;
         PanelOpenLevels = !PanelOpenLevels;
         PanelLevels.SetActive(PanelOpenLevels);
         PanelMain.SetActive(!PanelOpenLevels);
@@ -109,9 +108,9 @@ public class MainMenuController : MonoBehaviour
     public void btn_QuitGame()
     {
         Application.Quit();
-//#if UNITY_EDITOR
-//        UnityEditor.EditorApplication.isPlaying = false;
-//#endif
+        //#if UNITY_EDITOR
+        //        UnityEditor.EditorApplication.isPlaying = false;
+        //#endif
     }
     void Update()
     {

@@ -19,72 +19,72 @@ Copyright (c) 2025 Audiokinetic Inc.
 [System.Serializable]
 public class AkGameObjListenerList : AkAudioListener.BaseListenerList
 {
-	[System.NonSerialized] private AkGameObj akGameObj;
+    [System.NonSerialized] private AkGameObj akGameObj;
 
-	[UnityEngine.SerializeField]
-	public System.Collections.Generic.List<AkAudioListener> initialListenerList =
-		new System.Collections.Generic.List<AkAudioListener>();
+    [UnityEngine.SerializeField]
+    public System.Collections.Generic.List<AkAudioListener> initialListenerList =
+        new System.Collections.Generic.List<AkAudioListener>();
 
-	[UnityEngine.SerializeField] public bool useDefaultListeners = true;
+    [UnityEngine.SerializeField] public bool useDefaultListeners = true;
 
-	public void SetUseDefaultListeners(bool useDefault)
-	{
-		if (useDefaultListeners != useDefault)
-		{
-			useDefaultListeners = useDefault;
+    public void SetUseDefaultListeners(bool useDefault)
+    {
+        if (useDefaultListeners != useDefault)
+        {
+            useDefaultListeners = useDefault;
 
-			if (useDefault)
-			{
-				AkUnitySoundEngine.ResetListenersToDefault(akGameObj.gameObject);
-				for (var i = 0; i < ListenerList.Count; ++i)
-					AkUnitySoundEngine.AddListener(akGameObj.gameObject, ListenerList[i].gameObject);
-			}
-			else
-			{
-				var Ids = GetListenerIds();
-				AkUnitySoundEngine.SetListeners(akGameObj.gameObject, Ids, Ids == null ? 0 : (uint) Ids.Length);
-			}
-		}
-	}
+            if (useDefault)
+            {
+                AkUnitySoundEngine.ResetListenersToDefault(akGameObj.gameObject);
+                for (var i = 0; i < ListenerList.Count; ++i)
+                    AkUnitySoundEngine.AddListener(akGameObj.gameObject, ListenerList[i].gameObject);
+            }
+            else
+            {
+                var Ids = GetListenerIds();
+                AkUnitySoundEngine.SetListeners(akGameObj.gameObject, Ids, Ids == null ? 0 : (uint)Ids.Length);
+            }
+        }
+    }
 
-	public void Init(AkGameObj akGameObj)
-	{
-		this.akGameObj = akGameObj;
+    public void Init(AkGameObj akGameObj)
+    {
+        this.akGameObj = akGameObj;
 
-		if (!useDefaultListeners)
-			AkUnitySoundEngine.SetListeners(akGameObj.gameObject, null, 0);
+        if (!useDefaultListeners)
+            AkUnitySoundEngine.SetListeners(akGameObj.gameObject, null, 0);
 
-		for (var ii = 0; ii < initialListenerList.Count; ++ii)
-			initialListenerList[ii].StartListeningToEmitter(akGameObj);
-	}
+        for (var ii = 0; ii < initialListenerList.Count; ++ii)
+            initialListenerList[ii].StartListeningToEmitter(akGameObj);
+    }
 
-	public override bool Add(AkAudioListener listener)
-	{
-		var ret = base.Add(listener);
-		if (ret && AkUnitySoundEngine.IsInitialized())
-			AkUnitySoundEngine.AddListener(akGameObj.gameObject, listener.gameObject);
-		return ret;
-	}
+    public override bool Add(AkAudioListener listener)
+    {
+        var ret = base.Add(listener);
+        if (ret && AkUnitySoundEngine.IsInitialized())
+            AkUnitySoundEngine.AddListener(akGameObj.gameObject, listener.gameObject);
+        return ret;
+    }
 
-	public override bool Remove(AkAudioListener listener)
-	{
-		var ret = base.Remove(listener);
-		if (ret && AkUnitySoundEngine.IsInitialized())
-			AkUnitySoundEngine.RemoveListener(akGameObj.gameObject, listener.gameObject);
-		return ret;
-	}
+    public override bool Remove(AkAudioListener listener)
+    {
+        var ret = base.Remove(listener);
+        if (ret && AkUnitySoundEngine.IsInitialized())
+            AkUnitySoundEngine.RemoveListener(akGameObj.gameObject, listener.gameObject);
+        return ret;
+    }
 
 #if UNITY_EDITOR
-	public void AddToInitialListenerList(AkAudioListener listener)
-	{
-		if (!initialListenerList.Contains(listener))
-			initialListenerList.Add(listener);
-	}
+    public void AddToInitialListenerList(AkAudioListener listener)
+    {
+        if (!initialListenerList.Contains(listener))
+            initialListenerList.Add(listener);
+    }
 
-	public void RemoveFromInitialListenerList(AkAudioListener listener)
-	{
-		initialListenerList.Remove(listener);
-	}
+    public void RemoveFromInitialListenerList(AkAudioListener listener)
+    {
+        initialListenerList.Remove(listener);
+    }
 #endif
 }
 

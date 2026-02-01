@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IMadnessable
 {
     void IncreaseMadness(int amount);

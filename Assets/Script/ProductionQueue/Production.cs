@@ -11,7 +11,7 @@ public class Production
     public GameObject prefab;
     public GameObject placedObject;
 
-    public Production(Vector3Int position, ProductionType productionType, int duration, Building building=null)
+    public Production(Vector3Int position, ProductionType productionType, int duration, Building building = null)
     {
         this.building = building;
         this.position = position;
@@ -47,23 +47,25 @@ public class Production
         this.isStarted = false;
         this.placedObject = placedUnit;
     }
-    public bool StartProduction(GridCity city){
-        if(isStarted)
+    public bool StartProduction(GridCity city)
+    {
+        if (isStarted)
         {
             Debug.Log("Continuing production of " + productionType + " at " + position);
         }
-        if(productionType == ProductionType.Building)// && BuildingManager.Instance.CheckAndStartConstruction(city, building, position))
+        if (productionType == ProductionType.Building)// && BuildingManager.Instance.CheckAndStartConstruction(city, building, position))
         {
             isStarted = true;
         }
-        else if(productionType == ProductionType.Unit)// && UnitSpawner.Instance.CheckAndStartUnitSpawn(city, prefab, position))
+        else if (productionType == ProductionType.Unit)// && UnitSpawner.Instance.CheckAndStartUnitSpawn(city, prefab, position))
         {
             isStarted = true;
         }
-            return isStarted;
+        return isStarted;
     }
 
-    public void EndProduction(GridCity city){
+    public void EndProduction(GridCity city)
+    {
         //if (placedObject != null)
         //{
         //    BaseGridEntity entity = placedObject.GetComponent<BaseGridEntity>();
@@ -73,19 +75,21 @@ public class Production
         //    }
         //    UnityEngine.Object.Destroy(placedObject);
         //}
-        if (productionType == ProductionType.Building){
+        if (productionType == ProductionType.Building)
+        {
             BuildingManager.Instance.PlaceBuilding(building, position);
         }
         else if (productionType == ProductionType.Unit)
         {
             UnitSpawner.Instance.PlaceUnit(prefab, position, city.GetOwner());
         }
-        
+
         // Clean up the preview/queued object from the directory before it's destroyed
 
     }
 
-    public void UpdateProduction(){
+    public void UpdateProduction()
+    {
         if (isStarted)
         {
             turnsRemaining--;
@@ -100,7 +104,7 @@ public class Production
     public bool Cancel(GridCity city)
     {
         //if (!isStarted) return true;
-        if(productionType == ProductionType.Building)
+        if (productionType == ProductionType.Building)
         {
             BuildingManager.Instance.CancelConstruction(city, building, position);
             return true;

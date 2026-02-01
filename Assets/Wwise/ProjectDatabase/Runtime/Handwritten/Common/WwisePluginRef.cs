@@ -15,7 +15,7 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 #if UNITY_EDITOR
-public class WwisePluginRef: global::System.IDisposable
+public class WwisePluginRef : global::System.IDisposable
 {
     private global::System.IntPtr swigCPtr;
     protected bool swigCMemOwn;
@@ -69,7 +69,7 @@ public class WwisePluginRef: global::System.IDisposable
     public WwisePluginRef(global::System.IntPtr cPtr) : this(cPtr, true)
     {
     }
-    
+
     public uint Id => WwiseProjectDatabase.GetPluginId(swigCPtr);
     public string Name => WwiseProjectDatabase.GetPluginName(swigCPtr);
     public string DLL => WwiseProjectDatabase.GetPluginDLL(swigCPtr);

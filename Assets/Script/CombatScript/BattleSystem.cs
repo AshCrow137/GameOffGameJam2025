@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,9 +8,9 @@ public static class BattleSystem
 
     private static bool IsInCombat(UnitStats atacked)
     {
-        foreach(Combat combat in combats)
+        foreach (Combat combat in combats)
         {
-            if(combat.unitAtacked == atacked)
+            if (combat.unitAtacked == atacked)
             {
                 return true;
             }
@@ -61,10 +60,10 @@ public static class BattleSystem
     private static float CalculateDamageOf(Combat combat, UnitStats attacker)
     {
         CombatData data = combat.combatDataList.Find(d => d.UnitAtacker == attacker);
-        if(data != null)
+        if (data != null)
         {
             float totalDamage = 0f;
-            foreach(float damage in data.DamageDealtByType.Values)
+            foreach (float damage in data.DamageDealtByType.Values)
             {
                 totalDamage += damage;
             }
@@ -76,7 +75,7 @@ public static class BattleSystem
     public static float DamageTakingTo(UnitStats attacker, UnitStats attacked)
     {
         Combat combat = GetCombat(attacker);
-        if(combat != null)
+        if (combat != null)
         {
             return CalculateDamageOf(combat, attacked);
         }
@@ -113,14 +112,14 @@ public static class BattleSystem
         if (combat != null)
         {
             CombatData data = combat.combatDataList.Find(d => d == atackerData);
-            if(data != null)
+            if (data != null)
             {
                 int count = 0;
                 foreach (BaseEffect effect in atacked.GetOwner().activeEffects)
                 {
-                    for(int i = 0; i< data.EffectsApplied.Count; i++)
+                    for (int i = 0; i < data.EffectsApplied.Count; i++)
                     {
-                        if(effect.Name == data.EffectsApplied[i])
+                        if (effect.Name == data.EffectsApplied[i])
                         {
                             count++;
                         }
@@ -134,7 +133,7 @@ public static class BattleSystem
 
     public static void EndCombat(Combat combat)
     {
-        if(combats.Contains(combat))
+        if (combats.Contains(combat))
         {
             combats.Remove(combat);
             completeCombats.Add(combat);

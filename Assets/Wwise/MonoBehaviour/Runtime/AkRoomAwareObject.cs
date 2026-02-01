@@ -26,84 +26,84 @@ Copyright (c) 2025 Audiokinetic Inc.
 [UnityEngine.DisallowMultipleComponent]
 public class AkRoomAwareObject : UnityEngine.MonoBehaviour
 {
-	private static readonly System.Collections.Generic.Dictionary<UnityEngine.Collider, AkRoomAwareObject> ColliderToRoomAwareObjectMap = new System.Collections.Generic.Dictionary<UnityEngine.Collider, AkRoomAwareObject>();
+    private static readonly System.Collections.Generic.Dictionary<UnityEngine.Collider, AkRoomAwareObject> ColliderToRoomAwareObjectMap = new System.Collections.Generic.Dictionary<UnityEngine.Collider, AkRoomAwareObject>();
 
-	public static AkRoomAwareObject GetAkRoomAwareObjectFromCollider(UnityEngine.Collider collider)
-	{
-		AkRoomAwareObject roomAwareObject = null;
-		return ColliderToRoomAwareObjectMap.TryGetValue(collider, out roomAwareObject) ? roomAwareObject : null;
-	}
+    public static AkRoomAwareObject GetAkRoomAwareObjectFromCollider(UnityEngine.Collider collider)
+    {
+        AkRoomAwareObject roomAwareObject = null;
+        return ColliderToRoomAwareObjectMap.TryGetValue(collider, out roomAwareObject) ? roomAwareObject : null;
+    }
 
-	public UnityEngine.Collider m_Collider;
-	private readonly AkRoom.PriorityList roomPriorityList = new AkRoom.PriorityList();
+    public UnityEngine.Collider m_Collider;
+    private readonly AkRoom.PriorityList roomPriorityList = new AkRoom.PriorityList();
 
-	private void Awake()
-	{
-		m_Collider = GetComponent<UnityEngine.Collider>();
-		if (m_Collider != null)
-		{
-			ColliderToRoomAwareObjectMap.Add(m_Collider, this);
-		}
-	}
+    private void Awake()
+    {
+        m_Collider = GetComponent<UnityEngine.Collider>();
+        if (m_Collider != null)
+        {
+            ColliderToRoomAwareObjectMap.Add(m_Collider, this);
+        }
+    }
 
-	private void OnEnable()
-	{
-		AkRoomAwareManager.RegisterRoomAwareObject(this);
+    private void OnEnable()
+    {
+        AkRoomAwareManager.RegisterRoomAwareObject(this);
 
-		for (int i = 0; i < roomPriorityList.Count; ++i)
-		{
-			roomPriorityList[i].TryEnter(this);
-		}
-	}
+        for (int i = 0; i < roomPriorityList.Count; ++i)
+        {
+            roomPriorityList[i].TryEnter(this);
+        }
+    }
 
-	private void OnDisable()
-	{
-		for (int i = 0; i < roomPriorityList.Count; ++i)
-		{
-			roomPriorityList[i].Exit(this);
-		}
+    private void OnDisable()
+    {
+        for (int i = 0; i < roomPriorityList.Count; ++i)
+        {
+            roomPriorityList[i].Exit(this);
+        }
 
-		roomPriorityList.Clear();
+        roomPriorityList.Clear();
 
-		AkRoomAwareManager.UnregisterRoomAwareObject(this);
+        AkRoomAwareManager.UnregisterRoomAwareObject(this);
 
-		SetGameObjectInRoom(null);
-	}
+        SetGameObjectInRoom(null);
+    }
 
-	private void OnDestroy()
-	{
-		if (m_Collider)
-		{
-			ColliderToRoomAwareObjectMap.Remove(m_Collider);
-		}
-	}
+    private void OnDestroy()
+    {
+        if (m_Collider)
+        {
+            ColliderToRoomAwareObjectMap.Remove(m_Collider);
+        }
+    }
 
-	public void SetGameObjectInHighestPriorityActiveAndEnabledRoom()
-	{
-		SetGameObjectInRoom(roomPriorityList.GetHighestPriorityActiveAndEnabledRoom());
-	}
+    public void SetGameObjectInHighestPriorityActiveAndEnabledRoom()
+    {
+        SetGameObjectInRoom(roomPriorityList.GetHighestPriorityActiveAndEnabledRoom());
+    }
 
-	private void SetGameObjectInRoom(AkRoom room)
-	{
-		AkUnitySoundEngine.SetGameObjectInRoom(gameObject, AkRoom.GetAkRoomID(room));
-	}
+    private void SetGameObjectInRoom(AkRoom room)
+    {
+        AkUnitySoundEngine.SetGameObjectInRoom(gameObject, AkRoom.GetAkRoomID(room));
+    }
 
-	/// <summary>
-	///     Called when entering a room.
-	/// </summary>
-	/// <param name="room">The room.</param>
-	public void EnteredRoom(AkRoom room)
-	{
-		roomPriorityList.Add(room);
-	}
+    /// <summary>
+    ///     Called when entering a room.
+    /// </summary>
+    /// <param name="room">The room.</param>
+    public void EnteredRoom(AkRoom room)
+    {
+        roomPriorityList.Add(room);
+    }
 
-	/// <summary>
-	///     Called when exiting a room.
-	/// </summary>
-	/// <param name="room">The room.</param>
-	public void ExitedRoom(AkRoom room)
-	{
-		roomPriorityList.Remove(room);
-	}
+    /// <summary>
+    ///     Called when exiting a room.
+    /// </summary>
+    /// <param name="room">The room.</param>
+    public void ExitedRoom(AkRoom room)
+    {
+        roomPriorityList.Remove(room);
+    }
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

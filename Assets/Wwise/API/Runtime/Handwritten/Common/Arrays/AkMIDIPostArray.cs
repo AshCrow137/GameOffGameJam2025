@@ -18,71 +18,71 @@ Copyright (c) 2025 Audiokinetic Inc.
 
 public class AkMIDIPostArray
 {
-	private readonly int m_Count;
-	private readonly int SIZE_OF = AkUnitySoundEnginePINVOKE.CSharp_AkMIDIPost_GetSizeOf();
-	private System.IntPtr m_Buffer = System.IntPtr.Zero;
+    private readonly int m_Count;
+    private readonly int SIZE_OF = AkUnitySoundEnginePINVOKE.CSharp_AkMIDIPost_GetSizeOf();
+    private System.IntPtr m_Buffer = System.IntPtr.Zero;
 
-	public AkMIDIPostArray(int size)
-	{
-		m_Count = size;
-		m_Buffer = System.Runtime.InteropServices.Marshal.AllocHGlobal(m_Count * SIZE_OF);
-	}
+    public AkMIDIPostArray(int size)
+    {
+        m_Count = size;
+        m_Buffer = System.Runtime.InteropServices.Marshal.AllocHGlobal(m_Count * SIZE_OF);
+    }
 
-	public AkMIDIPost this[int index]
-	{
-		get
-		{
-			if (index >= m_Count)
-				throw new System.IndexOutOfRangeException("Out of range access in AkMIDIPostArray");
+    public AkMIDIPost this[int index]
+    {
+        get
+        {
+            if (index >= m_Count)
+                throw new System.IndexOutOfRangeException("Out of range access in AkMIDIPostArray");
 
-			return new AkMIDIPost(GetObjectPtr(index), false);
-		}
+            return new AkMIDIPost(GetObjectPtr(index), false);
+        }
 
-		set
-		{
-			if (index >= m_Count)
-				throw new System.IndexOutOfRangeException("Out of range access in AkMIDIPostArray");
+        set
+        {
+            if (index >= m_Count)
+                throw new System.IndexOutOfRangeException("Out of range access in AkMIDIPostArray");
 
-			AkUnitySoundEnginePINVOKE.CSharp_AkMIDIPost_Clone(GetObjectPtr(index), AkMIDIPost.getCPtr(value));
-		}
-	}
+            AkUnitySoundEnginePINVOKE.CSharp_AkMIDIPost_Clone(GetObjectPtr(index), AkMIDIPost.getCPtr(value));
+        }
+    }
 
-	~AkMIDIPostArray()
-	{
-		System.Runtime.InteropServices.Marshal.FreeHGlobal(m_Buffer);
-		m_Buffer = System.IntPtr.Zero;
-	}
+    ~AkMIDIPostArray()
+    {
+        System.Runtime.InteropServices.Marshal.FreeHGlobal(m_Buffer);
+        m_Buffer = System.IntPtr.Zero;
+    }
 
-	public void PostOnEvent(uint in_eventID, UnityEngine.GameObject gameObject)
-	{
-		var gameObjectID = AkUnitySoundEngine.GetAkGameObjectID(gameObject);
-		AkUnitySoundEngine.PreGameObjectAPICall(gameObject, gameObjectID);
-		AkUnitySoundEnginePINVOKE.CSharp_PostMIDIOnEvent__SWIG_3(in_eventID, gameObjectID, m_Buffer, (ushort) m_Count);
-	}
+    public void PostOnEvent(uint in_eventID, UnityEngine.GameObject gameObject)
+    {
+        var gameObjectID = AkUnitySoundEngine.GetAkGameObjectID(gameObject);
+        AkUnitySoundEngine.PreGameObjectAPICall(gameObject, gameObjectID);
+        AkUnitySoundEnginePINVOKE.CSharp_PostMIDIOnEvent__SWIG_3(in_eventID, gameObjectID, m_Buffer, (ushort)m_Count);
+    }
 
-	public void PostOnEvent(uint in_eventID, UnityEngine.GameObject gameObject, int count)
-	{
-		if (count >= m_Count)
-			throw new System.IndexOutOfRangeException("Out of range access in AkMIDIPostArray");
+    public void PostOnEvent(uint in_eventID, UnityEngine.GameObject gameObject, int count)
+    {
+        if (count >= m_Count)
+            throw new System.IndexOutOfRangeException("Out of range access in AkMIDIPostArray");
 
-		var gameObjectID = AkUnitySoundEngine.GetAkGameObjectID(gameObject);
-		AkUnitySoundEngine.PreGameObjectAPICall(gameObject, gameObjectID);
-		AkUnitySoundEnginePINVOKE.CSharp_PostMIDIOnEvent__SWIG_3(in_eventID, gameObjectID, m_Buffer, (ushort) count);
-	}
+        var gameObjectID = AkUnitySoundEngine.GetAkGameObjectID(gameObject);
+        AkUnitySoundEngine.PreGameObjectAPICall(gameObject, gameObjectID);
+        AkUnitySoundEnginePINVOKE.CSharp_PostMIDIOnEvent__SWIG_3(in_eventID, gameObjectID, m_Buffer, (ushort)count);
+    }
 
-	public System.IntPtr GetBuffer()
-	{
-		return m_Buffer;
-	}
+    public System.IntPtr GetBuffer()
+    {
+        return m_Buffer;
+    }
 
-	public int Count()
-	{
-		return m_Count;
-	}
+    public int Count()
+    {
+        return m_Count;
+    }
 
-	private System.IntPtr GetObjectPtr(int index)
-	{
-		return (System.IntPtr) (m_Buffer.ToInt64() + SIZE_OF * index);
-	}
+    private System.IntPtr GetObjectPtr(int index)
+    {
+        return (System.IntPtr)(m_Buffer.ToInt64() + SIZE_OF * index);
+    }
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

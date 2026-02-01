@@ -18,7 +18,7 @@ public class CityManager : MonoBehaviour
     private GameObject cityPrefab;
     [SerializeField]
     private Tilemap tilemap;
-    
+
 
     private Resource resourceManager;
     public void Instantiate()
@@ -48,7 +48,7 @@ public class CityManager : MonoBehaviour
 
         // Create a new city instance from the city data
         //City newCity = new City(cityData, gridPosition);
-        GameObject newCityObject = Instantiate(cityPrefab,HexTilemapManager.Instance.CellToWorldPos(gridPosition),Quaternion.identity);
+        GameObject newCityObject = Instantiate(cityPrefab, HexTilemapManager.Instance.CellToWorldPos(gridPosition), Quaternion.identity);
         GridCity newCity = newCityObject.GetComponent<GridCity>();
         newCity.InstantiateCity(cityData, gridPosition, unitOwner);
         // TODO: JUST FOR TESTING. REMOVE LATER AND ADD LOGIC FOR FINDING RESOURCE PER CITY
@@ -147,7 +147,7 @@ public class CityManager : MonoBehaviour
             Debug.LogWarning("Tile state: " + HexTilemapManager.Instance.GetTileState(position));
             return false;
         }
-        
+
         return true;
     }
 
@@ -175,7 +175,7 @@ public class CityManager : MonoBehaviour
         foreach (var cityEntry in cities)
         {
             GridCity city = cityEntry.Value;
-            
+
             // Skip if city has no resources to generate
             if (city.resourceGainPerTurn == null || city.resourceGainPerTurn.Count == 0)
             {
@@ -209,9 +209,9 @@ public class CityManager : MonoBehaviour
         }
         return false;
     }
-    public bool AddCity(Vector3Int position,GridCity city)
+    public bool AddCity(Vector3Int position, GridCity city)
     {
-        if(!cities.ContainsKey(position))
+        if (!cities.ContainsKey(position))
         {
             cities.Add(position, city);
             HexTilemapManager.Instance.SetTileState(position, TileState.OccupiedByCity);
@@ -264,7 +264,7 @@ public class CityManager : MonoBehaviour
 
         return true;
     }
-    
+
     // public void SpawnBuilding(City city, Vector3Int position, BuildingData buildingData)
     // {
     //     if (!CanCityBePlaced(position))

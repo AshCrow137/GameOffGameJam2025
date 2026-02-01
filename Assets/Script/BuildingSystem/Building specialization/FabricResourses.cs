@@ -1,6 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
-using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine;
 
 public class FabricResourses : GridBuilding
 {
@@ -23,18 +22,18 @@ public class FabricResourses : GridBuilding
         if (kingdom != Owner) { return; }
         if (!bIsActive) return;
         Debug.Log("add resource");
-        
+
 
         Owner.Resources().AddAll(product);
     }
     public Dictionary<ResourceType, int> GetProduction()
     {
-        return new Dictionary<ResourceType, int>() { {ResourceType.Magic, productMagic }, { ResourceType.Gold, productGold }, { ResourceType.Materials, productMaterial} };
+        return new Dictionary<ResourceType, int>() { { ResourceType.Magic, productMagic }, { ResourceType.Gold, productGold }, { ResourceType.Materials, productMaterial } };
     }
     public override string GetBuildingFunction()
     {
         string text = "Produce";
-        if (productGold > 0) text+= $" {productGold} gold";
+        if (productGold > 0) text += $" {productGold} gold";
         if (productMagic > 0) text += $" {productMagic} magic";
         if (productMaterial > 0) text += $" {productMaterial} materials";
         return text;

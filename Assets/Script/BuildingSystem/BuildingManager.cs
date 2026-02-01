@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 /// <summary>
 /// Manages building placement and operations on the grid
@@ -28,7 +27,7 @@ public class BuildingManager : MonoBehaviour
 
     [SerializeField]
     private Tilemap tilemap;
-    
+
     //[SerializeField]
     //private Resource resourceManager;
 
@@ -84,10 +83,10 @@ public class BuildingManager : MonoBehaviour
         buildingPreview.GetComponent<GridBuilding>().Initialize(building.ownerCity.GetOwner());
         building.ownerCity.buildings[gridPosition] = buildingPreview.GetComponent<GridBuilding>();
         building.ownerCity.OnBuildingConstructed(buildingPreview.GetComponent<GridBuilding>());
-        
+
         HexTilemapManager.Instance.SetTileState(gridPosition, TileState.OccuppiedByBuilding);
 
-        if(playerKngdom.GetVisionManager().IsInNoFog(gridPosition))
+        if (playerKngdom.GetVisionManager().IsInNoFog(gridPosition))
         {
             building.buildingPlacementEvent.Post(gameObject);
         }
@@ -215,7 +214,7 @@ public class BuildingManager : MonoBehaviour
             UIManager.Instance.ShowMessageText($"Cannot place entity outside city boundaries. Distance to city: {distanceToCity}, allowed radius: {city.unitSpawnRadius}");
             return false;
         }
-        if(city.GetComponent<CityProductionQueue>().IsQueueFull())
+        if (city.GetComponent<CityProductionQueue>().IsQueueFull())
         {
             UIManager.Instance.ShowMessageText("Production queue is full");
             return false;
@@ -225,9 +224,10 @@ public class BuildingManager : MonoBehaviour
     }
 
 
-    private bool CanBuildingBePlaced(Building building, Vector3Int position, BaseKingdom kingdom){
+    private bool CanBuildingBePlaced(Building building, Vector3Int position, BaseKingdom kingdom)
+    {
 
-        if(!building.buildingPrefab.GetComponent<BaseGridEntity>().GetCanStandOnTiles().Contains(HexTilemapManager.Instance.GetTileState(position)))
+        if (!building.buildingPrefab.GetComponent<BaseGridEntity>().GetCanStandOnTiles().Contains(HexTilemapManager.Instance.GetTileState(position)))
         {
             return false;
         }
@@ -237,7 +237,7 @@ public class BuildingManager : MonoBehaviour
         // return true;
         Resource kingdomResource = kingdom.Resources();
         Dictionary<ResourceType, int> resultReqs = kingdomResource.HasEnough(resourceRequirements);
-        if(resultReqs!=null)
+        if (resultReqs != null)
         {
             foreach (var a in resultReqs)
             {
@@ -268,7 +268,7 @@ public class BuildingManager : MonoBehaviour
     /// <summary>
     /// Queues a building for production at mouse position
     /// </summary>
-    public void QueueBuildingAtMousePosition(GridCity city,int buildingType)
+    public void QueueBuildingAtMousePosition(GridCity city, int buildingType)
     {
         Vector3Int mousePosition = HexTilemapManager.Instance.GetCellAtMousePosition();
         if (mousePosition.x == int.MaxValue)
@@ -280,7 +280,7 @@ public class BuildingManager : MonoBehaviour
         QueueBuildingAtPosition(mousePosition, city, building);
 
     }
-    public bool QueueBuildingAtPosition(Vector3Int position,GridCity city,GridBuilding gridBuilding )
+    public bool QueueBuildingAtPosition(Vector3Int position, GridCity city, GridBuilding gridBuilding)
     {
         Building building = gridBuilding.GetBuilding();
         return QueueBuildingAtPosition(position, city, building);
@@ -317,12 +317,12 @@ public class BuildingManager : MonoBehaviour
     // set tile to available, and refund resources
     public void CancelConstruction(GridCity city, Building building, Vector3Int position)
     {
-        if(city == null || building == null || position == null)
+        if (city == null || building == null || position == null)
         {
             Debug.LogError("Invalid parameters");
             return;
         }
-        if(HexTilemapManager.Instance.GetTileState(position) != TileState.OccuppiedByBuilding)
+        if (HexTilemapManager.Instance.GetTileState(position) != TileState.OccuppiedByBuilding)
         {
             Debug.LogError("Tile was not occupied by building when cancelling construction");
             return;

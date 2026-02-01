@@ -18,33 +18,33 @@ Copyright (c) 2025 Audiokinetic Inc.
 
 public class AkExternalSourceInfoArray : AkBaseArray<AkExternalSourceInfo>
 {
-	public AkExternalSourceInfoArray(int count) : base(count)
-	{
-	}
+    public AkExternalSourceInfoArray(int count) : base(count)
+    {
+    }
 
-	protected override int StructureSize
-	{
-		get { return AkUnitySoundEnginePINVOKE.CSharp_AkExternalSourceInfo_GetSizeOf(); }
-	}
+    protected override int StructureSize
+    {
+        get { return AkUnitySoundEnginePINVOKE.CSharp_AkExternalSourceInfo_GetSizeOf(); }
+    }
 
-	protected override void DefaultConstructAtIntPtr(System.IntPtr address)
-	{
-		AkUnitySoundEnginePINVOKE.CSharp_AkExternalSourceInfo_Clear(address);
-	}
+    protected override void DefaultConstructAtIntPtr(System.IntPtr address)
+    {
+        AkUnitySoundEnginePINVOKE.CSharp_AkExternalSourceInfo_Clear(address);
+    }
 
-	protected override void ReleaseAllocatedMemoryFromReferenceAtIntPtr(System.IntPtr address)
-	{
-		AkUnitySoundEnginePINVOKE.CSharp_AkExternalSourceInfo_szFile_set(address, null);
-	}
+    protected override void ReleaseAllocatedMemoryFromReferenceAtIntPtr(System.IntPtr address)
+    {
+        AkUnitySoundEnginePINVOKE.CSharp_AkExternalSourceInfo_szFile_set(address, null);
+    }
 
-	protected override AkExternalSourceInfo CreateNewReferenceFromIntPtr(System.IntPtr address)
-	{
-		return new AkExternalSourceInfo(address, false);
-	}
+    protected override AkExternalSourceInfo CreateNewReferenceFromIntPtr(System.IntPtr address)
+    {
+        return new AkExternalSourceInfo(address, false);
+    }
 
-	protected override void CloneIntoReferenceFromIntPtr(System.IntPtr address, AkExternalSourceInfo other)
-	{
-		AkUnitySoundEnginePINVOKE.CSharp_AkExternalSourceInfo_Clone(address, AkExternalSourceInfo.getCPtr(other));
-	}
+    protected override void CloneIntoReferenceFromIntPtr(System.IntPtr address, AkExternalSourceInfo other)
+    {
+        AkUnitySoundEnginePINVOKE.CSharp_AkExternalSourceInfo_Clone(address, AkExternalSourceInfo.getCPtr(other));
+    }
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 //TODO replace TakeDamage function with interface
 public interface IDamageable
 {
-    
+
 }
 
 public class BaseGridEntity : MonoBehaviour
@@ -47,7 +47,7 @@ public class BaseGridEntity : MonoBehaviour
 
     protected BaseKingdom Owner;
     protected SpriteRenderer baseSprite;
-    
+
 
     protected static readonly float[,] AttackModifiers = {
                 /*C |  I  | A | S | B */
@@ -63,7 +63,7 @@ public class BaseGridEntity : MonoBehaviour
     }
     public EntityType getVulnerableEntityType(EntityType attackerType)
     {
-        switch(attackerType)
+        switch (attackerType)
         {
             case EntityType.Infantry: return EntityType.Cavalry;
             case EntityType.Archer: return EntityType.Infantry;
@@ -77,7 +77,7 @@ public class BaseGridEntity : MonoBehaviour
     public virtual void Initialize(BaseKingdom owner)
     {
         hTM = HexTilemapManager.Instance;
-       
+
         Owner = owner;
         if (!Owner)
         {
@@ -89,7 +89,7 @@ public class BaseGridEntity : MonoBehaviour
         }
         GlobalEventManager.EndTurnEvent.AddListener(OnEndTurn);
         GlobalEventManager.StartTurnEvent.AddListener(OnStartTurn);
-        if(!baseSprite) baseSprite = GetComponent<SpriteRenderer>();
+        if (!baseSprite) baseSprite = GetComponent<SpriteRenderer>();
         Color ownerColor = Owner.GetKingdomColor();
         baseSprite.color = new Color(ownerColor.r, ownerColor.g, ownerColor.b, baseSprite.color.a);
         gridPosition = HexTilemapManager.Instance.WorldToCellPos(transform.position);
@@ -101,7 +101,7 @@ public class BaseGridEntity : MonoBehaviour
             entityVision = gameObject.AddComponent<EntityVision>();
         }
         entityVision.Initialize(this);
-        
+
         // Add entity to directory
         hTM.AddEntityToDirectory(gridPosition, this);
     }
@@ -120,7 +120,7 @@ public class BaseGridEntity : MonoBehaviour
     /// <param name="entity">Kingdom that end his turn</param>
     protected virtual void OnEndTurn(BaseKingdom entity)
     {
-        
+
     }
     /// <summary>
     /// Invokes whis StartTurnEvent in GlobalEventManager
@@ -128,7 +128,7 @@ public class BaseGridEntity : MonoBehaviour
     /// <param name="entity">current kingdom's turn</param>
     protected virtual void OnStartTurn(BaseKingdom entity)
     {
-        
+
     }
     private void RotateObject(GameObject obj)
     {
@@ -177,17 +177,17 @@ public class BaseGridEntity : MonoBehaviour
         //    {
         //        float angle = Mathf.Atan2(objdir.y, objdir.x) * Mathf.Rad2Deg;
 
-            //        // Clamp rotation so it never passes 180° or -180°
-            //        if (angle > 180f) angle -= 360f;
-            //        if (angle < -180f) angle += 360f;
+        //        // Clamp rotation so it never passes 180° or -180°
+        //        if (angle > 180f) angle -= 360f;
+        //        if (angle < -180f) angle += 360f;
 
-            //        obj.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
-            //        //Quaternion desired = Quaternion.LookRotation(dir) * Quaternion.Euler(0, 0, -90);
-            //        //bodySprite.transform.rotation = Quaternion.RotateTowards(bodySprite.transform.rotation, desired, 360f * Time.deltaTime);
-            //        //bodySprite.transform.rotation = Quaternion.LookRotation(dir);
-            //        //bodySprite.transform.rotation *= Quaternion.Euler(new Vector3(0, 0, -90));
-            //    }
-            //}
+        //        obj.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        //        //Quaternion desired = Quaternion.LookRotation(dir) * Quaternion.Euler(0, 0, -90);
+        //        //bodySprite.transform.rotation = Quaternion.RotateTowards(bodySprite.transform.rotation, desired, 360f * Time.deltaTime);
+        //        //bodySprite.transform.rotation = Quaternion.LookRotation(dir);
+        //        //bodySprite.transform.rotation *= Quaternion.Euler(new Vector3(0, 0, -90));
+        //    }
+        //}
     }
     /// <summary>
     /// invokes when kingdom select grid entity
@@ -218,7 +218,7 @@ public class BaseGridEntity : MonoBehaviour
             hTM.RemoveEntityFromDirectory(gridPosition, this);
         }
     }
-    
+
     /// <summary>
     /// Updates the grid position of this entity (called when entity moves)
     /// </summary>
@@ -226,7 +226,7 @@ public class BaseGridEntity : MonoBehaviour
     {
         gridPosition = newPosition;
     }
-    
+
     public virtual void TakeDamage(int amount, BaseGridUnitScript attacker, bool retallitionAttack, DamageType damageType)
     {
 

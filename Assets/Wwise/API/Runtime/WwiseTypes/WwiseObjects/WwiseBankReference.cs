@@ -15,9 +15,6 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
-using System.IO;
-using UnityEditor;
-
 #if AK_WWISE_ADDRESSABLES && UNITY_ADDRESSABLES
 using AK.Wwise.Unity.WwiseAddressables;
 #endif
@@ -87,5 +84,5 @@ public class WwiseBankReference : WwiseObjectReference
 #endif
 #endif
 
-	public override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.Soundbank; } }
+    public override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.Soundbank; } }
 }

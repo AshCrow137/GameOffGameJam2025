@@ -25,134 +25,134 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// - <a href="https://www.audiokinetic.com/library/edge/?source=SDK&id=soundengine__listeners.html" target="_blank">Integrating Listeners</a> (Note: This is described in the Wwise SDK documentation.)
 public class AkSpatialAudioListener : UnityEngine.MonoBehaviour
 #if UNITY_EDITOR
-	, AK.Wwise.IMigratable
+    , AK.Wwise.IMigratable
 #endif
 {
-	private static AkSpatialAudioListener s_SpatialAudioListener;
-	private static readonly SpatialAudioListenerList spatialAudioListeners = new SpatialAudioListenerList();
-	private AkAudioListener AkAudioListener;
+    private static AkSpatialAudioListener s_SpatialAudioListener;
+    private static readonly SpatialAudioListenerList spatialAudioListeners = new SpatialAudioListenerList();
+    private AkAudioListener AkAudioListener;
 
-	/// <summary>
-	///     Returns the "single" spatial audio listener.
-	/// </summary>
-	public static AkAudioListener TheSpatialAudioListener
-	{
-		get { return s_SpatialAudioListener != null ? s_SpatialAudioListener.AkAudioListener : null; }
-	}
+    /// <summary>
+    ///     Returns the "single" spatial audio listener.
+    /// </summary>
+    public static AkAudioListener TheSpatialAudioListener
+    {
+        get { return s_SpatialAudioListener != null ? s_SpatialAudioListener.AkAudioListener : null; }
+    }
 
-	/// <summary>
-	///     Returns the list of active Unity Game Objects that are designated to be spatial audio listeners.
-	/// </summary>
-	public static SpatialAudioListenerList SpatialAudioListeners
-	{
-		get { return spatialAudioListeners; }
-	}
+    /// <summary>
+    ///     Returns the list of active Unity Game Objects that are designated to be spatial audio listeners.
+    /// </summary>
+    public static SpatialAudioListenerList SpatialAudioListeners
+    {
+        get { return spatialAudioListeners; }
+    }
 
-	private void Awake()
-	{
-		AkAudioListener = GetComponent<AkAudioListener>();
-	}
+    private void Awake()
+    {
+        AkAudioListener = GetComponent<AkAudioListener>();
+    }
 
-	private void OnEnable()
-	{
-		spatialAudioListeners.Add(this);
-	}
+    private void OnEnable()
+    {
+        spatialAudioListeners.Add(this);
+    }
 
-	private void OnDisable()
-	{
-		spatialAudioListeners.Remove(this);
-	}
+    private void OnDisable()
+    {
+        spatialAudioListeners.Remove(this);
+    }
 
-	/// <summary>
-	///     This class represents the list of active Unity Game Objects that are designated to be spatial audio listeners.
-	///     Currently, only one spatial audio listener can be active at a time.
-	/// </summary>
-	public class SpatialAudioListenerList
-	{
-		private readonly System.Collections.Generic.List<AkSpatialAudioListener> listenerList =
-			new System.Collections.Generic.List<AkSpatialAudioListener>();
+    /// <summary>
+    ///     This class represents the list of active Unity Game Objects that are designated to be spatial audio listeners.
+    ///     Currently, only one spatial audio listener can be active at a time.
+    /// </summary>
+    public class SpatialAudioListenerList
+    {
+        private readonly System.Collections.Generic.List<AkSpatialAudioListener> listenerList =
+            new System.Collections.Generic.List<AkSpatialAudioListener>();
 
-		public System.Collections.Generic.List<AkSpatialAudioListener> ListenerList
-		{
-			get { return listenerList; }
-		}
+        public System.Collections.Generic.List<AkSpatialAudioListener> ListenerList
+        {
+            get { return listenerList; }
+        }
 
-		/// <summary>
-		///     Uniquely adds listeners to the list
-		/// </summary>
-		/// <param name="listener"></param>
-		/// <returns></returns>
-		public bool Add(AkSpatialAudioListener listener)
-		{
-			if (listener == null)
-			{
-				return false;
-			}
+        /// <summary>
+        ///     Uniquely adds listeners to the list
+        /// </summary>
+        /// <param name="listener"></param>
+        /// <returns></returns>
+        public bool Add(AkSpatialAudioListener listener)
+        {
+            if (listener == null)
+            {
+                return false;
+            }
 
-			if (listenerList.Contains(listener))
-			{
-				return false;
-			}
+            if (listenerList.Contains(listener))
+            {
+                return false;
+            }
 
-			listenerList.Add(listener);
-			Refresh();
-			return true;
-		}
+            listenerList.Add(listener);
+            Refresh();
+            return true;
+        }
 
-		/// <summary>
-		///     Removes listeners from the list
-		/// </summary>
-		/// <param name="listener"></param>
-		/// <returns></returns>
-		public bool Remove(AkSpatialAudioListener listener)
-		{
-			if (listener == null)
-			{
-				return false;
-			}
+        /// <summary>
+        ///     Removes listeners from the list
+        /// </summary>
+        /// <param name="listener"></param>
+        /// <returns></returns>
+        public bool Remove(AkSpatialAudioListener listener)
+        {
+            if (listener == null)
+            {
+                return false;
+            }
 
-			if (!listenerList.Remove(listener))
-			{
-				return false;
-			}
+            if (!listenerList.Remove(listener))
+            {
+                return false;
+            }
 
-			Refresh();
-			return true;
-		}
+            Refresh();
+            return true;
+        }
 
-		private void Refresh()
-		{
-			if (ListenerList.Count == 1)
-			{
-				if (s_SpatialAudioListener != null)
-				{
-					AkUnitySoundEngine.UnregisterSpatialAudioListener(s_SpatialAudioListener.gameObject);
-				}
+        private void Refresh()
+        {
+            if (ListenerList.Count == 1)
+            {
+                if (s_SpatialAudioListener != null)
+                {
+                    AkUnitySoundEngine.UnregisterSpatialAudioListener(s_SpatialAudioListener.gameObject);
+                }
 
-				s_SpatialAudioListener = ListenerList[0];
+                s_SpatialAudioListener = ListenerList[0];
 
-				AkUnitySoundEngine.RegisterSpatialAudioListener(s_SpatialAudioListener.gameObject);
-			}
-			else if (ListenerList.Count == 0 && s_SpatialAudioListener != null)
-			{
-				AkUnitySoundEngine.UnregisterSpatialAudioListener(s_SpatialAudioListener.gameObject);
-				s_SpatialAudioListener = null;
-			}
-		}
-	}
+                AkUnitySoundEngine.RegisterSpatialAudioListener(s_SpatialAudioListener.gameObject);
+            }
+            else if (ListenerList.Count == 0 && s_SpatialAudioListener != null)
+            {
+                AkUnitySoundEngine.UnregisterSpatialAudioListener(s_SpatialAudioListener.gameObject);
+                s_SpatialAudioListener = null;
+            }
+        }
+    }
 
 #if UNITY_EDITOR
-	#region WwiseMigration
-	bool AK.Wwise.IMigratable.Migrate(UnityEditor.SerializedObject obj)
-	{
-		if (!AkUtilities.IsMigrationRequired(AkUtilities.MigrationStep.NewScriptableObjectFolder_v2019_2_0))
-			return false;
+    #region WwiseMigration
+    bool AK.Wwise.IMigratable.Migrate(UnityEditor.SerializedObject obj)
+    {
+        if (!AkUtilities.IsMigrationRequired(AkUtilities.MigrationStep.NewScriptableObjectFolder_v2019_2_0))
+            return false;
 
-		UnityEditor.Undo.AddComponent<AkRoomAwareObject>(gameObject);
+        UnityEditor.Undo.AddComponent<AkRoomAwareObject>(gameObject);
 
-		return true;
-	}
-	#endregion
+        return true;
+    }
+    #endregion
 #endif
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

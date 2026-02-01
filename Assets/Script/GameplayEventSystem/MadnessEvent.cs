@@ -5,14 +5,14 @@ public class MadnessEvent : BaseGameplayEvent
 {
     [SerializeField]
     private int minMadnessReduction;
-    
+
     [SerializeField]
     private int maxMadnessReduction;
 
     public override void ExecuteEvent(BaseKingdom kingdom)
     {
         int reductionAmount = Random.Range(minMadnessReduction, maxMadnessReduction);
-        
+
         int previousMadness = kingdom.GetMadnessLevel();
         kingdom.DecreaseMadness(reductionAmount);
         int actualReduction = previousMadness - kingdom.GetMadnessLevel();

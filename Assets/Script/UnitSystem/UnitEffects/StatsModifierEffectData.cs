@@ -13,16 +13,16 @@ public class StatsModifierEffectData : BaseUnitEffectData
 
     public override BaseEffect InstantiateEffect(BaseKingdom owner, BaseGridUnitScript target)
     {
-        return new StatsModifierEffect(effectName, duration,owner,target,procRate, effectType,effectModifier, AffectedByMagicDefence, StatsToModify);
+        return new StatsModifierEffect(effectName, duration, owner, target, procRate, effectType, effectModifier, AffectedByMagicDefence, StatsToModify);
     }
 
 }
 [Serializable]
 public class StatsModifierEffect : BaseEffect
 {
-   
+
     public List<StatToModifyTypeAndValue> StatsToModify { get; private set; }
-    public StatsModifierEffect(string effectName, int duration, BaseKingdom OwnerKingdom, BaseGridUnitScript targetUnit,ProcRate procRate ,EffectType effectType,MagicDefenceEffectModifier effectModifier, bool affectedByMagicDefence, List<StatToModifyTypeAndValue> statsToModify) : base(effectName, duration, OwnerKingdom, targetUnit,procRate,effectType, effectModifier, affectedByMagicDefence)
+    public StatsModifierEffect(string effectName, int duration, BaseKingdom OwnerKingdom, BaseGridUnitScript targetUnit, ProcRate procRate, EffectType effectType, MagicDefenceEffectModifier effectModifier, bool affectedByMagicDefence, List<StatToModifyTypeAndValue> statsToModify) : base(effectName, duration, OwnerKingdom, targetUnit, procRate, effectType, effectModifier, affectedByMagicDefence)
     {
         StatsToModify = statsToModify;
     }
@@ -31,7 +31,7 @@ public class StatsModifierEffect : BaseEffect
         base.ApplyEffect(targetUnit);
         foreach (var stat in StatsToModify)
         {
-            ModifyStat(stat,1);
+            ModifyStat(stat, 1);
         }
     }
     public override void RemoveEffect()
@@ -53,7 +53,7 @@ public class StatsModifierEffect : BaseEffect
         StatBase statToModify = TargetUnit.unitStats.GetUnitStat(stat.Type);
         if (statToModify != null)
         {
-            statToModify.ChangeStat(stat.Value*mod);
+            statToModify.ChangeStat(stat.Value * mod);
         }
     }
 }
@@ -95,11 +95,11 @@ public class InspectableType<T> : ISerializationCallbackReceiver
 
     public void OnBeforeSerialize()
     {
-        if(storedType != null)
+        if (storedType != null)
         {
             qualifiedName = storedType.AssemblyQualifiedName;
         }
-        
+
 
 #if UNITY_EDITOR
         baseTypeName = typeof(T).AssemblyQualifiedName;

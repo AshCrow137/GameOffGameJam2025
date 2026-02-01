@@ -1,51 +1,52 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-    public class UnitStats : MonoBehaviour
-    {
+public class UnitStats : MonoBehaviour
+{
     [Header("Unit stats")]
     [SerializeField]
     private int unitTier = 1;
     [SerializeField]
     protected StatExp unitExp; public StatExp UnitExp { get { return unitExp; } private set { unitExp = value; } }
     [SerializeField]
-    protected StatHealth unitHealth; public StatHealth UnitHealth { get {  return unitHealth; } private set { unitHealth = value; } }
+    protected StatHealth unitHealth; public StatHealth UnitHealth { get { return unitHealth; } private set { unitHealth = value; } }
     [SerializeField]
-    protected StatVision unitVision; public StatVision UnitVision { get {  return unitVision; } private set { unitVision = value; } }   
+    protected StatVision unitVision; public StatVision UnitVision { get { return unitVision; } private set { unitVision = value; } }
     [SerializeField]
-    protected StatMeleeDamage unitMeleeDamage; public StatMeleeDamage UnitMeleeDamage {  get { return unitMeleeDamage; } private set { unitMeleeDamage = value;} }
+    protected StatMeleeDamage unitMeleeDamage; public StatMeleeDamage UnitMeleeDamage { get { return unitMeleeDamage; } private set { unitMeleeDamage = value; } }
     [SerializeField]
     protected StatRangedDamage unitRangedDamage; public StatRangedDamage UnitRangedDamage { get { return unitRangedDamage; } private set { unitRangedDamage = value; } }
     [SerializeField]
-    protected StatCounterattack unitCounterAttack; public StatCounterattack UnitCounterAttack { get {  return unitCounterAttack; } private set { unitCounterAttack = value; } }
+    protected StatCounterattack unitCounterAttack; public StatCounterattack UnitCounterAttack { get { return unitCounterAttack; } private set { unitCounterAttack = value; } }
     [SerializeField]
-    protected StatAttackRange unitAttackRange; public StatAttackRange UnitAttackRange { get {  return unitAttackRange; } private set { unitAttackRange = value; } }
+    protected StatAttackRange unitAttackRange; public StatAttackRange UnitAttackRange { get { return unitAttackRange; } private set { unitAttackRange = value; } }
     [SerializeField]
-    protected StatMeleeDefence unitMeleeDefence; public StatMeleeDefence UnitMeleeDefence { get {  return unitMeleeDefence; } private set { unitMeleeDefence = value; } }
+    protected StatMeleeDefence unitMeleeDefence; public StatMeleeDefence UnitMeleeDefence { get { return unitMeleeDefence; } private set { unitMeleeDefence = value; } }
     [SerializeField]
-    protected StatRangedDefence unitRangedDefence; public StatRangedDefence UnitRangedDefence { get { return unitRangedDefence; }private set {  unitRangedDefence = value; } }
+    protected StatRangedDefence unitRangedDefence; public StatRangedDefence UnitRangedDefence { get { return unitRangedDefence; } private set { unitRangedDefence = value; } }
     [SerializeField]
     protected StatMagicDefence unitMagicDefence; public StatMagicDefence UnitMagicDefence { get { return unitMagicDefence; } private set { unitMagicDefence = value; } }
     [SerializeField]
-    protected StatMovementDistance unitMovementDistance; public StatMovementDistance UnitMovementDistance { get {  return unitMovementDistance; } private set { unitMovementDistance = value; } }
+    protected StatMovementDistance unitMovementDistance; public StatMovementDistance UnitMovementDistance { get { return unitMovementDistance; } private set { unitMovementDistance = value; } }
     [SerializeField]
-    protected StatStamina unitStamina; public StatStamina UnitStamina { get {  return unitStamina; } private set { unitStamina = value; } }
+    protected StatStamina unitStamina; public StatStamina UnitStamina { get { return unitStamina; } private set { unitStamina = value; } }
     [SerializeField]
-    protected StatMana unitMana; public StatMana UnitMana { get {  return unitMana; } private set { unitMana = value; } }
+    protected StatMana unitMana; public StatMana UnitMana { get { return unitMana; } private set { unitMana = value; } }
     [SerializeField]
-    protected StatAttacksPerTurn unitAttacksPerTurn; public StatAttacksPerTurn UnitAttacksPerTurn { get {  return unitAttacksPerTurn; } private set { unitAttacksPerTurn = value; } }
+    protected StatAttacksPerTurn unitAttacksPerTurn; public StatAttacksPerTurn UnitAttacksPerTurn { get { return unitAttacksPerTurn; } private set { unitAttacksPerTurn = value; } }
     [SerializeField]
-    protected int localMadness = 0; public int LocalMadness { get {  return localMadness; } private set {  localMadness = value; } }
+    protected int localMadness = 0; public int LocalMadness { get { return localMadness; } private set { localMadness = value; } }
     [SerializeField]
-    protected int productionTime = 1; public int ProductionTime {  get { return productionTime; } private set { productionTime = value; } }
-
+    protected int productionTime = 1; public int ProductionTime { get { return productionTime; } private set { productionTime = value; } }
+    [SerializeField]
+    protected List<Upgrade> possibleUpgrades; public List<Upgrade> PossibleUpgrades { get { return possibleUpgrades; } private set { possibleUpgrades = value; } }
 
 
     private BaseGridUnitScript owner;
     private List<StatBase> unitStats;
+    private List<Upgrade> habilitys;
 
     public void Initialize()
     {
@@ -57,13 +58,20 @@ using UnityEngine;
             unitStat.Initialize();
         }
 
+        habilitys = new List<Upgrade>();
         unitExp.ExpToNextLvl = ExperienceSystem.ExpToNextLevel(this);
-    }
-    public T GetUnitStat<T>() where T:StatBase
-    {
-        foreach(StatBase stat in unitStats)
+
+        // Reset upgrades levels
+        foreach (Upgrade upgrade in possibleUpgrades)
         {
-            if(stat is T cast)
+            upgrade.ResetCurrentUpgradeLevel(upgrade);
+        }
+    }
+    public T GetUnitStat<T>() where T : StatBase
+    {
+        foreach (StatBase stat in unitStats)
+        {
+            if (stat is T cast)
             {
                 return cast;
             }
@@ -75,7 +83,7 @@ using UnityEngine;
         Debug.Log(statBase.storedType);
         foreach (StatBase stat in unitStats)
         {
-            if(stat.GetType() == statBase.storedType)
+            if (stat.GetType() == statBase.storedType)
             {
                 return stat;
             }
@@ -103,11 +111,60 @@ using UnityEngine;
 
     public BaseGridUnitScript GetOwner()
     {
-        if(owner == null)
+        if (owner == null)
         {
             owner = GetComponent<BaseGridUnitScript>();
         }
         return owner;
+    }
+
+    public void AddHability(Upgrade hability)
+    {
+        Upgrade upgradeToIncreaseLvl = habilitys.Find(upgrade => upgrade.upgradeName == hability.upgradeName);
+        if (upgradeToIncreaseLvl == null)
+        {
+            Upgrade upgrade = ScriptableObject.CreateInstance(hability.GetType()) as Upgrade;
+            upgrade.Init(hability);
+            habilitys.Add(upgrade);
+        }
+        else
+        {
+            upgradeToIncreaseLvl.IncreaseLevel(upgradeToIncreaseLvl);
+        }
+
+        
+        for (int i = 0; i < possibleUpgrades.Count; i++)
+        {
+            if (possibleUpgrades[i].upgradeName == hability.upgradeName)
+            {
+                possibleUpgrades[i].IncreaseLevel(possibleUpgrades[i]);
+                break;
+            }
+        }
+        
+        ApplyAllHabilities();
+    }
+    public void ApplyAllHabilities()
+    {
+        if (habilitys.Count == 0) return;
+        Debug.Log("Applying habilitys...");
+        for (int i = 0; i < habilitys.Count; i++)
+        {
+            habilitys[i].ApplyUpgrade(this);
+            if (!habilitys[i].isBehaviour)
+            {
+                habilitys.RemoveAt(i);
+            }
+        }
+    }
+
+    public void IsLevelUp()
+    {
+        if (this.unitExp.IsLvlUp())
+        {
+            UIUpgradeManager.Instance.ShowUpgradeOptions(UpgradeSystemManager.ChooseForUpgrade(this));
+            ApplyAllHabilities();
+        }
     }
 }
 
@@ -128,7 +185,7 @@ public abstract class StatBase
     }
 }
 [Serializable]
-public sealed class StatHealth:StatBase
+public sealed class StatHealth : StatBase
 {
 
     public int MaxHealth = 10;
@@ -161,34 +218,38 @@ public sealed class StatHealth:StatBase
     }
 }
 [Serializable]
-public sealed class StatExp:StatBase
+public sealed class StatExp : StatBase
 {
     public int ExpModifier = 35;
     public int ExpToNextLvl = 0;
-    public int CurrentExp=0;
-    public int Level=0;
-    
+    public int CurrentExp = 0;
+    public int Level = 0;
+
     public void AddExp(int amount)
     {
         CurrentExp += amount;
         Debug.Log("Added " + amount + " EXP. Current EXP: " + CurrentExp + "/" + ExpToNextLvl);
+    }
+    public bool IsLvlUp()
+    {
         if (CurrentExp >= ExpToNextLvl)
         {
+            Level++;
+            Level = Mathf.Clamp(Level, 0, 99);
             int r = CurrentExp - ExpToNextLvl;
             CurrentExp = r;
-            LvlUp(Level);
+            Debug.Log("Unit leveled up! New Level: " + Level);
+            return true;
         }
-    }
-    private void LvlUp(int previousLvl)
-    {   
-        Level++;
-        Level = Mathf.Clamp(Level, 0, 99);
-        Debug.Log("Unit leveled up! New Level: " + Level);
+        else
+        {
+            return false;
+        }
     }
 
 }
 [Serializable]
-public sealed class StatVision:StatBase
+public sealed class StatVision : StatBase
 {
     public int Vision = 5;
     public int FinalVision { get; private set; }

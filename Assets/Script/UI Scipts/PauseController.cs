@@ -23,9 +23,10 @@ public class PauseController : MonoBehaviour
         moveAction.performed += CloseOpenPuaseWithBind;
         moveAction.Enable();
     }
-    private void OnDisable() {
+    private void OnDisable()
+    {
         moveAction.performed -= CloseOpenPuaseWithBind;
-        moveAction.Disable(); 
+        moveAction.Disable();
     }
     public void btn_QuitGame()
     {

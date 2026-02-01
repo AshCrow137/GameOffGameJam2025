@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class MadmanUnit : BaseGridUnitScript
 {
     private int resultDamage;

@@ -18,25 +18,25 @@ Copyright (c) 2025 Audiokinetic Inc.
 
 public abstract class AkBaseInspector : UnityEditor.Editor
 {
-	public abstract void OnChildInspectorGUI();
+    public abstract void OnChildInspectorGUI();
 
-	public override void OnInspectorGUI()
-	{
-		serializedObject.Update();
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
 
-		UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
+        UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-		OnChildInspectorGUI();
+        OnChildInspectorGUI();
 
-		UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
+        UnityEngine.GUILayout.Space(UnityEditor.EditorGUIUtility.standardVerticalSpacing);
 
-		using (new UnityEngine.GUILayout.HorizontalScope("box"))
-			UnityEditor.EditorGUILayout.PropertyField(serializedObject.FindProperty("data"), new UnityEngine.GUIContent("Name: "));
+        using (new UnityEngine.GUILayout.HorizontalScope("box"))
+            UnityEditor.EditorGUILayout.PropertyField(serializedObject.FindProperty("data"), new UnityEngine.GUIContent("Name: "));
 
-		if (serializedObject.ApplyModifiedProperties() && UnityEngine.GUI.changed)
-		{
-			UnityEditor.EditorUtility.SetDirty(serializedObject.targetObject);
-		}
-	}
+        if (serializedObject.ApplyModifiedProperties() && UnityEngine.GUI.changed)
+        {
+            UnityEditor.EditorUtility.SetDirty(serializedObject.targetObject);
+        }
+    }
 }
 #endif

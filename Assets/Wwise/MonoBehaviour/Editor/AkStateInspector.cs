@@ -20,16 +20,16 @@ Copyright (c) 2025 Audiokinetic Inc.
 [UnityEditor.CustomEditor(typeof(AkState), true)]
 public class AkStateInspector : AkBaseInspector
 {
-	private readonly AkUnityEventHandlerInspector m_UnityEventHandlerInspector = new AkUnityEventHandlerInspector();
+    private readonly AkUnityEventHandlerInspector m_UnityEventHandlerInspector = new AkUnityEventHandlerInspector();
 
-	private void OnEnable()
-	{
-		m_UnityEventHandlerInspector.Init(serializedObject);
-	}
+    private void OnEnable()
+    {
+        m_UnityEventHandlerInspector.Init(serializedObject);
+    }
 
-	public override void OnChildInspectorGUI()
-	{
-		m_UnityEventHandlerInspector.OnGUI();
-	}
+    public override void OnChildInspectorGUI()
+    {
+        m_UnityEventHandlerInspector.OnGUI();
+    }
 }
 #endif

@@ -24,12 +24,12 @@ public class CombatData
     public CombatData(UnitStats unitAtacker, DamageType damageType, float damageDealt, bool hasKilled, int lastInteractTurn)
     {
         this.unitAtacker = unitAtacker;
-        if(damageDealtByType == null)
+        if (damageDealtByType == null)
         {
             Debug.Log("Creating new damageDealtByType dictionary.");
             damageDealtByType = new Dictionary<DamageType, float>();
         }
-        if(!damageDealtByType.ContainsKey(damageType))
+        if (!damageDealtByType.ContainsKey(damageType))
         {
             damageDealtByType[damageType] = 0;
         }
@@ -49,10 +49,10 @@ public class CombatData
     public int LastInteractTurn { get => lastInteractTurn; set => lastInteractTurn = value; }
     public List<string> EffectsApplied { get => str_EffectsApplied; set => str_EffectsApplied = value; }
     public DamageType KilledTypeDamage { get => killedTypeDamage; set => killedTypeDamage = value; }
-    
+
     public void RemoveEffect(CombatData data, BaseEffect effect)
     {
-        if(data.str_EffectsApplied.Contains(effect.Name))
+        if (data.str_EffectsApplied.Contains(effect.Name))
         {
             data.str_EffectsApplied.Remove(effect.Name);
         }
@@ -60,7 +60,7 @@ public class CombatData
 
     public void AddEffect(CombatData data, BaseEffect effect)
     {
-        if(!data.str_EffectsApplied.Contains(effect.Name))
+        if (!data.str_EffectsApplied.Contains(effect.Name))
         {
             data.str_EffectsApplied.Add(effect.Name);
         }
@@ -75,7 +75,7 @@ public class CombatData
 
         for (int i = 0; i < atacker.str_EffectsApplied.Count; i++)
         {
-            if(activeEffects.Exists(e=> e.Name == atacker.str_EffectsApplied[i]))
+            if (activeEffects.Exists(e => e.Name == atacker.str_EffectsApplied[i]))
             {
                 effectCount++;
             }

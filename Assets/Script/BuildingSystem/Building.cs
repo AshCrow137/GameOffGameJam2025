@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Building", menuName = "Building System/Building Data")]
 public class Building : ScriptableObject
@@ -7,10 +7,10 @@ public class Building : ScriptableObject
     [Header("Building Information")]
     public string buildingName;
     public Sprite sprite;
-    
+
     [Header("Resource Requirements")]
     [SerializeField] private List<ResourceRequirement> resourceRequirements = new List<ResourceRequirement>();
-    
+
     [Header("Construction")]
     public int duration;
     public GameObject owner;
@@ -41,18 +41,18 @@ public class Building : ScriptableObject
         clone.sprite = this.sprite;
         clone.duration = this.duration;
         clone.owner = this.owner;
-        
+
         // Clone resource requirements
         clone.resourceRequirements = new List<ResourceRequirement>();
         foreach (var req in this.resourceRequirements)
         {
-            clone.resourceRequirements.Add(new ResourceRequirement 
-            { 
-                resourceType = req.resourceType, 
-                amount = req.amount 
+            clone.resourceRequirements.Add(new ResourceRequirement
+            {
+                resourceType = req.resourceType,
+                amount = req.amount
             });
         }
-        
+
         return clone;
     }
     public void SetOwnerCity(GridCity newOwner)

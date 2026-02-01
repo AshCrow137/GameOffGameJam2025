@@ -15,7 +15,7 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 #if UNITY_EDITOR
-public class WwisePlatformRef: global::System.IDisposable
+public class WwisePlatformRef : global::System.IDisposable
 {
     private global::System.IntPtr swigCPtr;
     protected bool swigCMemOwn;
@@ -66,15 +66,15 @@ public class WwisePlatformRef: global::System.IDisposable
             global::System.GC.SuppressFinalize(this);
         }
     }
-    
+
     public WwisePlatformRef(global::System.IntPtr cPtr) : this(cPtr, true)
     {
     }
-    
+
     public WwisePlatformRef(string platformName) : this(WwiseProjectDatabase.GetPlatformRef(platformName), true)
     {
     }
-    
+
     public string Name => WwiseProjectDatabase.GetPlatformName(swigCPtr);
     public System.IntPtr Guid => WwiseProjectDatabase.GetPlatformGuid(swigCPtr);
 

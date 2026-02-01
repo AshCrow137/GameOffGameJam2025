@@ -15,17 +15,17 @@ in a written agreement between you and Audiokinetic Inc.
 Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
-﻿namespace AK.Wwise.Editor
+namespace AK.Wwise.Editor
 {
-	[UnityEditor.CustomPropertyDrawer(typeof(AcousticTexture))]
-	public class AcousticTextureDrawer : BaseTypeDrawer
-	{
-		protected override string GetComponentName(UnityEditor.SerializedProperty wwiseObjectReference)
-		{
-			var componentName = base.GetComponentName(wwiseObjectReference);
-			return string.IsNullOrEmpty(componentName) ? "None" : componentName;
-		}
+    [UnityEditor.CustomPropertyDrawer(typeof(AcousticTexture))]
+    public class AcousticTextureDrawer : BaseTypeDrawer
+    {
+        protected override string GetComponentName(UnityEditor.SerializedProperty wwiseObjectReference)
+        {
+            var componentName = base.GetComponentName(wwiseObjectReference);
+            return string.IsNullOrEmpty(componentName) ? "None" : componentName;
+        }
 
-		protected override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.AcousticTexture; } }
-	}
+        protected override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.AcousticTexture; } }
+    }
 }

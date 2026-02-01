@@ -24,97 +24,97 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// - <a href="https://www.audiokinetic.com/library/edge/?source=SDK&id=soundengine__switch.html" target="_blank">Integration Details - Switches</a> (Note: This is described in the Wwise SDK documentation.)
 public class AkSwitch : AkDragDropTriggerHandler
 #if UNITY_EDITOR
-	, AK.Wwise.IMigratable
+    , AK.Wwise.IMigratable
 #endif
 {
-	public AK.Wwise.Switch data = new AK.Wwise.Switch();
-	protected override AK.Wwise.BaseType WwiseType { get { return data; } }
+    public AK.Wwise.Switch data = new AK.Wwise.Switch();
+    protected override AK.Wwise.BaseType WwiseType { get { return data; } }
 
-	protected override void Awake()
-	{
-		base.Awake();
+    protected override void Awake()
+    {
+        base.Awake();
 #if UNITY_EDITOR
-		var reference = AkWwiseTypes.DragAndDropObjectReference;
-		if (reference)
-		{
-			UnityEngine.GUIUtility.hotControl = 0;
-			data.ObjectReference = reference;
-			AkWwiseTypes.DragAndDropObjectReference = null;
-		}
+        var reference = AkWwiseTypes.DragAndDropObjectReference;
+        if (reference)
+        {
+            UnityEngine.GUIUtility.hotControl = 0;
+            data.ObjectReference = reference;
+            AkWwiseTypes.DragAndDropObjectReference = null;
+        }
 #endif
-	}
-	
-	public override void HandleEvent(UnityEngine.GameObject in_gameObject)
-	{
-		data.SetValue(useOtherObject && in_gameObject != null ? in_gameObject : gameObject);
-	}
+    }
 
-	#region Obsolete
-	[System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
-	public int valueID { get { return (int)(data == null ? AkUnitySoundEngine.AK_INVALID_UNIQUE_ID : data.Id); } }
+    public override void HandleEvent(UnityEngine.GameObject in_gameObject)
+    {
+        data.SetValue(useOtherObject && in_gameObject != null ? in_gameObject : gameObject);
+    }
 
-	[System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
-	public int groupID { get { return (int)(data == null ? AkUnitySoundEngine.AK_INVALID_UNIQUE_ID : data.GroupId); } }
+    #region Obsolete
+    [System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
+    public int valueID { get { return (int)(data == null ? AkUnitySoundEngine.AK_INVALID_UNIQUE_ID : data.Id); } }
 
-	[System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
-	public byte[] valueGuid
-	{
-		get
-		{
-			if (data == null)
-				return null;
+    [System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
+    public int groupID { get { return (int)(data == null ? AkUnitySoundEngine.AK_INVALID_UNIQUE_ID : data.GroupId); } }
 
-			var objRef = data.ObjectReference;
-			return !objRef ? null : objRef.Guid.ToByteArray();
-		}
-	}
+    [System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
+    public byte[] valueGuid
+    {
+        get
+        {
+            if (data == null)
+                return null;
 
-	[System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
-	public byte[] groupGuid
-	{
-		get
-		{
-			if (data == null)
-				return null;
+            var objRef = data.ObjectReference;
+            return !objRef ? null : objRef.Guid.ToByteArray();
+        }
+    }
 
-			var objRef = data.GroupWwiseObjectReference;
-			return !objRef ? null : objRef.Guid.ToByteArray();
-		}
-	}
-	#endregion
+    [System.Obsolete(AkUnitySoundEngine.Deprecation_2018_1_6)]
+    public byte[] groupGuid
+    {
+        get
+        {
+            if (data == null)
+                return null;
 
-	#region WwiseMigration
+            var objRef = data.GroupWwiseObjectReference;
+            return !objRef ? null : objRef.Guid.ToByteArray();
+        }
+    }
+    #endregion
+
+    #region WwiseMigration
 #pragma warning disable 0414 // private field assigned but not used.
-	[UnityEngine.HideInInspector]
-	[UnityEngine.SerializeField]
-	[UnityEngine.Serialization.FormerlySerializedAs("valueID")]
-	private int valueIdInternal = (int)AkUnitySoundEngine.AK_INVALID_UNIQUE_ID;
-	[UnityEngine.HideInInspector]
-	[UnityEngine.SerializeField]
-	[UnityEngine.Serialization.FormerlySerializedAs("groupID")]
-	private int groupIdInternal = (int)AkUnitySoundEngine.AK_INVALID_UNIQUE_ID;
-	[UnityEngine.HideInInspector]
-	[UnityEngine.SerializeField]
-	[UnityEngine.Serialization.FormerlySerializedAs("valueGuid")]
-	private byte[] valueGuidInternal;
-	[UnityEngine.HideInInspector]
-	[UnityEngine.SerializeField]
-	[UnityEngine.Serialization.FormerlySerializedAs("groupGuid")]
-	private byte[] groupGuidInternal;
+    [UnityEngine.HideInInspector]
+    [UnityEngine.SerializeField]
+    [UnityEngine.Serialization.FormerlySerializedAs("valueID")]
+    private int valueIdInternal = (int)AkUnitySoundEngine.AK_INVALID_UNIQUE_ID;
+    [UnityEngine.HideInInspector]
+    [UnityEngine.SerializeField]
+    [UnityEngine.Serialization.FormerlySerializedAs("groupID")]
+    private int groupIdInternal = (int)AkUnitySoundEngine.AK_INVALID_UNIQUE_ID;
+    [UnityEngine.HideInInspector]
+    [UnityEngine.SerializeField]
+    [UnityEngine.Serialization.FormerlySerializedAs("valueGuid")]
+    private byte[] valueGuidInternal;
+    [UnityEngine.HideInInspector]
+    [UnityEngine.SerializeField]
+    [UnityEngine.Serialization.FormerlySerializedAs("groupGuid")]
+    private byte[] groupGuidInternal;
 #pragma warning restore 0414 // private field assigned but not used.
 
 #if UNITY_EDITOR
-	bool AK.Wwise.IMigratable.Migrate(UnityEditor.SerializedObject obj)
-	{
-		if (!AkUtilities.IsMigrationRequired(AkUtilities.MigrationStep.WwiseTypes_v2018_1_6))
-			return false;
+    bool AK.Wwise.IMigratable.Migrate(UnityEditor.SerializedObject obj)
+    {
+        if (!AkUtilities.IsMigrationRequired(AkUtilities.MigrationStep.WwiseTypes_v2018_1_6))
+            return false;
 
-		return AK.Wwise.TypeMigration.ProcessDoubleGuidType(obj.FindProperty("data.WwiseObjectReference"), WwiseObjectType.Switch,
-			obj.FindProperty("valueGuidInternal"), obj.FindProperty("valueIdInternal"),
-			obj.FindProperty("groupGuidInternal"), obj.FindProperty("groupIdInternal"));
-	}
+        return AK.Wwise.TypeMigration.ProcessDoubleGuidType(obj.FindProperty("data.WwiseObjectReference"), WwiseObjectType.Switch,
+            obj.FindProperty("valueGuidInternal"), obj.FindProperty("valueIdInternal"),
+            obj.FindProperty("groupGuidInternal"), obj.FindProperty("groupIdInternal"));
+    }
 #endif
 
-	#endregion
+    #endregion
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-public class BotTurnHandler : EntityTurnHandler
+﻿public class BotTurnHandler : EntityTurnHandler
 {
 
-    
-    
+
+
 }

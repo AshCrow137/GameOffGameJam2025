@@ -8480,6 +8480,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5be95865b4145c47ab46e3940563dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &724652392 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8410484620592630384, guid: 0dbdf33b7401d1847896256ddbb7a6cc, type: 3}
+  m_PrefabInstance: {fileID: 4501169512139857333}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3357cfd3219e10348a36c457ad0d972a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &747274847 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2418462404444536988, guid: 1a0de3aab0ba9b14c97bb834fa3cfcaa, type: 3}
@@ -9227,12 +9238,48 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: unitExp.CurrentExp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
       propertyPath: unitExp.ExpModifier
-      value: 350
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
       propertyPath: unitRangedDamage.IsMagic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: possibleUpgrades.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: unitMeleeDamage.MeleeDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 3ce65e3bd50c0e649ab497f504196452, type: 2}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a27a8256f739ae843b3f839f7930c35f, type: 2}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a0f88fd704ee541bd23e2b0904782c, type: 2}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: 'possibleUpgrades.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: abfb43cac09825f4a8ac67d6e146fdd5, type: 2}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: unitCounterAttack.Counterattack
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947847883873233701, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
+      propertyPath: unitMovementDistance.MovementDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2024756050137535649, guid: 74bb001c7c8adf046b275a3ceb0053f4, type: 3}
       propertyPath: m_Name
@@ -10930,6 +10977,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2116678396}
     - target: {fileID: 1391848642426180670, guid: 285aea841eb649a418abe34282c95eb7, type: 3}
+      propertyPath: upgradeManager
+      value: 
+      objectReference: {fileID: 724652392}
+    - target: {fileID: 1391848642426180670, guid: 285aea841eb649a418abe34282c95eb7, type: 3}
       propertyPath: cameraController
       value: 
       objectReference: {fileID: 1736380834}
@@ -10989,6 +11040,10 @@ PrefabInstance:
       propertyPath: playerVisionManager
       value: 
       objectReference: {fileID: 1507932132}
+    - target: {fileID: 5451628189081609274, guid: 285aea841eb649a418abe34282c95eb7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5501620702127990095, guid: 285aea841eb649a418abe34282c95eb7, type: 3}
       propertyPath: playerKngdom
       value: 

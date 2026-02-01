@@ -16,267 +16,266 @@ Copyright (c) 2025 Audiokinetic Inc.
 *******************************************************************************/
 
 #if UNITY_EDITOR
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 
 internal class AkPlatformPluginList
 {
-	private static readonly Dictionary<string, System.DateTime> s_LastParsed = new Dictionary<string, System.DateTime>();
+    private static readonly Dictionary<string, System.DateTime> s_LastParsed = new Dictionary<string, System.DateTime>();
 
-	private static readonly Dictionary<string, HashSet<AkPluginInfo>> s_PerPlatformPlugins = new Dictionary<string, HashSet<AkPluginInfo>>();
-	
-	internal static void GetPluginsUsedForPlatform(string deploymentTargetName, out HashSet<AkPluginInfo> UsedPlugins)
-	{
-		s_PerPlatformPlugins.TryGetValue(deploymentTargetName, out UsedPlugins);
-	}
+    private static readonly Dictionary<string, HashSet<AkPluginInfo>> s_PerPlatformPlugins = new Dictionary<string, HashSet<AkPluginInfo>>();
 
-	internal static bool ContainsPlatform(string platform)
-	{
-		return s_PerPlatformPlugins.ContainsKey(platform);
-	}
+    internal static void GetPluginsUsedForPlatform(string deploymentTargetName, out HashSet<AkPluginInfo> UsedPlugins)
+    {
+        s_PerPlatformPlugins.TryGetValue(deploymentTargetName, out UsedPlugins);
+    }
 
-	public static bool IsPluginUsed(AkPlatformPluginActivator in_config, string in_UnityPlatform, string in_PluginName)
-	{
-		var pluginDSPPlatform = in_config.WwisePlatformName;
+    internal static bool ContainsPlatform(string platform)
+    {
+        return s_PerPlatformPlugins.ContainsKey(platform);
+    }
 
-		if (!s_PerPlatformPlugins.ContainsKey(pluginDSPPlatform))
-		{
-			return false; //XML not parsed, don't touch anything.
-		}
+    public static bool IsPluginUsed(AkPlatformPluginActivator in_config, string in_UnityPlatform, string in_PluginName)
+    {
+        var pluginDSPPlatform = in_config.WwisePlatformName;
 
-		if (in_PluginName.Contains("AkUnitySoundEngine"))
-		{
-			return true;
-		}
+        if (!s_PerPlatformPlugins.ContainsKey(pluginDSPPlatform))
+        {
+            return false; //XML not parsed, don't touch anything.
+        }
 
-		var pluginName = in_PluginName;
-		if (in_PluginName.StartsWith("lib"))
-		{
-			pluginName = in_PluginName.Substring(3);
-		}
+        if (in_PluginName.Contains("AkUnitySoundEngine"))
+        {
+            return true;
+        }
 
-		const string factory = "Factory";
-		int indexOfFactory = in_PluginName.IndexOf(factory);
-		// Ensure the plugin name ends with "Factory.h"
-		if (indexOfFactory != -1 && indexOfFactory + factory.Length == in_PluginName.Length)
-		{
-			pluginName = in_PluginName.Substring(0, indexOfFactory);
-		}
+        var pluginName = in_PluginName;
+        if (in_PluginName.StartsWith("lib"))
+        {
+            pluginName = in_PluginName.Substring(3);
+        }
 
-		System.Collections.Generic.HashSet<AkPluginInfo> plugins;
-		if (s_PerPlatformPlugins.TryGetValue(pluginDSPPlatform, out plugins))
-		{
-			if (!in_config.RequiresStaticPluginRegistration)
-			{
-				foreach (var pluginInfo in plugins)
-				{
-					if (pluginInfo.DllName == pluginName ||
-					    (pluginInfo.StaticLibName == "AkMeterFX" && pluginName.Contains("AkSoundEngine")))
-					{
-						return true;
-					}
-				}
-			}
+        const string factory = "Factory";
+        int indexOfFactory = in_PluginName.IndexOf(factory);
+        // Ensure the plugin name ends with "Factory.h"
+        if (indexOfFactory != -1 && indexOfFactory + factory.Length == in_PluginName.Length)
+        {
+            pluginName = in_PluginName.Substring(0, indexOfFactory);
+        }
 
-			//Exceptions
-			if (!string.IsNullOrEmpty(in_config.StaticPluginRegistrationName) && pluginName.Contains(in_config.StaticPluginRegistrationName))
-			{
-				return true;
-			}
+        System.Collections.Generic.HashSet<AkPluginInfo> plugins;
+        if (s_PerPlatformPlugins.TryGetValue(pluginDSPPlatform, out plugins))
+        {
+            if (!in_config.RequiresStaticPluginRegistration)
+            {
+                foreach (var pluginInfo in plugins)
+                {
+                    if (pluginInfo.DllName == pluginName ||
+                        (pluginInfo.StaticLibName == "AkMeterFX" && pluginName.Contains("AkSoundEngine")))
+                    {
+                        return true;
+                    }
+                }
+            }
 
-			//WebGL, iOS, tvOS, visionOS, and Switch deal with the static libs directly, unlike all other platforms.
-			//Luckily the DLL name is always a subset of the lib name.
-			foreach (var pluginInfo in plugins)
-			{
-				if (pluginInfo.StaticLibName == pluginName)
-				{
-					return true;
-				}
-			}
-		}
+            //Exceptions
+            if (!string.IsNullOrEmpty(in_config.StaticPluginRegistrationName) && pluginName.Contains(in_config.StaticPluginRegistrationName))
+            {
+                return true;
+            }
 
-		return false;
-	}
+            //WebGL, iOS, tvOS, visionOS, and Switch deal with the static libs directly, unlike all other platforms.
+            //Luckily the DLL name is always a subset of the lib name.
+            foreach (var pluginInfo in plugins)
+            {
+                if (pluginInfo.StaticLibName == pluginName)
+                {
+                    return true;
+                }
+            }
+        }
 
-	public static void ExecuteParse()
-	{
-		Update();
-	}
-	public static void Update(bool forceUpdate = false)
-	{
-		//Gather all GeneratedSoundBanks folder from the project
-		var allPaths = AkUtilities.GetAllBankPaths(AkWwiseEditorSettings.WwiseProjectAbsolutePath);
-		var bNeedRefresh = false;
-		var projectDir = AkBasePathGetter.GetWwiseProjectDirectory();
-		var baseSoundBankPath = AkBasePathGetter.GetFullSoundBankPathEditor();
+        return false;
+    }
 
-		AkWwiseInitializationSettings.UpdatePlatforms();
+    public static void ExecuteParse()
+    {
+        Update();
+    }
+    public static void Update(bool forceUpdate = false)
+    {
+        //Gather all GeneratedSoundBanks folder from the project
+        var allPaths = AkUtilities.GetAllBankPaths(AkWwiseEditorSettings.WwiseProjectAbsolutePath);
+        var bNeedRefresh = false;
+        var projectDir = AkBasePathGetter.GetWwiseProjectDirectory();
+        var baseSoundBankPath = AkBasePathGetter.GetFullSoundBankPathEditor();
 
-		//make a copy of the platform map and handle "special" custom platforms
-		var platformMap = new Dictionary<string, List<string>>();
-		foreach (var key in AkUtilities.PlatformMapping.Keys)
-		{
-			platformMap.Add(key, new List<string>(AkUtilities.PlatformMapping[key]));
-			foreach (var customPF in AkUtilities.PlatformMapping[key])
-			{
-				if (customPF != key && (AkWwiseInitializationSettings.PlatformSettings.IsDistinctPlatform(customPF)))
-				{
-					platformMap.Add(customPF, new List<string> { customPF });
-					platformMap[key].Remove(customPF);
-				}
-			}
-			if (platformMap[key].Count==0)
-			{
-				platformMap.Remove(key);
-			}
-		}
+        AkWwiseInitializationSettings.UpdatePlatforms();
+
+        //make a copy of the platform map and handle "special" custom platforms
+        var platformMap = new Dictionary<string, List<string>>();
+        foreach (var key in AkUtilities.PlatformMapping.Keys)
+        {
+            platformMap.Add(key, new List<string>(AkUtilities.PlatformMapping[key]));
+            foreach (var customPF in AkUtilities.PlatformMapping[key])
+            {
+                if (customPF != key && (AkWwiseInitializationSettings.PlatformSettings.IsDistinctPlatform(customPF)))
+                {
+                    platformMap.Add(customPF, new List<string> { customPF });
+                    platformMap[key].Remove(customPF);
+                }
+            }
+            if (platformMap[key].Count == 0)
+            {
+                platformMap.Remove(key);
+            }
+        }
 
 
-		//Go through all BasePlatforms 
-		foreach (var pairPF in platformMap)
-		{
-			//Go through all custom platforms related to that base platform and check if any of the bank files were updated.
-			var bParse = forceUpdate;
-			var fullPaths = new System.Collections.Generic.List<string>();
-			foreach (var customPF in pairPF.Value)
-			{
-				string bankPath;
-				if (!allPaths.TryGetValue(customPF, out bankPath))
-					continue;
+        //Go through all BasePlatforms 
+        foreach (var pairPF in platformMap)
+        {
+            //Go through all custom platforms related to that base platform and check if any of the bank files were updated.
+            var bParse = forceUpdate;
+            var fullPaths = new System.Collections.Generic.List<string>();
+            foreach (var customPF in pairPF.Value)
+            {
+                string bankPath;
+                if (!allPaths.TryGetValue(customPF, out bankPath))
+                    continue;
 
-				var pluginFile = "";
-				try
-				{
-					pluginFile = System.IO.Path.Combine(projectDir, System.IO.Path.Combine(bankPath, "PluginInfo.xml"));
-					pluginFile = pluginFile.Replace('/', System.IO.Path.DirectorySeparatorChar);
-					if (!System.IO.File.Exists(pluginFile))
-					{
-						//Try in StreamingAssets too.
-						pluginFile = System.IO.Path.Combine(System.IO.Path.Combine(baseSoundBankPath, customPF), "PluginInfo.xml");
-						if (!System.IO.File.Exists(pluginFile))
-							continue;
-					}
+                var pluginFile = "";
+                try
+                {
+                    pluginFile = System.IO.Path.Combine(projectDir, System.IO.Path.Combine(bankPath, "PluginInfo.xml"));
+                    pluginFile = pluginFile.Replace('/', System.IO.Path.DirectorySeparatorChar);
+                    if (!System.IO.File.Exists(pluginFile))
+                    {
+                        //Try in StreamingAssets too.
+                        pluginFile = System.IO.Path.Combine(System.IO.Path.Combine(baseSoundBankPath, customPF), "PluginInfo.xml");
+                        if (!System.IO.File.Exists(pluginFile))
+                            continue;
+                    }
 
-					fullPaths.Add(pluginFile);
+                    fullPaths.Add(pluginFile);
 
-					var t = System.IO.File.GetLastWriteTime(pluginFile);
-					var lastTime = System.DateTime.MinValue;
-					bool bParsedBefore = s_LastParsed.TryGetValue(customPF, out lastTime);
-					if (!bParsedBefore || lastTime < t)
-					{
-						bParse = true;
-						s_LastParsed[customPF] = t;
-					}
-				}
-				catch (System.Exception ex)
-				{
-					UnityEngine.Debug.LogError("WwiseUnity: " + pluginFile + " could not be parsed. " + ex.Message);
-				}
-			}
+                    var t = System.IO.File.GetLastWriteTime(pluginFile);
+                    var lastTime = System.DateTime.MinValue;
+                    bool bParsedBefore = s_LastParsed.TryGetValue(customPF, out lastTime);
+                    if (!bParsedBefore || lastTime < t)
+                    {
+                        bParse = true;
+                        s_LastParsed[customPF] = t;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    UnityEngine.Debug.LogError("WwiseUnity: " + pluginFile + " could not be parsed. " + ex.Message);
+                }
+            }
 
-			if (bParse)
-			{
-				var platform = pairPF.Key;
+            if (bParse)
+            {
+                var platform = pairPF.Key;
 
-				var newDlls = ParsePlugins(platform);
-				System.Collections.Generic.HashSet<AkPluginInfo> oldDlls = null;
+                var newDlls = ParsePlugins(platform);
+                System.Collections.Generic.HashSet<AkPluginInfo> oldDlls = null;
 
-				s_PerPlatformPlugins.TryGetValue(platform, out oldDlls);
-				s_PerPlatformPlugins[platform] = newDlls;
+                s_PerPlatformPlugins.TryGetValue(platform, out oldDlls);
+                s_PerPlatformPlugins[platform] = newDlls;
 
-				//Check if there was any change.
-				if (!bNeedRefresh && oldDlls != null)
-				{
-					if (oldDlls.Count == newDlls.Count)
-					{
-						oldDlls.IntersectWith(newDlls);
-					}
+                //Check if there was any change.
+                if (!bNeedRefresh && oldDlls != null)
+                {
+                    if (oldDlls.Count == newDlls.Count)
+                    {
+                        oldDlls.IntersectWith(newDlls);
+                    }
 
-					bNeedRefresh |= oldDlls.Count != newDlls.Count;
-				}
-				else
-				{
-					bNeedRefresh |= newDlls.Count > 0;
-				}
-			}
-		}
+                    bNeedRefresh |= oldDlls.Count != newDlls.Count;
+                }
+                else
+                {
+                    bNeedRefresh |= newDlls.Count > 0;
+                }
+            }
+        }
 
-		if (bNeedRefresh)
-		{
-			AkPluginActivator.ActivatePluginsForEditor();
-		}
-	}
+        if (bNeedRefresh)
+        {
+            AkPluginActivator.ActivatePluginsForEditor();
+        }
+    }
 
-	private static bool PlatformUsesStaticLibs(string platform)
-	{
-		var pair = AkPluginActivator.BuildTargetToPlatformPluginActivator.FirstOrDefault(x => x.Value.WwisePlatformName == platform);
-		
-		if (pair.Equals(default(KeyValuePair<BuildTarget, AkPlatformPluginActivator>)))
-		{
-			// Platform not found
-			return false;
-		}
-		return pair.Value.RequiresStaticPluginRegistration;
-	}
+    private static bool PlatformUsesStaticLibs(string platform)
+    {
+        var pair = AkPluginActivator.BuildTargetToPlatformPluginActivator.FirstOrDefault(x => x.Value.WwisePlatformName == platform);
 
-	private static HashSet<AkPluginInfo> ParsePlugins(string platform)
-	{
-		var newPlugins = new System.Collections.Generic.HashSet<AkPluginInfo>();
-		var usesStaticLibs = PlatformUsesStaticLibs(platform);
+        if (pair.Equals(default(KeyValuePair<BuildTarget, AkPlatformPluginActivator>)))
+        {
+            // Platform not found
+            return false;
+        }
+        return pair.Value.RequiresStaticPluginRegistration;
+    }
 
-		try
-		{
-			WwisePluginRefArray pluginRefArray = new WwisePluginRefArray();
-			for (var i = 0; i < WwiseProjectDatabase.GetPluginCount(); i++)
-			{
-				var pluginRef = pluginRefArray[i];
-				var rawPluginID = pluginRef.Id;
-				if (rawPluginID == 0)
-				{
-					continue;
-				}
-				AkPluginActivatorConstants.PluginID pluginID = (AkPluginActivatorConstants.PluginID)rawPluginID;
+    private static HashSet<AkPluginInfo> ParsePlugins(string platform)
+    {
+        var newPlugins = new System.Collections.Generic.HashSet<AkPluginInfo>();
+        var usesStaticLibs = PlatformUsesStaticLibs(platform);
 
-				if (AkPluginActivatorConstants.alwaysSkipPluginsIDs.Contains(pluginID))
-				{
-					continue;
-				}
+        try
+        {
+            WwisePluginRefArray pluginRefArray = new WwisePluginRefArray();
+            for (var i = 0; i < WwiseProjectDatabase.GetPluginCount(); i++)
+            {
+                var pluginRef = pluginRefArray[i];
+                var rawPluginID = pluginRef.Id;
+                if (rawPluginID == 0)
+                {
+                    continue;
+                }
+                AkPluginActivatorConstants.PluginID pluginID = (AkPluginActivatorConstants.PluginID)rawPluginID;
 
-				var dll = string.Empty;
+                if (AkPluginActivatorConstants.alwaysSkipPluginsIDs.Contains(pluginID))
+                {
+                    continue;
+                }
 
-				if (!usesStaticLibs && AkPluginActivatorConstants.builtInPluginIDs.Contains(pluginID))
-				{
-					continue;
-				}
+                var dll = string.Empty;
 
-				if (string.IsNullOrEmpty(dll))
-				{
-					dll = pluginRef.DLL;
-				}
+                if (!usesStaticLibs && AkPluginActivatorConstants.builtInPluginIDs.Contains(pluginID))
+                {
+                    continue;
+                }
 
-				var staticLibName = pluginRef.StaticLib;
+                if (string.IsNullOrEmpty(dll))
+                {
+                    dll = pluginRef.DLL;
+                }
 
-				AkPluginInfo newPluginInfo = new AkPluginInfo();
-				newPluginInfo.PluginID = rawPluginID;
-				newPluginInfo.DllName = dll;
-				newPluginInfo.StaticLibName = staticLibName;
+                var staticLibName = pluginRef.StaticLib;
 
-				if (string.IsNullOrEmpty(newPluginInfo.StaticLibName) && !AkPluginActivatorConstants.PluginIDToStaticLibName.TryGetValue(pluginID, out newPluginInfo.StaticLibName))
-				{
-					newPluginInfo.StaticLibName = dll;
-				}
+                AkPluginInfo newPluginInfo = new AkPluginInfo();
+                newPluginInfo.PluginID = rawPluginID;
+                newPluginInfo.DllName = dll;
+                newPluginInfo.StaticLibName = staticLibName;
 
-				newPlugins.Add(newPluginInfo);
-			}
-		}
-		catch (System.Exception ex)
-		{
-			UnityEngine.Debug.LogError("WwiseUnity: plugins could not be parsed. " + ex.Message);
-		}
+                if (string.IsNullOrEmpty(newPluginInfo.StaticLibName) && !AkPluginActivatorConstants.PluginIDToStaticLibName.TryGetValue(pluginID, out newPluginInfo.StaticLibName))
+                {
+                    newPluginInfo.StaticLibName = dll;
+                }
 
-		return newPlugins;
-	}
+                newPlugins.Add(newPluginInfo);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            UnityEngine.Debug.LogError("WwiseUnity: plugins could not be parsed. " + ex.Message);
+        }
+
+        return newPlugins;
+    }
 }
 #endif

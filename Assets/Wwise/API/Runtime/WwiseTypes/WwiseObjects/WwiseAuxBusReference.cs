@@ -18,5 +18,5 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// @brief Represents Wwise aux buses as Unity assets.
 public class WwiseAuxBusReference : WwiseObjectReference
 {
-	public override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.AuxBus; } }
+    public override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.AuxBus; } }
 }

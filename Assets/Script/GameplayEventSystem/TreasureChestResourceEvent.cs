@@ -11,7 +11,7 @@ public class TreasureChestResourceEvent : BaseTreasureChestEvent
 
     public override void ExecuteEvent(BaseKingdom kingdom, Vector3Int chestPos)
     {
-        base.ExecuteEvent(kingdom,chestPos);
+        base.ExecuteEvent(kingdom, chestPos);
         int amount = Random.Range(minResource, maxResource);
         ResourceType resource = resources[Random.Range(0, resources.Count)];
 

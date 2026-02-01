@@ -18,5 +18,5 @@ Copyright (c) 2025 Audiokinetic Inc.
 /// @brief Represents Wwise RTPCs as Unity assets.
 public class WwiseRtpcReference : WwiseObjectReference
 {
-	public override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.GameParameter; } }
+    public override WwiseObjectType WwiseObjectType { get { return WwiseObjectType.GameParameter; } }
 }

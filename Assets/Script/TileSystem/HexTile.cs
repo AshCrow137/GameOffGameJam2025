@@ -11,25 +11,25 @@ public class HexTile : Tile
     public TileState defaultState = TileState.Land;
     public TileState state { get; private set; }
 
-    public Fog fog {get; private set;}
-    public TileState temporaryState {  get; private set; }
+    public Fog fog { get; private set; }
+    public TileState temporaryState { get; private set; }
     public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
     {
         base.GetTileData(position, tilemap, ref tileData);
-        
+
         // Set Tile colour based on state
         HexTilemapManager manager = HexTilemapManager.Instance;
-        if(manager == null)
+        if (manager == null)
             return;
 
         tileData.color = manager.GetTileColorAtPosition(position);
 
         // Set Tile sprite based on city at position (cities have priority over buildings)
         CityManager cityManager = CityManager.Instance;
-        if(cityManager != null)
+        if (cityManager != null)
         {
             Sprite citySprite = cityManager.GetCitySprite(position);
-            if(citySprite != null)
+            if (citySprite != null)
             {
                 tileData.sprite = citySprite;
                 return;
@@ -37,12 +37,13 @@ public class HexTile : Tile
         }
         // Set Tile sprite based on building at position
         BuildingManager buildingManager = BuildingManager.Instance;
-        if(buildingManager == null)
+        if (buildingManager == null)
         {
             return;
         }
         Sprite sprite = buildingManager.GetBuildingSprite(position);
-        if(sprite != null){
+        if (sprite != null)
+        {
             tileData.sprite = sprite;
         }
 
@@ -51,6 +52,6 @@ public class HexTile : Tile
     {
         state = newState;
     }
-    
+
 }
 

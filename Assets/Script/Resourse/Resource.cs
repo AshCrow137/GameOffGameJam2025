@@ -1,7 +1,7 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 public enum ResourceType { Magic, Gold, Materials }
-public class Resource 
+public class Resource
 {
     //public static Resource Instance { get; private set; }
     private Dictionary<ResourceType, int> resources = new();
@@ -11,25 +11,25 @@ public class Resource
     //private int StartingMaterials = 30;
 
     public BaseKingdom Owner { get; private set; }
-    public Resource(BaseKingdom owner,int StartingMagic,int StartingGold, int StartingMaterials)
+    public Resource(BaseKingdom owner, int StartingMagic, int StartingGold, int StartingMaterials)
     {
         resources[ResourceType.Magic] = StartingMagic;
         resources[ResourceType.Gold] = StartingGold;
         resources[ResourceType.Materials] = StartingMaterials;
         Owner = owner;
-        if(Owner is PlayerKingdom)
+        if (Owner is PlayerKingdom)
         {
             UpdateUI();
         }
-        
+
     }
 
-    public void AddAll(Dictionary<ResourceType,int> required)
+    public void AddAll(Dictionary<ResourceType, int> required)
     {
         foreach (var req in required)
         {
             resources[req.Key] += req.Value;
-            if (resources[req.Key] <0) 
+            if (resources[req.Key] < 0)
             {
                 resources[req.Key] = 0;
             }
@@ -47,9 +47,9 @@ public class Resource
         UpdateUI();
     }
 
-    public void Remove( Dictionary<ResourceType,int> required)
+    public void Remove(Dictionary<ResourceType, int> required)
     {
-        
+
         foreach (var req in required)
         {
             resources[req.Key] = Mathf.Max(0, resources[req.Key] - req.Value);
@@ -59,7 +59,7 @@ public class Resource
 
     public int Get(ResourceType type) => resources[type];
 
-    public Dictionary<ResourceType,int> HasEnough(Dictionary<ResourceType, int> required)
+    public Dictionary<ResourceType, int> HasEnough(Dictionary<ResourceType, int> required)
     {
         var _temp = new Dictionary<ResourceType, int>();
         foreach (var req in required)
@@ -70,7 +70,7 @@ public class Resource
             }
 
         }
-        if (_temp.Count==0)
+        if (_temp.Count == 0)
             return null;
         else
             return _temp;
@@ -85,7 +85,7 @@ public class Resource
                 UIManager.Instance.UpdateResourceImages(kvp.Value, kvp.Key);
             }
         }
-            
+
     }
 
     public void TESTADDFORBUTTON()
@@ -115,7 +115,7 @@ public class Resource
         }
         else
         {
-            foreach(var a in _temp)
+            foreach (var a in _temp)
             {
                 Debug.Log($"not enough {a.Key} - {a.Value}");
             }

@@ -9,14 +9,14 @@ public class DropSystem : MonoBehaviour
     [SerializeField]
     private int minResource;
 
-    [SerializeField] 
+    [SerializeField]
     private int maxResource;
 
     public static DropSystem instance;
-    
+
     public void Instantiate()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }

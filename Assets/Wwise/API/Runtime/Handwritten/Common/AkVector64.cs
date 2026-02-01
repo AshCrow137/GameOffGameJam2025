@@ -21,23 +21,25 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Sequential)]
 public class AkVector64
 {
-	public void Zero() { 
-		X = 0.0;
-		Y = 0.0;
-		Z = 0.0;
-	}
+    public void Zero()
+    {
+        X = 0.0;
+        Y = 0.0;
+        Z = 0.0;
+    }
 
-	public double X = 0.0;
-	public double Y = 0.0;
-	public double Z = 0.0;
+    public double X = 0.0;
+    public double Y = 0.0;
+    public double Z = 0.0;
 
-	public static implicit operator AkVector64(UnityEngine.Vector3 vector) {
-		AkVector64 ret = new AkVector64();
-		ret.X = vector.x;
-		ret.Y = vector.y;
-		ret.Z = vector.z;
-		return ret; 
-	}
+    public static implicit operator AkVector64(UnityEngine.Vector3 vector)
+    {
+        AkVector64 ret = new AkVector64();
+        ret.X = vector.x;
+        ret.Y = vector.y;
+        ret.Z = vector.z;
+        return ret;
+    }
 
 }
 
