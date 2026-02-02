@@ -148,3 +148,14 @@ public enum GamePlayEvent
     SpawnUnit,
     SpecialEvent
 }
+public enum AbilityTypeEnum
+{
+    Active,
+    Passive
+}
+public enum AbilityResource
+{
+    Mana,
+    Stamina,
+    Health
+}

@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1724408627
       objectReference: {fileID: 0}
+    - target: {fileID: 6192672561206537955, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
+      propertyPath: abilityList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6383089082207975250, guid: 35a027b17a2dea84eb1eb04724d48f1b, type: 3}
       propertyPath: unitMana.MaxMana
       value: 0

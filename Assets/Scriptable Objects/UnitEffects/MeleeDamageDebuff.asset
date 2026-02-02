@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3768490403671040a284a2bd27e59ba, type: 3}
   m_Name: MeleeDamageDebuff
   m_EditorClassIdentifier: 
+  effectName: 
   duration: 5
   procRate: 0
   effectType: 1

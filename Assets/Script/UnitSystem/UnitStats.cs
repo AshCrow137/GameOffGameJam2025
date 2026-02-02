@@ -137,6 +137,7 @@ public sealed class StatHealth:StatBase
     public int CurrentHealth = 10;
     // Actual max health after all effects and modificators
     public int FinalMaxHealth { get; private set; }
+    public bool CanHeal { get; private set; } = true;
 
     /// <summary>
     /// Changing FinalMaxStamina. Use "+" to add max health; "-" to remove maxHealth
@@ -161,6 +162,18 @@ public sealed class StatHealth:StatBase
     {
         base.Initialize();
         FinalMaxHealth = MaxHealth;
+    }
+    public void ChangeCanHealt(bool newValue)
+    {
+        CanHeal = newValue;
+    }
+    public void Heal(int amount)
+    {
+        if(CanHeal)
+        {
+            CurrentHealth += amount;
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, FinalMaxHealth);
+        }
     }
 }
 [Serializable]
